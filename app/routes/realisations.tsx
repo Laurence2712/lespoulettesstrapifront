@@ -18,25 +18,17 @@ export default function Realisations() {
     async function fetchRealisations() {
       try {
         const response = await fetch('http://localhost:1337/api/realisations?populate=*');
-        
-        if (!response.ok) {
-          throw new Error(`Erreur HTTP : ${response.status}`);
-        }
-        
+        if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
         const data = await response.json();
-        
-        // Affiche les données pour vérifier leur structure
-        console.log(data);
 
+        console.log(data); // Pour vérifier la structure
 
-        
         if (data && data.data) {
           const realisationsData: Realisation[] = data.data.map((realisation: any) => ({
             id: realisation.id,
             title: realisation.Titre || 'Titre indisponible',
             image_url: realisation.Images?.[0]?.url,
             description: realisation.Description || 'Description indisponible',
-            prix: realisation.Prix || 'Prix indisponible',
           }));
           setRealisations(realisationsData);
         } else {
@@ -54,22 +46,14 @@ export default function Realisations() {
   }, []);
 
   useEffect(() => {
-    // Animation des réalisations à l'apparition avec GSAP
     gsap.from('.realisation-card', {
-      opacity: 0,   // Commence avec une opacité de 0
-      y: 50,        // Déplace l'élément de bas en haut
-      stagger: {
-        amount: 0.6, // Augmente la durée du décalage entre les éléments
-        from: "start", // Déclenche l'animation à partir du premier élément
-      },
+      opacity: 0,
+      y: 50,
+      stagger: { amount: 0.6, from: 'start' },
       duration: 0.8,
       ease: 'power3.out',
       onComplete: () => {
-        // À la fin de l'animation, assure l'opacité à 1
-        gsap.to('.realisation-card', {
-          opacity: 1,
-          duration: 0.1, // Une transition rapide pour garantir l'opacité à 1
-        });
+        gsap.to('.realisation-card', { opacity: 1, duration: 0.1 });
       },
     });
   }, [realisations]);
@@ -104,15 +88,14 @@ export default function Realisations() {
             <div className="p-4">
               <h3 className="text-lg font-semibold text-gray-900">{realisation.title}</h3>
               <p className="text-gray-700 mt-2">{realisation.description}</p>
-              <p className="text-gray-700 mt-2">{realisation.prix} € </p>
             </div>
             <div className="p-4">
-              <a
-                href={`/realisations/${realisation.id}`}
+              <Link
+                to={`/realisations/${realisation.id}`}
                 className="text-indigo-600 hover:text-indigo-800 font-medium"
               >
                 Voir plus
-              </a>
+              </Link>
             </div>
           </div>
         ))}
