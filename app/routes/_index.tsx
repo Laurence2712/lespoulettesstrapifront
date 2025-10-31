@@ -53,13 +53,14 @@ export default function Index() {
   if (error) {
     return <p className="text-red-500">{error}</p>;
   }
+console.log(homepageData);
 
   return (
     <div>
       {/* Bannière principale */}
-      <header className="banner relative bg-cover bg-center h-[80vh] flex items-center justify-center text-white p-8" style={{ backgroundImage: `url(${homepageData?.image_url})` }}>
+      <header className="banner relative bg-cover bg-center h-[80vh] flex items-center justify-center text-white p-8" style={{ backgroundImage: `url(${homepageData?.banner_image})` }}>
         <div className="banner-content text-center z-10">
-          <h1 className="text-5xl font-bold drop-shadow-lg">Bienvenue chez Les Poulettes</h1>
+          <h1 className="text-5xl font-bold drop-shadow-lg">Les Poulettes</h1>
           <p className="text-xl mt-4 drop-shadow-lg">{homepageData?.description}</p>
           <Link to="/realisations" className="btn bg-yellow-400 text-black px-6 py-3 rounded mt-6 inline-block transform transition duration-500 hover:scale-105">Voir nos réalisations</Link>
         </div>
