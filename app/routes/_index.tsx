@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from '@remix-run/react';
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 interface HomepageData {
   image_url?: string;
@@ -11,23 +14,30 @@ interface Realisation {
   title: string;
   image_url?: string;
   description?: string;
-  prix?: string;
+  prix?: string | number;
+}
+
+interface Actualite {
+  id: number;
+  title: string;
+  content: string;
+  image_url?: string;
 }
 
 export default function Index() {
   const [homepageData, setHomepageData] = useState<HomepageData | null>(null);
   const [realisations, setRealisations] = useState<Realisation[]>([]);
+  const [actualites, setActualites] = useState<Actualite[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch homepage data
+  // === Fetch Homepage ===
   useEffect(() => {
     async function fetchHomepageData() {
       try {
         const response = await fetch('http://localhost:1337/api/homepages?populate=*');
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
-
         if (data?.data?.length) {
           const homepage = data.data[0];
           const bannerImageUrl = homepage.banner_image?.formats?.large?.url
@@ -35,7 +45,6 @@ export default function Index() {
             : homepage.banner_image?.url
             ? `http://localhost:1337${homepage.banner_image.url}`
             : '';
-
           let descriptionText = '';
           if (Array.isArray(homepage.description)) {
             homepage.description.forEach((block: any) => {
@@ -44,16 +53,12 @@ export default function Index() {
               });
             });
           }
-
-          setHomepageData({
-            image_url: bannerImageUrl,
-            description: descriptionText.trim(),
-          });
+          setHomepageData({ image_url: bannerImageUrl, description: descriptionText.trim() });
         } else {
           setError('Aucune donnée trouvée');
         }
       } catch (err: any) {
-        console.error('Erreur lors du chargement de la homepage :', err);
+        console.error(err);
         setError('Erreur lors du chargement des données');
       }
     }
@@ -61,26 +66,25 @@ export default function Index() {
     fetchHomepageData();
   }, []);
 
-  // Fetch last 3 realizations
+  // === Fetch Réalisations ===
   useEffect(() => {
     async function fetchRealisations() {
       try {
-        const response = await fetch('http://localhost:1337/api/realisations?populate=*&sort=createdAt:desc&pagination[pageSize]=3');
-        if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
+        const response = await fetch('http://localhost:1337/api/realisations?populate=*');
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
-
         if (data?.data) {
           const realisationsData: Realisation[] = data.data.map((item: any) => ({
             id: item.id,
             title: item.Titre || 'Titre indisponible',
-            image_url: item.Images?.[0]?.url,
+            image_url: item.Images?.[0]?.url ? `http://localhost:1337${item.Images[0].url}` : undefined,
             description: item.Description || 'Description indisponible',
             prix: item.Prix || 'Prix indisponible',
           }));
           setRealisations(realisationsData);
         }
       } catch (err: any) {
-        console.error('Erreur lors du chargement des réalisations', err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -89,12 +93,54 @@ export default function Index() {
     fetchRealisations();
   }, []);
 
+  // === Fetch Actualités ===
+  useEffect(() => {
+    async function fetchActualites() {
+      try {
+        const response = await fetch('http://localhost:1337/api/actualites?populate=*');
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+        if (data?.data) {
+          const actualitesData: Actualite[] = data.data.map((item: any) => ({
+            id: item.id,
+            title: item.Title || 'Titre indisponible',
+            content: item.content || '',
+            image_url: item.image?.formats?.large?.url
+              ? `http://localhost:1337${item.image.formats.large.url}`
+              : item.image?.url
+              ? `http://localhost:1337${item.image.url}`
+              : '',
+          }));
+          setActualites(actualitesData);
+        }
+      } catch (err: any) {
+        console.error(err);
+      }
+    }
+
+    fetchActualites();
+  }, []);
+
   if (loading) return <p>Chargement...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
 
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    responsive: [
+      { breakpoint: 1024, settings: { slidesToShow: 2 } },
+      { breakpoint: 640, settings: { slidesToShow: 1 } },
+    ],
+  };
+
   return (
     <div>
-      {/* Bannière principale */}
+      {/* Bannière */}
       <header
         className="banner relative bg-cover bg-center h-[80vh] flex items-center justify-center text-white p-8"
         style={{ backgroundImage: `url(${homepageData?.image_url})` }}
@@ -112,78 +158,62 @@ export default function Index() {
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
       </header>
 
-      {/* Container pour toutes les sections */}
-      <div className="max-w-7xl mx-auto px-4">
-
-        {/* À propos */}
-        <section className="about py-16 bg-white">
-          <h2 className="text-3xl text-center font-semibold text-black">Qui sommes-nous ?</h2>
-          <p className="text-lg mt-4 text-center max-w-3xl mx-auto text-black">
-            Les Poulettes, c’est une équipe passionnée qui fabrique des objets uniques : tote bags, décorations, housses d’ordinateur, bandeaux, sacs à main et bien plus encore.
-          </p>
-        </section>
-
-        {/* Nos valeurs */}
-        <section className="values py-16 bg-gray-100">
-          <h2 className="text-3xl text-center font-semibold text-black">Nos Valeurs</h2>
-          <div className="values-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-            <div className="value-box text-center bg-white p-6 rounded-lg shadow-lg transition-transform duration-500 hover:scale-105">
-              <img src="images/artisanat.jpg" alt="Artisanat" className="w-full h-48 object-cover rounded-md" />
-              <h3 className="mt-4 text-xl font-semibold">Artisanat</h3>
-              <p>Chaque création est faite à la main avec soin et originalité.</p>
-            </div>
-            <div className="value-box text-center bg-white p-6 rounded-lg shadow-lg transition-transform duration-500 hover:scale-105">
-              <img src="images/ecologie.jpg" alt="Écologie" className="w-full h-48 object-cover rounded-md" />
-              <h3 className="mt-4 text-xl font-semibold">Écologie</h3>
-              <p>Nous utilisons des matériaux respectueux de l’environnement.</p>
-            </div>
-            <div className="value-box text-center bg-white p-6 rounded-lg shadow-lg transition-transform duration-500 hover:scale-105">
-              <img src="images/qualite.jpg" alt="Qualité" className="w-full h-48 object-cover rounded-md" />
-              <h3 className="mt-4 text-xl font-semibold">Qualité</h3>
-              <p>Des produits conçus pour durer et embellir votre quotidien.</p>
-            </div>
-          </div>
-        </section>
-
-        {/* Produits / Dernières réalisations */}
-        <section className="products py-16 bg-white">
-          <h2 className="text-3xl text-center font-semibold text-black">Nos Réalisations</h2>
-          <div className="product-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-            {realisations.map((realisation) => (
-              <div
-                key={realisation.id}
-                className="product-box text-center bg-gray-200 p-6 rounded-lg shadow-lg transition-transform duration-500 hover:scale-105"
-              >
-                {realisation.image_url ? (
-                  <img
-                    src={`http://localhost:1337${realisation.image_url}`}
-                    alt={realisation.title}
-                    className="w-full h-48 object-cover rounded-md"
-                  />
-                ) : (
-                  <div className="w-full h-48 bg-gray-300 flex items-center justify-center">
-                    <span className="text-gray-500">Aucune image</span>
-                  </div>
-                )}
-                <h3 className="mt-4 text-xl font-semibold">{realisation.title}</h3>
-                <p className="text-gray-700 mt-2">{realisation.description}</p>
-                <p className="text-gray-700 mt-2">{realisation.prix} €</p>
-                <Link
-                  to={`/realisations/${realisation.id}`}
-                  className="text-indigo-600 hover:text-indigo-800 font-medium mt-2 block"
-                >
-                  Voir plus
-                </Link>
+      {/* Actualités */}
+      <section className="actualites py-16 bg-yellow-100 max-w-7xl mx-auto px-4 rounded-lg shadow-md mt-12">
+        {actualites.length > 0 ? (
+          actualites.map((actu) => (
+            <div key={actu.id} className="flex flex-col md:flex-row items-center gap-8 mb-12">
+              <div className="md:w-1/2">
+                <h2 className="text-3xl font-semibold text-black mb-4">{actu.title}</h2>
+                <p className="text-gray-800 text-lg whitespace-pre-line">{actu.content}</p>
               </div>
-            ))}
-          </div>
-        </section>
+              {actu.image_url && (
+                <div className="md:w-1/2">
+                  <img
+                    src={actu.image_url}
+                    alt={actu.title}
+                    className="w-full h-64 object-cover rounded-md shadow-md"
+                  />
+                </div>
+              )}
+            </div>
+          ))
+        ) : (
+          <p className="text-center text-gray-600">Aucune actualité disponible.</p>
+        )}
+      </section>
 
-        {/* Pied de page */}
-        <footer className="footer bg-gray-800 text-white text-center py-4">
-          <p>&copy; 2025 Les Poulettes - Tous droits réservés</p>
-        </footer>
-      </div>
+      {/* Slider Réalisations */}
+      <section className="products py-16 bg-white max-w-7xl mx-auto px-4">
+        <h2 className="text-3xl text-center font-semibold text-black">Nos Réalisations</h2>
+        <Slider {...sliderSettings} className="mt-8">
+          {realisations.map((realisation) => (
+            <div key={realisation.id} className="p-4">
+              <Link to={`/realisations/${realisation.id}`}>
+                <div className="bg-gray-200 p-6 rounded-lg shadow-lg text-center hover:shadow-xl transition">
+                  {realisation.image_url ? (
+                    <img
+                      src={realisation.image_url}
+                      alt={realisation.title}
+                      className="w-full h-48 object-cover rounded-md"
+                    />
+                  ) : (
+                    <div className="w-full h-48 bg-gray-300 flex items-center justify-center">
+                      <span className="text-gray-500">Aucune image</span>
+                    </div>
+                  )}
+                  <h3 className="mt-4 text-xl font-semibold">{realisation.title}</h3>
+                  <p className="mt-2 text-gray-700">{realisation.description}</p>
+                  <p className="mt-2 text-gray-700">{realisation.prix} €</p>
+                  <span className="text-indigo-600 hover:text-indigo-800 font-medium mt-2 block">
+                    Voir plus
+                  </span>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </Slider>
+      </section>
     </div>
   );
 }
