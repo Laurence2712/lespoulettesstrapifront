@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 html,
 body {
   @apply bg-white dark:bg-gray-950;
@@ -9,4 +10,50 @@ body {
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
+
 }
+body {
+  font-family: "Ogg", serif !important;
+}
+
+
+@font-face {
+  font-family: "Ogg";
+  src: url("/fonts/Ogg/Ogg-Light.woff2") format("woff2"),
+       url("/fonts/Ogg/Ogg-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ogg";
+  src: url("/fonts/Ogg/Ogg-Regular.woff2") format("woff2"),
+       url("/fonts/Ogg/Ogg-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ogg";
+  src: url("/fonts/Ogg/Ogg-Bold.woff2") format("woff2"),
+       url("/fonts/Ogg/Ogg-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Basecoat-Light";
+  src: url("https://db.onlinewebfonts.com/t/4478bac97c5a69efb625357a83017b06.eot");
+  src: url("https://db.onlinewebfonts.com/t/4478bac97c5a69efb625357a83017b06.eot?#iefix") format("embedded-opentype"),
+       url("https://db.onlinewebfonts.com/t/4478bac97c5a69efb625357a83017b06.woff2") format("woff2"),
+       url("https://db.onlinewebfonts.com/t/4478bac97c5a69efb625357a83017b06.woff") format("woff"),
+       url("https://db.onlinewebfonts.com/t/4478bac97c5a69efb625357a83017b06.ttf") format("truetype"),
+       url("https://db.onlinewebfonts.com/t/4478bac97c5a69efb625357a83017b06.svg#Basecoat-Light") format("svg");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+

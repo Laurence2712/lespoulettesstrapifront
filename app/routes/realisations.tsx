@@ -21,8 +21,6 @@ export default function Realisations() {
         if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
         const data = await response.json();
 
-        console.log(data); // Pour vérifier la structure
-
         if (data && data.data) {
           const realisationsData: Realisation[] = data.data.map((realisation: any) => ({
             id: realisation.id,
@@ -59,17 +57,46 @@ export default function Realisations() {
   }, [realisations]);
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <h1 className="text-3xl font-semibold text-center mb-6">Nos Réalisations</h1>
+    <div className="container mx-auto py-8 px-4 max-w-7xl">
+      {/* Breadcrumb */}
+      <nav className="mb-8 text-sm">
+        <Link to="/" className="text-indigo-600 hover:text-indigo-800 font-medium">
+          Accueil
+        </Link>
+        <span className="mx-2 text-gray-400">/</span>
+        <span className="text-gray-600">Réalisations</span>
+      </nav>
 
-      {loading && <p>Chargement...</p>}
-      {error && <p className="text-red-500">{error}</p>}
+      {/* Bouton retour */}
+      <Link
+        to="/"
+        className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-6 transition"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5 mr-2"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fillRule="evenodd"
+            d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+            clipRule="evenodd"
+          />
+        </svg>
+        Retour à l'accueil
+      </Link>
+
+      <h1 className="text-4xl font-bold text-center mb-12 text-gray-900">Nos Réalisations</h1>
+
+      {loading && <p className="text-center text-xl">Chargement...</p>}
+      {error && <p className="text-red-500 text-center">{error}</p>}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {realisations.map((realisation) => (
           <div
             key={realisation.id}
-            className="bg-white rounded-lg shadow-md overflow-hidden realisation-card"
+            className="bg-white rounded-lg shadow-md overflow-hidden realisation-card hover:shadow-xl transition-shadow"
             style={{ transform: 'scale(1)', transition: 'transform 0.3s' }}
           >
             <div className="relative">
@@ -87,14 +114,26 @@ export default function Realisations() {
             </div>
             <div className="p-4">
               <h3 className="text-lg font-semibold text-gray-900">{realisation.title}</h3>
-              <p className="text-gray-700 mt-2">{realisation.description}</p>
+              <p className="text-gray-700 mt-2 line-clamp-3">{realisation.description}</p>
             </div>
-            <div className="p-4">
+            <div className="p-4 pt-0">
               <Link
                 to={`/realisations/${realisation.id}`}
-                className="text-indigo-600 hover:text-indigo-800 font-medium"
+                className="inline-flex items-center text-yellow-600 hover:text-yellow-700 font-medium transition"
               >
                 Voir plus
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 ml-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
               </Link>
             </div>
           </div>

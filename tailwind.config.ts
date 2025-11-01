@@ -15,6 +15,8 @@ export default {
           "Segoe UI Symbol",
           "Noto Color Emoji",
         ],
+        ogg: ["Ogg", "serif"], 
+        basecoat: ["Basecoat-Light", "sans-serif"],
       },
     },
   },

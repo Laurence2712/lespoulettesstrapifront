@@ -131,7 +131,7 @@ export default function Index() {
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 2000,
     responsive: [
       { breakpoint: 1024, settings: { slidesToShow: 2 } },
       { breakpoint: 640, settings: { slidesToShow: 1 } },
@@ -141,31 +141,49 @@ export default function Index() {
   return (
     <div>
       {/* Bannière */}
-      <header
-        className="banner relative bg-cover bg-center h-[80vh] flex items-center justify-center text-white p-8"
-        style={{ backgroundImage: `url(${homepageData?.image_url})` }}
-      >
-        <div className="banner-content text-center z-10">
-          <h1 className="text-5xl font-bold drop-shadow-lg">Les Poulettes</h1>
-          <p className="text-xl mt-4 drop-shadow-lg">{homepageData?.description}</p>
-          <Link
-            to="/realisations"
-            className="btn bg-yellow-400 text-black px-6 py-3 rounded mt-6 inline-block transform transition duration-500 hover:scale-105"
-          >
-            Voir nos réalisations
-          </Link>
-        </div>
-        <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
-      </header>
+     <header
+  className="banner relative bg-contain md:bg-cover bg-center h-[100vh] flex flex-col justify-between text-white p-8"
+  style={{ backgroundImage: `url(${homepageData?.image_url})` }}
+>
+  
+  <div className="banner-content text-center z-10 flex-1 flex flex-col items-center justify-end">
+    <h1 className="font-basecoat text-5xl font-bold drop-shadow-lg uppercase">Les trousses</h1>
+  </div>
+
+  <div className="z-10 flex justify-center mt-8">
+    <Link
+      to="/realisations"
+      className="font-basecoat btn bg-yellow-400 text-black px-6 py-3 rounded transform transition duration-500 hover:scale-105 font-semibold"
+    >
+      Foncez !
+    </Link>
+  </div>
+  
+  <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
+</header>
+
+  <div className="banner-content mt-12  text-center z-10 flex-1 flex flex-col items-center justify-end">
+    <p className="font-basecoat text-xl drop-shadow-lg max-w-[750px]">{homepageData?.description}</p>
+  </div>
 
       {/* Actualités */}
+ <div
+  className="relative z-10 mt-12 text-center -mb-[var(--margin-mobile)] lg:-mb-[var(--margin-desktop)]"
+  style={{ "--margin-desktop": "75px", "--margin-mobile": "20px" }}
+>
+  <h2 className="font-ogg font-light uppercase text-[35px] md:text-[40px] lg:text-[60px] text-black leading-tight tracking-[5px]">
+    À ne pas manquer
+  </h2>
+</div>
+
       <section className="actualites py-16 bg-yellow-100 max-w-7xl mx-auto px-4 rounded-lg shadow-md mt-12">
+
         {actualites.length > 0 ? (
           actualites.map((actu) => (
             <div key={actu.id} className="flex flex-col md:flex-row items-center gap-8 mb-12">
               <div className="md:w-1/2">
-                <h2 className="text-3xl font-semibold text-black mb-4">{actu.title}</h2>
-                <p className="text-gray-800 text-lg whitespace-pre-line">{actu.content}</p>
+                <h2 className="font-basecoat text-3xl font-semibold text-black mb-4">{actu.title}</h2>
+                <p className="font-basecoat text-gray-800 text-lg whitespace-pre-line">{actu.content}</p>
               </div>
               {actu.image_url && (
                 <div className="md:w-1/2">
@@ -184,36 +202,47 @@ export default function Index() {
       </section>
 
       {/* Slider Réalisations */}
-      <section className="products py-16 bg-white max-w-7xl mx-auto px-4">
-        <h2 className="text-3xl text-center font-semibold text-black">Nos Réalisations</h2>
-        <Slider {...sliderSettings} className="mt-8">
-          {realisations.map((realisation) => (
-            <div key={realisation.id} className="p-4">
-              <Link to={`/realisations/${realisation.id}`}>
-                <div className="bg-gray-200 p-6 rounded-lg shadow-lg text-center hover:shadow-xl transition">
-                  {realisation.image_url ? (
-                    <img
-                      src={realisation.image_url}
-                      alt={realisation.title}
-                      className="w-full h-48 object-cover rounded-md"
-                    />
-                  ) : (
-                    <div className="w-full h-48 bg-gray-300 flex items-center justify-center">
-                      <span className="text-gray-500">Aucune image</span>
-                    </div>
-                  )}
-                  <h3 className="mt-4 text-xl font-semibold">{realisation.title}</h3>
-                  <p className="mt-2 text-gray-700">{realisation.description}</p>
-                  <p className="mt-2 text-gray-700">{realisation.prix} €</p>
-                  <span className="text-indigo-600 hover:text-indigo-800 font-medium mt-2 block">
-                    Voir plus
-                  </span>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </Slider>
-      </section>
+<section className="products py-16 bg-white max-w-7xl mx-auto px-4 relative z-10">
+  <div
+    className="relative z-10 mt-12 text-center -mb-[var(--margin-mobile)] lg:-mb-[var(--margin-desktop)]"
+    style={{ "--margin-desktop": "75px", "--margin-mobile": "20px" }}
+  >
+   <h2 className="font-ogg font-light uppercase text-[35px] md:text-[40px] lg:text-[60px] text-black leading-tight tracking-[5px]">
+  Laisserez-vous tenter ?
+</h2>
+
+  </div>
+
+  <Slider {...sliderSettings} className="mt-8 relative z-0">
+    {realisations.map((realisation) => (
+      <div key={realisation.id} className="p-4">
+        <Link to={`/realisations/${realisation.id}`}>
+          <div className="bg-gray-200 p-6 rounded-lg shadow-lg text-center hover:shadow-xl transition">
+            {realisation.image_url ? (
+              <img
+                src={realisation.image_url}
+                alt={realisation.title}
+                className="w-full h-48 object-cover rounded-md"
+              />
+            ) : (
+              <div className="w-full h-48 bg-gray-300 flex items-center justify-center">
+                <span className="text-gray-500">Aucune image</span>
+              </div>
+            )}
+            <h3 className="font-basecoat mt-4 text-xl font-semibold">{realisation.title}</h3>
+            <p className="font-basecoat mt-2 text-gray-700">{realisation.description}</p>
+            <p className="font-basecoat mt-2 text-gray-700">{realisation.prix} €</p>
+            <span className="font-basecoat text-indigo-600 hover:text-indigo-800 font-medium mt-2 block">
+              Voir plus
+            </span>
+          </div>
+        </Link>
+      </div>
+    ))}
+  </Slider>
+</section>
+
+
     </div>
   );
 }
