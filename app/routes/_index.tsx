@@ -186,8 +186,8 @@ useEffect(() => {
               </Link>
             </li>
             <li>
-              <Link to="news" className="font-basecoat hover:text-yellow-400 transition">
-                News
+              <Link to="actualites" className="font-basecoat hover:text-yellow-400 transition">
+                Actualités
               </Link>
             </li>
           </ul>
