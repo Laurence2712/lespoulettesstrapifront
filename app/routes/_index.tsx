@@ -162,13 +162,13 @@ useEffect(() => {
           scrolled ? "bg-black bg-opacity-70 text-white" : "bg-transparent text-white"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
          {/* Logo */}
 <Link to="/" className="flex items-center">
   <img
-    src="/assets/logo_poulettes.jpg" 
+    src="/assets/logo_t_poulettes.png" 
     alt="Les Poulettes"
-    className="h-20 w-auto" 
+    className="h-[100px] w-auto" 
   />
 </Link>
 
