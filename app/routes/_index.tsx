@@ -3,6 +3,8 @@ import { Link } from '@remix-run/react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline"; // 👈 ajoute cet import en haut avec les autres
+
 
 interface HomepageData {
   image_url?: string;
@@ -93,6 +95,15 @@ export default function Index() {
     fetchRealisations();
   }, []);
 
+
+  const [scrolled, setScrolled] = useState(false);
+
+useEffect(() => {
+  const handleScroll = () => setScrolled(window.scrollY > 50);
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
   // === Fetch Actualités ===
   useEffect(() => {
     async function fetchActualites() {
@@ -145,7 +156,54 @@ export default function Index() {
   className="banner relative bg-contain md:bg-cover bg-center h-[100vh] flex flex-col justify-between text-white p-8"
   style={{ backgroundImage: `url(${homepageData?.image_url})` }}
 >
-  
+  {/* Navigation */}
+      <nav
+        className={`fixed top-0 left-0 w-full z-50 transition-colors duration-500 ${
+          scrolled ? "bg-black bg-opacity-70 text-white" : "bg-transparent text-white"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+         {/* Logo */}
+<Link to="/" className="flex items-center">
+  <img
+    src="/assets/logo_poulettes.jpg" 
+    alt="Les Poulettes"
+    className="h-20 w-auto" 
+  />
+</Link>
+
+
+          {/* Menu */}
+          <ul className="hidden md:flex space-x-8 uppercase font-semibold text-lg">
+            <li>
+              <Link to="apropos" className="font-basecoat hover:text-yellow-400 transition">
+                A propos
+              </Link>
+            </li>
+            <li>
+              <Link to="realisations" className="font-basecoat hover:text-yellow-400 transition">
+                Réalisations
+              </Link>
+            </li>
+            <li>
+              <Link to="news" className="font-basecoat hover:text-yellow-400 transition">
+                News
+              </Link>
+            </li>
+          </ul>
+
+          {/* Panier */}
+          <Link
+            to="/panier"
+            className="relative p-2 hover:text-yellow-400 transition"
+          >
+            <ShoppingCartIcon className="w-6 h-6" />
+            {/* Badge optionnel : */}
+            {/* <span className="absolute -top-1 -right-1 bg-red-500 rounded-full text-xs w-4 h-4 flex items-center justify-center">3</span> */}
+          </Link>
+        </div>
+      </nav>
+
   <div className="banner-content text-center z-10 flex-1 flex flex-col items-center justify-end">
     <h1 className="font-basecoat text-5xl font-bold drop-shadow-lg uppercase">Les trousses</h1>
   </div>
