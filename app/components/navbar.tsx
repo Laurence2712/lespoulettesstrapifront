@@ -21,10 +21,15 @@ export default function NavBar() {
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-[90px]">
         {/* Logo */}
         <Link to="/" className="flex items-center">
+         
           <img
-            src="/assets/logo_t_poulettes.png"
+            src={
+              scrolled
+                ? "/assets/logo_t_poulettes_white.png" 
+                : "/assets/logo_t_poulettes.png" 
+            }
             alt="Les Poulettes"
-            className="h-[100px] w-auto"
+            className="h-[100px] w-auto transition-opacity duration-500"
           />
         </Link>
 
@@ -34,14 +39,7 @@ export default function NavBar() {
             scrolled ? "text-white" : "text-black"
           }`}
         >
-          <li>
-            <Link
-              to="apropos"
-              className="font-basecoat hover:text-yellow-400 transition"
-            >
-              A propos
-            </Link>
-          </li>
+         
           <li>
             <Link
               to="realisations"
@@ -56,6 +54,14 @@ export default function NavBar() {
               className="font-basecoat hover:text-yellow-400 transition"
             >
               Actualités
+            </Link>
+          </li>
+             <li>
+            <Link
+              to="contact"
+              className="font-basecoat hover:text-yellow-400 transition"
+            >
+              Contact
             </Link>
           </li>
         </ul>
