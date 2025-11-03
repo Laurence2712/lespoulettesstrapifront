@@ -57,9 +57,10 @@ export default function Realisations() {
   }, [realisations]);
 
   return (
+    
     <div className="container mx-auto py-8 px-4 max-w-7xl">
       {/* Breadcrumb */}
-      <nav className="mb-8 text-sm">
+      <nav className="font-basecoat mb-8 text-sm">
         <Link to="/" className="text-indigo-600 hover:text-indigo-800 font-medium">
           Accueil
         </Link>
@@ -70,7 +71,7 @@ export default function Realisations() {
       {/* Bouton retour */}
       <Link
         to="/"
-        className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-6 transition"
+        className="font-basecoat inline-flex items-center text-gray-600 hover:text-gray-900 mb-6 transition"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +88,7 @@ export default function Realisations() {
         Retour à l'accueil
       </Link>
 
-      <h1 className="text-4xl font-bold text-center mb-12 text-gray-900">Nos Réalisations</h1>
+      <h1 className="text-4xl md:text-5xl text-center mb-12 text-gray-900 tracking-wide">Découvrez les réalisations</h1>
 
       {loading && <p className="text-center text-xl">Chargement...</p>}
       {error && <p className="text-red-500 text-center">{error}</p>}
@@ -113,13 +114,13 @@ export default function Realisations() {
               )}
             </div>
             <div className="p-4">
-              <h3 className="text-lg font-semibold text-gray-900">{realisation.title}</h3>
-              <p className="text-gray-700 mt-2 line-clamp-3">{realisation.description}</p>
+              <h3 className="font-basecoat text-lg font-semibold text-gray-900">{realisation.title}</h3>
+              <p className="font-basecoat text-gray-700 mt-2 line-clamp-3">{realisation.description}</p>
             </div>
             <div className="p-4 pt-0">
               <Link
                 to={`/realisations/${realisation.id}`}
-                className="inline-flex items-center text-yellow-600 hover:text-yellow-700 font-medium transition"
+                className="font-basecoat inline-flex items-center text-yellow-600 hover:text-yellow-700 font-medium transition"
               >
                 Voir plus
                 <svg

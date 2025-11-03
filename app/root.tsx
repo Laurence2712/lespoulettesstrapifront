@@ -7,6 +7,7 @@ import {
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
 
+import NavBar from "./components/NavBar"; // 🟡 On importe la nav
 import "./tailwind.css";
 
 export const links: LinksFunction = () => [
@@ -24,15 +25,22 @@ export const links: LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
       </head>
-      <body>
-        {children}
+      <body className="font-inter bg-white text-gray-900">
+        {/* 🧭 Barre de navigation visible partout */}
+        <NavBar />
+
+        {/* 📦 Contenu spécifique à chaque page */}
+        <main className="pt-[100px]"> {/* padding pour éviter le chevauchement avec la nav fixe */}
+          {children}
+        </main>
+
         <ScrollRestoration />
         <Scripts />
       </body>

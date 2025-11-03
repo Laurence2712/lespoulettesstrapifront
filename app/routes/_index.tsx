@@ -108,7 +108,9 @@ useEffect(() => {
   useEffect(() => {
     async function fetchActualites() {
       try {
-        const response = await fetch('http://localhost:1337/api/actualites?populate=*');
+const response = await fetch(
+  'http://localhost:1337/api/actualites?populate=*&sort[0]=publishedAt:desc&pagination[limit]=1'
+);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
         if (data?.data) {
@@ -242,6 +244,10 @@ useEffect(() => {
               <div className="md:w-1/2">
                 <h2 className="font-basecoat text-3xl font-semibold text-black mb-4">{actu.title}</h2>
                 <p className="font-basecoat text-gray-800 text-lg whitespace-pre-line">{actu.content}</p>
+                        <Link to={`/actualites/`}>
+
+                            <button type="button" className="font-basecoat uppercase py-2.5 px-5 me-2 mb-2 text-sm font-medium text-indigo-600 mt-2 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Toutes les actualités</button>
+</Link>
               </div>
               {actu.image_url && (
                 <div className="md:w-1/2">
@@ -290,9 +296,8 @@ useEffect(() => {
             <h3 className="font-basecoat mt-4 text-xl font-semibold">{realisation.title}</h3>
             <p className="font-basecoat mt-2 text-gray-700">{realisation.description}</p>
             <p className="font-basecoat mt-2 text-gray-700">{realisation.prix} €</p>
-            <span className="font-basecoat text-indigo-600 hover:text-indigo-800 font-medium mt-2 block">
-              Voir plus
-            </span>
+                  <button type="button" className="font-basecoat uppercase py-2.5 px-5 me-2 mb-2 text-sm font-medium text-indigo-600 mt-2 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Voir plus</button>
+
           </div>
         </Link>
       </div>

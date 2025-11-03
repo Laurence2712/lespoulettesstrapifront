@@ -14,6 +14,7 @@ interface RealisationDetail {
 
 export default function RealisationDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [realisation, setRealisation] = useState<RealisationDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,13 +24,10 @@ export default function RealisationDetail() {
   useEffect(() => {
     async function fetchRealisation() {
       try {
-        // Première étape : récupérer toutes les réalisations
         const response = await fetch('http://localhost:1337/api/realisations?populate=*');
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         
         const data = await response.json();
-        
-        // Trouver la réalisation avec l'id correspondant
         const item = data.data.find((r: any) => r.id === parseInt(id || '0'));
         
         if (!item) {
@@ -68,9 +66,20 @@ export default function RealisationDetail() {
     }
   }, [id]);
 
+  // ✅ Ajout au panier sans alert, avec redirection
   const handleAddToCart = () => {
-    console.log(`Ajout au panier: ${quantity}x ${realisation?.title}`);
-    alert(`${quantity}x "${realisation?.title}" ajouté au panier !`);
+    if (!realisation) return;
+
+    const item: CartItem = {
+      id: realisation.id,
+      title: realisation.title,
+      prix: Number(realisation.prix) || 0,
+      image_url: realisation.images?.[0] || "",
+      quantity: quantity,
+    };
+
+    CartUtils.addToCart(item);
+    navigate('/panier'); // ✅ redirection directe
   };
 
   if (loading) {
@@ -95,16 +104,16 @@ export default function RealisationDetail() {
   return (
     <div className="container mx-auto py-8 px-4 max-w-7xl">
       {/* Breadcrumb */}
-      <nav className="mb-8 text-sm">
+      <nav className="font-basecoat mb-8 text-sm">
         <Link to="/" className="text-indigo-600 hover:text-indigo-800">Accueil</Link>
         <span className="mx-2">/</span>
-        <Link to="/realisations" className="text-indigo-600 hover:text-indigo-800">Réalisations</Link>
+        <Link to="/realisations" className="font-basecoat text-indigo-600 hover:text-indigo-800">Réalisations</Link>
         <span className="mx-2">/</span>
         <span className="text-gray-600">{realisation.title}</span>
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Galerie d'images */}
+        {/* Galerie */}
         <div>
           {realisation.images.length > 0 ? (
             <div>
@@ -144,33 +153,21 @@ export default function RealisationDetail() {
           )}
         </div>
 
-        {/* Détails du produit */}
+        {/* Détails */}
         <div>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">{realisation.title}</h1>
-          
-          <div className="mb-6">
-            <span className="text-3xl font-bold text-yellow-600">
-              {realisation.prix ? `${realisation.prix} €` : 'Prix sur demande'}
-            </span>
-          </div>
+          <p className="text-3xl font-bold text-yellow-600 mb-6">
+            {realisation.prix ? `${realisation.prix} €` : 'Prix sur demande'}
+          </p>
 
           <div className="border-t border-b border-gray-200 py-6 mb-6">
-            <h2 className="text-xl font-semibold mb-3">Description</h2>
-            <p className="text-gray-700 whitespace-pre-line leading-relaxed">
+            <h2 className="font-basecoat text-xl font-semibold mb-3">Description</h2>
+            <p className="font-basecoat text-gray-700 whitespace-pre-line leading-relaxed">
               {realisation.description}
             </p>
           </div>
 
-          {realisation.specifications && (
-            <div className="mb-6">
-              <h2 className="text-xl font-semibold mb-3">Spécifications</h2>
-              <p className="text-gray-700 whitespace-pre-line">
-                {realisation.specifications}
-              </p>
-            </div>
-          )}
-
-          {/* Quantité et Ajout au panier */}
+          {/* Quantité + Bouton */}
           <div className="space-y-4">
             <div className="flex items-center gap-4">
               <label className="font-medium text-gray-700">Quantité:</label>
