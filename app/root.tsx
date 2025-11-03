@@ -7,7 +7,8 @@ import {
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
 
-import NavBar from "./components/NavBar"; // 🟡 On importe la nav
+import NavBar from "./components/NavBar";
+import Footer from "./components/Footer"; // 🟡 On importe le footer
 import "./tailwind.css";
 
 export const links: LinksFunction = () => [
@@ -21,6 +22,11 @@ export const links: LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
+  // Optionnel si tu veux les icônes Font Awesome pour les réseaux du footer :
+  {
+    rel: "stylesheet",
+    href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css",
+  },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -32,13 +38,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="font-inter bg-white text-gray-900">
+
+      <body className="font-inter bg-white text-gray-900 flex flex-col min-h-screen">
+        {/* Barre de navigation */}
         <NavBar />
 
-        <main> {}
-          {children}
-        </main>
+        {/* Contenu principal */}
+        <main className="flex-grow">{children}</main>
 
+        {/* Pied de page global */}
+        <Footer />
+
+        {/* Scripts Remix */}
         <ScrollRestoration />
         <Scripts />
       </body>
