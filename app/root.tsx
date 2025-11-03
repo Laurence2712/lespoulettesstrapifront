@@ -33,11 +33,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="font-inter bg-white text-gray-900">
-        {/* 🧭 Barre de navigation visible partout */}
         <NavBar />
 
-        {/* 📦 Contenu spécifique à chaque page */}
-        <main className="pt-[100px]"> {/* padding pour éviter le chevauchement avec la nav fixe */}
+        <main> {}
           {children}
         </main>
 

@@ -63,7 +63,7 @@ export default function ActualitesPage() {
   }, [actualites]);
 
   return (
-    <div className="container mx-auto py-16 px-4 max-w-7xl">
+    <div className="container mx-auto py-16 px-4 max-w-7xl mt-[70px]">
       {/* Breadcrumb */}
       <nav className="mb-8 text-sm">
         <Link to="/" className="text-yellow-600 hover:text-yellow-800 font-medium">
@@ -74,7 +74,7 @@ export default function ActualitesPage() {
       </nav>
 
       <h1 className="text-4xl md:text-5xl text-center mb-12 text-gray-900 tracking-wide">
-        Toutes nos Actualités
+        Toutes les actualités
       </h1>
 
       {loading && <p className="text-center text-xl">Chargement...</p>}

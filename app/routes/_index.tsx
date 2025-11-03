@@ -3,8 +3,7 @@ import { Link } from '@remix-run/react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { ShoppingCartIcon } from "@heroicons/react/24/outline"; // 👈 ajoute cet import en haut avec les autres
-
+import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 interface HomepageData {
   image_url?: string;
@@ -33,7 +32,17 @@ export default function Index() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // === Fetch Homepage ===
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Scroll pour nav
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Fetch homepage
   useEffect(() => {
     async function fetchHomepageData() {
       try {
@@ -64,11 +73,10 @@ export default function Index() {
         setError('Erreur lors du chargement des données');
       }
     }
-
     fetchHomepageData();
   }, []);
 
-  // === Fetch Réalisations ===
+  // Fetch réalisations
   useEffect(() => {
     async function fetchRealisations() {
       try {
@@ -91,26 +99,16 @@ export default function Index() {
         setLoading(false);
       }
     }
-
     fetchRealisations();
   }, []);
 
-
-  const [scrolled, setScrolled] = useState(false);
-
-useEffect(() => {
-  const handleScroll = () => setScrolled(window.scrollY > 50);
-  window.addEventListener("scroll", handleScroll);
-  return () => window.removeEventListener("scroll", handleScroll);
-}, []);
-
-  // === Fetch Actualités ===
+  // Fetch actualités
   useEffect(() => {
     async function fetchActualites() {
       try {
-const response = await fetch(
-  'http://localhost:1337/api/actualites?populate=*&sort[0]=publishedAt:desc&pagination[limit]=1'
-);
+        const response = await fetch(
+          'http://localhost:1337/api/actualites?populate=*&sort[0]=publishedAt:desc&pagination[limit]=1'
+        );
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
         if (data?.data) {
@@ -130,7 +128,6 @@ const response = await fetch(
         console.error(err);
       }
     }
-
     fetchActualites();
   }, []);
 
@@ -144,7 +141,7 @@ const response = await fetch(
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 2500,
     responsive: [
       { breakpoint: 1024, settings: { slidesToShow: 2 } },
       { breakpoint: 640, settings: { slidesToShow: 1 } },
@@ -153,101 +150,55 @@ const response = await fetch(
 
   return (
     <div>
-      {/* Bannière */}
-     <header
-  className="banner relative bg-contain md:bg-cover bg-center h-[100vh] flex flex-col justify-between text-white p-8"
-  style={{ backgroundImage: `url(${homepageData?.image_url})` }}
->
-  {/* Navigation */}
-      <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-colors duration-500 ${
-          scrolled ? "bg-black bg-opacity-70 text-white" : "bg-transparent text-white"
-        }`}
+     
+      {/* Header Banner */}
+      <header
+        className="banner relative bg-cover bg-center h-[100vh] flex flex-col justify-end text-white p-8"
+        style={{ backgroundImage: `url(${homepageData?.image_url})` }}
       >
-        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
-         {/* Logo */}
-<Link to="/" className="flex items-center">
-  <img
-    src="/assets/logo_t_poulettes.png" 
-    alt="Les Poulettes"
-    className="h-[100px] w-auto" 
-  />
-</Link>
-
-
-          {/* Menu */}
-          <ul className="hidden md:flex space-x-8 uppercase font-semibold text-lg">
-            <li>
-              <Link to="apropos" className="font-basecoat hover:text-yellow-400 transition">
-                A propos
-              </Link>
-            </li>
-            <li>
-              <Link to="realisations" className="font-basecoat hover:text-yellow-400 transition">
-                Réalisations
-              </Link>
-            </li>
-            <li>
-              <Link to="actualites" className="font-basecoat hover:text-yellow-400 transition">
-                Actualités
-              </Link>
-            </li>
-          </ul>
-
-          {/* Panier */}
-          <Link
-            to="/panier"
-            className="relative p-2 hover:text-yellow-400 transition"
-          >
-            <ShoppingCartIcon className="w-6 h-6" />
-            {/* Badge optionnel : */}
-            {/* <span className="absolute -top-1 -right-1 bg-red-500 rounded-full text-xs w-4 h-4 flex items-center justify-center">3</span> */}
-          </Link>
+        <div className="banner-content text-center z-10 flex flex-col items-center justify-end pb-16">
+          <h1 className="font-basecoat text-5xl font-bold drop-shadow-lg uppercase">Les trousses</h1>
+          <div className="mt-6">
+            <Link
+              to="/realisations"
+              className="font-basecoat btn bg-yellow-400 text-black px-6 py-3 rounded transform transition duration-500 hover:scale-105 font-semibold"
+            >
+              Foncez !
+            </Link>
+          </div>
         </div>
-      </nav>
+        <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
+      </header>
 
-  <div className="banner-content text-center z-10 flex-1 flex flex-col items-center justify-end">
-    <h1 className="font-basecoat text-5xl font-bold drop-shadow-lg uppercase">Les trousses</h1>
-  </div>
-
-  <div className="z-10 flex justify-center mt-8">
-    <Link
-      to="/realisations"
-      className="font-basecoat btn bg-yellow-400 text-black px-6 py-3 rounded transform transition duration-500 hover:scale-105 font-semibold"
-    >
-      Foncez !
-    </Link>
-  </div>
-  
-  <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
-</header>
-
-  <div className="banner-content mt-12  text-center z-10 flex-1 flex flex-col items-center justify-end">
-    <p className="font-basecoat text-xl drop-shadow-lg max-w-[750px]">{homepageData?.description}</p>
-  </div>
+      {/* Description */}
+      <div className="banner-content mt-12 text-center z-10 flex flex-col items-center justify-end">
+        <p className="font-basecoat text-xl drop-shadow-lg max-w-[750px]">{homepageData?.description}</p>
+      </div>
 
       {/* Actualités */}
- <div
-  className="relative z-10 mt-12 text-center -mb-[var(--margin-mobile)] lg:-mb-[var(--margin-desktop)]"
-  style={{ "--margin-desktop": "75px", "--margin-mobile": "20px" }}
->
-  <h2 className="font-ogg font-light uppercase text-[35px] md:text-[40px] lg:text-[60px] text-black leading-tight tracking-[5px]">
-    À ne pas manquer
-  </h2>
-</div>
+      <div className="relative z-10 mt-12 text-center -mb-[var(--margin-mobile)] lg:-mb-[var(--margin-desktop)]"
+        style={{ "--margin-desktop": "75px", "--margin-mobile": "20px" } as any}
+      >
+        <h2 className="font-ogg font-light uppercase text-[35px] md:text-[40px] lg:text-[60px] text-black leading-tight tracking-[5px]">
+          À ne pas manquer
+        </h2>
+      </div>
 
       <section className="actualites py-16 bg-yellow-100 max-w-7xl mx-auto px-4 rounded-lg shadow-md mt-12">
-
         {actualites.length > 0 ? (
           actualites.map((actu) => (
             <div key={actu.id} className="flex flex-col md:flex-row items-center gap-8 mb-12">
               <div className="md:w-1/2">
                 <h2 className="font-basecoat text-3xl font-semibold text-black mb-4">{actu.title}</h2>
                 <p className="font-basecoat text-gray-800 text-lg whitespace-pre-line">{actu.content}</p>
-                        <Link to={`/actualites/`}>
-
-                            <button type="button" className="font-basecoat uppercase py-2.5 px-5 me-2 mb-2 text-sm font-medium text-indigo-600 mt-2 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Toutes les actualités</button>
-</Link>
+                <Link to={`/actualites/`}>
+                  <button
+                    type="button"
+                    className="font-basecoat uppercase py-2.5 px-5 me-2 mb-2 text-sm font-medium text-indigo-600 mt-2 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
+                  >
+                    Toutes les actualités
+                  </button>
+                </Link>
               </div>
               {actu.image_url && (
                 <div className="md:w-1/2">
@@ -266,46 +217,47 @@ const response = await fetch(
       </section>
 
       {/* Slider Réalisations */}
-<section className="products py-16 bg-white max-w-7xl mx-auto px-4 relative z-10">
-  <div
-    className="relative z-10 mt-12 text-center -mb-[var(--margin-mobile)] lg:-mb-[var(--margin-desktop)]"
-    style={{ "--margin-desktop": "75px", "--margin-mobile": "20px" }}
-  >
-   <h2 className="font-ogg font-light uppercase text-[35px] md:text-[40px] lg:text-[60px] text-black leading-tight tracking-[5px]">
-  Laisserez-vous tenter ?
-</h2>
+      <section className="products py-16 bg-white max-w-7xl mx-auto px-4 relative z-10">
+        <div
+          className="relative z-10 mt-12 text-center -mb-[var(--margin-mobile)] lg:-mb-[var(--margin-desktop)]"
+          style={{ "--margin-desktop": "75px", "--margin-mobile": "20px" } as any}
+        >
+          <h2 className="font-ogg font-light uppercase text-[28px] sm:text-[35px] md:text-[40px] lg:text-[60px] text-black leading-tight tracking-[3px] sm:tracking-[4px] md:tracking-[5px]">
+            Laisserez-vous tenter ?
+          </h2>
+        </div>
 
-  </div>
-
-  <Slider {...sliderSettings} className="mt-8 relative z-0">
-    {realisations.map((realisation) => (
-      <div key={realisation.id} className="p-4">
-        <Link to={`/realisations/${realisation.id}`}>
-          <div className="bg-gray-200 p-6 rounded-lg shadow-lg text-center hover:shadow-xl transition">
-            {realisation.image_url ? (
-              <img
-                src={realisation.image_url}
-                alt={realisation.title}
-                className="w-full h-48 object-cover rounded-md"
-              />
-            ) : (
-              <div className="w-full h-48 bg-gray-300 flex items-center justify-center">
-                <span className="text-gray-500">Aucune image</span>
-              </div>
-            )}
-            <h3 className="font-basecoat mt-4 text-xl font-semibold">{realisation.title}</h3>
-            <p className="font-basecoat mt-2 text-gray-700">{realisation.description}</p>
-            <p className="font-basecoat mt-2 text-gray-700">{realisation.prix} €</p>
-                  <button type="button" className="font-basecoat uppercase py-2.5 px-5 me-2 mb-2 text-sm font-medium text-indigo-600 mt-2 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Voir plus</button>
-
-          </div>
-        </Link>
-      </div>
-    ))}
-  </Slider>
-</section>
-
-
+        <Slider {...sliderSettings} className="mt-8 relative z-0">
+          {realisations.map((realisation) => (
+            <div key={realisation.id} className="p-2 sm:p-4">
+              <Link to={`/realisations/${realisation.id}`}>
+                <div className="bg-gray-200 p-4 sm:p-6 rounded-lg shadow-lg text-center hover:shadow-xl transition">
+                  {realisation.image_url ? (
+                    <img
+                      src={realisation.image_url}
+                      alt={realisation.title}
+                      className="w-full h-40 sm:h-48 md:h-52 object-cover rounded-md"
+                    />
+                  ) : (
+                    <div className="w-full h-40 sm:h-48 md:h-52 bg-gray-300 flex items-center justify-center">
+                      <span className="text-gray-500">Aucune image</span>
+                    </div>
+                  )}
+                  <h3 className="font-basecoat mt-3 sm:mt-4 text-lg sm:text-xl font-semibold">{realisation.title}</h3>
+                  <p className="font-basecoat mt-1 sm:mt-2 text-gray-700 text-sm sm:text-base">{realisation.description}</p>
+                  <p className="font-basecoat mt-1 sm:mt-2 text-gray-700 font-medium">{realisation.prix} €</p>
+                  <button
+                    type="button"
+                    className="font-basecoat uppercase py-2 px-4 sm:py-2.5 sm:px-5 mt-2 text-sm sm:text-base font-medium text-indigo-600 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 transition"
+                  >
+                    Voir plus
+                  </button>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </Slider>
+      </section>
     </div>
   );
 }
