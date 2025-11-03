@@ -42,7 +42,7 @@ export default function Panier() {
   }
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-6xl">
+    <div className="container mx-auto py-8 px-4 max-w-6xl mt-[70px]">
       <nav className="mb-8 text-sm">
         <Link to="/" className="text-indigo-600 hover:text-indigo-800">Accueil</Link>
         <span className="mx-2">/</span>
@@ -211,7 +211,7 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
   }
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-3xl">
+    <div className="container mx-auto py-8 px-4 max-w-3xl mt-[70px]">
       <button
         onClick={onBack}
         className="text-indigo-600 hover:text-indigo-800 mb-6 flex items-center"
