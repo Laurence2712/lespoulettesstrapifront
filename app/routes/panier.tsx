@@ -162,7 +162,7 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
     setError('');
 
     try {
-      const response = await fetch('http://localhost:1337/api/commandes', {
+      const response = await fetch('http://lespoulettesstrapi.onrender.com/api/commandes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

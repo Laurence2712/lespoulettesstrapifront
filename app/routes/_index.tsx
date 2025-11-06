@@ -46,15 +46,15 @@ export default function Index() {
   useEffect(() => {
     async function fetchHomepageData() {
       try {
-        const response = await fetch('http://localhost:1337/api/homepages?populate=*');
+        const response = await fetch('https://lespoulettesstrapi.onrender.com/api/homepages?populate=*');
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
         if (data?.data?.length) {
           const homepage = data.data[0];
           const bannerImageUrl = homepage.banner_image?.formats?.large?.url
-            ? `http://localhost:1337${homepage.banner_image.formats.large.url}`
+            ? `http://lespoulettesstrapi.onrender.com${homepage.banner_image.formats.large.url}`
             : homepage.banner_image?.url
-            ? `http://localhost:1337${homepage.banner_image.url}`
+            ? `http://lespoulettesstrapi.onrender.com${homepage.banner_image.url}`
             : '';
           let descriptionText = '';
           if (Array.isArray(homepage.description)) {
@@ -80,14 +80,14 @@ export default function Index() {
   useEffect(() => {
     async function fetchRealisations() {
       try {
-        const response = await fetch('http://localhost:1337/api/realisations?populate=*');
+        const response = await fetch('http://lespoulettesstrapi.onrender.com/api/realisations?populate=*');
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
         if (data?.data) {
           const realisationsData: Realisation[] = data.data.map((item: any) => ({
             id: item.id,
             title: item.Titre || 'Titre indisponible',
-            image_url: item.Images?.[0]?.url ? `http://localhost:1337${item.Images[0].url}` : undefined,
+            image_url: item.Images?.[0]?.url ? `http://lespoulettesstrapi.onrender.com${item.Images[0].url}` : undefined,
             description: item.Description || 'Description indisponible',
             prix: item.Prix || 'Prix indisponible',
           }));
@@ -107,7 +107,7 @@ export default function Index() {
     async function fetchActualites() {
       try {
         const response = await fetch(
-          'http://localhost:1337/api/actualites?populate=*&sort[0]=publishedAt:desc&pagination[limit]=1'
+          'http://lespoulettesstrapi.onrender.com/api/actualites?populate=*&sort[0]=publishedAt:desc&pagination[limit]=1'
         );
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
@@ -117,9 +117,9 @@ export default function Index() {
             title: item.Title || 'Titre indisponible',
             content: item.content || '',
             image_url: item.image?.formats?.large?.url
-              ? `http://localhost:1337${item.image.formats.large.url}`
+              ? `http://lespoulettesstrapi.onrender.com${item.image.formats.large.url}`
               : item.image?.url
-              ? `http://localhost:1337${item.image.url}`
+              ? `http://lespoulettesstrapi.onrender.com${item.image.url}`
               : '',
           }));
           setActualites(actualitesData);

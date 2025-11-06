@@ -24,7 +24,7 @@ export default function RealisationDetail() {
   useEffect(() => {
     async function fetchRealisation() {
       try {
-        const response = await fetch('http://localhost:1337/api/realisations?populate=*');
+const response = await fetch(`${STRAPI_URL}/api/realisations?populate=*`);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         
         const data = await response.json();
@@ -37,7 +37,7 @@ export default function RealisationDetail() {
         }
 
         const imagesUrls = item.Images?.map((img: any) => 
-          `http://localhost:1337${img.url}`
+          `http://lespoulettesstrapi.onrender.com${img.url}`
         ) || [];
 
         setRealisation({

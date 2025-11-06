@@ -4,10 +4,11 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "remix vite:build",
     "dev": "remix vite:dev",
-    "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
+    "build": "remix vite:build",
+    "vercel-build": "remix vite:build",
     "start": "remix-serve ./build/server/index.js",
+    "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "typecheck": "tsc"
   },
   "dependencies": {
@@ -16,6 +17,7 @@
     "@remix-run/react": "^2.16.0",
     "@remix-run/serve": "^2.16.0",
     "axios": "^1.8.3",
+    "framer-motion": "^12.23.24",
     "gsap": "^3.12.7",
     "isbot": "^4.1.0",
     "react": "^18.2.0",
