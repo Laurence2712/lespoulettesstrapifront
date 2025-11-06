@@ -37,7 +37,7 @@ const response = await fetch(`${STRAPI_URL}/api/realisations?populate=*`);
         }
 
         const imagesUrls = item.Images?.map((img: any) => 
-          `http://lespoulettesstrapi.onrender.com${img.url}`
+          `https://lespoulettesstrapi.onrender.com${img.url}`
         ) || [];
 
         setRealisation({

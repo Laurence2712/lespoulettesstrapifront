@@ -103,7 +103,7 @@ export default function Realisations() {
             <div className="relative">
               {realisation.image_url ? (
                 <img
-                  src={`http://lespoulettesstrapi.onrender.com${realisation.image_url}`}
+                  src={`https://lespoulettesstrapi.onrender.com${realisation.image_url}`}
                   alt={realisation.title}
                   className="w-full h-48 object-cover"
                 />
