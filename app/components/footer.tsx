@@ -51,7 +51,7 @@ export default function Footer() {
           <ul className="space-y-3 text-gray-400 text-sm">
             <li className="flex items-center space-x-2">
               <EnvelopeIcon className="w-5 h-5 text-yellow-400" />
-              <span>contact@lespoulettes.be</span>
+              <span>lespoulettes.benin@gmail.com</span>
             </li>
             
             <li className="flex items-center space-x-2">
