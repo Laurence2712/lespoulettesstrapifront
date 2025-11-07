@@ -7,8 +7,8 @@ import {
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
 
-import NavBar from "./components/NavBar";
-import Footer from "./components/Footer"; // 🟡 On importe le footer
+import NavBar from "./components/navbar";
+import Footer from "./components/footer";
 import "./tailwind.css";
 
 export const links: LinksFunction = () => [
