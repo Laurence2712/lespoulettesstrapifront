@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from '@remix-run/react';
 import { gsap } from 'gsap';
+import { STRAPI_URL, getApiUrl } from '../utils/env';
 
 interface Realisation {
   id: number;
@@ -17,7 +18,7 @@ export default function Realisations() {
   useEffect(() => {
     async function fetchRealisations() {
       try {
-        const response = await fetch('https://lespoulettesstrapi.onrender.com/api/realisations?populate=*');
+        const response = await fetch(getApiUrl('/api/realisations?populate=*'));
         if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
         const data = await response.json();
 
@@ -103,7 +104,7 @@ export default function Realisations() {
             <div className="relative">
               {realisation.image_url ? (
                 <img
-                  src={`https://lespoulettesstrapi.onrender.com${realisation.image_url}`}
+                  src={`${STRAPI_URL}${realisation.image_url}`}
                   alt={realisation.title}
                   className="w-full h-48 object-cover"
                 />

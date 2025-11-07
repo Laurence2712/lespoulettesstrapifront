@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from '@remix-run/react';
-import { CartUtils, CartItem } from '../utils/cart'; 
+import { CartUtils, CartItem } from '../utils/cart';
+import { getApiUrl } from '../utils/env'; 
 
 export default function Panier() {
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -162,7 +163,7 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
     setError('');
 
     try {
-      const response = await fetch('https://lespoulettesstrapi.onrender.com/api/commandes', {
+      const response = await fetch(getApiUrl('/api/commandes'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
