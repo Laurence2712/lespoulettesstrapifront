@@ -9,6 +9,13 @@ export interface CartItem {
   image_url?: string;
 }
 
+// Fonction pour déclencher l'événement de mise à jour du panier
+const triggerCartUpdate = () => {
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('cartUpdated'));
+  }
+};
+
 export const CartUtils = {
   // Récupérer le panier
   getCart: (): CartItem[] => {
@@ -18,17 +25,18 @@ export const CartUtils = {
   },
 
   // Ajouter au panier
-  addToCart: (item: Omit<CartItem, 'quantity'>, quantity: number = 1) => {
+  addToCart: (item: CartItem) => {
     const cart = CartUtils.getCart();
     const existingItem = cart.find(i => i.id === item.id);
 
     if (existingItem) {
-      existingItem.quantity += quantity;
+      existingItem.quantity += item.quantity;
     } else {
-      cart.push({ ...item, quantity });
+      cart.push(item);
     }
 
     localStorage.setItem('cart', JSON.stringify(cart));
+    triggerCartUpdate();
     return cart;
   },
 
@@ -36,6 +44,7 @@ export const CartUtils = {
   removeFromCart: (id: number) => {
     const cart = CartUtils.getCart().filter(item => item.id !== id);
     localStorage.setItem('cart', JSON.stringify(cart));
+    triggerCartUpdate();
     return cart;
   },
 
@@ -50,12 +59,14 @@ export const CartUtils = {
       }
     }
     localStorage.setItem('cart', JSON.stringify(cart));
+    triggerCartUpdate();
     return cart;
   },
 
   // Vider le panier
   clearCart: () => {
     localStorage.removeItem('cart');
+    triggerCartUpdate();
     return [];
   },
 

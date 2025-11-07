@@ -1,15 +1,37 @@
 import { Link } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { CartUtils } from "../utils/cart";
 
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 30);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Mettre à jour le compteur du panier
+  useEffect(() => {
+    const updateCartCount = () => {
+      const cart = CartUtils.getCart();
+      setCartCount(CartUtils.getItemCount(cart));
+    };
+
+    updateCartCount();
+
+    // Écouter les changements du localStorage
+    window.addEventListener('storage', updateCartCount);
+    // Écouter un événement personnalisé pour les changements locaux
+    window.addEventListener('cartUpdated', updateCartCount);
+
+    return () => {
+      window.removeEventListener('storage', updateCartCount);
+      window.removeEventListener('cartUpdated', updateCartCount);
+    };
   }, []);
 
   return (
@@ -70,11 +92,14 @@ export default function NavBar() {
         <div className="flex items-center space-x-4">
           <Link
             to="/panier"
-            className={`relative p-2 hover:text-yellow-400 transition ${
-              scrolled ? "text-white" : "text-black"
-            }`}
+            className="relative p-2 hover:text-yellow-400 transition text-white"
           >
             <ShoppingCartIcon className="w-6 h-6" />
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-yellow-400 text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {cartCount}
+              </span>
+            )}
           </Link>
 
           {/* Burger menu mobile */}
