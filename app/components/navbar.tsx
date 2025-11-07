@@ -15,31 +15,21 @@ export default function NavBar() {
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-colors duration-500 ${
-        scrolled ? "bg-black bg-opacity-90 text-white" : "bg-transparent text-black"
-      }`}
+        scrolled ? "bg-black bg-opacity-90" : "bg-transparent"
+      } text-white`}
     >
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-[90px]">
         {/* Logo */}
         <Link to="/" className="flex items-center">
-         
           <img
-            src={
-              scrolled
-                ? "/assets/logo_t_poulettes_white.png" 
-                : "/assets/logo_t_poulettes.png" 
-            }
+            src="/assets/logo_t_poulettes_white.png"
             alt="Les Poulettes"
             className="h-[100px] w-auto transition-opacity duration-500"
           />
         </Link>
 
         {/* Menu desktop */}
-        <ul
-          className={`hidden md:flex space-x-8 uppercase font-semibold text-lg transition-colors duration-500 ${
-            scrolled ? "text-white" : "text-black"
-          }`}
-        >
-         
+        <ul className="hidden md:flex space-x-8 uppercase font-semibold text-lg text-white">
           <li>
             <Link
               to="realisations"
@@ -56,7 +46,7 @@ export default function NavBar() {
               Actualités
             </Link>
           </li>
-             <li>
+          <li>
             <Link
               to="contact"
               className="font-basecoat hover:text-yellow-400 transition"
@@ -70,9 +60,7 @@ export default function NavBar() {
         <div className="flex items-center space-x-4">
           <Link
             to="/panier"
-            className={`relative p-2 hover:text-yellow-400 transition ${
-              scrolled ? "text-white" : "text-black"
-            }`}
+            className="relative p-2 hover:text-yellow-400 transition text-white"
           >
             <ShoppingCartIcon className="w-6 h-6" />
           </Link>
@@ -85,11 +73,7 @@ export default function NavBar() {
             {menuOpen ? (
               <XMarkIcon className="w-6 h-6 text-yellow-400" />
             ) : (
-              <Bars3Icon
-                className={`w-6 h-6 transition-colors duration-300 ${
-                  scrolled ? "text-white" : "text-black"
-                }`}
-              />
+              <Bars3Icon className="w-6 h-6 text-white transition-colors duration-300" />
             )}
           </button>
         </div>
