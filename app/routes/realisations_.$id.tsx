@@ -24,20 +24,20 @@ export default function RealisationDetail() {
   useEffect(() => {
     async function fetchRealisation() {
       try {
-const response = await fetch(`${STRAPI_URL}/api/realisations?populate=*`);
+        const response = await fetch(`https://lespoulettesstrapi.onrender.com/api/realisations?populate=*`);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        
+
         const data = await response.json();
         const item = data.data.find((r: any) => r.id === parseInt(id || '0'));
-        
+
         if (!item) {
           setError('Réalisation introuvable');
           setLoading(false);
           return;
         }
 
-        const imagesUrls = item.Images?.map((img: any) => 
-          `http://lespoulettesstrapi.onrender.com${img.url}`
+        const imagesUrls = item.Images?.map((img: any) =>
+          `https://lespoulettesstrapi.onrender.com${img.url}`
         ) || [];
 
         setRealisation({
