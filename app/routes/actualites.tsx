@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "@remix-run/react";
 import { gsap } from "gsap";
+import { apiEndpoints, getImageUrl } from "../config/api";
 
 interface Actualite {
   id: number;
@@ -19,9 +20,7 @@ export default function ActualitesPage() {
   useEffect(() => {
     async function fetchActualites() {
       try {
-        const response = await fetch(
-          'http://lespoulettesstrapi.onrender.com/api/actualites?populate=*'
-        );
+        const response = await fetch(apiEndpoints.actualites);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
         if (data?.data) {
@@ -30,9 +29,9 @@ export default function ActualitesPage() {
             title: item.Title || 'Titre indisponible',
             content: item.content || '',
             image_url: item.image?.formats?.large?.url
-              ? `http://lespoulettesstrapi.onrender.com${item.image.formats.large.url}`
+              ? getImageUrl(item.image.formats.large.url)
               : item.image?.url
-              ? `http://lespoulettesstrapi.onrender.com${item.image.url}`
+              ? getImageUrl(item.image.url)
               : '',
             date: item.publishedAt || item.date || '',
           }));

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from '@remix-run/react';
-import { CartUtils, CartItem } from '../utils/cart'; 
+import { CartUtils, CartItem } from '../utils/cart';
+import { apiEndpoints, getImageUrl } from '../config/api'; 
 
 interface RealisationDetail {
   id: number;
@@ -24,7 +25,7 @@ export default function RealisationDetail() {
   useEffect(() => {
     async function fetchRealisation() {
       try {
-        const response = await fetch(`https://lespoulettesstrapi.onrender.com/api/realisations?populate=*`);
+        const response = await fetch(apiEndpoints.realisations);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
         const data = await response.json();
@@ -37,7 +38,7 @@ export default function RealisationDetail() {
         }
 
         const imagesUrls = item.Images?.map((img: any) =>
-          `https://lespoulettesstrapi.onrender.com${img.url}`
+          getImageUrl(img.url)
         ) || [];
 
         setRealisation({
