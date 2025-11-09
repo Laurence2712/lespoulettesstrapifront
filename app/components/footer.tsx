@@ -17,7 +17,7 @@ export default function Footer() {
               className="h-[100px] w-auto"
             />
           </Link>
-          <p className="mt-4 text-gray-400 text-sm leading-relaxed font-basecoat">
+          <p className="text-gray-400 text-sm leading-relaxed font-basecoat">
             Des trousses faites avec amour et passion, à la main, pour un style unique et durable.
           </p>
         </div>
