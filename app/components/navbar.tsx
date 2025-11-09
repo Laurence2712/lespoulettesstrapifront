@@ -1,9 +1,11 @@
-import { Link } from "@remix-run/react";
+import { Link, useLocation } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { CartUtils } from "../utils/cart";
 
 export default function NavBar() {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
@@ -34,24 +36,34 @@ export default function NavBar() {
     };
   }, []);
 
+  // Déterminer les couleurs selon la page et le scroll
+  const navBgColor = scrolled
+    ? "bg-black bg-opacity-90"
+    : isHomePage
+      ? "bg-transparent"
+      : "bg-white";
+
+  const textColor = scrolled || isHomePage ? "text-white" : "text-black";
+  const logoSrc = scrolled || isHomePage
+    ? "/assets/logo_t_poulettes_white.png"
+    : "/assets/logo_t_poulettes.png";
+
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-colors duration-500 ${
-        scrolled ? "bg-black bg-opacity-90" : "bg-transparent"
-      } text-white`}
+      className={`fixed top-0 left-0 w-full z-50 transition-colors duration-500 ${navBgColor} ${textColor}`}
     >
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-[90px]">
         {/* Logo */}
         <Link to="/" className="flex items-center">
           <img
-            src="/assets/logo_t_poulettes_white.png"
+            src={logoSrc}
             alt="Les Poulettes"
             className="h-[100px] w-auto transition-opacity duration-500"
           />
         </Link>
 
         {/* Menu desktop */}
-        <ul className="hidden md:flex space-x-8 uppercase font-semibold text-lg text-white">
+        <ul className={`hidden md:flex space-x-8 uppercase font-semibold text-lg ${textColor}`}>
           <li>
             <Link
               to="realisations"
@@ -82,7 +94,7 @@ export default function NavBar() {
         <div className="flex items-center space-x-4">
           <Link
             to="/panier"
-            className="relative p-2 hover:text-yellow-400 transition text-white"
+            className={`relative p-2 hover:text-yellow-400 transition ${textColor}`}
           >
             <ShoppingCartIcon className="w-6 h-6" />
             {cartCount > 0 && (
@@ -100,7 +112,7 @@ export default function NavBar() {
             {menuOpen ? (
               <XMarkIcon className="w-6 h-6 text-yellow-400" />
             ) : (
-              <Bars3Icon className="w-6 h-6 text-white transition-colors duration-300" />
+              <Bars3Icon className={`w-6 h-6 ${textColor} transition-colors duration-300`} />
             )}
           </button>
         </div>
