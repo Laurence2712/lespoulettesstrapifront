@@ -38,7 +38,7 @@ export default function Contact() {
               width="100%"
               height="250"
               style={{ border: 0 }}
-              allowFullScreen=""
+              allowFullScreen
               loading="lazy"
             ></iframe>
           </motion.div>
@@ -75,7 +75,7 @@ export default function Contact() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
               <textarea
                 placeholder="Écrivez votre message..."
-                rows="5"
+                rows={5}
                 className="w-full rounded-xl border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-yellow-400 outline-none transition"
                 required
               ></textarea>
