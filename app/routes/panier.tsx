@@ -193,7 +193,7 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
 
   if (success) {
     return (
-      <div className="container mx-auto py-16 px-4 text-center max-w-2xl">
+      <div className="container mx-auto py-16 px-4 text-center max-w-2xl mt-[70px]">
         <div className="bg-green-50 border-2 border-green-500 rounded-lg p-8">
           <div className="text-6xl mb-4">✓</div>
           <h1 className="text-3xl font-bold text-green-800 mb-4">Commande envoyée !</h1>
