@@ -163,29 +163,40 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
     setError('');
 
     try {
+      const payload = {
+        data: {
+          nom: formData.nom,
+          email: formData.email,
+          telephone: formData.telephone,
+          adresse: formData.adresse,
+          articles: JSON.stringify(cart), // Strapi n'accepte pas les objets complexes, on stringify
+          total: total,
+          statut: 'en_attente',
+          notes: formData.notes
+        }
+      };
+
+      console.log('Envoi de la commande:', payload);
+
       const response = await fetch(apiEndpoints.commandes, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          data: {
-            nom: formData.nom,
-            email: formData.email,
-            telephone: formData.telephone,
-            adresse: formData.adresse,
-            articles: cart,
-            total: total,
-            statut: 'en_attente',
-            notes: formData.notes
-          }
-        })
+        body: JSON.stringify(payload)
       });
 
-      if (!response.ok) throw new Error('Erreur lors de l\'envoi de la commande');
+      const responseData = await response.json();
+      console.log('Réponse de l\'API:', responseData);
+
+      if (!response.ok) {
+        const errorMessage = responseData?.error?.message || 'Erreur lors de l\'envoi de la commande';
+        throw new Error(errorMessage);
+      }
 
       CartUtils.clearCart();
       setSuccess(true);
     } catch (err: any) {
-      setError(err.message);
+      console.error('Erreur complète:', err);
+      setError(err.message || 'Erreur inconnue');
     } finally {
       setLoading(false);
     }
