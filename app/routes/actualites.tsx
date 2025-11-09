@@ -20,7 +20,7 @@ export default function ActualitesPage() {
     async function fetchActualites() {
       try {
         const response = await fetch(
-          'http://lespoulettesstrapi.onrender.com/api/actualites?populate=*'
+          'https://lespoulettesstrapi.onrender.com/api/actualites?populate=*'
         );
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
@@ -30,9 +30,9 @@ export default function ActualitesPage() {
             title: item.Title || 'Titre indisponible',
             content: item.content || '',
             image_url: item.image?.formats?.large?.url
-              ? `http://lespoulettesstrapi.onrender.com${item.image.formats.large.url}`
+              ? `https://lespoulettesstrapi.onrender.com${item.image.formats.large.url}`
               : item.image?.url
-              ? `http://lespoulettesstrapi.onrender.com${item.image.url}`
+              ? `https://lespoulettesstrapi.onrender.com${item.image.url}`
               : '',
             date: item.publishedAt || item.date || '',
           }));
