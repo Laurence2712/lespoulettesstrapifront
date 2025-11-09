@@ -3,7 +3,7 @@ import { Link } from '@remix-run/react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { apiEndpoints, getImageUrl } from '../config/api';
 
 interface HomepageData {
   image_url?: string;
@@ -46,15 +46,15 @@ export default function Index() {
   useEffect(() => {
     async function fetchHomepageData() {
       try {
-        const response = await fetch('https://lespoulettesstrapi.onrender.com/api/homepages?populate=*');
+        const response = await fetch(apiEndpoints.homepages);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
         if (data?.data?.length) {
           const homepage = data.data[0];
           const bannerImageUrl = homepage.banner_image?.formats?.large?.url
-            ? `https://lespoulettesstrapi.onrender.com${homepage.banner_image.formats.large.url}`
+            ? getImageUrl(homepage.banner_image.formats.large.url)
             : homepage.banner_image?.url
-            ? `https://lespoulettesstrapi.onrender.com${homepage.banner_image.url}`
+            ? getImageUrl(homepage.banner_image.url)
             : '';
           let descriptionText = '';
           if (Array.isArray(homepage.description)) {
@@ -80,14 +80,14 @@ export default function Index() {
   useEffect(() => {
     async function fetchRealisations() {
       try {
-        const response = await fetch('https://lespoulettesstrapi.onrender.com/api/realisations?populate=*');
+        const response = await fetch(apiEndpoints.realisations);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
         if (data?.data) {
           const realisationsData: Realisation[] = data.data.map((item: any) => ({
             id: item.id,
             title: item.Titre || 'Titre indisponible',
-            image_url: item.Images?.[0]?.url ? `https://lespoulettesstrapi.onrender.com${item.Images[0].url}` : undefined,
+            image_url: item.Images?.[0]?.url ? getImageUrl(item.Images[0].url) : undefined,
             description: item.Description || 'Description indisponible',
             prix: item.Prix || 'Prix indisponible',
           }));
@@ -106,9 +106,7 @@ export default function Index() {
   useEffect(() => {
     async function fetchActualites() {
       try {
-        const response = await fetch(
-          'https://lespoulettesstrapi.onrender.com/api/actualites?populate=*&sort[0]=publishedAt:desc&pagination[limit]=1'
-        );
+        const response = await fetch(apiEndpoints.latestActualite);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
         if (data?.data) {
@@ -117,9 +115,9 @@ export default function Index() {
             title: item.Title || 'Titre indisponible',
             content: item.content || '',
             image_url: item.image?.formats?.large?.url
-              ? `https://lespoulettesstrapi.onrender.com${item.image.formats.large.url}`
+              ? getImageUrl(item.image.formats.large.url)
               : item.image?.url
-              ? `https://lespoulettesstrapi.onrender.com${item.image.url}`
+              ? getImageUrl(item.image.url)
               : '',
           }));
           setActualites(actualitesData);
