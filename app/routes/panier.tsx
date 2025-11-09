@@ -165,11 +165,11 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
     try {
       const payload = {
         data: {
-          nom: formData.nom,
-          email: formData.email,
-          telephone: formData.telephone,
+          Nom: formData.nom,
+          Email: formData.email,
+          Telephone: formData.telephone,
           adresse: formData.adresse,
-          articles: JSON.stringify(cart), // Strapi n'accepte pas les objets complexes, on stringify
+          articles: JSON.stringify(cart),
           total: total,
           statut: 'en_attente',
           notes: formData.notes
