@@ -1,0 +1,26 @@
+========================================
+INSTRUCTIONS POUR CONFIGURER L'ENVOI D'EMAIL
+========================================
+
+1. Dans votre projet BACKEND (lespoulettesstrapi), créez ce fichier :
+
+   src/api/commande/content-types/commande/lifecycles.js
+
+2. Copiez-y le contenu du fichier BACKEND_FIX_lifecycles.js
+
+3. Le fichier BACKEND_FIX_lifecycles.js se trouve dans ce dépôt frontend à la racine.
+
+4. Sur votre Mac, vous pouvez le copier comme ceci :
+
+   # Depuis le dossier lespoulettesstrapifront
+   cat BACKEND_FIX_lifecycles.js
+
+   # Puis copiez tout le contenu et collez-le dans votre backend
+
+5. Ensuite dans le backend :
+   - Vérifiez que .env contient SENDGRID_API_KEY=votre_cle
+   - Installez le provider : npm install @strapi/provider-email-sendgrid
+   - Push sur GitHub : git push origin main
+   - Render redéploiera automatiquement
+
+========================================
