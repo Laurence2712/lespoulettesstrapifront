@@ -236,9 +236,24 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
       <div className="bg-gray-100 rounded-lg p-6 mb-8">
         <h2 className="font-bold mb-2">Récapitulatif</h2>
         <p className="text-sm text-gray-600 mb-4">{cart.length} article(s) - Total: {total.toFixed(2)} €</p>
-        <p className="text-sm">
-          Après validation, nous vous contacterons pour confirmer la commande et convenir du mode de paiement et de livraison.
+        <p className="text-sm mb-4">
+          Après validation, nous vous contacterons pour confirmer la commande et convenir du mode de livraison.
         </p>
+      </div>
+
+      <div className="bg-yellow-50 border-2 border-yellow-400 rounded-lg p-6 mb-8">
+        <div className="flex items-start gap-3">
+          <span className="text-3xl">💳</span>
+          <div>
+            <h3 className="font-bold text-yellow-900 mb-2">Instructions de paiement</h3>
+            <ul className="text-sm text-yellow-900 space-y-2">
+              <li>✅ Vous recevrez un email de confirmation avec un <strong>QR Code Mobile Money</strong></li>
+              <li>✅ Scannez le QR Code avec votre application mobile (MTN, Moov, etc.)</li>
+              <li>✅ Effectuez le paiement de <strong>{total.toFixed(2)} FCFA</strong></li>
+              <li>✅ Votre commande sera validée après réception du paiement</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
