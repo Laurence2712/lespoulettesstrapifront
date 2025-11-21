@@ -245,7 +245,7 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
 
       <div className="bg-gray-100 rounded-lg p-6 mb-8">
         <h2 className="font-bold mb-2">Récapitulatif</h2>
-        <p className="text-sm text-gray-600 mb-4">{cart.length} article(s) - Total: {total.toFixed(2)} €</p>
+        <p className="text-sm text-gray-600 mb-4">{cart.reduce((sum, item) => sum + item.quantity, 0)} article(s) - Total: {total.toFixed(2)} €</p>
         <p className="text-sm mb-4">
           Après validation, nous vous contacterons pour confirmer la commande et convenir du mode de livraison.
         </p>
