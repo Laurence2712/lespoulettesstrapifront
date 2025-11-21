@@ -156,9 +156,18 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Empêcher les double soumissions
+    if (isSubmitting) {
+      console.log('Soumission déjà en cours, ignorée');
+      return;
+    }
+
+    setIsSubmitting(true);
     setLoading(true);
     setError('');
 
@@ -197,6 +206,7 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
     } catch (err: any) {
       console.error('Erreur complète:', err);
       setError(err.message || 'Erreur inconnue');
+      setIsSubmitting(false); // Réinitialiser en cas d'erreur pour permettre un nouvel essai
     } finally {
       setLoading(false);
     }
@@ -320,8 +330,8 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
 
         <button
           type="submit"
-          disabled={loading}
-          className="w-full bg-yellow-400 text-black py-4 rounded-lg font-semibold hover:bg-yellow-500 transition disabled:opacity-50"
+          disabled={loading || isSubmitting}
+          className="w-full bg-yellow-400 text-black py-4 rounded-lg font-semibold hover:bg-yellow-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? 'Envoi en cours...' : 'Envoyer la commande'}
         </button>
