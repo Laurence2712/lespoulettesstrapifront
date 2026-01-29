@@ -24,8 +24,7 @@ export default function Footer() {
 
         {/* Colonne 2 : Navigation */}
         <div>
-          <h3 className="text-lg font-semibold mb-4 uppercase font-basecoat">Navigation</h3>
-          <ul className="space-y-2 text-gray-400">
+          <ul className="space-y-2 text-gray-400 font-basecoat">
            
             <li>
               <Link to="/realisations" className="hover:text-yellow-400 transition">
