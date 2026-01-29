@@ -33,11 +33,11 @@ export default function NavBar() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center" onClick={handleLinkClick}>
-            <img
-              src="/assets/logo_t_poulettes.png"
-              alt="Les Poulettes"
-              className="h-10 md:h-12 w-auto"
-            />
+           <img
+  src="/assets/logo_t_poulettes.png"
+  alt="Les Poulettes"
+  className="h-14 sm:h-16 md:h-20 w-auto"
+/>
           </Link>
 
           {/* Menu Desktop */}
