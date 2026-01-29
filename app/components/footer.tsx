@@ -24,6 +24,7 @@ export default function Footer() {
 
         {/* Colonne 2 : Navigation */}
         <div>
+          <h3 className="text-lg font-semibold mb-4 uppercase font-basecoat">Navigation</h3>
           <ul className="space-y-2 text-gray-400 font-basecoat">
            
             <li>
@@ -47,7 +48,7 @@ export default function Footer() {
         {/* Colonne 3 : Contact */}
         <div>
           <h3 className="text-lg font-semibold mb-4 uppercase font-basecoat">Contact</h3>
-          <ul className="space-y-3 text-gray-400 text-sm">
+          <ul className="space-y-3 text-gray-400 text-sm font-basecoat">
             <li className="flex items-center space-x-2">
               <EnvelopeIcon className="w-5 h-5 text-yellow-400" />
               <span>lespoulettes.benin@gmail.com</span>
@@ -63,7 +64,7 @@ export default function Footer() {
         {/* Colonne 4 : Réseaux sociaux */}
         <div>
           <h3 className="text-lg font-semibold mb-4 uppercase font-basecoat">Suivez-nous</h3>
-          <div className="flex space-x-4">
+          <div className="flex space-x-4 font-basecoat">
             <a
               href="https://www.facebook.com/lespoulettescouture"
               target="_blank"
