@@ -135,7 +135,7 @@ const sliderSettings = {
   dots: true,
   infinite: true,
   speed: 500,
-  slidesToShow: 2.5,  // ✅ Moins de slides = plus larges
+  slidesToShow: 2.5,
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 3000,
@@ -146,17 +146,16 @@ const sliderSettings = {
     { 
       breakpoint: 1024,
       settings: { 
-        slidesToShow: 1.8,  // ✅ 1 slide presque complet + aperçu
+        slidesToShow: 1.8,
         slidesToScroll: 1,
       } 
     },
     { 
       breakpoint: 640,
       settings: { 
-        slidesToShow: 1,
+        slidesToShow: 1.5,  // ✅ 1 slide complet + un demi
         slidesToScroll: 1,
-        centerMode: true,
-        centerPadding: '40px',  // ✅ Réduit pour slide plus large
+        centerMode: false,
       } 
     },
   ],
