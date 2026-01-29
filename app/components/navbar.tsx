@@ -1,137 +1,171 @@
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "@remix-run/react";
-import { useEffect, useState } from "react";
-import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { CartUtils } from "../utils/cart";
 
 export default function NavBar() {
-  const location = useLocation();
-  const isHomePage = location.pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
+  const location = useLocation();
 
+  // Gestion du scroll
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 30);
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Mettre à jour le compteur du panier
+  // Fermer le menu quand on change de page
   useEffect(() => {
-    const updateCartCount = () => {
-      const cart = CartUtils.getCart();
-      setCartCount(CartUtils.getItemCount(cart));
-    };
+    setMenuOpen(false);
+  }, [location]);
 
-    updateCartCount();
-
-    // Écouter les changements du localStorage
-    window.addEventListener('storage', updateCartCount);
-    // Écouter un événement personnalisé pour les changements locaux
-    window.addEventListener('cartUpdated', updateCartCount);
-
-    return () => {
-      window.removeEventListener('storage', updateCartCount);
-      window.removeEventListener('cartUpdated', updateCartCount);
-    };
-  }, []);
-
-  // Déterminer les couleurs selon la page et le scroll
-  const navBgColor = scrolled
-    ? "bg-black bg-opacity-90"
-    : isHomePage
-      ? "bg-transparent"
-      : "bg-white";
-
-  const textColor = scrolled || isHomePage ? "text-white" : "text-black";
-  const logoSrc = scrolled || isHomePage
-    ? "/assets/logo_t_poulettes_white.png"
-    : "/assets/logo_t_poulettes.png";
+  // Fermer le menu quand on clique sur un lien
+  const handleLinkClick = () => {
+    setMenuOpen(false);
+  };
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-colors duration-500 ${navBgColor} ${textColor}`}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        scrolled ? "bg-white shadow-lg" : "bg-transparent"
+      }`}
     >
-      <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-[90px]">
-        {/* Logo */}
-        <Link to="/" className="flex items-center">
-          <img
-            src={logoSrc}
-            alt="Les Poulettes"
-            className="h-[100px] w-auto transition-opacity duration-500"
-          />
-        </Link>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 md:h-20">
+          {/* Logo */}
+          <Link to="/" className="flex items-center" onClick={handleLinkClick}>
+            <img
+              src="/assets/logo_t_poulettes.png"
+              alt="Les Poulettes"
+              className="h-10 md:h-12 w-auto"
+            />
+          </Link>
 
-        {/* Menu desktop */}
-        <ul className={`hidden md:flex space-x-8 uppercase font-semibold text-lg ${textColor}`}>
-          <li>
+          {/* Menu Desktop */}
+          <div className="hidden md:flex items-center space-x-8">
             <Link
-              to="realisations"
-              className="font-basecoat hover:text-yellow-400 transition"
+              to="/"
+              className={`font-basecoat font-semibold transition ${
+                scrolled
+                  ? "text-black hover:text-yellow-400"
+                  : "text-white hover:text-yellow-400"
+              }`}
+            >
+              Accueil
+            </Link>
+            <Link
+              to="/realisations"
+              className={`font-basecoat font-semibold transition ${
+                scrolled
+                  ? "text-black hover:text-yellow-400"
+                  : "text-white hover:text-yellow-400"
+              }`}
             >
               Réalisations
             </Link>
-          </li>
-          <li>
             <Link
-              to="actualites"
-              className="font-basecoat hover:text-yellow-400 transition"
+              to="/actualites"
+              className={`font-basecoat font-semibold transition ${
+                scrolled
+                  ? "text-black hover:text-yellow-400"
+                  : "text-white hover:text-yellow-400"
+              }`}
             >
               Actualités
             </Link>
-          </li>
-          <li>
             <Link
-              to="contact"
-              className="font-basecoat hover:text-yellow-400 transition"
+              to="/contact"
+              className={`font-basecoat font-semibold transition ${
+                scrolled
+                  ? "text-black hover:text-yellow-400"
+                  : "text-white hover:text-yellow-400"
+              }`}
             >
               Contact
             </Link>
-          </li>
-        </ul>
+            <Link
+              to="/panier"
+              className={`font-basecoat font-semibold transition ${
+                scrolled
+                  ? "text-black hover:text-yellow-400"
+                  : "text-white hover:text-yellow-400"
+              }`}
+            >
+              Panier
+            </Link>
+          </div>
 
-        {/* Panier + Burger */}
-        <div className="flex items-center space-x-4">
-          <Link
-            to="/panier"
-            className={`relative p-2 hover:text-yellow-400 transition ${textColor}`}
-          >
-            <ShoppingCartIcon className="w-6 h-6" />
-            {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-yellow-400 text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                {cartCount}
-              </span>
-            )}
-          </Link>
-
-          {/* Burger menu mobile */}
+          {/* Burger Button */}
           <button
-            className="md:hidden p-2"
             onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden focus:outline-none z-50"
+            aria-label="Toggle menu"
           >
-            {menuOpen ? (
-              <XMarkIcon className="w-6 h-6 text-yellow-400" />
-            ) : (
-              <Bars3Icon className={`w-6 h-6 ${textColor} transition-colors duration-300`} />
-            )}
+            <svg
+              className={`w-6 h-6 ${scrolled ? "text-black" : "text-white"}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              {menuOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
           </button>
         </div>
-      </div>
 
-      {/* Menu mobile */}
-      {menuOpen && (
-        <div className="md:hidden bg-black bg-opacity-90 text-white absolute top-[90px] left-0 w-full flex flex-col items-center space-y-6 py-6 uppercase font-semibold text-lg transition-all duration-300">
-          <Link to="apropos" onClick={() => setMenuOpen(false)} className="hover:text-yellow-400">
-            A propos
-          </Link>
-          <Link to="realisations" onClick={() => setMenuOpen(false)} className="hover:text-yellow-400">
-            Réalisations
-          </Link>
-          <Link to="actualites" onClick={() => setMenuOpen(false)} className="hover:text-yellow-400">
-            Actualités
-          </Link>
-        </div>
-      )}
+        {/* Menu Mobile */}
+        {menuOpen && (
+          <div className="md:hidden bg-white shadow-lg rounded-lg mt-2 p-4 absolute top-full left-4 right-4">
+            <Link
+              to="/"
+              onClick={handleLinkClick}
+              className="font-basecoat block py-2 font-semibold text-black hover:text-yellow-400 transition"
+            >
+              Accueil
+            </Link>
+            <Link
+              to="/realisations"
+              onClick={handleLinkClick}
+              className="font-basecoat block py-2 font-semibold text-black hover:text-yellow-400 transition"
+            >
+              Réalisations
+            </Link>
+            <Link
+              to="/actualites"
+              onClick={handleLinkClick}
+              className="font-basecoat block py-2 font-semibold text-black hover:text-yellow-400 transition"
+            >
+              Actualités
+            </Link>
+            <Link
+              to="/contact"
+              onClick={handleLinkClick}
+              className="font-basecoat block py-2 font-semibold text-black hover:text-yellow-400 transition"
+            >
+              Contact
+            </Link>
+            <Link
+              to="/panier"
+              onClick={handleLinkClick}
+              className="font-basecoat block py-2 font-semibold text-black hover:text-yellow-400 transition"
+            >
+              Panier
+            </Link>
+          </div>
+        )}
+      </div>
     </nav>
   );
 }
