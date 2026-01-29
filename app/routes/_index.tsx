@@ -32,16 +32,6 @@ export default function Index() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  // Scroll pour nav
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   // Fetch homepage
   useEffect(() => {
     async function fetchHomepageData() {
@@ -129,8 +119,17 @@ export default function Index() {
     fetchActualites();
   }, []);
 
-  if (loading) return <p>Chargement...</p>;
-  if (error) return <p className="text-red-500">{error}</p>;
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center">
+      <p className="text-xl font-basecoat">Chargement...</p>
+    </div>
+  );
+  
+  if (error) return (
+    <div className="min-h-screen flex items-center justify-center">
+      <p className="text-red-500 text-xl font-basecoat">{error}</p>
+    </div>
+  );
 
   const sliderSettings = {
     dots: true,
@@ -140,26 +139,30 @@ export default function Index() {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2500,
+    arrows: false,
     responsive: [
+      { breakpoint: 1280, settings: { slidesToShow: 3 } },
       { breakpoint: 1024, settings: { slidesToShow: 2 } },
       { breakpoint: 640, settings: { slidesToShow: 1 } },
     ],
   };
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
      
-      {/* Header Banner */}
+      {/* Header Banner - Responsive heights */}
       <header
-        className="banner relative bg-cover bg-center h-[100vh] flex flex-col justify-end text-white p-8"
+        className="banner relative bg-cover bg-center h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[100vh] flex flex-col justify-end text-white p-4 sm:p-6 md:p-8"
         style={{ backgroundImage: `url(${homepageData?.image_url})` }}
       >
-        <div className="banner-content text-center z-10 flex flex-col items-center justify-end pb-16">
-          <h1 className="font-basecoat text-5xl font-bold drop-shadow-lg uppercase">Les trousses</h1>
-          <div className="mt-6">
+        <div className="banner-content text-center z-10 flex flex-col items-center justify-end pb-8 sm:pb-12 md:pb-16">
+          <h1 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold drop-shadow-lg uppercase px-4">
+            Les trousses
+          </h1>
+          <div className="mt-4 sm:mt-6">
             <Link
               to="/realisations"
-              className="font-basecoat btn bg-yellow-400 text-black px-6 py-3 rounded transform transition duration-500 hover:scale-105 font-semibold"
+              className="font-basecoat btn bg-yellow-400 text-black px-5 py-2.5 sm:px-6 sm:py-3 md:px-8 md:py-3.5 rounded text-sm sm:text-base md:text-lg transform transition duration-500 hover:scale-105 font-semibold inline-block"
             >
               Foncez !
             </Link>
@@ -168,85 +171,93 @@ export default function Index() {
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
       </header>
 
-      {/* Description */}
-      <div className="banner-content mt-12 text-center z-10 flex flex-col items-center justify-end">
-        <p className="font-basecoat text-xl drop-shadow-lg max-w-[750px]">{homepageData?.description}</p>
+      {/* Description - Responsive padding & text */}
+      <div className="mt-8 sm:mt-10 md:mt-12 text-center px-4 sm:px-6 md:px-8">
+        <p className="font-basecoat text-base sm:text-lg md:text-xl lg:text-2xl max-w-[90%] sm:max-w-[750px] mx-auto leading-relaxed">
+          {homepageData?.description}
+        </p>
       </div>
 
-      {/* Actualités */}
-      <div className="relative z-10 mt-12 text-center -mb-[var(--margin-mobile)] lg:-mb-[var(--margin-desktop)]"
-        style={{ "--margin-desktop": "75px", "--margin-mobile": "20px" } as any}
-      >
-        <h2 className="font-ogg font-light uppercase text-[35px] md:text-[40px] lg:text-[60px] text-black leading-tight tracking-[5px]">
+      {/* Actualités - Responsive title */}
+      <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 text-center px-4">
+        <h2 className="font-ogg font-light uppercase text-[28px] sm:text-[35px] md:text-[45px] lg:text-[60px] text-black leading-tight tracking-[3px] sm:tracking-[4px] md:tracking-[5px]">
           À ne pas manquer
         </h2>
       </div>
 
-      <section className="actualites py-16 bg-yellow-100 max-w-7xl mx-auto px-4 rounded-lg shadow-md mt-12">
+      {/* Actualités Section - Responsive layout */}
+      <section className="actualites py-8 sm:py-12 md:py-16 bg-yellow-100 max-w-7xl mx-4 sm:mx-6 md:mx-8 lg:mx-auto px-4 sm:px-6 md:px-8 rounded-lg shadow-md mt-8 sm:mt-10 md:mt-12">
         {actualites.length > 0 ? (
           actualites.map((actu) => (
-            <div key={actu.id} className="flex flex-col md:flex-row items-center gap-8 mb-12">
-              <div className="md:w-1/2">
-                <h2 className="font-basecoat text-3xl font-semibold text-black mb-4">{actu.title}</h2>
-                <p className="font-basecoat text-gray-800 text-lg whitespace-pre-line">{actu.content}</p>
-                <Link to={`/actualites/`}>
+            <div key={actu.id} className="flex flex-col md:flex-row items-center gap-6 sm:gap-8 mb-8 sm:mb-10 md:mb-12">
+              <div className="w-full md:w-1/2 order-2 md:order-1">
+                <h2 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-semibold text-black mb-3 sm:mb-4">
+                  {actu.title}
+                </h2>
+                <p className="font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed">
+                  {actu.content}
+                </p>
+                <Link to="/actualites">
                   <button
                     type="button"
-                    className="font-basecoat uppercase py-2.5 px-5 me-2 mb-2 text-sm font-medium text-indigo-600 mt-2 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
+                    className="font-basecoat uppercase py-2 px-4 sm:py-2.5 sm:px-5 mt-4 sm:mt-6 text-xs sm:text-sm font-medium text-indigo-600 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 transition"
                   >
                     Toutes les actualités
                   </button>
                 </Link>
               </div>
               {actu.image_url && (
-                <div className="md:w-1/2">
+                <div className="w-full md:w-1/2 order-1 md:order-2">
                   <img
                     src={actu.image_url}
                     alt={actu.title}
-                    className="w-full h-64 object-cover rounded-md shadow-md"
+                    className="w-full h-48 sm:h-56 md:h-64 lg:h-72 object-cover rounded-md shadow-md"
                   />
                 </div>
               )}
             </div>
           ))
         ) : (
-          <p className="text-center text-gray-600">Aucune actualité disponible.</p>
+          <p className="text-center text-gray-600 text-base sm:text-lg">Aucune actualité disponible.</p>
         )}
       </section>
 
-      {/* Slider Réalisations */}
-      <section className="products py-16 bg-white max-w-7xl mx-auto px-4 relative z-10">
-        <div
-          className="relative z-10 mt-12 text-center -mb-[var(--margin-mobile)] lg:-mb-[var(--margin-desktop)]"
-          style={{ "--margin-desktop": "75px", "--margin-mobile": "20px" } as any}
-        >
-          <h2 className="font-ogg font-light uppercase text-[28px] sm:text-[35px] md:text-[40px] lg:text-[60px] text-black leading-tight tracking-[3px] sm:tracking-[4px] md:tracking-[5px]">
-            Laisserez-vous tenter ?
+      {/* Slider Réalisations - Responsive title & spacing */}
+      <section className="products py-8 sm:py-12 md:py-16 bg-white max-w-7xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
+        <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 text-center mb-8 sm:mb-10 md:mb-12">
+          <h2 className="font-ogg font-light uppercase text-[28px] sm:text-[35px] md:text-[45px] lg:text-[60px] text-black leading-tight tracking-[3px] sm:tracking-[4px] md:tracking-[5px]">
+            Vous laisserez-vous tenter ?
           </h2>
         </div>
 
-        <Slider {...sliderSettings} className="mt-8 relative z-0">
+        <Slider {...sliderSettings} className="mt-4 sm:mt-6 md:mt-8 relative z-0">
           {realisations.map((realisation) => (
-            <div key={realisation.id} className="p-2 sm:p-4">
+            <div key={realisation.id} className="px-2 sm:px-3 md:px-4">
               <Link to={`/realisations/${realisation.id}`}>
-                <div className="bg-gray-200 p-4 sm:p-6 rounded-lg shadow-lg text-center hover:shadow-xl transition">
+                <div className="bg-gray-200 p-4 sm:p-5 md:p-6 rounded-lg shadow-lg text-center hover:shadow-xl transition h-full">
                   {realisation.image_url ? (
                     <img
                       src={realisation.image_url}
                       alt={realisation.title}
-                      className="w-full h-40 sm:h-48 md:h-52 object-cover rounded-md"
+                      className="w-full h-36 sm:h-44 md:h-52 lg:h-60 object-cover rounded-md"
                     />
                   ) : (
-                    <div className="w-full h-40 sm:h-48 md:h-52 bg-gray-300 flex items-center justify-center">
-                      <span className="text-gray-500">Aucune image</span>
+                    <div className="w-full h-36 sm:h-44 md:h-52 lg:h-60 bg-gray-300 flex items-center justify-center rounded-md">
+                      <span className="text-gray-500 text-sm sm:text-base">Aucune image</span>
                     </div>
                   )}
-                  <h3 className="font-basecoat mt-3 sm:mt-4 text-lg sm:text-xl font-semibold">{realisation.title}</h3>
-                  <p className="font-basecoat mt-1 sm:mt-2 text-gray-700 text-sm sm:text-base">{realisation.description}</p>
-                  <p className="font-basecoat mt-1 sm:mt-2 text-gray-700 font-medium">{realisation.prix} €</p>
+                  <h3 className="font-basecoat mt-3 sm:mt-4 text-base sm:text-lg md:text-xl font-semibold line-clamp-2">
+                    {realisation.title}
+                  </h3>
+                  <p className="font-basecoat mt-2 text-gray-700 text-xs sm:text-sm md:text-base line-clamp-2">
+                    {realisation.description}
+                  </p>
+                  <p className="font-basecoat mt-2 text-gray-900 font-bold text-lg sm:text-xl md:text-2xl">
+                    {realisation.prix} €
+                  </p>
                   <button
                     type="button"
-                    className="font-basecoat uppercase py-2 px-4 sm:py-2.5 sm:px-5 mt-2 text-sm sm:text-base font-medium text-indigo-600 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 transition"
+                    className="font-basecoat uppercase py-1.5 px-3 sm:py-2 sm:px-4 md:py-2.5 md:px-5 mt-3 sm:mt-4 text-xs sm:text-sm md:text-base font-medium text-indigo-600 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 transition"
                   >
                     Voir plus
                   </button>
