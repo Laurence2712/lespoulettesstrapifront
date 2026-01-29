@@ -67,7 +67,6 @@ export default function RealisationDetail() {
     }
   }, [id]);
 
-  // ✅ Ajout au panier sans alert, avec redirection
   const handleAddToCart = () => {
     if (!realisation) return;
 
@@ -80,22 +79,27 @@ export default function RealisationDetail() {
     };
 
     CartUtils.addToCart(item);
-    navigate('/panier'); // ✅ redirection directe
+    navigate('/panier');
   };
 
   if (loading) {
     return (
-      <div className="container mx-auto py-16 px-4 text-center">
-        <p className="text-xl">Chargement...</p>
+      <div className="container mx-auto py-12 sm:py-16 md:py-20 px-4 text-center">
+        <p className="font-basecoat text-lg sm:text-xl md:text-2xl text-gray-600">Chargement...</p>
       </div>
     );
   }
 
   if (error || !realisation) {
     return (
-      <div className="container mx-auto py-16 px-4 text-center">
-        <p className="text-red-500 text-xl mb-4">{error || 'Réalisation introuvable'}</p>
-        <Link to="/realisations" className="text-indigo-600 hover:text-indigo-800 font-medium">
+      <div className="container mx-auto py-12 sm:py-16 md:py-20 px-4 text-center">
+        <p className="font-basecoat text-red-500 text-lg sm:text-xl md:text-2xl mb-4 sm:mb-6">
+          {error || 'Réalisation introuvable'}
+        </p>
+        <Link 
+          to="/realisations" 
+          className="font-basecoat text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base transition"
+        >
           ← Retour aux réalisations
         </Link>
       </div>
@@ -103,44 +107,48 @@ export default function RealisationDetail() {
   }
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-7xl mt-[70px]">
-      {/* Breadcrumb */}
-      <nav className="font-basecoat mb-8 text-sm">
-        <Link to="/" className="text-indigo-600 hover:text-indigo-800">Accueil</Link>
-        <span className="mx-2">/</span>
-        <Link to="/realisations" className="font-basecoat text-indigo-600 hover:text-indigo-800">Réalisations</Link>
-        <span className="mx-2">/</span>
-        <span className="text-gray-600">{realisation.title}</span>
+    <div className="container mx-auto py-6 sm:py-8 md:py-10 px-4 sm:px-6 md:px-8 max-w-7xl mt-[60px] sm:mt-[70px] md:mt-[80px]">
+      {/* Breadcrumb - Responsive */}
+      <nav className="font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
+        <Link to="/" className="text-indigo-600 hover:text-indigo-800 transition">Accueil</Link>
+        <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
+        <Link to="/realisations" className="text-indigo-600 hover:text-indigo-800 transition">Réalisations</Link>
+        <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
+        <span className="text-gray-600 truncate inline-block max-w-[150px] sm:max-w-none align-bottom">
+          {realisation.title}
+        </span>
       </nav>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Galerie */}
-        <div>
+      {/* Grid - Responsive: Stack on mobile, side-by-side on desktop */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12">
+        
+        {/* Galerie - Responsive heights */}
+        <div className="order-1">
           {realisation.images.length > 0 ? (
             <div>
-              <div className="bg-gray-100 rounded-lg overflow-hidden mb-4">
+              <div className="bg-gray-100 rounded-lg overflow-hidden mb-3 sm:mb-4">
                 <img
                   src={realisation.images[selectedImage]}
                   alt={realisation.title}
-                  className="w-full h-96 object-cover"
+                  className="w-full h-64 sm:h-80 md:h-96 lg:h-[28rem] object-cover"
                 />
               </div>
               {realisation.images.length > 1 && (
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-4 gap-2">
                   {realisation.images.map((img, index) => (
                     <button
                       key={index}
                       onClick={() => setSelectedImage(index)}
                       className={`border-2 rounded-md overflow-hidden transition ${
                         selectedImage === index
-                          ? 'border-yellow-400'
+                          ? 'border-yellow-400 scale-105'
                           : 'border-gray-300 hover:border-gray-400'
                       }`}
                     >
                       <img
                         src={img}
                         alt={`${realisation.title} ${index + 1}`}
-                        className="w-full h-20 object-cover"
+                        className="w-full h-16 sm:h-20 md:h-24 object-cover"
                       />
                     </button>
                   ))}
@@ -148,44 +156,52 @@ export default function RealisationDetail() {
               )}
             </div>
           ) : (
-            <div className="bg-gray-200 rounded-lg h-96 flex items-center justify-center">
-              <span className="text-gray-500">Aucune image disponible</span>
+            <div className="bg-gray-200 rounded-lg h-64 sm:h-80 md:h-96 flex items-center justify-center">
+              <span className="font-basecoat text-gray-500 text-sm sm:text-base">Aucune image disponible</span>
             </div>
           )}
         </div>
 
-        {/* Détails */}
-        <div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">{realisation.title}</h1>
-          <p className="text-3xl font-bold text-yellow-600 mb-6">
+        {/* Détails - Responsive text sizes */}
+        <div className="order-2">
+          <h1 className="font-ogg text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 mb-3 sm:mb-4 leading-tight">
+            {realisation.title}
+          </h1>
+          
+          <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-yellow-600 mb-4 sm:mb-6">
             {realisation.prix ? `${realisation.prix} €` : 'Prix sur demande'}
           </p>
 
-          <div className="border-t border-b border-gray-200 py-6 mb-6">
-            <h2 className="font-basecoat text-xl font-semibold mb-3">Description</h2>
-            <p className="font-basecoat text-gray-700 whitespace-pre-line leading-relaxed">
+          {/* Description - Responsive */}
+          <div className="border-t border-b border-gray-200 py-4 sm:py-5 md:py-6 mb-4 sm:mb-6">
+            <h2 className="font-basecoat text-lg sm:text-xl md:text-2xl font-semibold mb-2 sm:mb-3">
+              Description
+            </h2>
+            <p className="font-basecoat text-gray-700 text-sm sm:text-base md:text-lg whitespace-pre-line leading-relaxed">
               {realisation.description}
             </p>
           </div>
 
-          {/* Quantité + Bouton */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-4">
-              <label className="font-medium text-gray-700">Quantité:</label>
+          {/* Quantité + Boutons - Responsive */}
+          <div className="space-y-3 sm:space-y-4">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <label className="font-basecoat font-medium text-gray-700 text-sm sm:text-base">
+                Quantité:
+              </label>
               <div className="flex items-center border border-gray-300 rounded-md">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="px-4 py-2 hover:bg-gray-100 transition"
+                  className="px-3 sm:px-4 py-2 hover:bg-gray-100 transition text-sm sm:text-base"
                   disabled={quantity <= 1}
                 >
                   -
                 </button>
-                <span className="px-6 py-2 border-l border-r border-gray-300">
+                <span className="px-4 sm:px-6 py-2 border-l border-r border-gray-300 font-medium text-sm sm:text-base">
                   {quantity}
                 </span>
                 <button
                   onClick={() => setQuantity(quantity + 1)}
-                  className="px-4 py-2 hover:bg-gray-100 transition"
+                  className="px-3 sm:px-4 py-2 hover:bg-gray-100 transition text-sm sm:text-base"
                 >
                   +
                 </button>
@@ -194,14 +210,14 @@ export default function RealisationDetail() {
 
             <button
               onClick={handleAddToCart}
-              className="w-full py-4 rounded-lg font-semibold text-lg transition transform hover:scale-105 bg-yellow-400 text-black hover:bg-yellow-500"
+              className="font-basecoat w-full py-3 sm:py-3.5 md:py-4 rounded-lg font-semibold text-base sm:text-lg md:text-xl transition transform hover:scale-105 bg-yellow-400 text-black hover:bg-yellow-500 active:scale-95"
             >
               Ajouter au panier
             </button>
 
             <Link
               to="/realisations"
-              className="block w-full py-4 text-center border-2 border-gray-800 text-gray-800 rounded-lg font-semibold hover:bg-gray-100 transition"
+              className="font-basecoat block w-full py-3 sm:py-3.5 md:py-4 text-center border-2 border-gray-800 text-gray-800 rounded-lg font-semibold text-base sm:text-lg hover:bg-gray-100 transition"
             >
               ← Continuer mes achats
             </Link>
