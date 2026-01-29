@@ -131,49 +131,32 @@ export default function Index() {
     </div>
   );
 
-  const sliderSettings = {
+const sliderSettings = {
   dots: true,
   infinite: true,
   speed: 500,
-  slidesToShow: 4,
+  slidesToShow: 2.5,  // ✅ Moins de slides = plus larges
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 3000,
   arrows: false,
+  swipeToSlide: true,
+  touchThreshold: 10,
   responsive: [
-    { 
-      breakpoint: 1536,
-      settings: { 
-        slidesToShow: 4,
-        slidesToScroll: 1,
-      } 
-    },
-    { 
-      breakpoint: 1280,
-      settings: { 
-        slidesToShow: 3,
-        slidesToScroll: 1,
-      } 
-    },
     { 
       breakpoint: 1024,
       settings: { 
-        slidesToShow: 2.2,
-        slidesToScroll: 1,
-      } 
-    },
-    { 
-      breakpoint: 768,
-      settings: { 
-        slidesToShow: 1.5,
+        slidesToShow: 1.8,  // ✅ 1 slide presque complet + aperçu
         slidesToScroll: 1,
       } 
     },
     { 
       breakpoint: 640,
       settings: { 
-        slidesToShow: 1.2,
+        slidesToShow: 1,
         slidesToScroll: 1,
+        centerMode: true,
+        centerPadding: '40px',  // ✅ Réduit pour slide plus large
       } 
     },
   ],
@@ -264,8 +247,7 @@ export default function Index() {
 
         <Slider {...sliderSettings} className="mt-4 sm:mt-6 md:mt-8 relative z-0">
           {realisations.map((realisation) => (
-            <div key={realisation.id} className="px-2 sm:px-3 md:px-4">
-              <Link to={`/realisations/${realisation.id}`}>
+<div key={realisation.id} className="px-3 sm:px-4 md:px-6">              <Link to={`/realisations/${realisation.id}`}>
                 <div className="bg-gray-200 p-4 sm:p-5 md:p-6 rounded-lg shadow-lg text-center hover:shadow-xl transition h-full">
                   {realisation.image_url ? (
                     <img
