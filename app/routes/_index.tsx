@@ -135,34 +135,45 @@ export default function Index() {
   dots: true,
   infinite: true,
   speed: 500,
-  slidesToShow: 3,
+  slidesToShow: 4,
   slidesToScroll: 1,
   autoplay: true,
-  autoplaySpeed: 2500,
+  autoplaySpeed: 3000,
   arrows: false,
-  centerMode: false,
   responsive: [
     { 
-      breakpoint: 1280, 
+      breakpoint: 1536,
+      settings: { 
+        slidesToShow: 4,
+        slidesToScroll: 1,
+      } 
+    },
+    { 
+      breakpoint: 1280,
       settings: { 
         slidesToShow: 3,
-        centerMode: false 
-      } 
-    },
-    { 
-      breakpoint: 1024, 
-      settings: { 
-        slidesToShow: 2,
-        centerMode: false 
-      } 
-    },
-    { 
-      breakpoint: 640, 
-      settings: { 
-        slidesToShow: 1.2,  // ✅ 1 slide complet + 20% du suivant
         slidesToScroll: 1,
-        centerMode: false,
-        infinite: true
+      } 
+    },
+    { 
+      breakpoint: 1024,
+      settings: { 
+        slidesToShow: 2.2,
+        slidesToScroll: 1,
+      } 
+    },
+    { 
+      breakpoint: 768,
+      settings: { 
+        slidesToShow: 1.5,
+        slidesToScroll: 1,
+      } 
+    },
+    { 
+      breakpoint: 640,
+      settings: { 
+        slidesToShow: 1.2,
+        slidesToScroll: 1,
       } 
     },
   ],
