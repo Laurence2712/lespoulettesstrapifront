@@ -8,14 +8,14 @@ export default function Footer() {
     <footer className="bg-gray-900 text-white py-10 sm:py-12 md:py-14">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         {/* Contenu principal */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 items-start">
           
           {/* Colonne 1 : Logo + Description */}
           <div>
             <img
               src="/assets/logo_t_poulettes_white.png"
               alt="Les Poulettes"
-              className="h-16 sm:h-18 md:h-20 w-auto mb-4"
+              className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto mb-4"
             />
             <p className="font-basecoat text-gray-400 text-sm sm:text-base leading-relaxed">
               Accessoires éco-responsables en wax du Bénin
@@ -23,7 +23,7 @@ export default function Footer() {
           </div>
 
           {/* Colonne 2 : Navigation */}
-          <div>
+          <div className="lg:pt-2">
             <ul className="font-basecoat space-y-2 text-gray-400 text-sm sm:text-base">
               <li>
                 <Link to="/realisations" className="hover:text-yellow-400 transition">
@@ -44,7 +44,7 @@ export default function Footer() {
           </div>
 
           {/* Colonne 3 : Contact */}
-          <div>
+          <div className="lg:pt-2">
             <ul className="font-basecoat space-y-3 text-gray-400 text-sm sm:text-base">
               <li className="flex items-center space-x-2">
                 <EnvelopeIcon className="w-5 h-5 text-yellow-400 flex-shrink-0" />
@@ -59,7 +59,7 @@ export default function Footer() {
           </div>
 
           {/* Colonne 4 : Réseaux sociaux */}
-          <div>
+          <div className="lg:pt-2">
             <div className="flex space-x-4">
               <a 
                 href="https://www.facebook.com/lespoulettescouture"
