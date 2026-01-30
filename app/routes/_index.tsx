@@ -135,25 +135,28 @@ const sliderSettings = {
   dots: true,
   infinite: true,
   speed: 500,
-  slidesToShow: 2.5,
+  slidesToShow: 3,
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 3000,
   arrows: false,
   swipeToSlide: true,
   touchThreshold: 10,
+  centerMode: false,  // ✅ Pas de centerMode
+  centerPadding: '0px',  // ✅ Pas de padding
   responsive: [
     { 
-      breakpoint: 1024,
+      breakpoint: 1024,  // Tablet
       settings: { 
-        slidesToShow: 1.8,
+        slidesToShow: 2,  // ✅ 2 slides complets sur tablet
         slidesToScroll: 1,
+        centerMode: false,
       } 
     },
     { 
-      breakpoint: 640,
+      breakpoint: 640,  // Mobile
       settings: { 
-        slidesToShow: 1.5,  // ✅ 1 slide complet + un demi
+        slidesToShow: 1,  // ✅ 1 slide complet sur mobile
         slidesToScroll: 1,
         centerMode: false,
       } 
