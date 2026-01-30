@@ -24,71 +24,47 @@ export default function NavBar() {
   };
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-white shadow-lg" : "bg-transparent"
-      }`}
-    >
+    <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-16 sm:h-20 md:h-24">
           {/* Logo */}
           <Link to="/" className="flex items-center" onClick={handleLinkClick}>
-           <img
-  src="/assets/logo_t_poulettes.png"
-  alt="Les Poulettes"
-  className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto"
-/>
+            <img
+              src="/assets/logo_t_poulettes.png"
+              alt="Les Poulettes"
+              className="h-12 sm:h-16 md:h-20 lg:h-24 w-auto"
+            />
           </Link>
 
           {/* Menu Desktop */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
             <Link
               to="/"
-              className={`font-basecoat font-semibold transition ${
-                scrolled
-                  ? "text-black hover:text-yellow-400"
-                  : "text-white hover:text-yellow-400"
-              }`}
+              className="font-basecoat font-semibold text-black hover:text-yellow-400 transition text-sm lg:text-base"
             >
               Accueil
             </Link>
             <Link
               to="/realisations"
-              className={`font-basecoat font-semibold transition ${
-                scrolled
-                  ? "text-black hover:text-yellow-400"
-                  : "text-white hover:text-yellow-400"
-              }`}
+              className="font-basecoat font-semibold text-black hover:text-yellow-400 transition text-sm lg:text-base"
             >
               Réalisations
             </Link>
             <Link
               to="/actualites"
-              className={`font-basecoat font-semibold transition ${
-                scrolled
-                  ? "text-black hover:text-yellow-400"
-                  : "text-white hover:text-yellow-400"
-              }`}
+              className="font-basecoat font-semibold text-black hover:text-yellow-400 transition text-sm lg:text-base"
             >
               Actualités
             </Link>
             <Link
               to="/contact"
-              className={`font-basecoat font-semibold transition ${
-                scrolled
-                  ? "text-black hover:text-yellow-400"
-                  : "text-white hover:text-yellow-400"
-              }`}
+              className="font-basecoat font-semibold text-black hover:text-yellow-400 transition text-sm lg:text-base"
             >
               Contact
             </Link>
             <Link
               to="/panier"
-              className={`font-basecoat font-semibold transition ${
-                scrolled
-                  ? "text-black hover:text-yellow-400"
-                  : "text-white hover:text-yellow-400"
-              }`}
+              className="font-basecoat inline-block bg-yellow-400 hover:bg-yellow-500 text-black px-4 lg:px-6 py-2 lg:py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-sm lg:text-base"
             >
               Panier
             </Link>
@@ -101,7 +77,7 @@ export default function NavBar() {
             aria-label="Toggle menu"
           >
             <svg
-              className={`w-6 h-6 ${scrolled ? "text-black" : "text-white"}`}
+              className="w-6 h-6 text-black"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -125,44 +101,46 @@ export default function NavBar() {
           </button>
         </div>
 
-        {/* Menu Mobile */}
+        {/* Menu Mobile - CENTRÉ */}
         {menuOpen && (
-          <div className="md:hidden bg-white shadow-lg rounded-lg mt-2 p-4 absolute top-full left-4 right-4">
-            <Link
-              to="/"
-              onClick={handleLinkClick}
-              className="font-basecoat block py-2 font-semibold text-black hover:text-yellow-400 transition"
-            >
-              Accueil
-            </Link>
-            <Link
-              to="/realisations"
-              onClick={handleLinkClick}
-              className="font-basecoat block py-2 font-semibold text-black hover:text-yellow-400 transition"
-            >
-              Réalisations
-            </Link>
-            <Link
-              to="/actualites"
-              onClick={handleLinkClick}
-              className="font-basecoat block py-2 font-semibold text-black hover:text-yellow-400 transition"
-            >
-              Actualités
-            </Link>
-            <Link
-              to="/contact"
-              onClick={handleLinkClick}
-              className="font-basecoat block py-2 font-semibold text-black hover:text-yellow-400 transition"
-            >
-              Contact
-            </Link>
-            <Link
-              to="/panier"
-              onClick={handleLinkClick}
-              className="font-basecoat block py-2 font-semibold text-black hover:text-yellow-400 transition"
-            >
-              Panier
-            </Link>
+          <div className="md:hidden bg-white shadow-lg rounded-lg mt-2 mb-4 p-6 absolute top-full left-4 right-4">
+            <div className="flex flex-col items-center space-y-4">
+              <Link
+                to="/"
+                onClick={handleLinkClick}
+                className="font-basecoat font-semibold text-black hover:text-yellow-400 transition text-base"
+              >
+                Accueil
+              </Link>
+              <Link
+                to="/realisations"
+                onClick={handleLinkClick}
+                className="font-basecoat font-semibold text-black hover:text-yellow-400 transition text-base"
+              >
+                Réalisations
+              </Link>
+              <Link
+                to="/actualites"
+                onClick={handleLinkClick}
+                className="font-basecoat font-semibold text-black hover:text-yellow-400 transition text-base"
+              >
+                Actualités
+              </Link>
+              <Link
+                to="/contact"
+                onClick={handleLinkClick}
+                className="font-basecoat font-semibold text-black hover:text-yellow-400 transition text-base"
+              >
+                Contact
+              </Link>
+              <Link
+                to="/panier"
+                onClick={handleLinkClick}
+                className="font-basecoat bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-base"
+              >
+                Panier
+              </Link>
+            </div>
           </div>
         )}
       </div>
