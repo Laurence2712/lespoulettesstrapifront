@@ -40,12 +40,6 @@ className="h-[100px] w-auto"
           {/* Menu Desktop */}
           <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
             <Link
-              to="/"
-              className="font-basecoat font-semibold text-black hover:text-yellow-400 transition text-sm lg:text-base"
-            >
-              Accueil
-            </Link>
-            <Link
               to="/realisations"
               className="font-basecoat font-semibold text-black hover:text-yellow-400 transition text-sm lg:text-base"
             >
