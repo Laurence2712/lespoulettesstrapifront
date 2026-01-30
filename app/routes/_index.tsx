@@ -119,6 +119,23 @@ export default function Index() {
     fetchActualites();
   }, []);
 
+  // CSS pour forcer 1 slide sur mobile
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @media (max-width: 767px) {
+        .slick-slide {
+          width: 100% !important;
+        }
+        .slick-track {
+          display: flex !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
+  }, []);
+
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center">
       <p className="text-xl font-basecoat">Chargement...</p>
@@ -131,56 +148,51 @@ export default function Index() {
     </div>
   );
 
-const sliderSettings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 3,
-  slidesToScroll: 1,
-  autoplay: true,
-  autoplaySpeed: 3000,
-  arrows: false,
-  swipeToSlide: true,
-  responsive: [
-    { 
-      breakpoint: 1280,  // Large desktop
-      settings: { 
-        slidesToShow: 3,
-        slidesToScroll: 1,
-      } 
-    },
-    { 
-      breakpoint: 1024,  // Tablet landscape
-      settings: { 
-        slidesToShow: 2,
-        slidesToScroll: 1,
-      } 
-    },
-    { 
-      breakpoint: 768,  // Tablet portrait
-      settings: { 
-        slidesToShow: 2,
-        slidesToScroll: 1,
-      } 
-    },
-    { 
-      breakpoint: 480,  // ✅ Tous les smartphones (même les plus grands)
-      settings: { 
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      } 
-    },
-  ],
-};
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    arrows: false,
+    swipeToSlide: true,
+    variableWidth: false,
+    responsive: [
+      { 
+        breakpoint: 9999,
+        settings: { 
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        } 
+      },
+      { 
+        breakpoint: 1024,
+        settings: { 
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        } 
+      },
+      { 
+        breakpoint: 767,
+        settings: { 
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          centerMode: false,
+        } 
+      },
+    ],
+  };
 
   return (
     <div className="overflow-x-hidden">
      
       {/* Header Banner - Responsive heights */}
-    <header
-  className="banner relative bg-cover bg-center h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[100vh] flex flex-col justify-end text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24"
-  style={{ backgroundImage: `url(${homepageData?.image_url})` }}
->
+      <header
+        className="banner relative bg-cover bg-center h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[100vh] flex flex-col justify-end text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24"
+        style={{ backgroundImage: `url(${homepageData?.image_url})` }}
+      >
         <div className="banner-content text-center z-10 flex flex-col items-center justify-end pb-8 sm:pb-12 md:pb-16">
           <h1 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold drop-shadow-lg uppercase px-4">
             Les trousses
@@ -212,10 +224,10 @@ const sliderSettings = {
       </div>
 
       {/* Actualités Section - Responsive layout */}
-<section className="actualites py-6 sm:py-8 md:py-10 bg-yellow-100 max-w-7xl mx-4 sm:mx-6 md:mx-8 lg:mx-auto px-4 sm:px-6 md:px-8 rounded-lg shadow-md mt-8 sm:mt-10 md:mt-12">
+      <section className="actualites py-6 sm:py-8 md:py-10 bg-yellow-100 max-w-7xl mx-4 sm:mx-6 md:mx-8 lg:mx-auto px-4 sm:px-6 md:px-8 rounded-lg shadow-md mt-8 sm:mt-10 md:mt-12">
         {actualites.length > 0 ? (
           actualites.map((actu) => (
-<div key={actu.id} className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+            <div key={actu.id} className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
               <div className="w-full md:w-1/2 order-2 md:order-1">
                 <h2 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-semibold text-black mb-3 sm:mb-4">
                   {actu.title}
@@ -258,7 +270,8 @@ const sliderSettings = {
 
         <Slider {...sliderSettings} className="mt-4 sm:mt-6 md:mt-8 relative z-0">
           {realisations.map((realisation) => (
-<div key={realisation.id} className="px-3 sm:px-4 md:px-6">              <Link to={`/realisations/${realisation.id}`}>
+            <div key={realisation.id} className="px-3 sm:px-4 md:px-6">
+              <Link to={`/realisations/${realisation.id}`}>
                 <div className="bg-gray-200 p-4 sm:p-5 md:p-6 rounded-lg shadow-lg text-center hover:shadow-xl transition h-full">
                   {realisation.image_url ? (
                     <img
