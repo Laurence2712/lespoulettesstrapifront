@@ -19,7 +19,7 @@ export default function ActualitesPage() {
   useEffect(() => {
     async function fetchActualites() {
       try {
-        const response = await fetch(apiEndpoints.actualites);
+        const response = await fetch(apiEndpoints.actualites);  // ✅ Utilise actualites, pas latestActualite
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
         if (data?.data) {
