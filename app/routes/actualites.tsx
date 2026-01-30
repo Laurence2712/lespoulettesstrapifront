@@ -47,17 +47,24 @@ export default function ActualitesPage() {
     fetchActualites();
   }, []);
 
-  useEffect(() => {
-    if (actualites.length > 0) {
-      gsap.from(".actu-card", {
+useEffect(() => {
+  if (actualites.length > 0) {
+    gsap.fromTo(".actu-card", 
+      {
         opacity: 0,
         y: 50,
+      },
+      {
+        opacity: 1,
+        y: 0,
         stagger: { amount: 0.5 },
         duration: 0.8,
         ease: "power3.out",
-      });
-    }
-  }, [actualites]);
+        clearProps: "all", // ✅ Nettoie les styles inline après animation
+      }
+    );
+  }
+}, [actualites]);
 
   return (
     <div className="container mx-auto py-6 sm:py-8 md:py-12 lg:py-16 px-4 sm:px-6 md:px-8 max-w-7xl mt-[60px] sm:mt-[70px] md:mt-[80px]">
