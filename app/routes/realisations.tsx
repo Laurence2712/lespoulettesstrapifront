@@ -46,16 +46,20 @@ export default function Realisations() {
 
   useEffect(() => {
     if (realisations.length > 0) {
-      gsap.from('.realisation-card', {
-        opacity: 0,
-        y: 50,
-        stagger: { amount: 0.6, from: 'start' },
-        duration: 0.8,
-        ease: 'power3.out',
-        onComplete: () => {
-          gsap.set('.realisation-card', { opacity: 1 });
+      gsap.fromTo('.realisation-card',
+        {
+          opacity: 0,
+          y: 50,
         },
-      });
+        {
+          opacity: 1,
+          y: 0,
+          stagger: { amount: 0.6, from: 'start' },
+          duration: 0.8,
+          ease: 'power3.out',
+          clearProps: 'all',
+        }
+      );
     }
   }, [realisations]);
 
@@ -108,58 +112,58 @@ export default function Realisations() {
         </div>
       )}
 
-      {/* Grid - Responsive columns */}
+      {/* Grid - Responsive columns avec hauteur uniforme */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
         {realisations.map((realisation) => (
           <div
             key={realisation.id}
-            className="bg-white rounded-lg shadow-md overflow-hidden realisation-card hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col"
+            className="bg-white rounded-lg shadow-md overflow-hidden realisation-card hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full"
           >
-            {/* Image Container - Responsive heights */}
-            <div className="relative overflow-hidden">
+            {/* Image Container - Hauteur FIXE */}
+            <div className="relative overflow-hidden h-56 sm:h-60 md:h-64 flex-shrink-0">
               {realisation.image_url ? (
                 <img
                   src={realisation.image_url}
                   alt={realisation.title}
-                  className="w-full h-44 sm:h-48 md:h-52 lg:h-56 object-cover transition-transform duration-300 hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                 />
               ) : (
-                <div className="w-full h-44 sm:h-48 md:h-52 lg:h-56 bg-gray-200 flex items-center justify-center">
+                <div className="w-full h-full bg-gray-200 flex items-center justify-center">
                   <span className="font-basecoat text-gray-500 text-sm sm:text-base">Aucune image disponible</span>
                 </div>
               )}
             </div>
 
-            {/* Content - Responsive padding & text */}
-            <div className="p-3 sm:p-4 md:p-5 flex-grow">
+            {/* Content - flex-grow pour remplir l'espace */}
+            <div className="p-3 sm:p-4 md:p-5 flex-grow flex flex-col">
               <h3 className="font-basecoat text-base sm:text-lg md:text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
                 {realisation.title}
               </h3>
-              <p className="font-basecoat text-gray-700 text-xs sm:text-sm md:text-base line-clamp-3 leading-relaxed">
+              <p className="font-basecoat text-gray-700 text-xs sm:text-sm md:text-base line-clamp-3 leading-relaxed flex-grow">
                 {realisation.description}
               </p>
-            </div>
-
-            {/* Link - Responsive */}
-            <div className="p-3 sm:p-4 md:p-5 pt-0">
-              <Link
-                to={`/realisations/${realisation.id}`}
-                className="font-basecoat inline-flex items-center text-yellow-600 hover:text-yellow-700 font-medium transition text-sm sm:text-base group"
-              >
-                Voir plus
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-3.5 w-3.5 sm:h-4 sm:w-4 ml-1 group-hover:translate-x-1 transition-transform"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
+              
+              {/* Link en bas */}
+              <div className="mt-4">
+                <Link
+                  to={`/realisations/${realisation.id}`}
+                  className="font-basecoat inline-flex items-center text-yellow-600 hover:text-yellow-700 font-medium transition text-sm sm:text-base group"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </Link>
+                  Voir plus
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-3.5 w-3.5 sm:h-4 sm:w-4 ml-1 group-hover:translate-x-1 transition-transform"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </Link>
+              </div>
             </div>
           </div>
         ))}
