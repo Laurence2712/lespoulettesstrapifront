@@ -33,7 +33,7 @@ export default function NavBar() {
             <img
               src="/assets/logo_t_poulettes.png"
               alt="Les Poulettes"
-className="h-16 md:h-20 lg:h-24 w-auto"
+className="h-[100px] w-auto"
             />
           </Link>
 
