@@ -31,6 +31,22 @@ export default function Index() {
   const [actualites, setActualites] = useState<Actualite[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+
+  // Détection taille écran
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width <= 767);
+      setIsTablet(width > 767 && width <= 1024);
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Fetch homepage
   useEffect(() => {
@@ -119,23 +135,6 @@ export default function Index() {
     fetchActualites();
   }, []);
 
-  // CSS pour forcer 1 slide sur mobile
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.innerHTML = `
-      @media (max-width: 767px) {
-        .slick-slide {
-          width: 100% !important;
-        }
-        .slick-track {
-          display: flex !important;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-    return () => document.head.removeChild(style);
-  }, []);
-
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center">
       <p className="text-xl font-basecoat">Chargement...</p>
@@ -148,41 +147,23 @@ export default function Index() {
     </div>
   );
 
+  // Configuration slider dynamique
+  const getSlidesToShow = () => {
+    if (isMobile) return 1;
+    if (isTablet) return 2;
+    return 3;
+  };
+
   const sliderSettings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: getSlidesToShow(),
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
     arrows: false,
     swipeToSlide: true,
-    variableWidth: false,
-    responsive: [
-      { 
-        breakpoint: 9999,
-        settings: { 
-          slidesToShow: 3,
-          slidesToScroll: 1,
-        } 
-      },
-      { 
-        breakpoint: 1024,
-        settings: { 
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        } 
-      },
-      { 
-        breakpoint: 767,
-        settings: { 
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          centerMode: false,
-        } 
-      },
-    ],
   };
 
   return (
@@ -268,7 +249,7 @@ export default function Index() {
           </h2>
         </div>
 
-        <Slider {...sliderSettings} className="mt-4 sm:mt-6 md:mt-8 relative z-0">
+        <Slider {...sliderSettings} className="mt-4 sm:mt-6 md:mt-8 relative z-0" key={`${isMobile}-${isTablet}`}>
           {realisations.map((realisation) => (
             <div key={realisation.id} className="px-3 sm:px-4 md:px-6">
               <Link to={`/realisations/${realisation.id}`}>
