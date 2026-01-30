@@ -13,7 +13,7 @@ export default function Footer() {
             <img
               src="/assets/logo_t_poulettes_white.png"
               alt="Les Poulettes"
-              className="h-20 sm:h-24 md:h-28 w-auto"
+              className="h-[100px] w-auto"
             />
           </Link>
           <p className="mt-3 sm:mt-4 text-gray-400 text-xs sm:text-sm leading-relaxed font-basecoat">
