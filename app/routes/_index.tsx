@@ -193,48 +193,48 @@ const sliderSettings = {
       </div>
 
       {/* Actualités - Responsive title */}
-      <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 text-center px-4">
-        <h2 className="font-ogg font-light uppercase text-[28px] sm:text-[35px] md:text-[45px] lg:text-[60px] text-black leading-tight tracking-[3px] sm:tracking-[4px] md:tracking-[5px]">
-          À ne pas manquer
-        </h2>
-      </div>
+<div className="relative z-10 mt-8 sm:mt-10 md:mt-12 text-center px-4">
+  <h2 className="font-ogg font-light uppercase text-[28px] sm:text-[35px] md:text-[45px] lg:text-[60px] text-black leading-tight tracking-[3px] sm:tracking-[4px] md:tracking-[5px]">
+    À ne pas manquer
+  </h2>
+</div>
 
-      {/* Actualités Section - Responsive layout */}
-      <section className="actualites py-8 sm:py-12 md:py-16 bg-yellow-100 max-w-7xl mx-4 sm:mx-6 md:mx-8 lg:mx-auto px-4 sm:px-6 md:px-8 rounded-lg shadow-md mt-8 sm:mt-10 md:mt-12">
-        {actualites.length > 0 ? (
-          actualites.map((actu) => (
-            <div key={actu.id} className="flex flex-col md:flex-row items-center gap-6 sm:gap-8 mb-8 sm:mb-10 md:mb-12">
-              <div className="w-full md:w-1/2 order-2 md:order-1">
-                <h2 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-semibold text-black mb-3 sm:mb-4">
-                  {actu.title}
-                </h2>
-                <p className="font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed">
-                  {actu.content}
-                </p>
-                <Link to="/actualites">
-                  <button
-                    type="button"
-                    className="font-basecoat uppercase py-2 px-4 sm:py-2.5 sm:px-5 mt-4 sm:mt-6 text-xs sm:text-sm font-medium text-indigo-600 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 transition"
-                  >
-                    Toutes les actualités
-                  </button>
-                </Link>
-              </div>
-              {actu.image_url && (
-                <div className="w-full md:w-1/2 order-1 md:order-2">
-                  <img
-                    src={actu.image_url}
-                    alt={actu.title}
-                    className="w-full h-48 sm:h-56 md:h-64 lg:h-72 object-cover rounded-md shadow-md"
-                  />
-                </div>
-              )}
-            </div>
-          ))
-        ) : (
-          <p className="text-center text-gray-600 text-base sm:text-lg">Aucune actualité disponible.</p>
+{/* Actualités Section - Responsive layout */}
+<section className="actualites py-8 sm:py-12 md:py-16 bg-yellow-100 max-w-7xl mx-4 sm:mx-6 md:mx-8 lg:mx-auto px-4 sm:px-6 md:px-8 rounded-lg shadow-md mt-8 sm:mt-10 md:mt-12">
+  {actualites.length > 0 ? (
+    actualites.map((actu) => (
+      <div key={actu.id} className="flex flex-col md:flex-row items-center gap-6 sm:gap-8 mb-8 sm:mb-10 md:mb-12 last:mb-0">
+        <div className="w-full md:w-1/2 order-2 md:order-1">
+          <h2 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-semibold text-black mb-3 sm:mb-4">
+            {actu.title}
+          </h2>
+          <p className="font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed">
+            {actu.content}
+          </p>
+          <Link to="/actualites">
+            <button
+              type="button"
+              className="font-basecoat uppercase py-2 px-4 sm:py-2.5 sm:px-5 mt-4 sm:mt-6 text-xs sm:text-sm font-medium text-indigo-600 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 transition"
+            >
+              Toutes les actualités
+            </button>
+          </Link>
+        </div>
+        {actu.image_url && (
+          <div className="w-full md:w-1/2 order-1 md:order-2">
+            <img
+              src={actu.image_url}
+              alt={actu.title}
+              className="w-full h-48 sm:h-56 md:h-64 lg:h-72 object-cover rounded-md shadow-md"
+            />
+          </div>
         )}
-      </section>
+      </div>
+    ))
+  ) : (
+    <p className="text-center text-gray-600 text-base sm:text-lg">Aucune actualité disponible.</p>
+  )}
+</section>
 
       {/* Slider Réalisations - Responsive title & spacing */}
       <section className="products py-8 sm:py-12 md:py-16 bg-white max-w-7xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
