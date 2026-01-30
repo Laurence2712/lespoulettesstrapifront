@@ -170,10 +170,10 @@ const sliderSettings = {
     <div className="overflow-x-hidden">
      
       {/* Header Banner - Responsive heights */}
-      <header
-        className="banner relative bg-cover bg-center h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[100vh] flex flex-col justify-end text-white p-4 sm:p-6 md:p-8"
-        style={{ backgroundImage: `url(${homepageData?.image_url})` }}
-      >
+    <header
+  className="banner relative bg-cover bg-center h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[100vh] flex flex-col justify-end text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24"
+  style={{ backgroundImage: `url(${homepageData?.image_url})` }}
+>
         <div className="banner-content text-center z-10 flex flex-col items-center justify-end pb-8 sm:pb-12 md:pb-16">
           <h1 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold drop-shadow-lg uppercase px-4">
             Les trousses
