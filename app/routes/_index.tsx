@@ -143,21 +143,28 @@ const sliderSettings = {
   swipeToSlide: true,
   responsive: [
     { 
-      breakpoint: 1280,  // Large tablets et petits desktop
+      breakpoint: 1280,  // Large desktop
+      settings: { 
+        slidesToShow: 3,
+        slidesToScroll: 1,
+      } 
+    },
+    { 
+      breakpoint: 1024,  // Tablet landscape
       settings: { 
         slidesToShow: 2,
         slidesToScroll: 1,
       } 
     },
     { 
-      breakpoint: 768,  // ✅ iPad (768x1024) doit montrer 2 slides
+      breakpoint: 768,  // Tablet portrait
       settings: { 
         slidesToShow: 2,
         slidesToScroll: 1,
       } 
     },
     { 
-      breakpoint: 640,  // Mobile
+      breakpoint: 480,  // ✅ Tous les smartphones (même les plus grands)
       settings: { 
         slidesToShow: 1,
         slidesToScroll: 1,
