@@ -141,24 +141,26 @@ const sliderSettings = {
   autoplaySpeed: 3000,
   arrows: false,
   swipeToSlide: true,
-  touchThreshold: 10,
-  centerMode: false,  // ✅ Pas de centerMode
-  centerPadding: '0px',  // ✅ Pas de padding
   responsive: [
     { 
-      breakpoint: 1024,  // Tablet
+      breakpoint: 1280,  // Large tablets et petits desktop
       settings: { 
-        slidesToShow: 2,  // ✅ 2 slides complets sur tablet
+        slidesToShow: 2,
         slidesToScroll: 1,
-        centerMode: false,
+      } 
+    },
+    { 
+      breakpoint: 768,  // ✅ iPad (768x1024) doit montrer 2 slides
+      settings: { 
+        slidesToShow: 2,
+        slidesToScroll: 1,
       } 
     },
     { 
       breakpoint: 640,  // Mobile
       settings: { 
-        slidesToShow: 1,  // ✅ 1 slide complet sur mobile
+        slidesToShow: 1,
         slidesToScroll: 1,
-        centerMode: false,
       } 
     },
   ],
@@ -203,10 +205,10 @@ const sliderSettings = {
       </div>
 
       {/* Actualités Section - Responsive layout */}
-      <section className="actualites py-8 sm:py-12 md:py-16 bg-yellow-100 max-w-7xl mx-4 sm:mx-6 md:mx-8 lg:mx-auto px-4 sm:px-6 md:px-8 rounded-lg shadow-md mt-8 sm:mt-10 md:mt-12">
+<section className="actualites py-6 sm:py-8 md:py-10 bg-yellow-100 max-w-7xl mx-4 sm:mx-6 md:mx-8 lg:mx-auto px-4 sm:px-6 md:px-8 rounded-lg shadow-md mt-8 sm:mt-10 md:mt-12">
         {actualites.length > 0 ? (
           actualites.map((actu) => (
-            <div key={actu.id} className="flex flex-col md:flex-row items-center gap-6 sm:gap-8 mb-8 sm:mb-10 md:mb-12">
+<div key={actu.id} className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
               <div className="w-full md:w-1/2 order-2 md:order-1">
                 <h2 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-semibold text-black mb-3 sm:mb-4">
                   {actu.title}
