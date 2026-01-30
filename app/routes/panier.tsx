@@ -25,7 +25,7 @@ export default function Panier() {
 
   if (cart.length === 0) {
     return (
-      <div className="container mx-auto py-12 sm:py-16 md:py-20 px-4 text-center">
+    <div className="container mx-auto py-6 sm:py-8 md:py-10 px-4 text-center mt-[60px] sm:mt-[70px] md:mt-[80px] min-h-[60vh] flex flex-col justify-center">
         <h1 className="font-ogg text-2xl sm:text-3xl md:text-4xl font-light mb-3 sm:mb-4 uppercase">
           Votre panier est vide
         </h1>
