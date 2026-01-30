@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "@remix-run/react";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
@@ -64,9 +65,10 @@ export default function NavBar() {
             </Link>
             <Link
               to="/panier"
-              className="font-basecoat inline-block bg-yellow-400 hover:bg-yellow-500 text-black px-4 lg:px-6 py-2 lg:py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-sm lg:text-base"
+              className="font-basecoat inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-4 lg:px-5 py-2 lg:py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-sm lg:text-base"
             >
-              Panier
+              <ShoppingCartIcon className="w-5 h-5" />
+              <span className="hidden lg:inline">Panier</span>
             </Link>
           </div>
 
@@ -136,8 +138,9 @@ export default function NavBar() {
               <Link
                 to="/panier"
                 onClick={handleLinkClick}
-                className="font-basecoat bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-base"
+                className="font-basecoat inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-base"
               >
+                <ShoppingCartIcon className="w-5 h-5" />
                 Panier
               </Link>
             </div>
