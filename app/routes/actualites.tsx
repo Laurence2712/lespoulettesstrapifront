@@ -19,7 +19,7 @@ export default function ActualitesPage() {
   useEffect(() => {
     async function fetchActualites() {
       try {
-        const response = await fetch(apiEndpoints.actualites);  // ✅ Utilise actualites, pas latestActualite
+        const response = await fetch(apiEndpoints.actualites);  // ✅ TOUTES les actualités
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
         if (data?.data) {
@@ -61,7 +61,7 @@ export default function ActualitesPage() {
 
   return (
     <div className="container mx-auto py-6 sm:py-8 md:py-12 lg:py-16 px-4 sm:px-6 md:px-8 max-w-7xl mt-[60px] sm:mt-[70px] md:mt-[80px]">
-      {/* Breadcrumb - Responsive */}
+      {/* Breadcrumb */}
       <nav className="font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
         <Link to="/" className="text-yellow-600 hover:text-yellow-800 font-medium transition">
           Accueil
@@ -70,32 +70,33 @@ export default function ActualitesPage() {
         <span className="text-gray-600">Actualités</span>
       </nav>
 
-      {/* Titre - Responsive */}
+      {/* Titre */}
       <h1 className="font-ogg text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-center mb-8 sm:mb-10 md:mb-12 text-gray-900 tracking-wide font-light uppercase">
         Toutes les actualités
       </h1>
 
-      {/* Loading & Error states */}
+      {/* Loading */}
       {loading && (
         <div className="flex items-center justify-center py-12 sm:py-16 md:py-20">
           <p className="font-basecoat text-lg sm:text-xl md:text-2xl text-gray-600">Chargement...</p>
         </div>
       )}
       
+      {/* Error */}
       {error && (
         <div className="flex items-center justify-center py-12 sm:py-16 md:py-20">
           <p className="font-basecoat text-red-500 text-center text-base sm:text-lg md:text-xl">{error}</p>
         </div>
       )}
 
-      {/* Liste actualités - Responsive spacing */}
+      {/* Liste actualités avec alternance */}
       <div className="flex flex-col gap-8 sm:gap-10 md:gap-12 lg:gap-16">
         {actualites.map((actu, index) => (
           <div
             key={actu.id}
-            className="flex flex-col md:flex-row items-center gap-6 sm:gap-8 actu-card bg-white rounded-xl shadow-lg overflow-hidden p-4 sm:p-5 md:p-6 transform transition hover:scale-[1.01] md:hover:scale-[1.02]"
+            className="flex flex-col md:flex-row items-center gap-6 sm:gap-8 actu-card bg-white rounded-xl shadow-lg overflow-hidden p-4 sm:p-5 md:p-6 transform transition hover:scale-[1.01]"
           >
-            {/* Image à gauche (index pair) - Desktop only alternance */}
+            {/* Image à GAUCHE si index PAIR (0, 2, 4...) */}
             {index % 2 === 0 && actu.image_url && (
               <div className="w-full md:w-1/2 order-1">
                 <img
@@ -106,7 +107,7 @@ export default function ActualitesPage() {
               </div>
             )}
 
-            {/* Contenu - Responsive text sizes */}
+            {/* Contenu texte */}
             <div className={`w-full md:w-1/2 flex flex-col justify-center ${index % 2 === 0 ? 'order-2' : 'order-2 md:order-1'}`}>
               <p className="font-basecoat text-xs sm:text-sm text-gray-500 mb-2 sm:mb-3 italic">
                 {actu.date
@@ -125,9 +126,9 @@ export default function ActualitesPage() {
               </p>
             </div>
 
-            {/* Image à droite (index impair) - Desktop only alternance */}
+            {/* Image à DROITE si index IMPAIR (1, 3, 5...) */}
             {index % 2 !== 0 && actu.image_url && (
-              <div className={`w-full md:w-1/2 ${index % 2 !== 0 ? 'order-1 md:order-2' : 'order-1'}`}>
+              <div className="w-full md:w-1/2 order-1 md:order-2">
                 <img
                   src={actu.image_url}
                   alt={actu.title}
