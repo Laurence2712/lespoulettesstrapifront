@@ -170,37 +170,83 @@ export default function Index() {
     <div className="overflow-x-hidden">
      
       {/* Header Banner - Responsive heights */}
-      <header
-        className="banner relative bg-cover bg-center h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[100vh] flex flex-col justify-end text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24"
-        style={{ backgroundImage: `url(${homepageData?.image_url})` }}
+<header
+  className="banner relative bg-cover bg-center h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[100vh] flex flex-col justify-end text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24"
+  style={{ backgroundImage: `url(${homepageData?.image_url})` }}
+>
+  <div className="banner-content text-center z-10 flex flex-col items-center justify-end pb-8 sm:pb-12 md:pb-16">
+    {/* Logo Les Poulettes BLANC et GRAND */}
+    <img
+      src="/assets/logo_t_poulettes_white.png"
+      alt="Les Poulettes"
+      className="w-[300px] sm:w-[400px] md:w-[500px] lg:w-[600px] drop-shadow-2xl"
+    />
+    
+    <h1 className="font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold drop-shadow-lg mb-6 px-4 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[50%]">
+      Une marque d'accessoires made in Bénin, éco-trendy/éco-friendly qui surfe sur la vague du wax !
+    </h1>
+    
+    <div className="mt-4 sm:mt-6">
+      <Link
+        to="/realisations"
+        className="font-basecoat btn bg-yellow-400 text-black px-5 py-2.5 sm:px-6 sm:py-3 md:px-8 md:py-3.5 rounded text-sm sm:text-base md:text-lg transform transition duration-500 hover:scale-105 font-semibold inline-block"
       >
-        <div className="banner-content text-center z-10 flex flex-col items-center justify-end pb-8 sm:pb-12 md:pb-16">
-          <h1 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold drop-shadow-lg uppercase px-4">
-            Les trousses
-          </h1>
-          <div className="mt-4 sm:mt-6">
-            <Link
-              to="/realisations"
-              className="font-basecoat btn bg-yellow-400 text-black px-5 py-2.5 sm:px-6 sm:py-3 md:px-8 md:py-3.5 rounded text-sm sm:text-base md:text-lg transform transition duration-500 hover:scale-105 font-semibold inline-block"
-            >
-              Foncez !
-            </Link>
-          </div>
-        </div>
-        <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
-      </header>
+        Je craque !
+      </Link>
+    </div>
+  </div>
+  <div className="absolute inset-0 bg-black opacity-65 z-0"></div>
+</header>
+<section id="qui-sommes-nous">
+  <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 text-center mb-8 sm:mb-10 md:mb-12">
+    <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xldrop-shadow-lg uppercase px-4">
+      Qui sommes-nous?
+    </h2>
+  </div>
 
-      {/* Description - Responsive padding & text */}
-      <div className="mt-8 sm:mt-10 md:mt-12 text-center px-4 sm:px-6 md:px-8">
-        <p className="font-basecoat text-base sm:text-lg md:text-xl lg:text-2xl max-w-[90%] sm:max-w-[750px] mx-auto leading-relaxed">
-          {homepageData?.description}
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16 md:mb-20">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+      
+      {/* Texte */}
+      <div className="order-2 md:order-1">
+        <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
+          Les Poulettes est une marque d'accessoires éco-responsables créée au Bénin. 
+          Nous confectionnons à la main des trousses, sacs et housses d'ordinateur en tissu wax authentique. 
+          Chaque pièce est unique et reflète l'artisanat béninois traditionnel tout en adoptant 
+          un style moderne et tendance.
+        </p>
+        <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mt-4">
+          Notre mission : promouvoir le savoir-faire local et offrir des accessoires durables, 
+          élégants et respectueux de l'environnement.
         </p>
       </div>
 
+      {/* Photos circulaires - 2 personnes */}
+      <div className="order-1 md:order-2 flex justify-center items-center">
+        <div className="relative w-full h-[300px] sm:h-[350px]">
+          {/* Photo 1 - Gauche */}
+          <div className="absolute top-1/2 left-[20%] sm:left-[25%] -translate-x-1/2 -translate-y-1/2 z-20">
+            <div className="relative w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] rounded-full overflow-hidden border-4 border-yellow-400 shadow-2xl transform hover:scale-110 transition duration-300">
+              <img src="/assets/equipe-1.jpg" alt="Fondatrice 1" className="w-full h-full object-cover" />
+            </div>
+          </div>
+          
+          {/* Photo 2 - Droite */}
+          <div className="absolute top-1/2 right-[20%] sm:right-[25%] translate-x-1/2 -translate-y-1/2 z-20">
+            <div className="relative w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] rounded-full overflow-hidden border-4 border-yellow-400 shadow-2xl transform hover:scale-110 transition duration-300">
+              <img src="/assets/equipe-2.jpg" alt="Fondatrice 2" className="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
       {/* Actualités - Responsive title */}
       <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 text-center px-4">
-        <h2 className="font-ogg font-light uppercase text-[28px] sm:text-[35px] md:text-[45px] lg:text-[60px] text-black leading-tight tracking-[3px] sm:tracking-[4px] md:tracking-[5px]">
-          À ne pas manquer
+        <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xldrop-shadow-lg uppercase px-4">
+         Actualités
         </h2>
       </div>
 
@@ -244,9 +290,8 @@ export default function Index() {
       {/* Slider Réalisations - Responsive title & spacing */}
       <section className="products py-8 sm:py-12 md:py-16 bg-white max-w-7xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 text-center mb-8 sm:mb-10 md:mb-12">
-          <h2 className="font-ogg font-light uppercase text-[28px] sm:text-[35px] md:text-[45px] lg:text-[60px] text-black leading-tight tracking-[3px] sm:tracking-[4px] md:tracking-[5px]">
-            Vous laisserez-vous tenter ?
-          </h2>
+          <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xldrop-shadow-lg uppercase px-4">
+ Nos créations          </h2>
         </div>
 
         <Slider {...sliderSettings} className="mt-4 sm:mt-6 md:mt-8 relative z-0" key={`${isMobile}-${isTablet}`}>
@@ -268,12 +313,7 @@ export default function Index() {
                   <h3 className="font-basecoat mt-3 sm:mt-4 text-base sm:text-lg md:text-xl font-semibold line-clamp-2">
                     {realisation.title}
                   </h3>
-                  <p className="font-basecoat mt-2 text-gray-700 text-xs sm:text-sm md:text-base line-clamp-2">
-                    {realisation.description}
-                  </p>
-                  <p className="font-basecoat mt-2 text-gray-900 font-bold text-lg sm:text-xl md:text-2xl">
-                    {realisation.prix} €
-                  </p>
+                
                   <button
                     type="button"
                     className="font-basecoat uppercase py-1.5 px-3 sm:py-2 sm:px-4 md:py-2.5 md:px-5 mt-3 sm:mt-4 text-xs sm:text-sm md:text-base font-medium text-indigo-600 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 transition"
@@ -286,6 +326,33 @@ export default function Index() {
           ))}
         </Slider>
       </section>
+   <section id="ou-nous-trouver" className="w-full">
+  <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 text-center mb-8 sm:mb-10 md:mb-12">
+    <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xldrop-shadow-lg uppercase px-4">
+      Où nous trouver
+    </h2>
+    
+    {/* Texte descriptif */}
+    <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 mt-4 sm:mt-6 px-4">
+      Vous pouvez nous trouver à Cotonou
+      Whatsapp : +229 xx xx xx xx
+    </p>
+  </div>
+
+  {/* Google Map - Pleine largeur */}
+  <div className="w-full h-[400px] sm:h-[500px] md:h-[600px]">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126169.02214257128!2d2.3522219!3d6.3702928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1024a9a5c8d5f6c5%3A0x7a7a7a7a7a7a7a7a!2sCotonou%2C%20B%C3%A9nin!5e0!3m2!1sfr!2sbe!4v1234567890123!5m2!1sfr!2sbe"
+      width="100%"
+      height="100%"
+      style={{ border: 0 }}
+      allowFullScreen={true}
+      loading="lazy"
+      referrerPolicy="no-referrer-when-downgrade"
+      title="Localisation Les Poulettes - Cotonou, Bénin"
+    ></iframe>
+  </div>
+</section>
     </div>
   );
 }

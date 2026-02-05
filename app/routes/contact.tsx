@@ -105,11 +105,7 @@ export default function Contact() {
           transition={{ delay: 0.6 }}
           className="relative order-2 mt-8 md:mt-0"
         >
-          <img
-            src="/assets/contact_visual.jpg"
-            alt="Illustration contact"
-            className="rounded-xl sm:rounded-2xl shadow-2xl w-full object-cover h-64 sm:h-80 md:h-96 lg:h-[500px]"
-          />
+        
           <div className="absolute inset-0 bg-yellow-400 opacity-20 rounded-xl sm:rounded-2xl pointer-events-none"></div>
         </motion.div>
       </div>

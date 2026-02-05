@@ -5,7 +5,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-black text-white py-8 sm:py-10 mt-12 sm:mt-16 md:mt-20">
+    <footer className="bg-black text-white py-8 sm:py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
         {/* Colonne 1 : Logo + description */}
         <div>
@@ -52,7 +52,7 @@ export default function Footer() {
             
             <li className="flex items-start space-x-2">
               <MapPinIcon className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
-              <span>Cotonou, Benin</span>
+              <span>WHATSAPP</span>
             </li>
           </ul>
         </div>

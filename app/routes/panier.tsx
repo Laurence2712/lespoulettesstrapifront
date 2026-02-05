@@ -34,7 +34,7 @@ export default function Panier() {
         </p>
         <Link
           to="/realisations"
-          className="font-basecoat inline-block bg-yellow-400 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-yellow-500 transition text-sm sm:text-base"
+          className="font-basecoat inline-block bg-yellow-400 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-yellow-500 transition text-sm sm:text-base max-w-xs sm:max-w-sm md:max-w-md mx-auto max-w-xs sm:max-w-sm md:max-w-md mx-auto max-w-xs sm:max-w-sm md:max-w-md mx-auto"
         >
           Voir nos réalisations
         </Link>
@@ -240,9 +240,12 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
           <p className="font-basecoat text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
             Nous avons bien reçu votre commande. Vous recevrez un email de confirmation à {formData.email}.
           </p>
+            <p className="font-basecoat text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
+          Attention :  La commande ne sera préparée et expédiée, qu'à la réception du paiement.
+          </p>
           <Link
             to="/"
-            className="font-basecoat inline-block bg-yellow-400 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-yellow-500 transition text-sm sm:text-base"
+            className="font-basecoat inline-block bg-yellow-400 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-yellow-500 transition text-sm sm:text-base max-w-xs sm:max-w-sm md:max-w-md mx-auto max-w-xs sm:max-w-sm md:max-w-md mx-auto max-w-xs sm:max-w-sm md:max-w-md mx-auto"
           >
             Retour à l'accueil
           </Link>
@@ -271,7 +274,7 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
           {cart.reduce((sum, item) => sum + item.quantity, 0)} article(s) - Total: {total.toFixed(2)} €
         </p>
         <p className="font-basecoat text-xs sm:text-sm">
-          Après validation, nous vous contacterons pour confirmer la commande et convenir du mode de livraison.
+          Votre commande ne sera validée qu'après réception du paiement.
         </p>
       </div>
 
@@ -284,10 +287,11 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
               Instructions de paiement
             </h3>
             <ul className="font-basecoat text-xs sm:text-sm text-yellow-900 space-y-1.5 sm:space-y-2">
-              <li>✅ Vous recevrez un email avec un <strong>QR Code Mobile Money</strong></li>
-              <li>✅ Scannez le QR Code avec votre application mobile</li>
-              <li>✅ Effectuez le paiement de <strong>{total.toFixed(2)} FCFA</strong></li>
-              <li>✅ Votre commande sera validée après réception</li>
+            <li>✅ Remplissez les champs du formulaire de commande</li>
+
+             <li>✅ Effectuez un virement sur le numéro de compte <strong>XXXXXXXX</strong></li>
+             <li>✅ Dès réception du virement, votre commande sera préparée et expédiée !</li>
+
             </ul>
           </div>
         </div>
