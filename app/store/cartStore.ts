@@ -7,6 +7,8 @@ interface CartItem {
   prix: string | number;
   quantity: number;
   image_url: string;
+  categorieId?: number; 
+  declinaisonId?: number;  
 }
 
 interface CartStore {

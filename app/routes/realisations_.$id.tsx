@@ -148,17 +148,19 @@ const declinaisons: Declinaison[] = item.Declinaison?.map((decl: any) => {
   const currentDeclinaison = realisation.declinaisons[selectedImageIndex];
 
   const handleAddToCart = () => {
-    if (currentDeclinaison && currentDeclinaison.Stock > 0) {
-      addToCart({
-        id: realisation.id,
-        title: `${realisation.title}${currentDeclinaison.Description ? ` - ${currentDeclinaison.Description}` : ''}`,
-        prix: realisation.prix || 0,
-        quantity,
-        image_url: currentImage?.url,
-      });
-      alert('Produit ajouté au panier !');
-    }
-  };
+  if (currentDeclinaison && currentDeclinaison.Stock > 0) {
+    addToCart({
+      id: realisation.id,
+      title: `${realisation.title}${currentDeclinaison.Description ? ` - ${currentDeclinaison.Description}` : ''}`,
+      prix: realisation.prix || 0,
+      quantity,
+      image_url: currentImage?.url,
+      categorieId: realisation.id,  // ← NOUVEAU
+      declinaisonId: currentDeclinaison.id,  // ← NOUVEAU
+    });
+    alert('Produit ajouté au panier !');
+  }
+};
 
   return (
     <div className="container mx-auto py-6 sm:py-8 md:py-12 lg:py-16 px-4 sm:px-6 md:px-8 max-w-7xl mt-[60px] sm:mt-[70px] md:mt-[80px]">
