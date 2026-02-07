@@ -265,7 +265,7 @@ export default function Index() {
                 <Link to="/actualites">
                   <button
                     type="button"
-                    className="font-basecoat btn bg-yellow-400 text-black px-5 py-2.5 sm:px-6 sm:py-3 md:px-8 md:py-3.5 rounded text-sm sm:text-base md:text-lg transform transition duration-500 hover:scale-105 font-semibold inline-block"
+                    className="font-basecoat btn uppercase bg-yellow-400 text-black px-5 py-2.5 sm:px-6 sm:py-3 md:px-8 md:py-3.5 rounded text-sm sm:text-base md:text-lg transform transition duration-500 hover:scale-105 font-semibold inline-block"
                   >
                     Toutes les actualités
                   </button>
