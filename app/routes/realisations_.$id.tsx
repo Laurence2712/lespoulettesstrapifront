@@ -28,6 +28,7 @@ interface Realisation {
   declinaisons: Declinaison[];
 }
 
+
 export default function RealisationDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ const response = await fetch(url);
         
         if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
         const data = await response.json();
+        console.log('DATA STRAPI DETAIL 👉', data);
 
         if (data && data.data) {
           const item = data.data;

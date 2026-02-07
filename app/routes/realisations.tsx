@@ -4,7 +4,7 @@ import { gsap } from 'gsap';
 import { apiEndpoints, getImageUrl } from '../config/api';
 
 interface Realisation {
-  id: number;
+  id: string;
   title: string;
   image_url?: string;
   description?: string;
@@ -27,7 +27,7 @@ export default function Realisations() {
 
         if (data && data.data) {
           const realisationsData: Realisation[] = data.data.map((realisation: any) => ({
-            id: realisation.id,
+            id: realisation.documentId,
             title: realisation.Titre || 'Titre indisponible',
             image_url: realisation.Images?.[0]?.url ? getImageUrl(realisation.Images[0].url) : undefined,
             description: realisation.Description || 'Description indisponible',
