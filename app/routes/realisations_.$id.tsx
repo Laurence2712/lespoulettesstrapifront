@@ -5,7 +5,7 @@ import { useCartStore } from '../store/cartStore';
 
 interface Declinaison {
   id: number;
-  Image?: {
+  Image: {
     id: number;
     url: string;
     formats?: {
@@ -48,7 +48,6 @@ export default function RealisationDetail() {
 
         if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
         const data = await response.json();
-        console.log('DATA STRAPI DETAIL 👉', data);
 
         if (data && data.data) {
           const item = data.data;
@@ -56,25 +55,34 @@ export default function RealisationDetail() {
           // 🔹 Vérifier les déclinaisons
           console.log('DECLINAISONS RAW 👉', item.Declinaison);
 
-          const declinaisons: Declinaison[] = item.Declinaison?.map((decl: any) => ({
-            id: decl.id,
-            Image: decl.Image
-              ? {
-                  id: decl.Image.id,
-                  url: getImageUrl(decl.Image.url),
-                  formats: decl.Image.formats
-                    ? {
-                        large: decl.Image.formats.large ? { url: getImageUrl(decl.Image.formats.large.url) } : undefined,
-                        medium: decl.Image.formats.medium ? { url: getImageUrl(decl.Image.formats.medium.url) } : undefined,
-                        small: decl.Image.formats.small ? { url: getImageUrl(decl.Image.formats.small.url) } : undefined,
-                        thumbnail: decl.Image.formats.thumbnail ? { url: getImageUrl(decl.Image.formats.thumbnail.url) } : undefined,
-                      }
-                    : undefined,
-                }
-              : undefined,
-            Stock: decl.Stock ?? 0,
-            Description: decl.Description ?? '',
-          })) || [];
+    const declinaisons: Declinaison[] = item.Declinaison?.map((decl: any) => {
+  const imgData = decl.Image?.data?.attributes; 
+
+  const image: Declinaison['Image'] = imgData
+    ? {
+        id: decl.Image.data.id,
+        url: getImageUrl(imgData.url),
+        formats: imgData.formats
+          ? {
+              large: imgData.formats.large ? { url: getImageUrl(imgData.formats.large.url) } : undefined,
+              medium: imgData.formats.medium ? { url: getImageUrl(imgData.formats.medium.url) } : undefined,
+              small: imgData.formats.small ? { url: getImageUrl(imgData.formats.small.url) } : undefined,
+              thumbnail: imgData.formats.thumbnail ? { url: getImageUrl(imgData.formats.thumbnail.url) } : undefined,
+            }
+          : undefined,
+      }
+    : {
+        id: 0,
+        url: '', // image vide par défaut si pas d'image
+      };
+
+  return {
+    id: decl.id,
+    Stock: decl.Stock ?? 0,
+    Description: decl.Description ?? '',
+    Image: image,
+  };
+});
 
           const mainImageUrl =
             item.Images?.[0]?.url
@@ -211,31 +219,42 @@ export default function RealisationDetail() {
           {/* Galerie de miniatures (déclinaisons) */}
           {realisation.declinaisons.length > 0 && (
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 sm:gap-4">
-              {realisation.declinaisons.map((declinaison, index) => (
-                <button
-                  key={declinaison.id}
-                  onClick={() => {
-                    setSelectedDeclinaisonIndex(index);
-                    setQuantity(1);
-                  }}
-                  className={`relative overflow-hidden rounded-lg transition-all duration-300 ${
-                    selectedDeclinaisonIndex === index
-                      ? 'ring-4 ring-yellow-400 scale-105'
-                      : 'ring-2 ring-gray-200 hover:ring-yellow-300'
-                  }`}
-                >
-                  <img
-                    src={declinaison.Image?.formats?.thumbnail?.url || declinaison.Image?.url}
-                    alt={`${realisation.title} - ${declinaison.Description || index + 1}`}
-                    className="w-full h-20 sm:h-24 object-cover"
-                  />
-                  {declinaison.Stock === 0 && (
-                    <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
-                      <span className="text-white text-xs font-bold">Épuisé</span>
-                    </div>
-                  )}
-                </button>
-              ))}
+              {realisation.declinaisons.map((declinaison, index) => {
+                const thumbUrl = declinaison.Image?.formats?.thumbnail?.url || declinaison.Image?.url;
+
+                return (
+                  <button
+                    key={declinaison.id}
+                    onClick={() => {
+                      setSelectedDeclinaisonIndex(index);
+                      setQuantity(1);
+                    }}
+                    className={`relative overflow-hidden rounded-lg transition-all duration-300 ${
+                      selectedDeclinaisonIndex === index
+                        ? 'ring-4 ring-yellow-400 scale-105'
+                        : 'ring-2 ring-gray-200 hover:ring-yellow-300'
+                    }`}
+                  >
+                    {thumbUrl ? (
+                      <img
+                        src={thumbUrl}
+                        alt={`${realisation.title} - ${declinaison.Description || index + 1}`}
+                        className="w-full h-20 sm:h-24 object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-20 sm:h-24 flex items-center justify-center bg-gray-200 text-gray-500 rounded-lg">
+                        Aucune image
+                      </div>
+                    )}
+
+                    {declinaison.Stock === 0 && (
+                      <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">Épuisé</span>
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
             </div>
           )}
         </div>
