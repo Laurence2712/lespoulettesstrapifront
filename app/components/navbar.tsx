@@ -104,25 +104,25 @@ export default function NavBar() {
           <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
             <Link
               to="/realisations"
-              className="font-basecoat uppercase font-semibold text-black hover:text-yellow-400 transition text-sm lg:text-base"
+              className="font-basecoat font-semibold text-black hover:text-yellow-400 transition text-sm lg:text-base"
             >
               Créations
             </Link>
             <Link
               to="/actualites"
-              className="font-basecoat uppercase font-semibold text-black hover:text-yellow-400 transition text-sm lg:text-base"
+              className="font-basecoat font-semibold text-black hover:text-yellow-400 transition text-sm lg:text-base"
             >
               Archives
             </Link>
             <Link
               to="/contact"
-              className="font-basecoat uppercase font-semibold text-black hover:text-yellow-400 transition text-sm lg:text-base"
+              className="font-basecoat font-semibold text-black hover:text-yellow-400 transition text-sm lg:text-base"
             >
               Contact
             </Link>
             <Link
               to="/panier"
-              className="font-basecoat uppercase inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-4 lg:px-5 py-2 lg:py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-sm lg:text-base"
+              className="font-basecoat inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-4 lg:px-5 py-2 lg:py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-sm lg:text-base"
             >
               <ShoppingCartIcon className="w-5 h-5" />
               <span className="hidden lg:inline">Panier</span>
