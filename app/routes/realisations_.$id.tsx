@@ -5,7 +5,7 @@ import { useCartStore } from '../store/cartStore';
 
 interface Declinaison {
   id: number;
-  Image: {
+  Image?: {
     id: number;
     url: string;
     formats?: {
@@ -28,12 +28,11 @@ interface Realisation {
   declinaisons: Declinaison[];
 }
 
-
 export default function RealisationDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const addToCart = useCartStore((state) => state.addToCart);
-  
+
   const [realisation, setRealisation] = useState<Realisation | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -43,39 +42,44 @@ export default function RealisationDetail() {
   useEffect(() => {
     async function fetchRealisation() {
       try {
-        // Construire l'URL correctement en enlevant le ?populate=* existant
-    const baseUrl = apiEndpoints.realisations.replace(/\?populate=\*$/, '');
-const url = `${baseUrl}/${id}?populate=*`;
-const response = await fetch(url);
-        
+        const baseUrl = apiEndpoints.realisations.replace(/\?populate=\*$/, '');
+        const url = `${baseUrl}/${id}?populate=*`;
+        const response = await fetch(url);
+
         if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
         const data = await response.json();
         console.log('DATA STRAPI DETAIL 👉', data);
 
         if (data && data.data) {
           const item = data.data;
-          
-          // Traiter les déclinaisons
-          const declinaisons: Declinaison[] = item.Declinaisons?.map((decl: any) => ({
+
+          // 🔹 Vérifier les déclinaisons
+          console.log('DECLINAISONS RAW 👉', item.Declinaison);
+
+          const declinaisons: Declinaison[] = item.Declinaison?.map((decl: any) => ({
             id: decl.id,
-            Image: {
-              id: decl.Image?.id,
-              url: getImageUrl(decl.Image?.url),
-              formats: decl.Image?.formats ? {
-                large: decl.Image.formats.large ? { url: getImageUrl(decl.Image.formats.large.url) } : undefined,
-                medium: decl.Image.formats.medium ? { url: getImageUrl(decl.Image.formats.medium.url) } : undefined,
-                small: decl.Image.formats.small ? { url: getImageUrl(decl.Image.formats.small.url) } : undefined,
-                thumbnail: decl.Image.formats.thumbnail ? { url: getImageUrl(decl.Image.formats.thumbnail.url) } : undefined,
-              } : undefined,
-            },
-            Stock: decl.Stock || 0,
-            Description: decl.Description || '',
+            Image: decl.Image
+              ? {
+                  id: decl.Image.id,
+                  url: getImageUrl(decl.Image.url),
+                  formats: decl.Image.formats
+                    ? {
+                        large: decl.Image.formats.large ? { url: getImageUrl(decl.Image.formats.large.url) } : undefined,
+                        medium: decl.Image.formats.medium ? { url: getImageUrl(decl.Image.formats.medium.url) } : undefined,
+                        small: decl.Image.formats.small ? { url: getImageUrl(decl.Image.formats.small.url) } : undefined,
+                        thumbnail: decl.Image.formats.thumbnail ? { url: getImageUrl(decl.Image.formats.thumbnail.url) } : undefined,
+                      }
+                    : undefined,
+                }
+              : undefined,
+            Stock: decl.Stock ?? 0,
+            Description: decl.Description ?? '',
           })) || [];
 
-          // Image principale (première image du tableau Images ou première déclinaison)
-          const mainImageUrl = item.Images?.[0]?.url 
-            ? getImageUrl(item.Images[0].url) 
-            : declinaisons[0]?.Image?.url;
+          const mainImageUrl =
+            item.Images?.[0]?.url
+              ? getImageUrl(item.Images[0].url)
+              : declinaisons[0]?.Image?.url;
 
           setRealisation({
             id: item.id,
@@ -99,6 +103,13 @@ const response = await fetch(url);
     if (id) fetchRealisation();
   }, [id]);
 
+  const currentDeclinaison = realisation?.declinaisons[selectedDeclinaisonIndex];
+  const mainImage =
+    currentDeclinaison?.Image?.formats?.large?.url ||
+    currentDeclinaison?.Image?.url ||
+    realisation?.mainImage;
+  const isInStock = currentDeclinaison && currentDeclinaison.Stock > 0;
+
   const handleAddToCart = () => {
     if (realisation && currentDeclinaison && currentDeclinaison.Stock > 0) {
       addToCart({
@@ -106,7 +117,7 @@ const response = await fetch(url);
         title: `${realisation.title}${currentDeclinaison.Description ? ` - ${currentDeclinaison.Description}` : ''}`,
         prix: realisation.prix || 0,
         quantity: quantity,
-        image_url: currentDeclinaison.Image.url,
+        image_url: currentDeclinaison.Image?.url,
       });
       alert('Produit ajouté au panier !');
     }
@@ -142,10 +153,6 @@ const response = await fetch(url);
       </div>
     );
   }
-
-  const currentDeclinaison = realisation.declinaisons[selectedDeclinaisonIndex];
-  const mainImage = currentDeclinaison?.Image?.formats?.large?.url || currentDeclinaison?.Image?.url || realisation.mainImage;
-  const isInStock = currentDeclinaison && currentDeclinaison.Stock > 0;
 
   return (
     <div className="container mx-auto py-6 sm:py-8 md:py-10 px-4 sm:px-6 md:px-8 max-w-7xl mt-[60px] sm:mt-[70px] md:mt-[80px]">
@@ -209,7 +216,7 @@ const response = await fetch(url);
                   key={declinaison.id}
                   onClick={() => {
                     setSelectedDeclinaisonIndex(index);
-                    setQuantity(1); // Reset quantity
+                    setQuantity(1);
                   }}
                   className={`relative overflow-hidden rounded-lg transition-all duration-300 ${
                     selectedDeclinaisonIndex === index
@@ -222,7 +229,6 @@ const response = await fetch(url);
                     alt={`${realisation.title} - ${declinaison.Description || index + 1}`}
                     className="w-full h-20 sm:h-24 object-cover"
                   />
-                  {/* Badge stock */}
                   {declinaison.Stock === 0 && (
                     <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
                       <span className="text-white text-xs font-bold">Épuisé</span>
@@ -236,24 +242,18 @@ const response = await fetch(url);
 
         {/* Colonne droite - Informations */}
         <div className="flex flex-col">
-          {/* Titre */}
           <h1 className="font-basecoat text-3xl sm:text-4xl md:text-5xl font-light uppercase mb-4 sm:mb-6 tracking-wide">
             {realisation.title}
           </h1>
 
-          {/* Description de la déclinaison sélectionnée */}
           {currentDeclinaison?.Description && (
-            <p className="font-basecoat text-lg text-gray-600 mb-4 italic">
-              {currentDeclinaison.Description}
-            </p>
+            <p className="font-basecoat text-lg text-gray-600 mb-4 italic">{currentDeclinaison.Description}</p>
           )}
 
-          {/* Prix */}
           <p className="font-basecoat text-4xl sm:text-5xl font-bold text-yellow-600 mb-6 sm:mb-8">
             {realisation.prix ? `${realisation.prix} €` : 'Prix sur demande'}
           </p>
 
-          {/* Stock de la déclinaison sélectionnée */}
           {currentDeclinaison && (
             <div className="mb-6 sm:mb-8">
               {isInStock ? (
@@ -273,7 +273,6 @@ const response = await fetch(url);
             </div>
           )}
 
-          {/* Description */}
           <div className="mb-8 sm:mb-10">
             <h2 className="font-basecoat text-xl sm:text-2xl font-semibold mb-4">Description</h2>
             <p className="font-basecoat text-gray-700 text-base sm:text-lg leading-relaxed whitespace-pre-line">
@@ -281,12 +280,9 @@ const response = await fetch(url);
             </p>
           </div>
 
-          {/* Sélecteur de quantité */}
           {isInStock && (
             <div className="mb-8">
-              <label className="font-basecoat block text-base sm:text-lg font-medium mb-3">
-                Quantité :
-              </label>
+              <label className="font-basecoat block text-base sm:text-lg font-medium mb-3">Quantité :</label>
               <div className="flex items-center gap-4">
                 <button
                   onClick={decrementQuantity}
@@ -307,7 +303,6 @@ const response = await fetch(url);
             </div>
           )}
 
-          {/* Bouton Ajouter au panier */}
           <button
             onClick={handleAddToCart}
             disabled={!isInStock}
