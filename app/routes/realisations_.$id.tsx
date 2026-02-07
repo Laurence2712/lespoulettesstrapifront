@@ -3,13 +3,9 @@ import { useParams, Link, useNavigate } from '@remix-run/react';
 import { apiEndpoints, getImageUrl } from '../config/api';
 import { useCartStore } from '../store/cartStore';
 
-interface Realisation {
+interface Declinaison {
   id: number;
-  title: string;
-  description?: string;
-  prix?: string | number;
-  stock?: number;
-  images: Array<{
+  Image: {
     id: number;
     url: string;
     formats?: {
@@ -18,7 +14,18 @@ interface Realisation {
       small?: { url: string };
       thumbnail?: { url: string };
     };
-  }>;
+  };
+  Stock: number;
+  Description?: string;
+}
+
+interface Realisation {
+  id: number;
+  title: string;
+  description?: string;
+  prix?: string | number;
+  mainImage?: string;
+  declinaisons: Declinaison[];
 }
 
 export default function RealisationDetail() {
@@ -29,43 +36,59 @@ export default function RealisationDetail() {
   const [realisation, setRealisation] = useState<Realisation | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedDeclinaisonIndex, setSelectedDeclinaisonIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   useEffect(() => {
     async function fetchRealisation() {
       try {
-        const response = await fetch(`${apiEndpoints.realisations}/${id}?populate=*`);
+        // Construire l'URL correctement en enlevant le ?populate=* existant
+    const baseUrl = apiEndpoints.realisations.replace(/\?populate=\*$/, '');
+const url = `${baseUrl}/${id}?populate=*`;
+const response = await fetch(url);
+        
         if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
         const data = await response.json();
 
         if (data && data.data) {
           const item = data.data;
-          const images = item.Images?.map((img: any) => ({
-            id: img.id,
-            url: getImageUrl(img.url),
-            formats: img.formats ? {
-              large: img.formats.large ? { url: getImageUrl(img.formats.large.url) } : undefined,
-              medium: img.formats.medium ? { url: getImageUrl(img.formats.medium.url) } : undefined,
-              small: img.formats.small ? { url: getImageUrl(img.formats.small.url) } : undefined,
-              thumbnail: img.formats.thumbnail ? { url: getImageUrl(img.formats.thumbnail.url) } : undefined,
-            } : undefined,
+          
+          // Traiter les déclinaisons
+          const declinaisons: Declinaison[] = item.Declinaisons?.map((decl: any) => ({
+            id: decl.id,
+            Image: {
+              id: decl.Image?.id,
+              url: getImageUrl(decl.Image?.url),
+              formats: decl.Image?.formats ? {
+                large: decl.Image.formats.large ? { url: getImageUrl(decl.Image.formats.large.url) } : undefined,
+                medium: decl.Image.formats.medium ? { url: getImageUrl(decl.Image.formats.medium.url) } : undefined,
+                small: decl.Image.formats.small ? { url: getImageUrl(decl.Image.formats.small.url) } : undefined,
+                thumbnail: decl.Image.formats.thumbnail ? { url: getImageUrl(decl.Image.formats.thumbnail.url) } : undefined,
+              } : undefined,
+            },
+            Stock: decl.Stock || 0,
+            Description: decl.Description || '',
           })) || [];
+
+          // Image principale (première image du tableau Images ou première déclinaison)
+          const mainImageUrl = item.Images?.[0]?.url 
+            ? getImageUrl(item.Images[0].url) 
+            : declinaisons[0]?.Image?.url;
 
           setRealisation({
             id: item.id,
             title: item.Titre || 'Titre indisponible',
             description: item.Description || '',
             prix: item.Prix,
-            stock: item.Stock || 0,
-            images,
+            mainImage: mainImageUrl,
+            declinaisons,
           });
         } else {
-          setError('Réalisation introuvable');
+          setError('Catégorie introuvable');
         }
       } catch (error: any) {
         console.error('Erreur lors du chargement :', error);
-        setError('Erreur lors du chargement de la réalisation');
+        setError('Erreur lors du chargement de la catégorie');
       } finally {
         setLoading(false);
       }
@@ -75,20 +98,20 @@ export default function RealisationDetail() {
   }, [id]);
 
   const handleAddToCart = () => {
-    if (realisation && realisation.stock && realisation.stock > 0) {
+    if (realisation && currentDeclinaison && currentDeclinaison.Stock > 0) {
       addToCart({
         id: realisation.id,
-        title: realisation.title,
+        title: `${realisation.title}${currentDeclinaison.Description ? ` - ${currentDeclinaison.Description}` : ''}`,
         prix: realisation.prix || 0,
         quantity: quantity,
-        image_url: realisation.images[0]?.url || '',
+        image_url: currentDeclinaison.Image.url,
       });
       alert('Produit ajouté au panier !');
     }
   };
 
   const incrementQuantity = () => {
-    if (realisation?.stock && quantity < realisation.stock) {
+    if (currentDeclinaison && quantity < currentDeclinaison.Stock) {
       setQuantity(quantity + 1);
     }
   };
@@ -109,7 +132,7 @@ export default function RealisationDetail() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <p className="font-basecoat text-red-500 text-xl mb-4">{error || 'Réalisation introuvable'}</p>
+          <p className="font-basecoat text-red-500 text-xl mb-4">{error || 'Catégorie introuvable'}</p>
           <Link to="/realisations" className="font-basecoat text-indigo-600 hover:text-indigo-800">
             Retour aux catégories
           </Link>
@@ -118,7 +141,9 @@ export default function RealisationDetail() {
     );
   }
 
-  const mainImage = realisation.images[selectedImageIndex]?.formats?.large?.url || realisation.images[selectedImageIndex]?.url;
+  const currentDeclinaison = realisation.declinaisons[selectedDeclinaisonIndex];
+  const mainImage = currentDeclinaison?.Image?.formats?.large?.url || currentDeclinaison?.Image?.url || realisation.mainImage;
+  const isInStock = currentDeclinaison && currentDeclinaison.Stock > 0;
 
   return (
     <div className="container mx-auto py-6 sm:py-8 md:py-10 px-4 sm:px-6 md:px-8 max-w-7xl mt-[60px] sm:mt-[70px] md:mt-[80px]">
@@ -174,24 +199,33 @@ export default function RealisationDetail() {
             )}
           </div>
 
-          {/* Galerie de miniatures */}
-          {realisation.images.length > 1 && (
+          {/* Galerie de miniatures (déclinaisons) */}
+          {realisation.declinaisons.length > 0 && (
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 sm:gap-4">
-              {realisation.images.map((image, index) => (
+              {realisation.declinaisons.map((declinaison, index) => (
                 <button
-                  key={image.id}
-                  onClick={() => setSelectedImageIndex(index)}
+                  key={declinaison.id}
+                  onClick={() => {
+                    setSelectedDeclinaisonIndex(index);
+                    setQuantity(1); // Reset quantity
+                  }}
                   className={`relative overflow-hidden rounded-lg transition-all duration-300 ${
-                    selectedImageIndex === index
+                    selectedDeclinaisonIndex === index
                       ? 'ring-4 ring-yellow-400 scale-105'
                       : 'ring-2 ring-gray-200 hover:ring-yellow-300'
                   }`}
                 >
                   <img
-                    src={image.formats?.thumbnail?.url || image.url}
-                    alt={`${realisation.title} - ${index + 1}`}
+                    src={declinaison.Image?.formats?.thumbnail?.url || declinaison.Image?.url}
+                    alt={`${realisation.title} - ${declinaison.Description || index + 1}`}
                     className="w-full h-20 sm:h-24 object-cover"
                   />
+                  {/* Badge stock */}
+                  {declinaison.Stock === 0 && (
+                    <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
+                      <span className="text-white text-xs font-bold">Épuisé</span>
+                    </div>
+                  )}
                 </button>
               ))}
             </div>
@@ -205,28 +239,37 @@ export default function RealisationDetail() {
             {realisation.title}
           </h1>
 
+          {/* Description de la déclinaison sélectionnée */}
+          {currentDeclinaison?.Description && (
+            <p className="font-basecoat text-lg text-gray-600 mb-4 italic">
+              {currentDeclinaison.Description}
+            </p>
+          )}
+
           {/* Prix */}
           <p className="font-basecoat text-4xl sm:text-5xl font-bold text-yellow-600 mb-6 sm:mb-8">
             {realisation.prix ? `${realisation.prix} €` : 'Prix sur demande'}
           </p>
 
-          {/* Stock */}
-          <div className="mb-6 sm:mb-8">
-            {realisation.stock && realisation.stock > 0 ? (
-              <div className="flex items-center gap-3">
-                <span className="font-basecoat inline-block bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-semibold">
-                  ✓ En stock
+          {/* Stock de la déclinaison sélectionnée */}
+          {currentDeclinaison && (
+            <div className="mb-6 sm:mb-8">
+              {isInStock ? (
+                <div className="flex items-center gap-3">
+                  <span className="font-basecoat inline-block bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-semibold">
+                    ✓ En stock
+                  </span>
+                  <span className="font-basecoat text-gray-600 text-sm">
+                    {currentDeclinaison.Stock} {currentDeclinaison.Stock > 1 ? 'unités disponibles' : 'unité disponible'}
+                  </span>
+                </div>
+              ) : (
+                <span className="font-basecoat inline-block bg-red-100 text-red-800 px-4 py-2 rounded-full text-sm font-semibold">
+                  ✗ Rupture de stock
                 </span>
-                <span className="font-basecoat text-gray-600 text-sm">
-                  {realisation.stock} {realisation.stock > 1 ? 'unités disponibles' : 'unité disponible'}
-                </span>
-              </div>
-            ) : (
-              <span className="font-basecoat inline-block bg-red-100 text-red-800 px-4 py-2 rounded-full text-sm font-semibold">
-                ✗ Rupture de stock
-              </span>
-            )}
-          </div>
+              )}
+            </div>
+          )}
 
           {/* Description */}
           <div className="mb-8 sm:mb-10">
@@ -237,7 +280,7 @@ export default function RealisationDetail() {
           </div>
 
           {/* Sélecteur de quantité */}
-          {realisation.stock && realisation.stock > 0 && (
+          {isInStock && (
             <div className="mb-8">
               <label className="font-basecoat block text-base sm:text-lg font-medium mb-3">
                 Quantité :
@@ -254,7 +297,7 @@ export default function RealisationDetail() {
                 <button
                   onClick={incrementQuantity}
                   className="font-basecoat bg-gray-200 hover:bg-gray-300 text-gray-800 w-12 h-12 rounded-lg font-bold text-xl transition"
-                  disabled={quantity >= (realisation.stock || 0)}
+                  disabled={currentDeclinaison ? quantity >= currentDeclinaison.Stock : true}
                 >
                   +
                 </button>
@@ -265,14 +308,14 @@ export default function RealisationDetail() {
           {/* Bouton Ajouter au panier */}
           <button
             onClick={handleAddToCart}
-            disabled={!realisation.stock || realisation.stock <= 0}
+            disabled={!isInStock}
             className={`font-basecoat w-full py-4 sm:py-5 rounded-xl text-lg sm:text-xl font-bold uppercase transition-all duration-300 ${
-              realisation.stock && realisation.stock > 0
+              isInStock
                 ? 'bg-yellow-400 hover:bg-yellow-500 text-black transform hover:scale-105 shadow-lg hover:shadow-xl'
                 : 'bg-gray-300 text-gray-500 cursor-not-allowed'
             }`}
           >
-            {realisation.stock && realisation.stock > 0 ? 'Ajouter au panier' : 'Rupture de stock'}
+            {isInStock ? 'Ajouter au panier' : 'Rupture de stock'}
           </button>
         </div>
       </div>

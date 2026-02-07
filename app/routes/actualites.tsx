@@ -78,7 +78,7 @@ useEffect(() => {
       </nav>
 
       {/* Titre */}
-      <h1 className="font-ogg text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-center mb-8 sm:mb-10 md:mb-12 text-gray-900 tracking-wide font-light uppercase">
+      <h1 className="mb-12 text-center font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl drop-shadow-lg uppercase px-4">
         Toutes les actualités
       </h1>
 

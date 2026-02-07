@@ -259,18 +259,22 @@ export default function Index() {
                 <h2 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-semibold text-black mb-3 sm:mb-4">
                   {actu.title}
                 </h2>
-                <p className="font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed">
+                <p className="mb-6 font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed">
                   {actu.content}
                 </p>
                 <Link to="/actualites">
                   <button
                     type="button"
-                    className="font-basecoat uppercase py-2 px-4 sm:py-2.5 sm:px-5 mt-4 sm:mt-6 text-xs sm:text-sm font-medium text-indigo-600 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 transition"
+                    className="font-basecoat btn bg-yellow-400 text-black px-5 py-2.5 sm:px-6 sm:py-3 md:px-8 md:py-3.5 rounded text-sm sm:text-base md:text-lg transform transition duration-500 hover:scale-105 font-semibold inline-block"
                   >
                     Toutes les actualités
                   </button>
                 </Link>
+          
               </div>
+            
+   
+
               {actu.image_url && (
                 <div className="w-full md:w-1/2 order-1 md:order-2">
                   <img
@@ -334,7 +338,7 @@ export default function Index() {
     
     {/* Texte descriptif */}
     <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 mt-4 sm:mt-6 px-4">
-      Vous pouvez nous trouver à Cotonou
+      Vous pouvez nous trouver à Cotonou<br></br>
       Whatsapp : +229 xx xx xx xx
     </p>
   </div>

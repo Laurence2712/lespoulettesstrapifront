@@ -147,7 +147,7 @@ const handleBeninClick = () => {
         </Link>
 
         {/* Titre */}
-        <h1 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl drop-shadow-lg uppercase px-4 mb-8 sm:mb-10 md:mb-12">
+        <h1 className="mb-12 text-center font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl drop-shadow-lg uppercase px-4">
           Nos Catégories
         </h1>
 
