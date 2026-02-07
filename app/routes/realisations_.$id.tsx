@@ -161,9 +161,9 @@ const declinaisons: Declinaison[] = item.Declinaison?.map((decl: any) => {
   };
 
   return (
-    <div className="container mx-auto py-6 max-w-7xl mt-[70px]">
+    <div className="container mx-auto py-6 sm:py-8 md:py-12 lg:py-16 px-4 sm:px-6 md:px-8 max-w-7xl mt-[60px] sm:mt-[70px] md:mt-[80px]">
       {/* Breadcrumb */}
-      <nav className="mb-6 text-xs sm:text-sm">
+      <nav className="mb-6 text-xs sm:text-sm font-basecoat">
         <Link to="/" className="text-indigo-600 hover:text-indigo-800">Accueil</Link> /{' '}
         <Link to="/realisations" className="text-indigo-600 hover:text-indigo-800">Catégories</Link> /{' '}
         <span className="text-gray-600 uppercase">{realisation.title}</span>
@@ -203,29 +203,29 @@ const declinaisons: Declinaison[] = item.Declinaison?.map((decl: any) => {
 
         {/* Infos produit */}
         <div className="flex flex-col">
-          <h1 className="text-3xl font-light uppercase mb-4">{realisation.title}</h1>
-          {currentDeclinaison?.Description && <p className="italic mb-4">{currentDeclinaison.Description}</p>}
-          <p className="text-4xl font-bold text-yellow-600 mb-6">{realisation.prix ? `${realisation.prix} €` : 'Prix sur demande'}</p>
+          <h1 className="text-3xl font-light uppercase mb-4 font-basecoat">{realisation.title}</h1>
+          {currentDeclinaison?.Description && <p className="italic mb-4 font-basecoat">{currentDeclinaison.Description}</p>}
+          <p className="text-4xl font-bold text-yellow-600 mb-6 font-basecoat">{realisation.prix ? `${realisation.prix} €` : 'Prix sur demande'}</p>
 
           {isInStock ? (
             <div className="mb-6">
-              <span className="bg-green-100 text-green-800 px-4 py-2 rounded-full">✓ En stock</span>{' '}
-              <span>{currentDeclinaison.Stock} {currentDeclinaison.Stock > 1 ? 'unités' : 'unité'}</span>
+              <span className="bg-green-100 text-green-800 px-4 py-2 rounded-full font-basecoat">✓ En stock</span>{' '}
+              <span className='font-basecoat'>{currentDeclinaison.Stock} {currentDeclinaison.Stock > 1 ? 'unités' : 'unité'}</span>
             </div>
           ) : (
-            <span className="bg-red-100 text-red-800 px-4 py-2 rounded-full">✗ Rupture de stock</span>
+            <span className="bg-red-100 text-red-800 px-4 py-2 rounded-full font-basecoat">✗ Rupture de stock</span>
           )}
 
           <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-4">Description</h2>
-            <p className="whitespace-pre-line">{realisation.description}</p>
+            <h2 className="text-xl font-semibold mb-4 font-basecoat">Description</h2>
+            <p className="whitespace-pre-line font-basecoat">{realisation.description}</p>
           </div>
 
           {isInStock && (
             <div className="mb-8">
-              <label className="block mb-3">Quantité :</label>
+              <label className="block mb-3 font-basecoat">Quantité :</label>
               <div className="flex items-center gap-4">
-                <button onClick={() => quantity > 1 && setQuantity(quantity - 1)} className="w-12 h-12">-</button>
+                <button onClick={() => quantity > 1 && setQuantity(quantity - 1)} className="w-12 h-12 font-basecoat">-</button>
                 <span className="w-16 text-center">{quantity}</span>
                 <button
                   onClick={() => quantity < currentDeclinaison.Stock && setQuantity(quantity + 1)}
@@ -240,7 +240,7 @@ const declinaisons: Declinaison[] = item.Declinaison?.map((decl: any) => {
           <button
             onClick={handleAddToCart}
             disabled={!isInStock}
-            className={`w-full py-4 rounded-xl uppercase font-bold ${isInStock ? 'bg-yellow-400' : 'bg-gray-300 text-gray-500'}`}
+            className={`w-full py-4 rounded-xl uppercase font-bold ${isInStock ? 'bg-yellow-400 font-basecoat' : 'bg-gray-300 text-gray-500 font-basecoat'}`}
           >
             {isInStock ? 'Ajouter au panier' : 'Rupture de stock'}
           </button>
