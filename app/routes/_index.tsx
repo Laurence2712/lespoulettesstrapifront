@@ -232,11 +232,11 @@ export default function Index() {
           </div>
           
           {/* Photo 2 - Droite */}
-          <div className="absolute top-1/2 right-[20%] sm:right-[25%] translate-x-1/2 -translate-y-1/2 z-20">
+          {/* <div className="absolute top-1/2 right-[20%] sm:right-[25%] translate-x-1/2 -translate-y-1/2 z-20">
             <div className="relative w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] rounded-full overflow-hidden border-4 border-yellow-400 shadow-2xl transform hover:scale-110 transition duration-300">
               <img src="/assets/equipe-2.jpg" alt="Fondatrice 2" className="w-full h-full object-cover" />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
