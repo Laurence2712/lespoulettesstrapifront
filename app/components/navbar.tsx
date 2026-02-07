@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "@remix-run/react";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { useCartStore } from "../store/cartStore";
 
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+
+
+    const getTotalItems = useCartStore((state) => state.getTotalItems);
+  const totalItems = getTotalItems();
 
   // Gestion du scroll
   useEffect(() => {
@@ -124,8 +129,14 @@ export default function NavBar() {
               to="/panier"
               className="font-basecoat inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-4 lg:px-5 py-2 lg:py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-sm lg:text-base"
             >
-              <ShoppingCartIcon className="w-5 h-5" />
+             <ShoppingCartIcon className="w-5 h-5" />
               <span className="hidden lg:inline">Panier</span>
+              {/* ← AJOUTER : Badge compteur */}
+              {totalItems > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
             </Link>
           </div>
 
@@ -134,7 +145,13 @@ export default function NavBar() {
             to="/panier"
             className="md:hidden font-basecoat inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-3 py-2 rounded-lg font-semibold transition transform hover:scale-105 text-sm"
           >
-            <ShoppingCartIcon className="w-5 h-5" />
+           <ShoppingCartIcon className="w-5 h-5" />
+            {/* ← AJOUTER : Badge compteur mobile */}
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {totalItems}
+              </span>
+            )}
           </Link>
         </div>
       </div>
