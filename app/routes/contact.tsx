@@ -11,7 +11,7 @@ export default function Contact() {
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="font-ogg text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-3 sm:mb-4 text-gray-900 uppercase"
+            className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-3 sm:mb-4 text-gray-900 uppercase"
           >
             Contactez-nous
           </motion.h1>
