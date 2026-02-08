@@ -359,7 +359,17 @@ export default function Index() {
     <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xldrop-shadow-lg uppercase px-4">
       Où nous trouver
     </h2>
-    
+       <p className='mt-6 mb-6 font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed'>Contactez-nous pour vos demandes spéciales</p>
+<p className="mb-6 font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed">
+  <a
+    href="https://wa.me/2290162007580"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:underline"
+  >
+    WhatsApp : +229 01 62 00 75 80
+  </a>
+</p>    
     {/* Texte descriptif */}
     <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 mt-4 sm:mt-6 px-4">
     </p>
