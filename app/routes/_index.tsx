@@ -87,24 +87,29 @@ export default function Index() {
     async function fetchRealisations() {
       try {
         const response = await fetch(apiEndpoints.realisations);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
         const data = await response.json();
-        if (data?.data) {
-          const realisationsData: Realisation[] = data.data.map((item: any) => ({
-            id: item.id,
-            title: item.Titre || 'Titre indisponible',
-            image_url: item.Images?.[0]?.url ? getImageUrl(item.Images[0].url) : undefined,
-            description: item.Description || 'Description indisponible',
-            prix: item.Prix || 'Prix indisponible',
+
+        if (data && data.data) {
+          const realisationsData: Realisation[] = data.data.map((realisation: any) => ({
+            id: realisation.documentId,
+            title: realisation.Titre || 'Titre indisponible',
+            image_url: realisation.Images?.[0]?.url ? getImageUrl(realisation.Images[0].url) : undefined,
+            description: realisation.Description || 'Description indisponible',
+            prix: realisation.Prix, 
           }));
           setRealisations(realisationsData);
+        } else {
+          setError('Aucune réalisation trouvée.');
         }
-      } catch (err: any) {
-        console.error(err);
+      } catch (error: any) {
+        console.error('Erreur lors du chargement des réalisations :', error);
+        setError('Erreur lors du chargement des réalisations');
       } finally {
         setLoading(false);
       }
     }
+
     fetchRealisations();
   }, []);
 
@@ -291,45 +296,64 @@ export default function Index() {
         )}
       </section>
 
-      {/* Slider Réalisations - Responsive title & spacing */}
-      <section className="products py-8 sm:py-12 md:py-16 bg-white max-w-7xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
-        <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 text-center mb-8 sm:mb-10 md:mb-12">
-          <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xldrop-shadow-lg uppercase px-4">
- Nos créations          </h2>
-        </div>
+      {/* Slider Réalisations - Pleine largeur */}
+<section className="products py-8 sm:py-12 md:py-16 w-full relative z-10">
+  {/* Titre centré */}
+  <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 text-center mb-8 sm:mb-10 md:mb-12">
+    <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl drop-shadow-lg uppercase px-4 tracking-wide">
+      Nos créations
+    </h2>
+  </div>
 
-        <Slider {...sliderSettings} className="mt-4 sm:mt-6 md:mt-8 relative z-0" key={`${isMobile}-${isTablet}`}>
-          {realisations.map((realisation) => (
-            <div key={realisation.id} className="px-3 sm:px-4 md:px-6">
-              <Link to={`/realisations/${realisation.id}`}>
-                <div className="bg-gray-200 p-4 sm:p-5 md:p-6 rounded-lg shadow-lg text-center hover:shadow-xl transition h-full">
-                  {realisation.image_url ? (
-                    <img
-                      src={realisation.image_url}
-                      alt={realisation.title}
-                      className="w-full h-36 sm:h-44 md:h-52 lg:h-60 object-cover rounded-md"
-                    />
-                  ) : (
-                    <div className="w-full h-36 sm:h-44 md:h-52 lg:h-60 bg-gray-300 flex items-center justify-center rounded-md">
-                      <span className="text-gray-500 text-sm sm:text-base">Aucune image</span>
-                    </div>
-                  )}
-                  <h3 className="font-basecoat mt-3 sm:mt-4 text-base sm:text-lg md:text-xl font-semibold line-clamp-2">
-                    {realisation.title}
-                  </h3>
+  {/* Slider pleine largeur avec padding sur les côtés */}
+  <div className="px-4 sm:px-6 md:px-8 lg:px-12">
+    <Slider {...sliderSettings} className="mt-4 sm:mt-6 md:mt-8 relative z-0" key={`${isMobile}-${isTablet}`}>
+      {realisations.map((realisation) => (
+        <div key={realisation.id} className="px-3 sm:px-4 md:px-6">
+          <Link to={`/realisations/${realisation.id}`}>
+            <div className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 h-full">
+              {/* Image avec effet hover */}
+              <div className="relative overflow-hidden h-48 sm:h-56 md:h-64 lg:h-72">
+                {realisation.image_url ? (
+                  <img
+                    src={realisation.image_url}
+                    alt={realisation.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-300 flex items-center justify-center">
+                    <span className="font-basecoat text-gray-500 text-sm sm:text-base">Aucune image</span>
+                  </div>
+                )}
+                {/* Overlay au hover */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+
+              {/* Contenu */}
+              <div className="p-4 sm:p-5 md:p-6 text-center">
+                <h3 className="font-basecoat text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-4 text-gray-900 line-clamp-2 min-h-[3.5rem]">
+                  {realisation.title}
+                </h3>
                 
-                  <button
-                    type="button"
-                    className="font-basecoat uppercase py-1.5 px-3 sm:py-2 sm:px-4 md:py-2.5 md:px-5 mt-3 sm:mt-4 text-xs sm:text-sm md:text-base font-medium text-indigo-600 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 transition"
+                <div className="inline-flex items-center gap-2 font-basecoat text-yellow-600 group-hover:text-yellow-700 font-semibold text-sm sm:text-base md:text-lg transition-colors">
+                  Voir plus
+                  <svg 
+                    className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-2" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
                   >
-                    Voir plus
-                  </button>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
                 </div>
-              </Link>
+              </div>
             </div>
-          ))}
-        </Slider>
-      </section>
+          </Link>
+        </div>
+      ))}
+    </Slider>
+  </div>
+</section>
    <section id="ou-nous-trouver" className="w-full">
   <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 text-center mb-8 sm:mb-10 md:mb-12">
     <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xldrop-shadow-lg uppercase px-4">
