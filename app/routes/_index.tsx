@@ -203,11 +203,7 @@ export default function Index() {
   <div className="absolute inset-0 bg-black opacity-65 z-0"></div>
 </header>
 <section id="qui-sommes-nous">
-  <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 text-center mb-8 sm:mb-10 md:mb-12">
-    <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xldrop-shadow-lg uppercase px-4">
-      Qui sommes-nous?
-    </h2>
-  </div>
+ 
 
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16 md:mb-20">
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -300,7 +296,7 @@ export default function Index() {
 <section className="products py-8 sm:py-12 md:py-16 w-full relative z-10">
   {/* Titre centré */}
   <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 text-center mb-8 sm:mb-10 md:mb-12">
-    <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl drop-shadow-lg uppercase px-4 tracking-wide">
+    <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xldrop-shadow-lg uppercase px-4">
       Nos créations
     </h2>
   </div>
