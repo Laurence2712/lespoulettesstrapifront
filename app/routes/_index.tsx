@@ -230,8 +230,8 @@ export default function Index() {
       <div className="order-1 md:order-2 flex justify-center items-center">
         <div className="relative w-full h-[300px] sm:h-[350px]">
           {/* Photo 1 - Gauche */}
-          <div className="absolute top-1/2 left-[20%] sm:left-[25%] -translate-x-1/2 -translate-y-1/2 z-20">
-            <div className="relative w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] rounded-full overflow-hidden border-4 border-yellow-400 shadow-2xl transform hover:scale-110 transition duration-300">
+<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">            
+<div className="relative w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] rounded-full overflow-hidden border-4 border-yellow-400 shadow-2xl transform hover:scale-110 transition duration-300">
               <img src="/assets/equipe-1.jpg" alt="Fondatrice 1" className="w-full h-full object-cover" />
             </div>
           </div>
