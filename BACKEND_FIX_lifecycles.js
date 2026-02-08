@@ -76,7 +76,7 @@ module.exports = {
       <div class="payment-box">
         <h3 style="margin-top: 0; color: #92400e;">💳 Instructions de paiement Mobile Money</h3>
         <ol style="margin: 10px 0; padding-left: 20px;">
-          <li>Contactez-nous au <strong>+229 XX XX XX XX</strong> pour recevoir le QR Code</li>
+          <li>Contactez-nous au <strong>+229 0162007580</strong> pour recevoir le QR Code</li>
           <li>Scannez le QR Code avec votre app mobile (MTN, Moov, Orange)</li>
           <li>Effectuez le paiement de <strong>${result.total.toFixed(2)} FCFA</strong></li>
           <li>Votre commande sera validée après réception du paiement</li>
