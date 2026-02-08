@@ -50,7 +50,6 @@ export default function RealisationDetail() {
 
         if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
         const data = await response.json();
-        console.log('DATA STRAPI DETAIL 👉', data);
 
         if (data && data.data) {
           const item = data.data;
@@ -156,7 +155,7 @@ export default function RealisationDetail() {
         categorieId: realisation.id,
         declinaisonId: currentDeclinaison.id,
       });
-      alert('Produit ajouté au panier !');
+      
     }
   };
 

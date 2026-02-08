@@ -4,8 +4,6 @@ module.exports = {
   async afterCreate(event) {
     const { result } = event;
 
-    console.log('🔔 Lifecycle hook déclenché pour commande:', result.id);
-    console.log('📧 Email destinataire:', result.Email);
 
     try {
       // Parser les articles
@@ -111,7 +109,6 @@ module.exports = {
         `,
       });
 
-      console.log(`✅ Email de confirmation envoyé à ${result.Email}`);
 
     } catch (error) {
       console.error('❌ Erreur lors de l\'envoi de l\'email:', error);
