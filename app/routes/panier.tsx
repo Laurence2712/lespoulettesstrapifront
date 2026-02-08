@@ -1,32 +1,23 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from '@remix-run/react';
-import { CartUtils, CartItem } from '../utils/cart';
+import { useCartStore } from '../store/cartStore';
 import { apiEndpoints } from '../config/api';
 
 export default function Panier() {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const items = useCartStore((state) => state.items);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const getTotalPrice = useCartStore((state) => state.getTotalPrice);
+  const clearCart = useCartStore((state) => state.clearCart);
+  
   const [showCheckout, setShowCheckout] = useState(false);
 
-  useEffect(() => {
-    setCart(CartUtils.getCart());
-  }, []);
+  const total = getTotalPrice();
 
-  const updateQuantity = (id: number, newQuantity: number) => {
-    const updatedCart = CartUtils.updateQuantity(id, newQuantity);
-    setCart(updatedCart);
-  };
-
-  const removeItem = (id: number) => {
-    const updatedCart = CartUtils.removeFromCart(id);
-    setCart(updatedCart);
-  };
-
-  const total = CartUtils.getTotal(cart);
-
-  if (cart.length === 0) {
+  if (items.length === 0) {
     return (
-    <div className="container mx-auto py-6 sm:py-8 md:py-10 px-4 text-center mt-[60px] sm:mt-[70px] md:mt-[80px] min-h-[60vh] flex flex-col justify-center">
-        <h1 className="font-ogg text-2xl sm:text-3xl md:text-4xl font-light mb-3 sm:mb-4 uppercase">
+      <div className="container mx-auto py-6 sm:py-8 md:py-10 px-4 text-center mt-[60px] sm:mt-[70px] md:mt-[80px] min-h-[60vh] flex flex-col justify-center">
+        <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-light mb-3 sm:mb-4 uppercase">
           Votre panier est vide
         </h1>
         <p className="font-basecoat text-gray-600 mb-6 sm:mb-8 text-sm sm:text-base">
@@ -34,7 +25,7 @@ export default function Panier() {
         </p>
         <Link
           to="/realisations"
-          className="font-basecoat inline-block bg-yellow-400 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-yellow-500 transition text-sm sm:text-base max-w-xs sm:max-w-sm md:max-w-md mx-auto max-w-xs sm:max-w-sm md:max-w-md mx-auto max-w-xs sm:max-w-sm md:max-w-md mx-auto"
+          className="font-basecoat inline-block bg-yellow-400 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-yellow-500 transition text-sm sm:text-base max-w-xs sm:max-w-sm md:max-w-md mx-auto"
         >
           Voir nos réalisations
         </Link>
@@ -43,7 +34,7 @@ export default function Panier() {
   }
 
   if (showCheckout) {
-    return <CheckoutForm cart={cart} total={total} onBack={() => setShowCheckout(false)} />;
+    return <CheckoutForm cart={items} total={total} clearCart={clearCart} onBack={() => setShowCheckout(false)} />;
   }
 
   return (
@@ -55,16 +46,16 @@ export default function Panier() {
         <span className="text-gray-600">Panier</span>
       </nav>
 
-      <h1 className="font-ogg text-3xl sm:text-4xl md:text-5xl font-light mb-6 sm:mb-8 uppercase">
+      <h1 className="font-basecoat text-3xl sm:text-4xl md:text-5xl font-light mb-6 sm:mb-8 uppercase">
         Votre panier
       </h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
         {/* Liste des articles */}
         <div className="lg:col-span-2 space-y-3 sm:space-y-4">
-          {cart.map((item) => (
+          {items.map((item) => (
             <div key={item.id} className="bg-white rounded-lg shadow-md p-4 sm:p-5 md:p-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
-              {/* Image - Responsive */}
+              {/* Image */}
               {item.image_url && (
                 <img
                   src={item.image_url}
@@ -87,6 +78,7 @@ export default function Panier() {
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
                       className="font-basecoat px-2.5 sm:px-3 py-1 hover:bg-gray-100 text-sm sm:text-base"
+                      disabled={item.quantity <= 1}
                     >
                       -
                     </button>
@@ -102,7 +94,7 @@ export default function Panier() {
                   </div>
                   
                   <button
-                    onClick={() => removeItem(item.id)}
+                    onClick={() => removeFromCart(item.id)}
                     className="font-basecoat text-red-600 hover:text-red-800 text-xs sm:text-sm font-medium"
                   >
                     Supprimer
@@ -110,17 +102,17 @@ export default function Panier() {
                 </div>
               </div>
               
-              {/* Prix total - Responsive */}
+              {/* Prix total */}
               <div className="text-left sm:text-right">
                 <p className="font-basecoat text-lg sm:text-xl md:text-2xl font-bold">
-                  {(item.prix * item.quantity).toFixed(2)} €
+                  {(Number(item.prix) * item.quantity).toFixed(2)} €
                 </p>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Résumé - Sticky on desktop only */}
+        {/* Résumé */}
         <div className="lg:col-span-1">
           <div className="bg-gray-100 rounded-lg p-4 sm:p-5 md:p-6 lg:sticky lg:top-4">
             <h2 className="font-basecoat text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
@@ -165,8 +157,13 @@ export default function Panier() {
   );
 }
 
-// Formulaire de commande - RESPONSIVE
-function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number, onBack: () => void }) {
+// Formulaire de commande
+function CheckoutForm({ cart, total, clearCart, onBack }: { 
+  cart: any[], 
+  total: number, 
+  clearCart: () => void,
+  onBack: () => void 
+}) {
   const [formData, setFormData] = useState({
     nom: '',
     email: '',
@@ -218,7 +215,7 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
         throw new Error(errorMessage);
       }
 
-      CartUtils.clearCart();
+      clearCart();
       setSuccess(true);
     } catch (err: any) {
       console.error('Erreur:', err);
@@ -234,18 +231,18 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
       <div className="container mx-auto py-12 sm:py-16 md:py-20 px-4 text-center max-w-2xl mt-[60px] sm:mt-[70px]">
         <div className="bg-green-50 border-2 border-green-500 rounded-lg p-6 sm:p-8">
           <div className="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4">✓</div>
-          <h1 className="font-ogg text-2xl sm:text-3xl md:text-4xl font-light text-green-800 mb-3 sm:mb-4 uppercase">
+          <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-light text-green-800 mb-3 sm:mb-4 uppercase">
             Commande envoyée !
           </h1>
           <p className="font-basecoat text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
             Nous avons bien reçu votre commande. Vous recevrez un email de confirmation à {formData.email}.
           </p>
-            <p className="font-basecoat text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
-          Attention :  La commande ne sera préparée et expédiée, qu'à la réception du paiement.
+          <p className="font-basecoat text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
+            Attention : La commande ne sera préparée et expédiée, qu'à la réception du paiement.
           </p>
           <Link
             to="/"
-            className="font-basecoat inline-block bg-yellow-400 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-yellow-500 transition text-sm sm:text-base max-w-xs sm:max-w-sm md:max-w-md mx-auto max-w-xs sm:max-w-sm md:max-w-md mx-auto max-w-xs sm:max-w-sm md:max-w-md mx-auto"
+            className="font-basecoat inline-block bg-yellow-400 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-yellow-500 transition text-sm sm:text-base max-w-xs sm:max-w-sm md:max-w-md mx-auto"
           >
             Retour à l'accueil
           </Link>
@@ -263,7 +260,7 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
         ← Retour au panier
       </button>
 
-      <h1 className="font-ogg text-2xl sm:text-3xl md:text-4xl font-light mb-6 sm:mb-8 uppercase">
+      <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-light mb-6 sm:mb-8 uppercase">
         Finaliser la commande
       </h1>
 
@@ -287,11 +284,9 @@ function CheckoutForm({ cart, total, onBack }: { cart: CartItem[], total: number
               Instructions de paiement
             </h3>
             <ul className="font-basecoat text-xs sm:text-sm text-yellow-900 space-y-1.5 sm:space-y-2">
-            <li>✅ Remplissez les champs du formulaire de commande</li>
-
-             <li>✅ Effectuez un virement sur le numéro de compte <strong>XXXXXXXX</strong></li>
-             <li>✅ Dès réception du virement, votre commande sera préparée et expédiée !</li>
-
+              <li>✅ Remplissez les champs du formulaire de commande</li>
+              <li>✅ Effectuez un virement sur le numéro de compte <strong>XXXXXXXX</strong></li>
+              <li>✅ Dès réception du virement, votre commande sera préparée et expédiée !</li>
             </ul>
           </div>
         </div>
