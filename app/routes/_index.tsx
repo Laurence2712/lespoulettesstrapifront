@@ -181,13 +181,15 @@ export default function Index() {
 >
   <div className="banner-content text-center z-10 flex flex-col items-center justify-end pb-8 sm:pb-12 md:pb-16">
     {/* Logo Les Poulettes BLANC et GRAND */}
-    <img
-      src="/assets/logo_t_poulettes_white.png"
-      alt="Les Poulettes"
-      className="w-[300px] sm:w-[400px] md:w-[500px] lg:w-[600px] drop-shadow-2xl"
-    />
+  <div className="w-full flex justify-center">
+  <img
+    src="/assets/logo_t_poulettes_white.png"
+    alt="Les Poulettes"
+    className="w-full max-w-[600px] h-auto drop-shadow-2xl"
+  />
+</div>
     
-    <h1 className="font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold drop-shadow-lg mb-6 px-4 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[50%]">
+    <h1 className="font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold drop-shadow-lg mb-6 px-4 max-w-[90%] sm:max-w-[80%] md:max-w-[70%]">
       Une marque d'accessoires made in Bénin, éco-trendy/éco-friendly qui surfe sur la vague du wax !
     </h1>
     
