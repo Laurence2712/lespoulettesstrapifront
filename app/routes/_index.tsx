@@ -338,8 +338,6 @@ export default function Index() {
     
     {/* Texte descriptif */}
     <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 mt-4 sm:mt-6 px-4">
-      Vous pouvez nous trouver à Cotonou<br></br>
-      Whatsapp : +229 0162007580
     </p>
   </div>
 
