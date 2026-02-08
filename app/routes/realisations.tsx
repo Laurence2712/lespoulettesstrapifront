@@ -148,7 +148,7 @@ const handleBeninClick = () => {
 
         {/* Titre */}
         <h1 className="mb-12 text-center font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl drop-shadow-lg uppercase px-4">
-          Nos Catégories
+          Nos réalisations
         </h1>
 
         {/* Loading & Error states */}
@@ -165,7 +165,7 @@ const handleBeninClick = () => {
         )}
 
         {/* Grid */}
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
   {realisations.map((realisation) => (
     <div
       key={realisation.id}

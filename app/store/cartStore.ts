@@ -7,25 +7,30 @@ interface CartItem {
   prix: string | number;
   quantity: number;
   image_url: string;
-  categorieId?: number; 
-  declinaisonId?: number;  
+  categorieId?: number;
+  declinaisonId?: number;
 }
 
-interface CartStore {
+interface CartState {
   items: CartItem[];
+  lastActivity: number; // Timestamp de la dernière activité
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: number) => void;
   updateQuantity: (id: number, quantity: number) => void;
   clearCart: () => void;
   getTotalPrice: () => number;
   getTotalItems: () => number;
+  checkExpiration: () => void;
 }
 
-export const useCartStore = create<CartStore>()(
+const EXPIRATION_TIME = 24 * 60 * 60 * 1000; // 24 heures en millisecondes
+
+export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
       items: [],
-      
+      lastActivity: Date.now(),
+
       addToCart: (item) => {
         set((state) => {
           const existingItem = state.items.find((i) => i.id === item.id);
@@ -33,46 +38,62 @@ export const useCartStore = create<CartStore>()(
           if (existingItem) {
             return {
               items: state.items.map((i) =>
-                i.id === item.id
-                  ? { ...i, quantity: i.quantity + item.quantity }
-                  : i
+                i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
               ),
+              lastActivity: Date.now(),
             };
           }
           
-          return { items: [...state.items, item] };
+          return {
+            items: [...state.items, item],
+            lastActivity: Date.now(),
+          };
         });
       },
-      
+
       removeFromCart: (id) => {
         set((state) => ({
           items: state.items.filter((item) => item.id !== id),
+          lastActivity: Date.now(),
         }));
       },
-      
+
       updateQuantity: (id, quantity) => {
+        if (quantity < 1) {
+          get().removeFromCart(id);
+          return;
+        }
+        
         set((state) => ({
           items: state.items.map((item) =>
             item.id === id ? { ...item, quantity } : item
           ),
+          lastActivity: Date.now(),
         }));
       },
-      
+
       clearCart: () => {
-        set({ items: [] });
+        set({ items: [], lastActivity: Date.now() });
       },
-      
+
       getTotalPrice: () => {
-        const items = get().items;
-        return items.reduce((total, item) => {
-          const price = typeof item.prix === 'string' ? parseFloat(item.prix) : item.prix;
-          return total + price * item.quantity;
+        return get().items.reduce((total, item) => {
+          return total + Number(item.prix) * item.quantity;
         }, 0);
       },
-      
+
       getTotalItems: () => {
-        const items = get().items;
-        return items.reduce((total, item) => total + item.quantity, 0);
+        return get().items.reduce((total, item) => total + item.quantity, 0);
+      },
+
+      checkExpiration: () => {
+        const now = Date.now();
+        const lastActivity = get().lastActivity;
+        
+        if (now - lastActivity > EXPIRATION_TIME) {
+          console.log('⏰ Panier expiré - Réinitialisation');
+          get().clearCart();
+        }
       },
     }),
     {

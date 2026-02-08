@@ -6,9 +6,11 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
+import { useEffect } from "react";
 
 import NavBar from "./components/navbar";
-import Footer from "./components/footer"; // 🟡 On importe le footer
+import Footer from "./components/footer";
+import { useCartStore } from "./store/cartStore";
 import "./tailwind.css";
 
 export const links: LinksFunction = () => [
@@ -22,7 +24,6 @@ export const links: LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
-  // Optionnel si tu veux les icônes Font Awesome pour les réseaux du footer :
   {
     rel: "stylesheet",
     href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css",
@@ -58,5 +59,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const checkExpiration = useCartStore((state) => state.checkExpiration);
+
+  useEffect(() => {
+    // Vérifier l'expiration du panier au chargement de la page
+    checkExpiration();
+    
+    // Vérifier l'expiration toutes les 5 minutes (optionnel)
+    const interval = setInterval(() => {
+      checkExpiration();
+    }, 5 * 60 * 1000); // 5 minutes
+
+    return () => clearInterval(interval);
+  }, [checkExpiration]);
+
   return <Outlet />;
 }

@@ -16,6 +16,7 @@
     "@remix-run/node": "^2.16.0",
     "@remix-run/react": "^2.16.0",
     "@remix-run/serve": "^2.16.0",
+    "@stripe/stripe-js": "^8.7.0",
     "axios": "^1.8.3",
     "framer-motion": "^12.23.24",
     "gsap": "^3.12.7",
