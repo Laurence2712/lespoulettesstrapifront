@@ -63,9 +63,7 @@ export default function NavBar() {
                   d="M4 6h16M4 12h16M4 18h16"
                 />
               </svg>
-              <span className="font-basecoat font-semibold text-black text-xs sm:text-sm md:text-base">
-                Catégories
-              </span>
+         
             </button>
 
             {/* Menu déroulant "Catégories" - Desktop & Mobile */}
