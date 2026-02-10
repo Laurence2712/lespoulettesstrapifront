@@ -244,9 +244,7 @@ function CheckoutForm({ cart, total, clearCart, onBack }: {
     setError('');
     
     try {
-      // ⚠️ FORCE L'URL LOCALE ICI
-      const url = 'http://localhost:1337/api/commandes/create-checkout-session';
-      console.log('🔵 URL appelée:', url);
+      const url = apiEndpoints.createCheckoutSession;
       
       const payload = {
         items: cart,
@@ -256,18 +254,14 @@ function CheckoutForm({ cart, total, clearCart, onBack }: {
         adresse: formData.adresse,
         notes: formData.notes,
       };
-      console.log('🔵 Payload:', payload);
-      
+
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
 
-      console.log('🔵 Response status:', response.status);
-      
       const responseData = await response.json();
-      console.log('🔵 Response data:', responseData);
 
       if (!response.ok) {
         throw new Error(responseData?.error?.message || 'Erreur lors de la création de la session de paiement');
@@ -279,7 +273,6 @@ function CheckoutForm({ cart, total, clearCart, onBack }: {
         throw new Error('URL de paiement manquante');
       }
       
-      console.log('🔵 Redirection vers:', checkoutUrl);
       window.location.href = checkoutUrl;
     } catch (error: any) {
       console.error('❌ Erreur:', error);
