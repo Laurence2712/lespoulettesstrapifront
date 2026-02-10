@@ -159,17 +159,23 @@ export default function Index() {
     return 3;
   };
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: getSlidesToShow(),
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    arrows: false,
-    swipeToSlide: true,
-  };
+const sliderSettings = {
+  dots: false,
+  infinite: true,
+
+  slidesToShow: getSlidesToShow(),
+  slidesToScroll: 1,
+
+  autoplay: true,
+  autoplaySpeed: 0,     
+  speed: 10000,         
+  cssEase: "linear",    
+
+  arrows: false,
+  swipeToSlide: true,
+  pauseOnHover: true,
+  pauseOnFocus: true,
+};
 
   return (
     <div className="overflow-x-hidden">

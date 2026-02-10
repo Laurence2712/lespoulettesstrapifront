@@ -2,6 +2,10 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from '@remix-run/react';
 import { useCartStore } from '../store/cartStore';
 import { apiEndpoints } from '../config/api';
+import { loadStripe } from '@stripe/stripe-js';
+
+// ⚠️ Remplace par ta vraie clé publique Stripe
+const stripePromise = loadStripe('pk_test_51Su85f3f5uvksVoPH7wJNkn1H091R2WqOeo3xxqowooxN7P5aHHAcqvt9fhwxD5wx7BHlNjFY63TVAXGI6AiUSaD00xeG2aK8r');
 
 export default function Panier() {
   const items = useCartStore((state) => state.items);
@@ -141,7 +145,7 @@ export default function Panier() {
               onClick={() => setShowCheckout(true)}
               className="font-basecoat w-full bg-yellow-400 text-black py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-yellow-500 transition mb-2 sm:mb-3 text-sm sm:text-base"
             >
-              Commander
+              Passer commande
             </button>
 
             <Link
@@ -157,13 +161,14 @@ export default function Panier() {
   );
 }
 
-// Formulaire de commande
+// 🔹 FORMULAIRE AVEC CHOIX DE PAIEMENT
 function CheckoutForm({ cart, total, clearCart, onBack }: { 
   cart: any[], 
   total: number, 
   clearCart: () => void,
   onBack: () => void 
 }) {
+  const [paymentMethod, setPaymentMethod] = useState<'virement' | 'carte' | null>(null);
   const [formData, setFormData] = useState({
     nom: '',
     email: '',
@@ -176,7 +181,8 @@ function CheckoutForm({ cart, total, clearCart, onBack }: {
   const [error, setError] = useState('');
   const isSubmittingRef = useRef(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // 🔹 PAIEMENT PAR VIREMENT (système actuel)
+  const handleVirementCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (isSubmittingRef.current) {
@@ -198,6 +204,7 @@ function CheckoutForm({ cart, total, clearCart, onBack }: {
           articles: JSON.stringify(cart),
           total: total,
           statut: 'en_attente',
+          methode_paiement: 'virement',
           notes: formData.notes
         }
       };
@@ -222,6 +229,61 @@ function CheckoutForm({ cart, total, clearCart, onBack }: {
       setError(err.message || 'Erreur inconnue');
       isSubmittingRef.current = false;
     } finally {
+      setLoading(false);
+    }
+  };
+
+  // 🔹 PAIEMENT PAR CARTE (Stripe)
+  const handleStripeCheckout = async () => {
+    if (!formData.nom || !formData.email || !formData.telephone || !formData.adresse) {
+      setError('Veuillez remplir tous les champs obligatoires');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+    
+    try {
+      // ⚠️ FORCE L'URL LOCALE ICI
+      const url = 'http://localhost:1337/api/commandes/create-checkout-session';
+      console.log('🔵 URL appelée:', url);
+      
+      const payload = {
+        items: cart,
+        email: formData.email,
+        nom: formData.nom,
+        telephone: formData.telephone,
+        adresse: formData.adresse,
+        notes: formData.notes,
+      };
+      console.log('🔵 Payload:', payload);
+      
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      console.log('🔵 Response status:', response.status);
+      
+      const responseData = await response.json();
+      console.log('🔵 Response data:', responseData);
+
+      if (!response.ok) {
+        throw new Error(responseData?.error?.message || 'Erreur lors de la création de la session de paiement');
+      }
+
+      const { url: checkoutUrl } = responseData;
+      
+      if (!checkoutUrl) {
+        throw new Error('URL de paiement manquante');
+      }
+      
+      console.log('🔵 Redirection vers:', checkoutUrl);
+      window.location.href = checkoutUrl;
+    } catch (error: any) {
+      console.error('❌ Erreur:', error);
+      setError(error.message || 'Erreur lors de la création de la session de paiement');
       setLoading(false);
     }
   };
@@ -270,109 +332,208 @@ function CheckoutForm({ cart, total, clearCart, onBack }: {
         <p className="font-basecoat text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">
           {cart.reduce((sum, item) => sum + item.quantity, 0)} article(s) - Total: {total.toFixed(2)} €
         </p>
-        <p className="font-basecoat text-xs sm:text-sm">
-          Votre commande ne sera validée qu'après réception du paiement.
-        </p>
       </div>
 
-      {/* Instructions paiement */}
-      <div className="bg-yellow-50 border-2 border-yellow-400 rounded-lg p-4 sm:p-5 md:p-6 mb-6 sm:mb-8">
-        <div className="flex items-start gap-2 sm:gap-3">
-          <span className="text-2xl sm:text-3xl">💳</span>
+      {/* 🔹 CHOIX DU MODE DE PAIEMENT */}
+      {!paymentMethod && (
+        <div className="space-y-4 mb-8">
+          <h2 className="font-basecoat text-xl sm:text-2xl font-semibold mb-4">
+            Choisissez votre mode de paiement
+          </h2>
+
+          {/* Option 1 : Virement */}
+          <button
+            onClick={() => setPaymentMethod('virement')}
+            className="w-full border-2 border-gray-300 hover:border-yellow-400 rounded-xl p-6 text-left transition-all duration-300 hover:shadow-lg group"
+          >
+            <div className="flex items-start gap-4">
+              <div className="text-3xl">🏦</div>
+              <div className="flex-1">
+                <h3 className="font-basecoat font-bold text-lg mb-2 group-hover:text-yellow-600">
+                  Paiement par virement bancaire
+                </h3>
+                <p className="font-basecoat text-sm text-gray-600 mb-2">
+                  Effectuez un virement sur notre compte bancaire
+                </p>
+                <div className="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">
+                  ✓ Sans frais
+                </div>
+              </div>
+            </div>
+          </button>
+
+          {/* Option 2 : Carte bancaire */}
+          <button
+            onClick={() => setPaymentMethod('carte')}
+            className="w-full border-2 border-gray-300 hover:border-yellow-400 rounded-xl p-6 text-left transition-all duration-300 hover:shadow-lg group"
+          >
+            <div className="flex items-start gap-4">
+              <div className="text-3xl">💳</div>
+              <div className="flex-1">
+                <h3 className="font-basecoat font-bold text-lg mb-2 group-hover:text-yellow-600">
+                  Paiement par carte bancaire
+                </h3>
+                <p className="font-basecoat text-sm text-gray-600 mb-2">
+                  Paiement immédiat et sécurisé via Stripe
+                </p>
+                <div className="flex gap-2 flex-wrap">
+                  <span className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold">
+                    🔒 Sécurisé
+                  </span>
+                  <span className="inline-block bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-semibold">
+                    ⚡ Instantané
+                  </span>
+                </div>
+                <p className="font-basecoat text-xs text-gray-500 mt-2">
+                  Frais Stripe : 2,9% + 0,25€ (ex: {(total * 1.029 + 0.25).toFixed(2)}€ pour {total.toFixed(2)}€)
+                </p>
+              </div>
+            </div>
+          </button>
+        </div>
+      )}
+
+      {/* 🔹 FORMULAIRE (affiché après choix du mode de paiement) */}
+      {paymentMethod && (
+        <form onSubmit={paymentMethod === 'virement' ? handleVirementCheckout : (e) => { e.preventDefault(); handleStripeCheckout(); }} className="space-y-4 sm:space-y-5 md:space-y-6">
+          
+          {/* Indication du mode choisi */}
+          <div className="bg-blue-50 border-2 border-blue-300 rounded-lg p-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">{paymentMethod === 'virement' ? '🏦' : '💳'}</span>
+              <span className="font-basecoat font-semibold">
+                {paymentMethod === 'virement' ? 'Paiement par virement' : 'Paiement par carte'}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setPaymentMethod(null)}
+              className="font-basecoat text-blue-600 hover:text-blue-800 text-sm underline"
+            >
+              Changer
+            </button>
+          </div>
+
+          {/* Instructions selon le mode */}
+          {paymentMethod === 'virement' && (
+            <div className="bg-yellow-50 border-2 border-yellow-400 rounded-lg p-4 sm:p-5 md:p-6">
+              <div className="flex items-start gap-2 sm:gap-3">
+                <span className="text-2xl sm:text-3xl">💳</span>
+                <div>
+                  <h3 className="font-basecoat font-bold text-yellow-900 mb-2 text-sm sm:text-base">
+                    Instructions de paiement
+                  </h3>
+                  <ul className="font-basecoat text-xs sm:text-sm text-yellow-900 space-y-1.5 sm:space-y-2">
+                    <li>✅ Remplissez le formulaire ci-dessous</li>
+                    <li>✅ Effectuez un virement sur le compte <strong>BE71 XXXX XXXX XXXX</strong></li>
+                    <li>✅ Votre commande sera préparée dès réception du paiement</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {paymentMethod === 'carte' && (
+            <div className="bg-green-50 border-2 border-green-400 rounded-lg p-4 sm:p-5 md:p-6">
+              <div className="flex items-start gap-2 sm:gap-3">
+                <span className="text-2xl sm:text-3xl">🔒</span>
+                <div>
+                  <h3 className="font-basecoat font-bold text-green-900 mb-2 text-sm sm:text-base">
+                    Paiement sécurisé par Stripe
+                  </h3>
+                  <ul className="font-basecoat text-xs sm:text-sm text-green-900 space-y-1.5 sm:space-y-2">
+                    <li>✅ Carte bancaire (Visa, Mastercard, Amex)</li>
+                    <li>✅ Bancontact, iDEAL</li>
+                    <li>✅ Paiement instantané et sécurisé</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div>
-            <h3 className="font-basecoat font-bold text-yellow-900 mb-2 text-sm sm:text-base">
-              Instructions de paiement
-            </h3>
-            <ul className="font-basecoat text-xs sm:text-sm text-yellow-900 space-y-1.5 sm:space-y-2">
-              <li>✅ Remplissez les champs du formulaire de commande</li>
-              <li>✅ Effectuez un virement sur le numéro de compte <strong>XXXXXXXX</strong></li>
-              <li>✅ Dès réception du virement, votre commande sera préparée et expédiée !</li>
-            </ul>
+            <label className="font-basecoat block font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
+              Nom complet *
+            </label>
+            <input
+              type="text"
+              required
+              value={formData.nom}
+              onChange={(e) => setFormData({...formData, nom: e.target.value})}
+              className="font-basecoat w-full border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base"
+            />
           </div>
-        </div>
-      </div>
 
-      {/* Formulaire */}
-      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6">
-        <div>
-          <label className="font-basecoat block font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
-            Nom complet *
-          </label>
-          <input
-            type="text"
-            required
-            value={formData.nom}
-            onChange={(e) => setFormData({...formData, nom: e.target.value})}
-            className="font-basecoat w-full border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base"
-          />
-        </div>
-
-        <div>
-          <label className="font-basecoat block font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
-            Email *
-          </label>
-          <input
-            type="email"
-            required
-            value={formData.email}
-            onChange={(e) => setFormData({...formData, email: e.target.value})}
-            className="font-basecoat w-full border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base"
-          />
-        </div>
-
-        <div>
-          <label className="font-basecoat block font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
-            Téléphone *
-          </label>
-          <input
-            type="tel"
-            required
-            value={formData.telephone}
-            onChange={(e) => setFormData({...formData, telephone: e.target.value})}
-            className="font-basecoat w-full border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base"
-          />
-        </div>
-
-        <div>
-          <label className="font-basecoat block font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
-            Adresse de livraison *
-          </label>
-          <textarea
-            required
-            rows={3}
-            value={formData.adresse}
-            onChange={(e) => setFormData({...formData, adresse: e.target.value})}
-            className="font-basecoat w-full border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base resize-none"
-          />
-        </div>
-
-        <div>
-          <label className="font-basecoat block font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
-            Notes (optionnel)
-          </label>
-          <textarea
-            rows={3}
-            value={formData.notes}
-            onChange={(e) => setFormData({...formData, notes: e.target.value})}
-            className="font-basecoat w-full border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base resize-none"
-            placeholder="Informations complémentaires, préférences de livraison..."
-          />
-        </div>
-
-        {error && (
-          <div className="font-basecoat bg-red-50 border border-red-500 text-red-700 px-3 sm:px-4 py-2.5 sm:py-3 rounded text-sm sm:text-base">
-            {error}
+          <div>
+            <label className="font-basecoat block font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
+              Email *
+            </label>
+            <input
+              type="email"
+              required
+              value={formData.email}
+              onChange={(e) => setFormData({...formData, email: e.target.value})}
+              className="font-basecoat w-full border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base"
+            />
           </div>
-        )}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="font-basecoat w-full bg-yellow-400 text-black py-3 sm:py-3.5 md:py-4 rounded-lg font-semibold hover:bg-yellow-500 transition disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
-        >
-          {loading ? 'Envoi en cours...' : 'Envoyer la commande'}
-        </button>
-      </form>
+          <div>
+            <label className="font-basecoat block font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
+              Téléphone *
+            </label>
+            <input
+              type="tel"
+              required
+              value={formData.telephone}
+              onChange={(e) => setFormData({...formData, telephone: e.target.value})}
+              className="font-basecoat w-full border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base"
+            />
+          </div>
+
+          <div>
+            <label className="font-basecoat block font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
+              Adresse de livraison *
+            </label>
+            <textarea
+              required
+              rows={3}
+              value={formData.adresse}
+              onChange={(e) => setFormData({...formData, adresse: e.target.value})}
+              className="font-basecoat w-full border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base resize-none"
+            />
+          </div>
+
+          <div>
+            <label className="font-basecoat block font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
+              Notes (optionnel)
+            </label>
+            <textarea
+              rows={3}
+              value={formData.notes}
+              onChange={(e) => setFormData({...formData, notes: e.target.value})}
+              className="font-basecoat w-full border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base resize-none"
+              placeholder="Informations complémentaires, préférences de livraison..."
+            />
+          </div>
+
+          {error && (
+            <div className="font-basecoat bg-red-50 border border-red-500 text-red-700 px-3 sm:px-4 py-2.5 sm:py-3 rounded text-sm sm:text-base">
+              {error}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="font-basecoat w-full bg-yellow-400 text-black py-3 sm:py-3.5 md:py-4 rounded-lg font-semibold hover:bg-yellow-500 transition disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+          >
+            {loading 
+              ? (paymentMethod === 'virement' ? 'Envoi en cours...' : 'Redirection vers le paiement...') 
+              : (paymentMethod === 'virement' ? 'Envoyer la commande' : 'Payer en ligne')
+            }
+          </button>
+        </form>
+      )}
     </div>
   );
 }

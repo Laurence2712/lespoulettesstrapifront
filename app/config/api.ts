@@ -15,7 +15,7 @@ export const apiEndpoints = {
   realisations: `${API_URL}/api/realisations?populate=*`,
   actualites: `${API_URL}/api/actualites?populate=*`,
   latestActualite: `${API_URL}/api/actualites?populate=*&sort[0]=publishedAt:desc&pagination[limit]=1`,
-  commandes: `${API_URL}/api/commandes`,
+  commandes: `${API_URL}/api/commandes`,  // ← Cette ligne
   realisationById: (id: number) => `${API_URL}/api/realisations/${id}?populate=*`,
   actualiteById: (id: number) => `${API_URL}/api/actualites/${id}?populate=*`,
 };
