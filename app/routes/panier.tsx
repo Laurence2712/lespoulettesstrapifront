@@ -215,9 +215,18 @@ function CheckoutForm({ cart, total, clearCart, onBack }: {
         body: JSON.stringify(payload)
       });
 
-      const responseData = await response.json();
+      let responseData;
+      try {
+        responseData = await response.json();
+      } catch {
+        // La réponse n'est pas du JSON valide
+        throw new Error(`Erreur serveur (${response.status}). Veuillez réessayer ou contacter le support.`);
+      }
 
       if (!response.ok) {
+        if (response.status === 403) {
+          throw new Error('Accès refusé : les commandes ne sont pas activées sur le serveur. Contactez l\'administrateur.');
+        }
         const errorMessage = responseData?.error?.message || 'Erreur lors de l\'envoi';
         throw new Error(errorMessage);
       }
@@ -242,10 +251,10 @@ function CheckoutForm({ cart, total, clearCart, onBack }: {
 
     setLoading(true);
     setError('');
-    
+
     try {
       const url = apiEndpoints.createCheckoutSession;
-      
+
       const payload = {
         items: cart,
         email: formData.email,
@@ -261,18 +270,30 @@ function CheckoutForm({ cart, total, clearCart, onBack }: {
         body: JSON.stringify(payload),
       });
 
-      const responseData = await response.json();
+      let responseData;
+      try {
+        responseData = await response.json();
+      } catch {
+        // La réponse n'est pas du JSON valide (ex: "Method Not Allowed")
+        if (response.status === 405) {
+          throw new Error('Le paiement en ligne n\'est pas encore configuré sur le serveur. Contactez l\'administrateur.');
+        }
+        throw new Error(`Erreur serveur (${response.status}). Veuillez réessayer ou contacter le support.`);
+      }
 
       if (!response.ok) {
+        if (response.status === 403) {
+          throw new Error('Accès refusé : le paiement en ligne n\'est pas activé. Contactez l\'administrateur.');
+        }
         throw new Error(responseData?.error?.message || 'Erreur lors de la création de la session de paiement');
       }
 
       const { url: checkoutUrl } = responseData;
-      
+
       if (!checkoutUrl) {
         throw new Error('URL de paiement manquante');
       }
-      
+
       window.location.href = checkoutUrl;
     } catch (error: any) {
       console.error('❌ Erreur:', error);
