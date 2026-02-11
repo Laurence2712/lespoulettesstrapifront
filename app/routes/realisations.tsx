@@ -176,6 +176,7 @@ const handleBeninClick = () => {
           <img
             src={realisation.image_url}
             alt={realisation.title}
+            loading="lazy"
             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
           />
         ) : (

@@ -109,6 +109,7 @@ useEffect(() => {
                 <img
                   src={actu.image_url}
                   alt={actu.title}
+                  loading="lazy"
                   className="w-full h-48 sm:h-56 md:h-64 lg:h-80 object-cover rounded-lg shadow-md"
                 />
               </div>
@@ -139,6 +140,7 @@ useEffect(() => {
                 <img
                   src={actu.image_url}
                   alt={actu.title}
+                  loading="lazy"
                   className="w-full h-48 sm:h-56 md:h-64 lg:h-80 object-cover rounded-lg shadow-md"
                 />
               </div>
