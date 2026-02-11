@@ -13,10 +13,50 @@ export default function Panier() {
   const updateQuantity = useCartStore((state) => state.updateQuantity);
   const getTotalPrice = useCartStore((state) => state.getTotalPrice);
   const clearCart = useCartStore((state) => state.clearCart);
-  
-  const [showCheckout, setShowCheckout] = useState(false);
 
-  const total = getTotalPrice();
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [orderSuccess, setOrderSuccess] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const total = mounted ? getTotalPrice() : 0;
+
+  // Show success screen (persists even after cart is cleared)
+  if (orderSuccess) {
+    return (
+      <div className="container mx-auto py-12 sm:py-16 md:py-20 px-4 text-center max-w-2xl mt-[60px] sm:mt-[70px]">
+        <div className="bg-green-50 border-2 border-green-500 rounded-lg p-6 sm:p-8">
+          <div className="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4">&#10003;</div>
+          <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-light text-green-800 mb-3 sm:mb-4 uppercase">
+            Commande envoyee !
+          </h1>
+          <p className="font-basecoat text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
+            Nous avons bien recu votre commande. Vous recevrez un email de confirmation.
+          </p>
+          <p className="font-basecoat text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
+            Attention : La commande ne sera preparee et expediee, qu'a la reception du paiement.
+          </p>
+          <Link
+            to="/"
+            className="font-basecoat inline-block bg-yellow-400 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-yellow-500 transition text-sm sm:text-base max-w-xs sm:max-w-sm md:max-w-md mx-auto"
+          >
+            Retour a l'accueil
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (!mounted) {
+    return (
+      <div className="min-h-screen flex items-center justify-center mt-[60px]">
+        <p className="text-xl font-basecoat">Chargement...</p>
+      </div>
+    );
+  }
 
   if (items.length === 0) {
     return (
@@ -38,7 +78,7 @@ export default function Panier() {
   }
 
   if (showCheckout) {
-    return <CheckoutForm cart={items} total={total} clearCart={clearCart} onBack={() => setShowCheckout(false)} />;
+    return <CheckoutForm cart={items} total={total} clearCart={clearCart} onBack={() => setShowCheckout(false)} onSuccess={() => setOrderSuccess(true)} />;
   }
 
   return (
@@ -161,12 +201,13 @@ export default function Panier() {
   );
 }
 
-// 🔹 FORMULAIRE AVEC CHOIX DE PAIEMENT
-function CheckoutForm({ cart, total, clearCart, onBack }: { 
-  cart: any[], 
-  total: number, 
+// FORMULAIRE AVEC CHOIX DE PAIEMENT
+function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
+  cart: any[],
+  total: number,
   clearCart: () => void,
-  onBack: () => void 
+  onBack: () => void,
+  onSuccess: () => void
 }) {
   const [paymentMethod, setPaymentMethod] = useState<'virement' | 'carte' | null>(null);
   const [formData, setFormData] = useState({
@@ -177,18 +218,31 @@ function CheckoutForm({ cart, total, clearCart, onBack }: {
     notes: ''
   });
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
   const isSubmittingRef = useRef(false);
 
-  // 🔹 PAIEMENT PAR VIREMENT (système actuel)
+  // Helper: fetch with timeout to avoid hanging requests
+  const fetchWithTimeout = async (url: string, options: RequestInit, timeoutMs = 30000) => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const response = await fetch(url, { ...options, signal: controller.signal });
+      return response;
+    } catch (err: any) {
+      if (err.name === 'AbortError') {
+        throw new Error('Le serveur ne repond pas. Veuillez reessayer dans quelques instants.');
+      }
+      throw err;
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  };
+
+  // PAIEMENT PAR VIREMENT
   const handleVirementCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (isSubmittingRef.current) {
-      console.log('⚠️ Soumission déjà en cours');
-      return;
-    }
+    if (isSubmittingRef.current) return;
 
     isSubmittingRef.current = true;
     setLoading(true);
@@ -209,7 +263,7 @@ function CheckoutForm({ cart, total, clearCart, onBack }: {
         }
       };
 
-      const response = await fetch(apiEndpoints.commandes, {
+      const response = await fetchWithTimeout(apiEndpoints.commandes, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -219,30 +273,34 @@ function CheckoutForm({ cart, total, clearCart, onBack }: {
       try {
         responseData = await response.json();
       } catch {
-        // La réponse n'est pas du JSON valide
-        throw new Error(`Erreur serveur (${response.status}). Veuillez réessayer ou contacter le support.`);
+        throw new Error(`Erreur serveur (${response.status}). Veuillez reessayer ou contacter le support.`);
       }
 
       if (!response.ok) {
         if (response.status === 403) {
-          throw new Error('Accès refusé : les commandes ne sont pas activées sur le serveur. Contactez l\'administrateur.');
+          throw new Error('Acces refuse : les commandes ne sont pas activees sur le serveur. Contactez l\'administrateur.');
         }
         const errorMessage = responseData?.error?.message || 'Erreur lors de l\'envoi';
         throw new Error(errorMessage);
       }
 
+      // Show success BEFORE clearing cart to avoid parent unmounting this component
+      onSuccess();
       clearCart();
-      setSuccess(true);
     } catch (err: any) {
       console.error('Erreur:', err);
-      setError(err.message || 'Erreur inconnue');
-      isSubmittingRef.current = false;
+      if (err.message === 'Failed to fetch' || err.name === 'TypeError') {
+        setError('Impossible de contacter le serveur. Verifiez votre connexion internet ou reessayez plus tard.');
+      } else {
+        setError(err.message || 'Erreur inconnue');
+      }
     } finally {
       setLoading(false);
+      isSubmittingRef.current = false;
     }
   };
 
-  // 🔹 PAIEMENT PAR CARTE (Stripe)
+  // PAIEMENT PAR CARTE (Stripe)
   const handleStripeCheckout = async () => {
     if (!formData.nom || !formData.email || !formData.telephone || !formData.adresse) {
       setError('Veuillez remplir tous les champs obligatoires');
@@ -264,7 +322,7 @@ function CheckoutForm({ cart, total, clearCart, onBack }: {
         notes: formData.notes,
       };
 
-      const response = await fetch(url, {
+      const response = await fetchWithTimeout(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -274,18 +332,17 @@ function CheckoutForm({ cart, total, clearCart, onBack }: {
       try {
         responseData = await response.json();
       } catch {
-        // La réponse n'est pas du JSON valide (ex: "Method Not Allowed")
         if (response.status === 405) {
-          throw new Error('Le paiement en ligne n\'est pas encore configuré sur le serveur. Contactez l\'administrateur.');
+          throw new Error('Le paiement en ligne n\'est pas encore configure sur le serveur. Contactez l\'administrateur.');
         }
-        throw new Error(`Erreur serveur (${response.status}). Veuillez réessayer ou contacter le support.`);
+        throw new Error(`Erreur serveur (${response.status}). Veuillez reessayer ou contacter le support.`);
       }
 
       if (!response.ok) {
         if (response.status === 403) {
-          throw new Error('Accès refusé : le paiement en ligne n\'est pas activé. Contactez l\'administrateur.');
+          throw new Error('Acces refuse : le paiement en ligne n\'est pas active. Contactez l\'administrateur.');
         }
-        throw new Error(responseData?.error?.message || 'Erreur lors de la création de la session de paiement');
+        throw new Error(responseData?.error?.message || 'Erreur lors de la creation de la session de paiement');
       }
 
       const { url: checkoutUrl } = responseData;
@@ -295,37 +352,16 @@ function CheckoutForm({ cart, total, clearCart, onBack }: {
       }
 
       window.location.href = checkoutUrl;
-    } catch (error: any) {
-      console.error('❌ Erreur:', error);
-      setError(error.message || 'Erreur lors de la création de la session de paiement');
+    } catch (err: any) {
+      console.error('Erreur:', err);
+      if (err.message === 'Failed to fetch' || err.name === 'TypeError') {
+        setError('Impossible de contacter le serveur. Verifiez votre connexion internet ou reessayez plus tard.');
+      } else {
+        setError(err.message || 'Erreur lors de la creation de la session de paiement');
+      }
       setLoading(false);
     }
   };
-
-  if (success) {
-    return (
-      <div className="container mx-auto py-12 sm:py-16 md:py-20 px-4 text-center max-w-2xl mt-[60px] sm:mt-[70px]">
-        <div className="bg-green-50 border-2 border-green-500 rounded-lg p-6 sm:p-8">
-          <div className="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4">✓</div>
-          <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-light text-green-800 mb-3 sm:mb-4 uppercase">
-            Commande envoyée !
-          </h1>
-          <p className="font-basecoat text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
-            Nous avons bien reçu votre commande. Vous recevrez un email de confirmation à {formData.email}.
-          </p>
-          <p className="font-basecoat text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
-            Attention : La commande ne sera préparée et expédiée, qu'à la réception du paiement.
-          </p>
-          <Link
-            to="/"
-            className="font-basecoat inline-block bg-yellow-400 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-yellow-500 transition text-sm sm:text-base max-w-xs sm:max-w-sm md:max-w-md mx-auto"
-          >
-            Retour à l'accueil
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="container mx-auto py-6 sm:py-8 md:py-10 px-4 sm:px-6 md:px-8 max-w-3xl mt-[60px] sm:mt-[70px]">
