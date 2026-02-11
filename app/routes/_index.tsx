@@ -54,96 +54,82 @@ export default function Index() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Fetch homepage
+  // Fetch all data in parallel
   useEffect(() => {
-    async function fetchHomepageData() {
+    async function fetchAllData() {
       try {
-        const response = await fetch(apiEndpoints.homepages);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const data = await response.json();
-        if (data?.data?.length) {
-          const homepage = data.data[0];
-          const bannerImageUrl = homepage.banner_image?.formats?.large?.url
-            ? getImageUrl(homepage.banner_image.formats.large.url)
-            : homepage.banner_image?.url
-            ? getImageUrl(homepage.banner_image.url)
-            : '';
-          let descriptionText = '';
-          if (Array.isArray(homepage.description)) {
-            homepage.description.forEach((block: any) => {
-              block.children?.forEach((child: any) => {
-                descriptionText += child.text + ' ';
+        const [homepageRes, realisationsRes, actualitesRes] = await Promise.all([
+          fetch(apiEndpoints.homepages),
+          fetch(apiEndpoints.realisations),
+          fetch(apiEndpoints.latestActualite),
+        ]);
+
+        // Process homepage
+        if (homepageRes.ok) {
+          const data = await homepageRes.json();
+          if (data?.data?.length) {
+            const homepage = data.data[0];
+            const bannerImageUrl = homepage.banner_image?.formats?.large?.url
+              ? getImageUrl(homepage.banner_image.formats.large.url)
+              : homepage.banner_image?.url
+              ? getImageUrl(homepage.banner_image.url)
+              : '';
+            let descriptionText = '';
+            if (Array.isArray(homepage.description)) {
+              homepage.description.forEach((block: any) => {
+                block.children?.forEach((child: any) => {
+                  descriptionText += child.text + ' ';
+                });
               });
-            });
+            }
+            setHomepageData({ image_url: bannerImageUrl, description: descriptionText.trim() });
           }
-          setHomepageData({ image_url: bannerImageUrl, description: descriptionText.trim() });
-        } else {
-          setError('Aucune donnée trouvée');
+        }
+
+        // Process realisations
+        if (realisationsRes.ok) {
+          const data = await realisationsRes.json();
+          if (data?.data) {
+            const realisationsData: Realisation[] = data.data.map((realisation: any) => ({
+              id: realisation.documentId,
+              title: realisation.Titre || 'Titre indisponible',
+              image_url: realisation.Images?.[0]?.url ? getImageUrl(realisation.Images[0].url) : undefined,
+              description: realisation.Description || 'Description indisponible',
+              prix: realisation.Prix,
+            }));
+            setRealisations(realisationsData);
+          }
+        }
+
+        // Process actualites
+        if (actualitesRes.ok) {
+          const data = await actualitesRes.json();
+          if (data?.data) {
+            const actualitesData: Actualite[] = data.data.map((item: any) => ({
+              id: item.id,
+              title: item.Title || 'Titre indisponible',
+              content: item.content || '',
+              image_url: item.image?.formats?.large?.url
+                ? getImageUrl(item.image.formats.large.url)
+                : item.image?.url
+                ? getImageUrl(item.image.url)
+                : '',
+            }));
+            setActualites(actualitesData);
+          }
+        }
+
+        if (!homepageRes.ok && !realisationsRes.ok) {
+          setError('Erreur lors du chargement des données');
         }
       } catch (err: any) {
         console.error(err);
         setError('Erreur lors du chargement des données');
-      }
-    }
-    fetchHomepageData();
-  }, []);
-
-  // Fetch réalisations
-  useEffect(() => {
-    async function fetchRealisations() {
-      try {
-        const response = await fetch(apiEndpoints.realisations);
-        if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
-        const data = await response.json();
-
-        if (data && data.data) {
-          const realisationsData: Realisation[] = data.data.map((realisation: any) => ({
-            id: realisation.documentId,
-            title: realisation.Titre || 'Titre indisponible',
-            image_url: realisation.Images?.[0]?.url ? getImageUrl(realisation.Images[0].url) : undefined,
-            description: realisation.Description || 'Description indisponible',
-            prix: realisation.Prix, 
-          }));
-          setRealisations(realisationsData);
-        } else {
-          setError('Aucune réalisation trouvée.');
-        }
-      } catch (error: any) {
-        console.error('Erreur lors du chargement des réalisations :', error);
-        setError('Erreur lors du chargement des réalisations');
       } finally {
         setLoading(false);
       }
     }
-
-    fetchRealisations();
-  }, []);
-
-  // Fetch actualités
-  useEffect(() => {
-    async function fetchActualites() {
-      try {
-        const response = await fetch(apiEndpoints.latestActualite);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const data = await response.json();
-        if (data?.data) {
-          const actualitesData: Actualite[] = data.data.map((item: any) => ({
-            id: item.id,
-            title: item.Title || 'Titre indisponible',
-            content: item.content || '',
-            image_url: item.image?.formats?.large?.url
-              ? getImageUrl(item.image.formats.large.url)
-              : item.image?.url
-              ? getImageUrl(item.image.url)
-              : '',
-          }));
-          setActualites(actualitesData);
-        }
-      } catch (err: any) {
-        console.error(err);
-      }
-    }
-    fetchActualites();
+    fetchAllData();
   }, []);
 
   if (loading) return (
@@ -254,7 +240,7 @@ const sliderSettings = {
           {/* Photo 1 - Gauche */}
 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">            
 <div className="relative w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] rounded-full overflow-hidden border-4 border-yellow-400 shadow-2xl transform hover:scale-110 transition duration-300">
-              <img src="/assets/equipe-1.jpg" alt="Fondatrice 1" className="w-full h-full object-cover" />
+              <img src="/assets/equipe-1.jpg" alt="Fondatrice 1" loading="lazy" className="w-full h-full object-cover" />
             </div>
           </div>
           
@@ -307,6 +293,7 @@ const sliderSettings = {
                   <img
                     src={actu.image_url}
                     alt={actu.title}
+                    loading="lazy"
                     className="w-full h-48 sm:h-56 md:h-64 lg:h-72 object-cover rounded-md shadow-md"
                   />
                 </div>
@@ -340,6 +327,7 @@ const sliderSettings = {
                   <img
                     src={realisation.image_url}
                     alt={realisation.title}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                 ) : (
