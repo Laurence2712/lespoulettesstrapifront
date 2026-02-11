@@ -222,7 +222,8 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
   const isSubmittingRef = useRef(false);
 
   // Helper: fetch with timeout to avoid hanging requests
-  const fetchWithTimeout = async (url: string, options: RequestInit, timeoutMs = 30000) => {
+  // Render free tier can take up to 60s to wake up, so we use a generous timeout
+  const fetchWithTimeout = async (url: string, options: RequestInit, timeoutMs = 90000) => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
     try {
@@ -230,7 +231,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
       return response;
     } catch (err: any) {
       if (err.name === 'AbortError') {
-        throw new Error('Le serveur ne repond pas. Veuillez reessayer dans quelques instants.');
+        throw new Error('Le serveur met du temps a repondre (il est peut-etre en train de demarrer). Veuillez reessayer dans 30 secondes.');
       }
       throw err;
     } finally {
