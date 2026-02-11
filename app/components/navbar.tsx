@@ -6,11 +6,16 @@ import { useCartStore } from "../store/cartStore";
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const location = useLocation();
 
+  const getTotalItems = useCartStore((state) => state.getTotalItems);
+  const totalItems = mounted ? getTotalItems() : 0;
 
-    const getTotalItems = useCartStore((state) => state.getTotalItems);
-  const totalItems = getTotalItems();
+  // Avoid hydration mismatch: only render client-dependent UI after mount
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Gestion du scroll
   useEffect(() => {

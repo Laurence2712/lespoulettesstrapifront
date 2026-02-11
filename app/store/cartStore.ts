@@ -29,7 +29,7 @@ export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
       items: [],
-      lastActivity: Date.now(),
+      lastActivity: 0,
 
       addToCart: (item) => {
         set((state) => {
@@ -89,9 +89,12 @@ export const useCartStore = create<CartState>()(
       checkExpiration: () => {
         const now = Date.now();
         const lastActivity = get().lastActivity;
-        
+
+        // Skip if store hasn't been hydrated from localStorage yet
+        if (lastActivity === 0) return;
+
         if (now - lastActivity > EXPIRATION_TIME) {
-          console.log('⏰ Panier expiré - Réinitialisation');
+          console.log('Panier expire - Reinitialisation');
           get().clearCart();
         }
       },
