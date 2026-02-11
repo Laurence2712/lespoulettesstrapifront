@@ -31,8 +31,14 @@ export default function Index() {
   const [actualites, setActualites] = useState<Actualite[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
+
+  // Mark as mounted to avoid hydration mismatch on client-only state
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Détection taille écran
   useEffect(() => {
@@ -41,10 +47,10 @@ export default function Index() {
       setIsMobile(width <= 767);
       setIsTablet(width > 767 && width <= 1024);
     };
-    
+
     handleResize();
     window.addEventListener('resize', handleResize);
-    
+
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
@@ -152,8 +158,9 @@ export default function Index() {
     </div>
   );
 
-  // Configuration slider dynamique
+  // Configuration slider dynamique - use responsive config to avoid hydration mismatch
   const getSlidesToShow = () => {
+    if (!mounted) return 3; // Default for SSR
     if (isMobile) return 1;
     if (isTablet) return 2;
     return 3;
@@ -167,14 +174,25 @@ const sliderSettings = {
   slidesToScroll: 1,
 
   autoplay: true,
-  autoplaySpeed: 0,     
-  speed: 10000,         
-  cssEase: "linear",    
+  autoplaySpeed: 0,
+  speed: 10000,
+  cssEase: "linear",
 
   arrows: false,
   swipeToSlide: true,
   pauseOnHover: true,
   pauseOnFocus: true,
+
+  responsive: [
+    {
+      breakpoint: 767,
+      settings: { slidesToShow: 1 },
+    },
+    {
+      breakpoint: 1024,
+      settings: { slidesToShow: 2 },
+    },
+  ],
 };
 
   return (
@@ -311,7 +329,7 @@ const sliderSettings = {
 
   {/* Slider pleine largeur avec padding sur les côtés */}
   <div className="px-4 sm:px-6 md:px-8 lg:px-12">
-    <Slider {...sliderSettings} className="mt-4 sm:mt-6 md:mt-8 relative z-0" key={`${isMobile}-${isTablet}`}>
+    <Slider {...sliderSettings} className="mt-4 sm:mt-6 md:mt-8 relative z-0">
       {realisations.map((realisation) => (
         <div key={realisation.id} className="px-3 sm:px-4 md:px-6">
           <Link to={`/realisations/${realisation.id}`}>
