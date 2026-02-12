@@ -16,6 +16,7 @@ export default function Realisations() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showPopup, setShowPopup] = useState(true);
+  const [sortOrder, setSortOrder] = useState<'default' | 'asc' | 'desc'>('default');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -146,11 +147,29 @@ const handleBeninClick = () => {
           Retour
         </Link>
 
-        {/* Titre */}
-        <h1 className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
-          Nos réalisations
-        </h1>
-        <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12"></div>
+        {/* Titre + Filtre */}
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6">
+          <div>
+            <h1 className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+              Nos réalisations
+            </h1>
+            <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4"></div>
+          </div>
+          <div className="flex items-center gap-2">
+            <label htmlFor="sort-price" className="font-basecoat text-sm text-gray-600 whitespace-nowrap">Trier par :</label>
+            <select
+              id="sort-price"
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value as 'default' | 'asc' | 'desc')}
+              className="font-basecoat text-sm border border-gray-300 rounded-lg px-3 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+            >
+              <option value="default">Par défaut</option>
+              <option value="asc">Prix croissant</option>
+              <option value="desc">Prix décroissant</option>
+            </select>
+          </div>
+        </div>
+        <div className="mb-8 sm:mb-10 md:mb-12"></div>
 
         {/* Loading & Error states */}
         {loading && (
@@ -167,7 +186,12 @@ const handleBeninClick = () => {
 
         {/* Grid */}
 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
-  {realisations.map((realisation) => (
+  {[...realisations].sort((a, b) => {
+    if (sortOrder === 'default') return 0;
+    const prixA = typeof a.prix === 'string' ? parseFloat(a.prix) : (a.prix ?? 0);
+    const prixB = typeof b.prix === 'string' ? parseFloat(b.prix) : (b.prix ?? 0);
+    return sortOrder === 'asc' ? prixA - prixB : prixB - prixA;
+  }).map((realisation) => (
     <div
       key={realisation.id}
       className="bg-white rounded-lg shadow-md overflow-hidden realisation-card hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full"
