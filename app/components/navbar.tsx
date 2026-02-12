@@ -63,7 +63,7 @@ export default function NavBar() {
               aria-label="Toggle menu"
             >
               <svg
-                className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transition-colors duration-300 ${
+                className={`w-6 h-6 sm:w-6 sm:h-6 md:w-7 md:h-7 transition-colors duration-300 ${
                   isTransparent ? 'text-white' : 'text-black'
                 }`}
                 fill="none"
@@ -86,28 +86,28 @@ export default function NavBar() {
                  <Link
   to="/#qui-sommes-nous"
   onClick={handleLinkClick}
-  className="font-basecoat font-medium text-black hover:bg-gray-100 px-4 py-3 rounded-lg transition text-base"
+  className="font-basecoat font-medium text-black hover:bg-gray-100 px-4 py-3 rounded-lg transition text-lg sm:text-base"
 >
   Qui sommes-nous
 </Link>
                   <Link
                     to="/realisations"
                     onClick={handleLinkClick}
-                    className="font-basecoat font-medium text-black hover:bg-gray-100 px-4 py-3 rounded-lg transition text-base"
+                    className="font-basecoat font-medium text-black hover:bg-gray-100 px-4 py-3 rounded-lg transition text-lg sm:text-base"
                   >
                     Nos Créations
                   </Link>
                 <Link
   to="/#ou-nous-trouver"
   onClick={handleLinkClick}
-  className="font-basecoat font-medium text-black hover:bg-gray-100 px-4 py-3 rounded-lg transition text-base"
+  className="font-basecoat font-medium text-black hover:bg-gray-100 px-4 py-3 rounded-lg transition text-lg sm:text-base"
 >
   Où nous trouver
 </Link>
                   <Link
                     to="/contact"
                     onClick={handleLinkClick}
-                    className="font-basecoat font-medium text-black hover:bg-gray-100 px-4 py-3 rounded-lg transition text-base"
+                    className="font-basecoat font-medium text-black hover:bg-gray-100 px-4 py-3 rounded-lg transition text-lg sm:text-base"
                   >
                     Nous contacter
                   </Link>
@@ -120,7 +120,7 @@ export default function NavBar() {
           <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
             <Link
               to="/realisations"
-              className={`font-basecoat font-semibold hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-base ${
+              className={`font-basecoat font-semibold hover:text-yellow-400 transition-colors duration-300 text-base lg:text-lg ${
                 isTransparent ? 'text-white' : 'text-black'
               }`}
             >
@@ -128,7 +128,7 @@ export default function NavBar() {
             </Link>
             <Link
               to="/actualites"
-              className={`font-basecoat font-semibold hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-base ${
+              className={`font-basecoat font-semibold hover:text-yellow-400 transition-colors duration-300 text-base lg:text-lg ${
                 isTransparent ? 'text-white' : 'text-black'
               }`}
             >
@@ -136,7 +136,7 @@ export default function NavBar() {
             </Link>
             <Link
               to="/contact"
-              className={`font-basecoat font-semibold hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-base ${
+              className={`font-basecoat font-semibold hover:text-yellow-400 transition-colors duration-300 text-base lg:text-lg ${
                 isTransparent ? 'text-white' : 'text-black'
               }`}
             >
@@ -144,9 +144,9 @@ export default function NavBar() {
             </Link>
             <Link
               to="/panier"
-              className="font-basecoat inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-4 lg:px-5 py-2 lg:py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-sm lg:text-base"
+              className="font-basecoat inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-4 lg:px-5 py-2 lg:py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-base lg:text-lg"
             >
-             <ShoppingCartIcon className="w-5 h-5" />
+             <ShoppingCartIcon className="w-5 h-5 lg:w-6 lg:h-6" />
               <span className="hidden lg:inline">Panier</span>
               {totalItems > 0 && (
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
@@ -159,9 +159,9 @@ export default function NavBar() {
           {/* Bouton Panier - Mobile uniquement */}
           <Link
             to="/panier"
-            className="md:hidden font-basecoat inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-3 py-2 rounded-lg font-semibold transition transform hover:scale-105 text-sm"
+            className="md:hidden font-basecoat inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-base"
           >
-           <ShoppingCartIcon className="w-5 h-5" />
+           <ShoppingCartIcon className="w-6 h-6" />
             {totalItems > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                 {totalItems}
