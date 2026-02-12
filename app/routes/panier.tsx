@@ -27,7 +27,7 @@ export default function Panier() {
   // Show success screen (persists even after cart is cleared)
   if (orderSuccess) {
     return (
-      <div className="container mx-auto py-12 sm:py-16 md:py-20 px-4 text-center max-w-2xl mt-[60px] sm:mt-[70px]">
+      <div className="container mx-auto py-6 sm:py-8 md:py-10 px-4 sm:px-6 md:px-8 text-center max-w-2xl mt-[60px] sm:mt-[70px] md:mt-[80px]">
         <div className="bg-green-50 border-2 border-green-500 rounded-lg p-6 sm:p-8">
           <div className="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4">&#10003;</div>
           <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-light text-green-800 mb-3 sm:mb-4 uppercase">
@@ -41,7 +41,7 @@ export default function Panier() {
           </p>
           <Link
             to="/"
-            className="font-basecoat inline-block bg-yellow-400 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-yellow-500 transition text-sm sm:text-base max-w-xs sm:max-w-sm md:max-w-md mx-auto"
+            className="font-basecoat inline-block bg-yellow-400 hover:bg-yellow-500 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition transform hover:scale-105 text-sm sm:text-base"
           >
             Retour a l'accueil
           </Link>
@@ -183,7 +183,7 @@ export default function Panier() {
 
             <button
               onClick={() => setShowCheckout(true)}
-              className="font-basecoat w-full bg-yellow-400 text-black py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-yellow-500 transition mb-2 sm:mb-3 text-sm sm:text-base"
+              className="font-basecoat w-full bg-yellow-400 hover:bg-yellow-500 text-black py-2.5 sm:py-3 rounded-lg font-semibold transition transform hover:scale-105 mb-2 sm:mb-3 text-sm sm:text-base"
             >
               Passer commande
             </button>
@@ -378,7 +378,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
   };
 
   return (
-    <div className="container mx-auto py-6 sm:py-8 md:py-10 px-4 sm:px-6 md:px-8 max-w-3xl mt-[60px] sm:mt-[70px]">
+    <div className="container mx-auto py-6 sm:py-8 md:py-10 px-4 sm:px-6 md:px-8 max-w-3xl mt-[60px] sm:mt-[70px] md:mt-[80px]">
       <button
         onClick={onBack}
         className="font-basecoat text-indigo-600 hover:text-indigo-800 mb-4 sm:mb-6 flex items-center text-sm sm:text-base"
@@ -589,7 +589,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
           <button
             type="submit"
             disabled={loading}
-            className="font-basecoat w-full bg-yellow-400 text-black py-3 sm:py-3.5 md:py-4 rounded-lg font-semibold hover:bg-yellow-500 transition disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+            className="font-basecoat w-full bg-yellow-400 hover:bg-yellow-500 text-black py-2.5 sm:py-3 rounded-lg font-semibold transition transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm sm:text-base"
           >
             {loading
               ? (loadingMessage || (paymentMethod === 'virement' ? 'Envoi en cours...' : 'Redirection vers le paiement...'))

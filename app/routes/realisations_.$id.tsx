@@ -159,7 +159,7 @@ export default function RealisationDetail() {
   };
 
   return (
-    <div className="container mx-auto py-6 max-w-7xl mt-[70px] px-4">
+    <div className="container mx-auto py-6 sm:py-8 md:py-10 max-w-7xl mt-[60px] sm:mt-[70px] md:mt-[80px] px-4 sm:px-6 md:px-8">
       {/* Breadcrumb */}
       <nav className="mb-6 text-xs sm:text-sm font-basecoat">
         <Link to="/" className="text-indigo-600 hover:text-indigo-800">Accueil</Link> /{' '}
@@ -170,7 +170,7 @@ export default function RealisationDetail() {
       {/* Bouton retour */}
       <button
         onClick={() => navigate(-1)}
-        className="font-basecoat inline-flex items-center text-gray-600 hover:text-gray-900 mb-6 transition text-sm"
+        className="font-basecoat inline-flex items-center text-gray-600 hover:text-gray-900 mb-6 sm:mb-8 transition text-sm sm:text-base"
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
@@ -272,7 +272,7 @@ export default function RealisationDetail() {
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => quantity > 1 && setQuantity(quantity - 1)}
-                  className="bg-gray-200 hover:bg-gray-300 w-12 h-12 rounded-lg font-bold text-xl transition"
+                  className="font-basecoat bg-gray-200 hover:bg-gray-300 w-12 h-12 rounded-lg font-bold text-xl transition"
                   disabled={quantity <= 1}
                 >
                   -
@@ -280,7 +280,7 @@ export default function RealisationDetail() {
                 <span className="text-2xl font-semibold w-16 text-center">{quantity}</span>
                 <button
                   onClick={() => currentDeclinaison && quantity < currentDeclinaison.Stock && setQuantity(quantity + 1)}
-                  className="bg-gray-200 hover:bg-gray-300 w-12 h-12 rounded-lg font-bold text-xl transition"
+                  className="font-basecoat bg-gray-200 hover:bg-gray-300 w-12 h-12 rounded-lg font-bold text-xl transition"
                   disabled={!currentDeclinaison || quantity >= currentDeclinaison.Stock}
                 >
                   +
@@ -294,9 +294,9 @@ export default function RealisationDetail() {
             <button
               onClick={handleAddToCart}
               disabled={!isInStock}
-              className={`w-full py-4 sm:py-5 rounded-xl text-lg sm:text-xl font-bold uppercase transition-all duration-300 ${
+              className={`font-basecoat w-full py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold uppercase transition transform ${
                 isInStock
-                  ? 'bg-yellow-400 hover:bg-yellow-500 text-black transform hover:scale-105 shadow-lg hover:shadow-xl'
+                  ? 'bg-yellow-400 hover:bg-yellow-500 text-black hover:scale-105'
                   : 'bg-gray-300 text-gray-500 cursor-not-allowed'
               }`}
             >
