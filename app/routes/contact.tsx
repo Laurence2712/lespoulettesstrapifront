@@ -11,10 +11,11 @@ export default function Contact() {
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-3 sm:mb-4 text-gray-900 uppercase"
+            className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 uppercase"
           >
             Contactez-nous
           </motion.h1>
+          <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-4 sm:mb-6"></div>
 
           <motion.p
             initial={{ opacity: 0, y: -10 }}

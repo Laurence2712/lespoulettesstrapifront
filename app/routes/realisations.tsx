@@ -82,7 +82,7 @@ const handleBeninClick = () => {
         <div className="fixed inset-0 bg-gradient-to-br from-gray-50 to-white z-50 flex items-center justify-center p-4">
           <div className="text-center max-w-5xl w-full">
             {/* Titre */}
-            <h1 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-light uppercase mb-16 sm:mb-20 md:mb-24 tracking-wide text-gray-800">
+            <h1 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold uppercase mb-16 sm:mb-20 md:mb-24 tracking-wide text-gray-900">
               Je commande depuis
             </h1>
 
@@ -147,9 +147,10 @@ const handleBeninClick = () => {
         </Link>
 
         {/* Titre */}
-        <h1 className="mb-12 text-center font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl drop-shadow-lg uppercase px-4">
+        <h1 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase text-gray-900">
           Nos réalisations
         </h1>
+        <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12"></div>
 
         {/* Loading & Error states */}
         {loading && (
