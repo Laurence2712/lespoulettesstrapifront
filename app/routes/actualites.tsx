@@ -78,7 +78,7 @@ useEffect(() => {
       </nav>
 
       {/* Titre */}
-      <h1 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase text-gray-900">
+      <h1 className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
         Toutes les actualités
       </h1>
       <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12"></div>

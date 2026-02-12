@@ -90,7 +90,7 @@ export default function Panier() {
         <span className="text-gray-600">Panier</span>
       </nav>
 
-      <h1 className="font-basecoat text-3xl sm:text-4xl md:text-5xl font-bold uppercase text-gray-900">
+      <h1 className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
         Votre panier
       </h1>
       <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-6 sm:mb-8"></div>

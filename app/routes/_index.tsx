@@ -207,7 +207,7 @@ const sliderSettings = {
 </header>
 <section id="qui-sommes-nous" className="py-6 sm:py-8 md:py-10">
   <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-8 sm:mb-10 md:mb-12">
-    <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase text-gray-900">
+    <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
       Qui sommes-nous
     </h2>
     <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12"></div>
@@ -251,7 +251,7 @@ const sliderSettings = {
 </section>
       {/* Actualités - Titre aligné à gauche */}
       <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-        <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase text-gray-900">
+        <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
          Actualités
         </h2>
         <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4"></div>
@@ -303,7 +303,7 @@ const sliderSettings = {
 <section className="products py-6 sm:py-8 md:py-10 w-full relative z-10">
   {/* Titre aligné à gauche */}
   <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10 md:mb-12 px-4 sm:px-6 md:px-8 lg:px-12">
-    <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase text-gray-900">
+    <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
       Nos créations
     </h2>
     <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4"></div>
@@ -361,7 +361,7 @@ const sliderSettings = {
 </section>
    <section id="ou-nous-trouver" className="w-full">
   <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10 md:mb-12 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-    <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase text-gray-900">
+    <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
       Où nous trouver
     </h2>
     <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4"></div>

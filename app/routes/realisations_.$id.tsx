@@ -217,7 +217,7 @@ export default function RealisationDetail() {
 
         {/* Infos produit */}
         <div className="flex flex-col font-basecoat">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase text-gray-900">{realisation.title}</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">{realisation.title}</h1>
           <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-4"></div>
           
           {/* Description du modèle sélectionné */}
