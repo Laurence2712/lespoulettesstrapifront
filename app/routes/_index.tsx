@@ -306,7 +306,7 @@ const sliderSettings = {
   </div>
 
   {/* Slider pleine largeur avec padding sur les côtés */}
-  <div className="px-4 sm:px-6 md:px-8 lg:px-12">
+  <div className="px-4 sm:px-6 md:px-8 lg:px-12 overflow-hidden">
     <Slider {...sliderSettings} className="mt-4 sm:mt-6 md:mt-8 relative z-0">
       {realisations.map((realisation) => (
         <div key={realisation.id} className="px-3 sm:px-4 md:px-6">
