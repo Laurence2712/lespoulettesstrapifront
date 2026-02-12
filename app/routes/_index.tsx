@@ -205,10 +205,12 @@ const sliderSettings = {
   </div>
   <div className="absolute inset-0 bg-black opacity-65 z-0"></div>
 </header>
-<section id="qui-sommes-nous">
- 
-
+<section id="qui-sommes-nous" className="py-6 sm:py-8 md:py-10">
   <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-8 sm:mb-10 md:mb-12">
+    <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase text-gray-900">
+      Qui sommes-nous
+    </h2>
+    <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12"></div>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
       
       {/* Texte */}
@@ -247,11 +249,12 @@ const sliderSettings = {
     </div>
   </div>
 </section>
-      {/* Actualités - Responsive title */}
-      <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 text-center px-4">
-        <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xldrop-shadow-lg uppercase px-4">
+      {/* Actualités - Titre aligné à gauche */}
+      <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+        <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase text-gray-900">
          Actualités
         </h2>
+        <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4"></div>
       </div>
 
       {/* Actualités Section - Responsive layout */}
@@ -298,11 +301,12 @@ const sliderSettings = {
 
       {/* Slider Réalisations - Pleine largeur */}
 <section className="products py-6 sm:py-8 md:py-10 w-full relative z-10">
-  {/* Titre centré */}
-  <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 text-center mb-8 sm:mb-10 md:mb-12">
-    <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xldrop-shadow-lg uppercase px-4">
+  {/* Titre aligné à gauche */}
+  <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10 md:mb-12 px-4 sm:px-6 md:px-8 lg:px-12">
+    <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase text-gray-900">
       Nos créations
     </h2>
+    <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4"></div>
   </div>
 
   {/* Slider pleine largeur avec padding sur les côtés */}
@@ -356,10 +360,11 @@ const sliderSettings = {
   </div>
 </section>
    <section id="ou-nous-trouver" className="w-full">
-  <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 text-center mb-8 sm:mb-10 md:mb-12">
-    <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xldrop-shadow-lg uppercase px-4">
+  <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10 md:mb-12 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+    <h2 className="font-basecoat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase text-gray-900">
       Où nous trouver
     </h2>
+    <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4"></div>
        <p className='mt-6 mb-6 font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed'>Contactez-nous pour vos demandes spéciales</p>
 <p className="mb-6 font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed">
   <a

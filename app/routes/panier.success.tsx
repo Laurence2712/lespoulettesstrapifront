@@ -19,7 +19,7 @@ export default function PaymentSuccess() {
     <div className="container mx-auto py-6 sm:py-8 md:py-10 px-4 sm:px-6 md:px-8 text-center max-w-2xl mt-[60px] sm:mt-[70px] md:mt-[80px]">
       <div className="bg-green-50 border-2 border-green-500 rounded-lg p-6 sm:p-8">
         <div className="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4">✓</div>
-        <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-light text-green-800 mb-3 sm:mb-4 uppercase">
+        <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-green-800 mb-3 sm:mb-4 uppercase">
           Paiement réussi !
         </h1>
         <p className="font-basecoat text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
