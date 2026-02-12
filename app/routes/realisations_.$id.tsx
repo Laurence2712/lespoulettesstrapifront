@@ -146,7 +146,7 @@ export default function RealisationDetail() {
   const handleAddToCart = () => {
     if (currentDeclinaison && currentDeclinaison.Stock > 0) {
       addToCart({
-        id: realisation.id,
+        id: `${realisation.id}-${currentDeclinaison.id}`,
         title: `${realisation.title}${currentDeclinaison.Description ? ` - ${currentDeclinaison.Description}` : ''}`,
         prix: realisation.prix || 0,
         quantity,

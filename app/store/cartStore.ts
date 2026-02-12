@@ -2,12 +2,12 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface CartItem {
-  id: number;
+  id: string;
   title: string;
   prix: string | number;
   quantity: number;
   image_url: string;
-  categorieId?: number;
+  categorieId?: number | string;
   declinaisonId?: number;
 }
 
@@ -15,8 +15,8 @@ interface CartState {
   items: CartItem[];
   lastActivity: number; // Timestamp de la dernière activité
   addToCart: (item: CartItem) => void;
-  removeFromCart: (id: number) => void;
-  updateQuantity: (id: number, quantity: number) => void;
+  removeFromCart: (id: string) => void;
+  updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
   getTotalPrice: () => number;
   getTotalItems: () => number;
