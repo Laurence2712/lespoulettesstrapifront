@@ -27,7 +27,7 @@ export default function Panier() {
   // Show success screen (persists even after cart is cleared)
   if (orderSuccess) {
     return (
-      <div className="container mx-auto py-6 sm:py-8 md:py-10 px-4 sm:px-6 md:px-8 text-center max-w-2xl mt-[60px] sm:mt-[70px] md:mt-[80px]">
+      <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] text-center mt-[60px] sm:mt-[70px] md:mt-[80px]">
         <div className="bg-green-50 border-2 border-green-500 rounded-lg p-6 sm:p-8">
           <div className="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4">&#10003;</div>
           <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-green-800 mb-3 sm:mb-4 uppercase">
@@ -60,7 +60,7 @@ export default function Panier() {
 
   if (items.length === 0) {
     return (
-      <div className="container mx-auto py-6 sm:py-8 md:py-10 px-4 text-center mt-[60px] sm:mt-[70px] md:mt-[80px] min-h-[60vh] flex flex-col justify-center">
+      <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] text-center mt-[60px] sm:mt-[70px] md:mt-[80px] min-h-[60vh] flex flex-col justify-center">
         <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 uppercase">
           Votre panier est vide
         </h1>
@@ -82,7 +82,7 @@ export default function Panier() {
   }
 
   return (
-    <div className="container mx-auto py-6 sm:py-8 md:py-10 px-4 sm:px-6 md:px-8 max-w-6xl mt-[60px] sm:mt-[70px] md:mt-[80px]">
+    <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]">
       {/* Breadcrumb */}
       <nav className="font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
         <Link to="/" className="text-indigo-600 hover:text-indigo-800 transition">Accueil</Link>
@@ -379,7 +379,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
   };
 
   return (
-    <div className="container mx-auto py-6 sm:py-8 md:py-10 px-4 sm:px-6 md:px-8 max-w-3xl mt-[60px] sm:mt-[70px] md:mt-[80px]">
+    <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]">
       <button
         onClick={onBack}
         className="font-basecoat text-indigo-600 hover:text-indigo-800 mb-4 sm:mb-6 flex items-center text-sm sm:text-base"

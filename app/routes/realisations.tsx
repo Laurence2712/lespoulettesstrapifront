@@ -116,7 +116,7 @@ const handleBeninClick = () => {
       )}
 
       {/* Contenu principal (masqué si popup visible) */}
-      <div className={`${showPopup ? 'hidden' : 'block'} container mx-auto py-6 sm:py-8 md:py-10 px-4 sm:px-6 md:px-8 max-w-7xl mt-[60px] sm:mt-[70px] md:mt-[80px]`}>
+      <div className={`${showPopup ? 'hidden' : 'block'} py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]`}>
         {/* Breadcrumb */}
         <nav className="font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
           <Link to="/" className="text-indigo-600 hover:text-indigo-800 font-medium transition">

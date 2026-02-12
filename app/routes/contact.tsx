@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 
 export default function Contact() {
   return (
-    <section className="min-h-screen bg-gray-50 mt-[60px] sm:mt-[70px] md:mt-[80px] py-6 sm:py-8 md:py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-start md:items-center">
+    <section className="min-h-screen bg-gray-50 mt-[60px] sm:mt-[70px] md:mt-[80px] py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-start md:items-center">
         
         {/* Bloc gauche : infos et formulaire */}
         <div className="order-1">

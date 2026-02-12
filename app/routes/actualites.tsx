@@ -67,7 +67,7 @@ useEffect(() => {
 }, [actualites]);
 
   return (
-    <div className="container mx-auto py-6 sm:py-8 md:py-10 px-4 sm:px-6 md:px-8 max-w-7xl mt-[60px] sm:mt-[70px] md:mt-[80px]">
+    <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]">
       {/* Breadcrumb */}
       <nav className="font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
         <Link to="/" className="text-yellow-600 hover:text-yellow-800 font-medium transition">

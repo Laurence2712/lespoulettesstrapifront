@@ -205,8 +205,8 @@ const sliderSettings = {
   </div>
   <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
 </header>
-<section id="qui-sommes-nous" className="py-6 sm:py-8 md:py-10">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-8 sm:mb-10 md:mb-12">
+<section id="qui-sommes-nous" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-6 sm:py-8 md:py-[60px]">
+  <div className="mb-8 sm:mb-10 md:mb-12">
     <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
       Qui sommes-nous
     </h2>
@@ -250,7 +250,7 @@ const sliderSettings = {
   </div>
 </section>
       {/* Actualités - Titre aligné à gauche */}
-      <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+      <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
         <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
          Actualités
         </h2>
@@ -258,7 +258,7 @@ const sliderSettings = {
       </div>
 
       {/* Actualités Section - Responsive layout */}
-      <section className="actualites py-6 sm:py-8 md:py-10 bg-yellow-100 max-w-7xl mx-4 sm:mx-6 md:mx-8 lg:mx-auto px-4 sm:px-6 md:px-8 rounded-lg shadow-md mt-8 sm:mt-10 md:mt-12">
+      <section className="actualites py-6 sm:py-8 md:py-[60px] bg-yellow-100 mx-4 sm:mx-6 md:mx-[60px] lg:mx-[120px] px-4 sm:px-6 md:px-8 rounded-lg shadow-md mt-8 sm:mt-10 md:mt-12">
         {actualites.length > 0 ? (
           actualites.map((actu) => (
             <div key={actu.id} className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
@@ -300,9 +300,9 @@ const sliderSettings = {
       </section>
 
       {/* Slider Réalisations - Pleine largeur */}
-<section className="products py-6 sm:py-8 md:py-10 w-full relative z-10">
+<section className="products py-6 sm:py-8 md:py-[60px] w-full relative z-10">
   {/* Titre aligné à gauche */}
-  <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10 md:mb-12 px-4 sm:px-6 md:px-8 lg:px-12">
+  <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10 md:mb-12 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
     <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
       Nos créations
     </h2>
@@ -310,7 +310,7 @@ const sliderSettings = {
   </div>
 
   {/* Slider pleine largeur avec padding sur les côtés */}
-  <div className="px-4 sm:px-6 md:px-8 lg:px-12 overflow-hidden">
+  <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] overflow-hidden">
     <Slider {...sliderSettings} className="mt-4 sm:mt-6 md:mt-8 relative z-0">
       {realisations.map((realisation) => (
         <div key={realisation.id} className="px-3 sm:px-4 md:px-6">
@@ -360,7 +360,7 @@ const sliderSettings = {
   </div>
 </section>
    <section id="ou-nous-trouver" className="w-full">
-  <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10 md:mb-12 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+  <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10 md:mb-12 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
     <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
       Où nous trouver
     </h2>
