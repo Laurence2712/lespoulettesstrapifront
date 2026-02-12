@@ -16,7 +16,7 @@ export default function Realisations() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showPopup, setShowPopup] = useState(true);
-  const [sortOrder, setSortOrder] = useState<'default' | 'asc' | 'desc'>('default');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -160,10 +160,9 @@ const handleBeninClick = () => {
             <select
               id="sort-price"
               value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value as 'default' | 'asc' | 'desc')}
+              onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}
               className="font-basecoat text-sm border border-gray-300 rounded-lg px-3 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
             >
-              <option value="default">Par défaut</option>
               <option value="asc">Prix croissant</option>
               <option value="desc">Prix décroissant</option>
             </select>
@@ -187,7 +186,6 @@ const handleBeninClick = () => {
         {/* Grid */}
 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
   {[...realisations].sort((a, b) => {
-    if (sortOrder === 'default') return 0;
     const prixA = typeof a.prix === 'string' ? parseFloat(a.prix) : (a.prix ?? 0);
     const prixB = typeof b.prix === 'string' ? parseFloat(b.prix) : (b.prix ?? 0);
     return sortOrder === 'asc' ? prixA - prixB : prixB - prixA;
