@@ -44,7 +44,7 @@ export default function RealisationDetail() {
   useEffect(() => {
     async function fetchRealisation() {
       try {
-        const url = `${getApiUrl()}/api/realisations/${id}?populate[Declinaison][populate]=Image&populate=Images`;
+        const url = `${getApiUrl()}/api/realisations/${id}?populate[Declinaison][populate]=Image&populate[Images][fields][0]=url&populate[Images][fields][1]=formats`;
         const response = await fetch(url);
 
         if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
