@@ -186,20 +186,11 @@ const sliderSettings = {
      
       {/* Header Banner - Responsive heights */}
 <header
-  className="banner relative bg-cover bg-center h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[100vh] flex flex-col justify-end text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24"
+  className="banner relative bg-cover bg-center h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[100vh] flex flex-col justify-center items-center text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24"
   style={{ backgroundImage: `url(${homepageData?.image_url})` }}
 >
-  <div className="banner-content text-center z-10 flex flex-col items-center justify-end pb-8 sm:pb-12 md:pb-16">
-    {/* Logo Les Poulettes BLANC et GRAND */}
-  <div className="w-full flex justify-center">
-  <img
-    src="/assets/logo_t_poulettes_white.png"
-    alt="Les Poulettes"
-    className="w-full max-w-[600px] h-auto drop-shadow-2xl"
-  />
-</div>
-    
-    <h1 className="font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold drop-shadow-lg mb-6 px-4 max-w-[90%] sm:max-w-[80%] md:max-w-[70%]">
+  <div className="banner-content text-center z-10 flex flex-col items-center justify-center pb-8 sm:pb-12 md:pb-16">
+    <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold drop-shadow-lg mb-8 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-snug">
       Une marque d'accessoires made in Bénin, éco-trendy/éco-friendly qui surfe sur la vague du wax !
     </h1>
     
