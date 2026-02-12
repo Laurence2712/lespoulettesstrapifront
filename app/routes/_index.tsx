@@ -190,20 +190,20 @@ const sliderSettings = {
   style={{ backgroundImage: `url(${homepageData?.image_url})` }}
 >
   <div className="banner-content text-center z-10 flex flex-col items-center justify-center pb-8 sm:pb-12 md:pb-16">
-    <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold drop-shadow-lg mb-8 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-snug">
+    <h1 className="font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-[44px] font-bold uppercase tracking-wide mb-8 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-tight lg:leading-snug">
       Une marque d'accessoires made in Bénin, éco-trendy/éco-friendly qui surfe sur la vague du wax !
     </h1>
     
     <div className="mt-4 sm:mt-6">
       <Link
         to="/realisations"
-        className="font-basecoat bg-yellow-400 hover:bg-yellow-500 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base transform transition hover:scale-105 font-semibold inline-block"
+        className="font-basecoat bg-yellow-400 hover:bg-yellow-500 text-black px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg uppercase tracking-wider font-bold transform transition hover:scale-105 inline-block"
       >
         Je craque !
       </Link>
     </div>
   </div>
-  <div className="absolute inset-0 bg-black opacity-65 z-0"></div>
+  <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
 </header>
 <section id="qui-sommes-nous" className="py-6 sm:py-8 md:py-10">
   <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-8 sm:mb-10 md:mb-12">
