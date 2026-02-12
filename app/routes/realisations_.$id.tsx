@@ -310,8 +310,13 @@ export default function RealisationDetail() {
 
           {/* Message de confirmation */}
           {addedToCart && (
-            <div className="mt-3 bg-green-100 border border-green-400 text-green-800 px-4 py-3 rounded-lg text-center font-basecoat text-sm sm:text-base font-semibold animate-pulse">
-              Ajouté au panier avec succès !
+            <div className="mt-3 flex justify-center">
+              <div className="inline-flex items-center gap-2 bg-green-100 border border-green-400 text-green-800 px-4 py-2 rounded-full font-basecoat text-sm sm:text-base font-semibold">
+                <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                Ajouté au panier !
+              </div>
             </div>
           )}
         </div>
