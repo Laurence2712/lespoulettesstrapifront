@@ -67,7 +67,7 @@ useEffect(() => {
 }, [actualites]);
 
   return (
-    <div className="container mx-auto py-6 sm:py-8 md:py-12 lg:py-16 px-4 sm:px-6 md:px-8 max-w-7xl mt-[60px] sm:mt-[70px] md:mt-[80px]">
+    <div className="container mx-auto py-6 sm:py-8 md:py-10 px-4 sm:px-6 md:px-8 max-w-7xl mt-[60px] sm:mt-[70px] md:mt-[80px]">
       {/* Breadcrumb */}
       <nav className="font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
         <Link to="/" className="text-yellow-600 hover:text-yellow-800 font-medium transition">
@@ -97,7 +97,7 @@ useEffect(() => {
       )}
 
       {/* Liste actualités avec alternance */}
-      <div className="flex flex-col gap-8 sm:gap-10 md:gap-12 lg:gap-16">
+      <div className="flex flex-col gap-6 sm:gap-8 md:gap-10">
         {actualites.map((actu, index) => (
           <div
             key={actu.id}

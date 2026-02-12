@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 export default function Contact() {
   return (
-    <section className="min-h-screen bg-gray-50 pt-[80px] sm:pt-[100px] md:pt-[120px] pb-12 sm:pb-16 md:pb-20">
+    <section className="min-h-screen bg-gray-50 mt-[60px] sm:mt-[70px] md:mt-[80px] py-6 sm:py-8 md:py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-start md:items-center">
         
         {/* Bloc gauche : infos et formulaire */}

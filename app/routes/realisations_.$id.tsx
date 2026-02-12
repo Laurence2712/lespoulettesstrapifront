@@ -159,7 +159,7 @@ export default function RealisationDetail() {
   };
 
   return (
-    <div className="container mx-auto py-6 max-w-7xl mt-[70px] px-4">
+    <div className="container mx-auto py-6 sm:py-8 md:py-10 max-w-7xl mt-[60px] sm:mt-[70px] md:mt-[80px] px-4 sm:px-6 md:px-8">
       {/* Breadcrumb */}
       <nav className="mb-6 text-xs sm:text-sm font-basecoat">
         <Link to="/" className="text-indigo-600 hover:text-indigo-800">Accueil</Link> /{' '}
