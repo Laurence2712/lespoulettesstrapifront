@@ -120,7 +120,7 @@ export default function NavBar() {
           <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
             <Link
               to="/realisations"
-              className={`font-basecoat font-semibold hover:text-yellow-400 transition-colors duration-300 text-base lg:text-lg ${
+              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-base ${
                 isTransparent ? 'text-white' : 'text-black'
               }`}
             >
@@ -128,7 +128,7 @@ export default function NavBar() {
             </Link>
             <Link
               to="/actualites"
-              className={`font-basecoat font-semibold hover:text-yellow-400 transition-colors duration-300 text-base lg:text-lg ${
+              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-base ${
                 isTransparent ? 'text-white' : 'text-black'
               }`}
             >
@@ -136,7 +136,7 @@ export default function NavBar() {
             </Link>
             <Link
               to="/contact"
-              className={`font-basecoat font-semibold hover:text-yellow-400 transition-colors duration-300 text-base lg:text-lg ${
+              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-base ${
                 isTransparent ? 'text-white' : 'text-black'
               }`}
             >
