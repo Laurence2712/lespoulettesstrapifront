@@ -218,8 +218,14 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
     notes: ''
   });
   const [loading, setLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState('');
   const [error, setError] = useState('');
   const isSubmittingRef = useRef(false);
+
+  // Préchauffer le serveur Strapi au chargement du formulaire
+  useEffect(() => {
+    fetch(apiEndpoints.commandes, { method: 'HEAD' }).catch(() => {});
+  }, []);
 
   // Helper: fetch with timeout to avoid hanging requests
   // Render free tier can take up to 60s to wake up, so we use a generous timeout
@@ -247,7 +253,13 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
     isSubmittingRef.current = true;
     setLoading(true);
+    setLoadingMessage('Envoi en cours...');
     setError('');
+
+    // Message progressif si le serveur met du temps
+    const slowTimer = setTimeout(() => {
+      setLoadingMessage('Le serveur demarre, patientez quelques secondes...');
+    }, 5000);
 
     try {
       const payload = {
@@ -296,7 +308,9 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
         setError(err.message || 'Erreur inconnue');
       }
     } finally {
+      clearTimeout(slowTimer);
       setLoading(false);
+      setLoadingMessage('');
       isSubmittingRef.current = false;
     }
   };
@@ -578,8 +592,8 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             disabled={loading}
             className="font-basecoat w-full bg-yellow-400 text-black py-3 sm:py-3.5 md:py-4 rounded-lg font-semibold hover:bg-yellow-500 transition disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
           >
-            {loading 
-              ? (paymentMethod === 'virement' ? 'Envoi en cours...' : 'Redirection vers le paiement...') 
+            {loading
+              ? (loadingMessage || (paymentMethod === 'virement' ? 'Envoi en cours...' : 'Redirection vers le paiement...'))
               : (paymentMethod === 'virement' ? 'Envoyer la commande' : 'Payer en ligne')
             }
           </button>
