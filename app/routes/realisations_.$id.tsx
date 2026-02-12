@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from '@remix-run/react';
-import { apiEndpoints, getImageUrl } from '../config/api';
+import { getApiUrl, getImageUrl } from '../config/api';
 import { useCartStore } from '../store/cartStore';
 
 interface ImageData {
@@ -44,8 +44,7 @@ export default function RealisationDetail() {
   useEffect(() => {
     async function fetchRealisation() {
       try {
-        const baseUrl = apiEndpoints.realisations.replace(/\?populate=\*$/, '');
-        const url = `${baseUrl}/${id}?populate[Declinaison][populate]=Image&populate=Images`;
+        const url = `${getApiUrl()}/api/realisations/${id}?populate[Declinaison][populate]=Image&populate=Images`;
         const response = await fetch(url);
 
         if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
