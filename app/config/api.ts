@@ -17,6 +17,7 @@ export const apiEndpoints = {
   latestActualite: `${API_URL}/api/actualites?populate=*&sort[0]=publishedAt:desc&pagination[limit]=1`,
   commandes: `${API_URL}/api/commandes`,
   createCheckoutSession: `${API_URL}/api/commandes/create-checkout-session`,
+  createBankTransferOrder: `${API_URL}/api/commandes/create-bank-transfer-order`,
   realisationById: (id: string) => `${API_URL}/api/realisations/${id}?populate=*`,
   actualiteById: (id: number) => `${API_URL}/api/actualites/${id}?populate=*`,
 };

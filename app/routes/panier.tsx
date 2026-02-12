@@ -263,20 +263,15 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
     try {
       const payload = {
-        data: {
-          Nom: formData.nom,
-          Email: formData.email,
-          Telephone: formData.telephone,
-          adresse: formData.adresse,
-          articles: JSON.stringify(cart),
-          total: total,
-          statut: 'en_attente',
-          methode_paiement: 'virement',
-          notes: formData.notes
-        }
+        items: cart,
+        email: formData.email,
+        nom: formData.nom,
+        telephone: formData.telephone,
+        adresse: formData.adresse,
+        notes: formData.notes,
       };
 
-      const response = await fetchWithTimeout(apiEndpoints.commandes, {
+      const response = await fetchWithTimeout(apiEndpoints.createBankTransferOrder, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -293,8 +288,12 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
         if (response.status === 403) {
           throw new Error('Acces refuse : les commandes ne sont pas activees sur le serveur. Contactez l\'administrateur.');
         }
-        const errorMessage = responseData?.error?.message || 'Erreur lors de l\'envoi';
+        const errorMessage = responseData?.error?.message || responseData?.message || 'Erreur lors de l\'envoi';
         throw new Error(errorMessage);
+      }
+
+      if (!responseData.success) {
+        throw new Error(responseData.message || 'Erreur lors de l\'enregistrement de la commande');
       }
 
       // Show success BEFORE clearing cart to avoid parent unmounting this component
