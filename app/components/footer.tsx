@@ -22,7 +22,7 @@ export default function Footer() {
         {/* Colonne 2 : Navigation */}
         <div>
           <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 uppercase font-basecoat">Navigation</h3>
-          <ul className="space-y-2 text-gray-400 font-basecoat text-xs sm:text-sm">
+          <ul className="space-y-2 text-gray-400 font-basecoat text-sm sm:text-base">
             <li>
               <Link to="/realisations" className="hover:text-yellow-400 transition">
                 Réalisations
@@ -44,7 +44,7 @@ export default function Footer() {
         {/* Colonne 3 : Contact */}
         <div>
           <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 uppercase font-basecoat">Contact</h3>
-          <ul className="space-y-2 sm:space-y-3 text-gray-400 text-xs sm:text-sm font-basecoat">
+          <ul className="space-y-2 sm:space-y-3 text-gray-400 text-sm sm:text-base font-basecoat">
           <li className="flex items-start space-x-2">
   <EnvelopeIcon className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
   <a
@@ -104,7 +104,7 @@ export default function Footer() {
       </div>
 
       {/* Ligne du bas */}
-      <div className="border-t border-gray-700 mt-8 sm:mt-10 pt-4 sm:pt-6 text-center text-gray-500 text-xs sm:text-sm font-basecoat">
+      <div className="border-t border-gray-700 mt-8 sm:mt-10 pt-4 sm:pt-6 text-center text-gray-500 text-sm sm:text-base font-basecoat">
         <p>© {currentYear} Les Poulettes. Tous droits réservés.</p>
       </div>
     </footer>
