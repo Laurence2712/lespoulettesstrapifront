@@ -178,22 +178,22 @@ export default function RealisationDetail() {
         Retour
       </button>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10">
         {/* Images */}
         <div>
-          {/* Grande image */}
-          <div className="relative rounded-2xl overflow-hidden shadow-xl mb-6 bg-gray-100">
+          {/* Grande image - hauteur réduite */}
+          <div className="relative rounded-xl overflow-hidden shadow-lg mb-4 bg-gray-100">
             {currentImage?.url ? (
-              <img src={currentImage.formats?.large?.url || currentImage.url} alt={realisation.title} className="w-full h-[400px] sm:h-[500px] md:h-[600px] object-cover" />
+              <img src={currentImage.formats?.large?.url || currentImage.url} alt={realisation.title} className="w-full h-[280px] sm:h-[320px] md:h-[380px] object-cover" />
             ) : (
-              <div className="w-full h-[400px] sm:h-[500px] md:h-[600px] flex items-center justify-center">
+              <div className="w-full h-[280px] sm:h-[320px] md:h-[380px] flex items-center justify-center">
                 <span className="font-basecoat text-gray-400">Aucune image disponible</span>
               </div>
             )}
           </div>
 
-          {/* Galerie de miniatures */}
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
+          {/* Galerie de miniatures - plus grandes */}
+          <div className="grid grid-cols-4 sm:grid-cols-5 gap-2 sm:gap-3">
             {allImages.map((img, idx) => (
               <button
                 key={idx}
@@ -202,13 +202,13 @@ export default function RealisationDetail() {
                   setQuantity(1);
                 }}
                 className={`rounded-lg overflow-hidden transition-all duration-300 ${
-                  selectedImageIndex === idx ? 'ring-4 ring-yellow-400 scale-105' : 'ring-2 ring-gray-200 hover:ring-yellow-300'
+                  selectedImageIndex === idx ? 'ring-3 ring-yellow-400 scale-105' : 'ring-1 ring-gray-200 hover:ring-yellow-300'
                 }`}
               >
                 <img
                   src={img.formats?.thumbnail?.url || img.url}
                   alt={`Image ${idx + 1}`}
-                  className="w-full h-20 sm:h-24 object-cover"
+                  className="w-full h-16 sm:h-20 object-cover"
                 />
               </button>
             ))}
@@ -217,71 +217,72 @@ export default function RealisationDetail() {
 
         {/* Infos produit */}
         <div className="flex flex-col font-basecoat">
-          <h1 className="text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">{realisation.title}</h1>
-          <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-4"></div>
-          
-          {/* Description du modèle sélectionné */}
-          {currentDeclinaison?.Description && (
-            <p className="italic text-gray-600 mb-4 text-lg">{currentDeclinaison.Description}</p>
-          )}
-          
-          <p className="text-4xl sm:text-5xl font-bold text-yellow-600 mb-6">
+          <h1 className="text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 leading-tight">{realisation.title}</h1>
+          <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 mb-4"></div>
+
+          {/* Prix */}
+          <p className="text-2xl sm:text-3xl font-bold text-yellow-600 mb-4">
             {realisation.prix ? `${realisation.prix} €` : 'Prix sur demande'}
           </p>
 
-          {/* 🔹 Message bleu uniquement sur l'image de catégorie */}
+          {/* Description du modèle sélectionné */}
+          {currentDeclinaison?.Description && (
+            <p className="italic text-gray-600 mb-4 text-sm sm:text-base">{currentDeclinaison.Description}</p>
+          )}
+
+          {/* Message bleu uniquement sur l'image de catégorie */}
           {isOnCategoryImage && (
-            <div className="mb-8 p-6 bg-blue-50 border-2 border-blue-300 rounded-xl">
-              <p className="text-blue-800 font-semibold text-center text-lg">
-                👇 Sélectionnez un modèle pour voir le stock et ajouter au panier
+            <div className="mb-4 p-4 bg-blue-50 border border-blue-300 rounded-lg">
+              <p className="text-blue-800 font-semibold text-center text-sm sm:text-base">
+                Sélectionnez un modèle ci-dessous pour voir le stock et ajouter au panier
               </p>
             </div>
           )}
 
-          {/* 🔹 Stock (uniquement sur déclinaison) */}
+          {/* Stock (uniquement sur déclinaison) */}
           {!isOnCategoryImage && (
-            <div className="mb-6">
+            <div className="mb-4">
               {isInStock ? (
-                <div className="flex items-center gap-3">
-                  <span className="bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-semibold">
-                    ✓ En stock
+                <div className="flex items-center gap-2">
+                  <span className="bg-green-100 text-green-800 px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold">
+                    En stock
                   </span>
-                  <span className="text-gray-600">
+                  <span className="text-gray-500 text-sm">
                     {currentDeclinaison?.Stock} {currentDeclinaison && currentDeclinaison.Stock > 1 ? 'unités' : 'unité'}
                   </span>
                 </div>
               ) : (
-                <span className="inline-block bg-red-100 text-red-800 px-4 py-2 rounded-full text-sm font-semibold">
-                  ✗ Rupture de stock
+                <span className="inline-block bg-red-100 text-red-800 px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold">
+                  Rupture de stock
                 </span>
               )}
             </div>
           )}
 
-          {/* Description de la catégorie */}
-          <div className="mb-8">
-            <h2 className="text-xl sm:text-2xl font-semibold mb-4">Description</h2>
-            <p className="text-gray-700 text-base sm:text-lg leading-relaxed whitespace-pre-line">
+          {/* Description */}
+          <div className="mb-6">
+            <h2 className="text-base sm:text-lg font-bold uppercase mb-2">Description</h2>
+            <p className="text-gray-700 text-sm sm:text-base leading-relaxed whitespace-pre-line">
               {realisation.description}
             </p>
           </div>
 
-          {/* 🔹 Sélecteur de quantité (uniquement sur déclinaison avec stock) */}
+          {/* Sélecteur de quantité (uniquement sur déclinaison avec stock) */}
           {!isOnCategoryImage && isInStock && (
-            <div className="mb-8">
-              <label className="block mb-3 font-medium">Quantité :</label>
-              <div className="flex items-center gap-4">
+            <div className="mb-4">
+              <label className="block mb-2 font-medium text-sm">Quantité :</label>
+              <div className="flex items-center gap-3">
                 <button
                   onClick={() => quantity > 1 && setQuantity(quantity - 1)}
-                  className="font-basecoat bg-gray-200 hover:bg-gray-300 w-12 h-12 rounded-lg font-bold text-xl transition"
+                  className="font-basecoat bg-gray-200 hover:bg-gray-300 w-10 h-10 rounded-lg font-bold text-lg transition"
                   disabled={quantity <= 1}
                 >
                   -
                 </button>
-                <span className="text-2xl font-semibold w-16 text-center">{quantity}</span>
+                <span className="text-xl font-semibold w-12 text-center">{quantity}</span>
                 <button
                   onClick={() => currentDeclinaison && quantity < currentDeclinaison.Stock && setQuantity(quantity + 1)}
-                  className="font-basecoat bg-gray-200 hover:bg-gray-300 w-12 h-12 rounded-lg font-bold text-xl transition"
+                  className="font-basecoat bg-gray-200 hover:bg-gray-300 w-10 h-10 rounded-lg font-bold text-lg transition"
                   disabled={!currentDeclinaison || quantity >= currentDeclinaison.Stock}
                 >
                   +
@@ -290,12 +291,12 @@ export default function RealisationDetail() {
             </div>
           )}
 
-          {/* 🔹 Bouton Ajouter au panier (uniquement sur déclinaison avec stock) */}
+          {/* Bouton Ajouter au panier */}
           {!isOnCategoryImage && (
             <button
               onClick={handleAddToCart}
               disabled={!isInStock}
-              className={`font-basecoat w-full py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold uppercase transition transform ${
+              className={`font-basecoat w-full py-3 rounded-lg text-sm sm:text-base font-bold uppercase tracking-wide transition transform ${
                 isInStock
                   ? 'bg-yellow-400 hover:bg-yellow-500 text-black hover:scale-105'
                   : 'bg-gray-300 text-gray-500 cursor-not-allowed'
