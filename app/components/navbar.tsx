@@ -41,7 +41,7 @@ export default function NavBar() {
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
       isTransparent ? 'bg-transparent' : 'bg-white shadow-md'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
         <div className="flex items-center justify-between h-16 sm:h-20 md:h-24">
           {/* Conteneur gauche : Logo + Bouton Catégories */}
           <div className="flex items-center gap-3 sm:gap-4 md:gap-6 relative">
