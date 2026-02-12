@@ -204,7 +204,7 @@ const handleBeninClick = () => {
    <div className="mt-4 overflow-hidden">
   <Link
     to={`/realisations/${realisation.id}`}
-    className="font-basecoat inline-flex items-center justify-center bg-yellow-400 hover:bg-yellow-500 text-black px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg font-semibold transition-all duration-500 hover:translate-x-2 text-sm sm:text-base gap-2"
+    className="font-basecoat inline-flex items-center justify-center bg-yellow-400 hover:bg-yellow-500 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition transform hover:scale-105 text-sm sm:text-base gap-2"
   >
     Choisir
     <svg

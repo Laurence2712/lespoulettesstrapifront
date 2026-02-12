@@ -91,7 +91,7 @@ export default function Contact() {
 
             <button
               type="submit"
-              className="font-basecoat w-full sm:w-auto bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg sm:rounded-xl transition transform hover:scale-105 active:scale-95 text-sm sm:text-base"
+              className="font-basecoat w-full sm:w-auto bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg transition transform hover:scale-105 text-sm sm:text-base"
             >
               Envoyer le message
             </button>

@@ -197,7 +197,7 @@ const sliderSettings = {
     <div className="mt-4 sm:mt-6">
       <Link
         to="/realisations"
-        className="font-basecoat btn bg-yellow-400 text-black px-5 py-2.5 sm:px-6 sm:py-3 md:px-8 md:py-3.5 rounded text-sm sm:text-base md:text-lg transform transition duration-500 hover:scale-105 font-semibold inline-block"
+        className="font-basecoat bg-yellow-400 hover:bg-yellow-500 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base transform transition hover:scale-105 font-semibold inline-block"
       >
         Je craque !
       </Link>
@@ -269,7 +269,7 @@ const sliderSettings = {
                 <Link to="/actualites">
                   <button
                     type="button"
-                    className="font-basecoat btn uppercase bg-yellow-400 text-black px-5 py-2.5 sm:px-6 sm:py-3 md:px-8 md:py-3.5 rounded text-sm sm:text-base md:text-lg transform transition duration-500 hover:scale-105 font-semibold inline-block"
+                    className="font-basecoat uppercase bg-yellow-400 hover:bg-yellow-500 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base transform transition hover:scale-105 font-semibold inline-block"
                   >
                     Toutes les actualités
                   </button>

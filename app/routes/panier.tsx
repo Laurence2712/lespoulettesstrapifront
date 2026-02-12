@@ -41,7 +41,7 @@ export default function Panier() {
           </p>
           <Link
             to="/"
-            className="font-basecoat inline-block bg-yellow-400 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-yellow-500 transition text-sm sm:text-base max-w-xs sm:max-w-sm md:max-w-md mx-auto"
+            className="font-basecoat inline-block bg-yellow-400 hover:bg-yellow-500 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition transform hover:scale-105 text-sm sm:text-base"
           >
             Retour a l'accueil
           </Link>
@@ -183,7 +183,7 @@ export default function Panier() {
 
             <button
               onClick={() => setShowCheckout(true)}
-              className="font-basecoat w-full bg-yellow-400 text-black py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-yellow-500 transition mb-2 sm:mb-3 text-sm sm:text-base"
+              className="font-basecoat w-full bg-yellow-400 hover:bg-yellow-500 text-black py-2.5 sm:py-3 rounded-lg font-semibold transition transform hover:scale-105 mb-2 sm:mb-3 text-sm sm:text-base"
             >
               Passer commande
             </button>
@@ -589,7 +589,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
           <button
             type="submit"
             disabled={loading}
-            className="font-basecoat w-full bg-yellow-400 text-black py-3 sm:py-3.5 md:py-4 rounded-lg font-semibold hover:bg-yellow-500 transition disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+            className="font-basecoat w-full bg-yellow-400 hover:bg-yellow-500 text-black py-2.5 sm:py-3 rounded-lg font-semibold transition transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm sm:text-base"
           >
             {loading
               ? (loadingMessage || (paymentMethod === 'virement' ? 'Envoi en cours...' : 'Redirection vers le paiement...'))
