@@ -9,6 +9,7 @@ interface CartItem {
   image_url: string;
   categorieId?: number | string;
   declinaisonId?: number;
+  stock?: number;
 }
 
 interface CartState {
@@ -34,18 +35,24 @@ export const useCartStore = create<CartState>()(
       addToCart: (item) => {
         set((state) => {
           const existingItem = state.items.find((i) => i.id === item.id);
-          
+
           if (existingItem) {
+            const maxStock = item.stock ?? existingItem.stock;
+            const newQuantity = existingItem.quantity + item.quantity;
+            const clampedQuantity = maxStock !== undefined ? Math.min(newQuantity, maxStock) : newQuantity;
+
             return {
               items: state.items.map((i) =>
-                i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
+                i.id === item.id ? { ...i, quantity: clampedQuantity, stock: maxStock } : i
               ),
               lastActivity: Date.now(),
             };
           }
-          
+
+          const clampedQuantity = item.stock !== undefined ? Math.min(item.quantity, item.stock) : item.quantity;
+
           return {
-            items: [...state.items, item],
+            items: [...state.items, { ...item, quantity: clampedQuantity }],
             lastActivity: Date.now(),
           };
         });
@@ -63,11 +70,13 @@ export const useCartStore = create<CartState>()(
           get().removeFromCart(id);
           return;
         }
-        
+
         set((state) => ({
-          items: state.items.map((item) =>
-            item.id === id ? { ...item, quantity } : item
-          ),
+          items: state.items.map((item) => {
+            if (item.id !== id) return item;
+            const clampedQuantity = item.stock !== undefined ? Math.min(quantity, item.stock) : quantity;
+            return { ...item, quantity: clampedQuantity };
+          }),
           lastActivity: Date.now(),
         }));
       },

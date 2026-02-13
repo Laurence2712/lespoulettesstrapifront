@@ -154,6 +154,7 @@ export default function RealisationDetail() {
         image_url: currentImage?.url || '',
         categorieId: realisation.id,
         declinaisonId: currentDeclinaison.id,
+        stock: currentDeclinaison.Stock,
       });
       setAddedToCart(true);
       setTimeout(() => setAddedToCart(false), 2500);
