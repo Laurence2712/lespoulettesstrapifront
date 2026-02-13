@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "@remix-run/react";
-import { gsap } from "gsap";
 import { apiEndpoints, getImageUrl } from "../config/api";
+import { useScrollAnimations } from "../hooks/useScrollAnimations";
 
 interface Actualite {
   id: number;
@@ -16,10 +16,12 @@ export default function ActualitesPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const scrollRef = useScrollAnimations([actualites]);
+
   useEffect(() => {
     async function fetchActualites() {
       try {
-        const response = await fetch(apiEndpoints.actualites);  // ✅ TOUTES les actualités
+        const response = await fetch(apiEndpoints.actualites);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
         if (data?.data) {
@@ -47,29 +49,10 @@ export default function ActualitesPage() {
     fetchActualites();
   }, []);
 
-useEffect(() => {
-  if (actualites.length > 0) {
-    gsap.fromTo(".actu-card", 
-      {
-        opacity: 0,
-        y: 50,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        stagger: { amount: 0.5 },
-        duration: 0.8,
-        ease: "power3.out",
-        clearProps: "all", // ✅ Nettoie les styles inline après animation
-      }
-    );
-  }
-}, [actualites]);
-
   return (
-    <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]">
+    <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]">
       {/* Breadcrumb */}
-      <nav className="font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
+      <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
         <Link to="/" className="text-yellow-600 hover:text-yellow-800 font-medium transition">
           Accueil
         </Link>
@@ -78,10 +61,10 @@ useEffect(() => {
       </nav>
 
       {/* Titre */}
-      <h1 className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+      <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900" data-delay="0.1">
         Toutes les actualités
       </h1>
-      <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12"></div>
+      <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.15"></div>
 
       {/* Loading */}
       {loading && (
@@ -89,7 +72,7 @@ useEffect(() => {
           <p className="font-basecoat text-lg sm:text-xl md:text-2xl text-gray-600">Chargement...</p>
         </div>
       )}
-      
+
       {/* Error */}
       {error && (
         <div className="flex items-center justify-center py-12 sm:py-16 md:py-20">
@@ -102,7 +85,8 @@ useEffect(() => {
         {actualites.map((actu, index) => (
           <div
             key={actu.id}
-            className="flex flex-col md:flex-row items-center gap-6 sm:gap-8 actu-card bg-white rounded-xl shadow-lg overflow-hidden p-4 sm:p-5 md:p-6 transform transition hover:scale-[1.01]"
+            className={`flex flex-col md:flex-row items-center gap-6 sm:gap-8 actu-card bg-white rounded-xl shadow-lg overflow-hidden p-4 sm:p-5 md:p-6 transform transition hover:scale-[1.01] ${index % 2 === 0 ? 'anim-fade-right' : 'anim-fade-left'}`}
+            data-delay={`${0.1 + index * 0.1}`}
           >
             {/* Image à GAUCHE si index PAIR (0, 2, 4...) */}
             {index % 2 === 0 && actu.image_url && (

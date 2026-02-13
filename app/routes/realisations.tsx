@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from '@remix-run/react';
-import { gsap } from 'gsap';
 import { apiEndpoints, getImageUrl } from '../config/api';
+import { useScrollAnimations } from '../hooks/useScrollAnimations';
 
 interface Realisation {
   id: string;
@@ -19,6 +19,8 @@ export default function Realisations() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const navigate = useNavigate();
 
+  const scrollRef = useScrollAnimations([realisations, showPopup]);
+
   useEffect(() => {
     async function fetchRealisations() {
       try {
@@ -32,7 +34,7 @@ export default function Realisations() {
             title: realisation.Titre || 'Titre indisponible',
             image_url: realisation.Images?.[0]?.url ? getImageUrl(realisation.Images[0].url) : undefined,
             description: realisation.Description || 'Description indisponible',
-            prix: realisation.Prix, 
+            prix: realisation.Prix,
           }));
           setRealisations(realisationsData);
         } else {
@@ -48,25 +50,6 @@ export default function Realisations() {
 
     fetchRealisations();
   }, []);
-
-  useEffect(() => {
-    if (realisations.length > 0 && !showPopup) {
-      gsap.fromTo('.realisation-card',
-        {
-          opacity: 0,
-          y: 50,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          stagger: { amount: 0.6, from: 'start' },
-          duration: 0.8,
-          ease: 'power3.out',
-          clearProps: 'all',
-        }
-      );
-    }
-  }, [realisations, showPopup]);
 
   const handleBelgiqueClick = () => {
     setShowPopup(false);
@@ -117,9 +100,9 @@ const handleBeninClick = () => {
       )}
 
       {/* Contenu principal (masqué si popup visible) */}
-      <div className={`${showPopup ? 'hidden' : 'block'} py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]`}>
+      <div ref={scrollRef} className={`${showPopup ? 'hidden' : 'block'} py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]`}>
         {/* Breadcrumb */}
-        <nav className="font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
+        <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
           <Link to="/" className="text-indigo-600 hover:text-indigo-800 font-medium transition">
             Accueil
           </Link>
@@ -130,7 +113,8 @@ const handleBeninClick = () => {
         {/* Bouton retour */}
         <Link
           to="/"
-          className="font-basecoat inline-flex items-center text-gray-600 hover:text-gray-900 mb-6 sm:mb-8 transition text-sm sm:text-base"
+          className="anim-fade-up font-basecoat inline-flex items-center text-gray-600 hover:text-gray-900 mb-6 sm:mb-8 transition text-sm sm:text-base"
+          data-delay="0.05"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -150,12 +134,12 @@ const handleBeninClick = () => {
         {/* Titre + Filtre */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6">
           <div>
-            <h1 className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+            <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900" data-delay="0.1">
               Nos réalisations
             </h1>
-            <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4"></div>
+            <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.15"></div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="anim-fade-up flex items-center gap-2" data-delay="0.2">
             <label htmlFor="sort-price" className="font-basecoat text-sm text-gray-600 whitespace-nowrap">Trier par :</label>
             <select
               id="sort-price"
@@ -176,7 +160,7 @@ const handleBeninClick = () => {
             <p className="font-basecoat text-lg sm:text-xl md:text-2xl text-gray-600">Chargement...</p>
           </div>
         )}
-        
+
         {error && (
           <div className="flex items-center justify-center py-12 sm:py-16 md:py-20">
             <p className="font-basecoat text-red-500 text-center text-base sm:text-lg md:text-xl">{error}</p>
@@ -184,7 +168,7 @@ const handleBeninClick = () => {
         )}
 
         {/* Grid */}
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+<div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6" data-stagger="0.12">
   {[...realisations].sort((a, b) => {
     const prixA = typeof a.prix === 'string' ? parseFloat(a.prix) : (a.prix ?? 0);
     const prixB = typeof b.prix === 'string' ? parseFloat(b.prix) : (b.prix ?? 0);
@@ -213,16 +197,16 @@ const handleBeninClick = () => {
         <h3 className="font-basecoat text-base sm:text-lg md:text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
           {realisation.title}
         </h3>
-        
+
         {/* Prix */}
         <p className="font-basecoat text-yellow-600 text-lg sm:text-xl md:text-2xl font-bold mb-2">
           {realisation.prix ? `${realisation.prix} €` : 'Prix sur demande'}
         </p>
-        
+
      <p className="font-basecoat text-gray-700 text-xs sm:text-sm md:text-base leading-relaxed flex-grow">
   {realisation.description}
 </p>
-        
+
         <div className="mt-4">
    <div className="mt-4 overflow-hidden">
   <Link
