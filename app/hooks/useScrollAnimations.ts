@@ -1,8 +1,4 @@
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Hook pour animer les elements au scroll (style resyne.be)
@@ -24,88 +20,99 @@ export function useScrollAnimations(deps: any[] = []) {
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container || typeof window === "undefined") return;
 
-    // Small delay to ensure DOM is fully rendered
-    const timeout = setTimeout(() => {
-      const ctx = gsap.context(() => {
-        // Individual element animations
-        const animElements = container.querySelectorAll(
-          ".anim-fade-up, .anim-fade-down, .anim-fade-left, .anim-fade-right, .anim-fade, .anim-scale"
-        );
+    let ctx: any;
+    let timeout: ReturnType<typeof setTimeout>;
 
-        animElements.forEach((el) => {
-          const htmlEl = el as HTMLElement;
-          const delay = parseFloat(htmlEl.dataset.delay || "0");
-          const duration = parseFloat(htmlEl.dataset.duration || "0.8");
+    // Dynamic import to avoid SSR crash
+    Promise.all([
+      import("gsap"),
+      import("gsap/ScrollTrigger"),
+    ]).then(([gsapModule, scrollTriggerModule]) => {
+      const gsap = gsapModule.gsap;
+      const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+      gsap.registerPlugin(ScrollTrigger);
 
-          let fromVars: gsap.TweenVars = { opacity: 0 };
-
-          if (el.classList.contains("anim-fade-up")) {
-            fromVars = { opacity: 0, y: 60 };
-          } else if (el.classList.contains("anim-fade-down")) {
-            fromVars = { opacity: 0, y: -40 };
-          } else if (el.classList.contains("anim-fade-left")) {
-            fromVars = { opacity: 0, x: -60 };
-          } else if (el.classList.contains("anim-fade-right")) {
-            fromVars = { opacity: 0, x: 60 };
-          } else if (el.classList.contains("anim-scale")) {
-            fromVars = { opacity: 0, scale: 0.85 };
-          }
-
-          gsap.fromTo(
-            el,
-            fromVars,
-            {
-              opacity: 1,
-              x: 0,
-              y: 0,
-              scale: 1,
-              duration,
-              delay,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: el,
-                start: "top 88%",
-                end: "bottom 20%",
-                toggleActions: "play none none none",
-              },
-            }
+      // Small delay to ensure DOM is fully rendered
+      timeout = setTimeout(() => {
+        ctx = gsap.context(() => {
+          // Individual element animations
+          const animElements = container.querySelectorAll(
+            ".anim-fade-up, .anim-fade-down, .anim-fade-left, .anim-fade-right, .anim-fade, .anim-scale"
           );
-        });
 
-        // Stagger container: animate direct children
-        const staggerContainers = container.querySelectorAll(".anim-stagger");
-        staggerContainers.forEach((parent) => {
-          const htmlParent = parent as HTMLElement;
-          const children = parent.children;
-          const staggerDelay = parseFloat(htmlParent.dataset.stagger || "0.15");
+          animElements.forEach((el) => {
+            const htmlEl = el as HTMLElement;
+            const delay = parseFloat(htmlEl.dataset.delay || "0");
+            const duration = parseFloat(htmlEl.dataset.duration || "0.8");
 
-          gsap.fromTo(
-            children,
-            { opacity: 0, y: 50 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.7,
-              stagger: staggerDelay,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: parent,
-                start: "top 85%",
-                toggleActions: "play none none none",
-              },
+            let fromVars: any = { opacity: 0 };
+
+            if (el.classList.contains("anim-fade-up")) {
+              fromVars = { opacity: 0, y: 60 };
+            } else if (el.classList.contains("anim-fade-down")) {
+              fromVars = { opacity: 0, y: -40 };
+            } else if (el.classList.contains("anim-fade-left")) {
+              fromVars = { opacity: 0, x: -60 };
+            } else if (el.classList.contains("anim-fade-right")) {
+              fromVars = { opacity: 0, x: 60 };
+            } else if (el.classList.contains("anim-scale")) {
+              fromVars = { opacity: 0, scale: 0.85 };
             }
-          );
-        });
-      }, container);
 
-      return () => ctx.revert();
-    }, 100);
+            gsap.fromTo(
+              el,
+              fromVars,
+              {
+                opacity: 1,
+                x: 0,
+                y: 0,
+                scale: 1,
+                duration,
+                delay,
+                ease: "power3.out",
+                scrollTrigger: {
+                  trigger: el,
+                  start: "top 88%",
+                  end: "bottom 20%",
+                  toggleActions: "play none none none",
+                },
+              }
+            );
+          });
+
+          // Stagger container: animate direct children
+          const staggerContainers = container.querySelectorAll(".anim-stagger");
+          staggerContainers.forEach((parent) => {
+            const htmlParent = parent as HTMLElement;
+            const children = parent.children;
+            const staggerDelay = parseFloat(htmlParent.dataset.stagger || "0.15");
+
+            gsap.fromTo(
+              children,
+              { opacity: 0, y: 50 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.7,
+                stagger: staggerDelay,
+                ease: "power3.out",
+                scrollTrigger: {
+                  trigger: parent,
+                  start: "top 85%",
+                  toggleActions: "play none none none",
+                },
+              }
+            );
+          });
+        }, container);
+      }, 100);
+    });
 
     return () => {
-      clearTimeout(timeout);
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+      if (timeout) clearTimeout(timeout);
+      if (ctx) ctx.revert();
     };
   }, deps);
 
@@ -120,39 +127,52 @@ export function useParallaxHero() {
 
   useEffect(() => {
     const hero = heroRef.current;
-    if (!hero) return;
+    if (!hero || typeof window === "undefined") return;
 
-    const ctx = gsap.context(() => {
-      // Parallax effect on background
-      gsap.to(hero, {
-        backgroundPositionY: "30%",
-        ease: "none",
-        scrollTrigger: {
-          trigger: hero,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
+    let ctx: any;
 
-      // Fade out hero content on scroll
-      const content = hero.querySelector(".banner-content");
-      if (content) {
-        gsap.to(content, {
-          opacity: 0,
-          y: -50,
+    Promise.all([
+      import("gsap"),
+      import("gsap/ScrollTrigger"),
+    ]).then(([gsapModule, scrollTriggerModule]) => {
+      const gsap = gsapModule.gsap;
+      const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+      gsap.registerPlugin(ScrollTrigger);
+
+      ctx = gsap.context(() => {
+        // Parallax effect on background
+        gsap.to(hero, {
+          backgroundPositionY: "30%",
           ease: "none",
           scrollTrigger: {
             trigger: hero,
             start: "top top",
-            end: "60% top",
+            end: "bottom top",
             scrub: true,
           },
         });
-      }
-    }, hero);
 
-    return () => ctx.revert();
+        // Fade out hero content on scroll
+        const content = hero.querySelector(".banner-content");
+        if (content) {
+          gsap.to(content, {
+            opacity: 0,
+            y: -50,
+            ease: "none",
+            scrollTrigger: {
+              trigger: hero,
+              start: "top top",
+              end: "60% top",
+              scrub: true,
+            },
+          });
+        }
+      }, hero);
+    });
+
+    return () => {
+      if (ctx) ctx.revert();
+    };
   }, []);
 
   return heroRef;
