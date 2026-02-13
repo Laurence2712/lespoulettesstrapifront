@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from '@remix-run/react';
+import { useState } from 'react';
+import { Link, useLoaderData, useNavigate } from '@remix-run/react';
+import { json } from '@remix-run/node';
 import { apiEndpoints, getImageUrl } from '../config/api';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 
@@ -11,45 +12,41 @@ interface Realisation {
   prix?: string | number;
 }
 
+interface LoaderData {
+  realisations: Realisation[];
+  error: string | null;
+}
+
+export async function loader() {
+  try {
+    const response = await fetch(apiEndpoints.realisations);
+    if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
+    const data = await response.json();
+
+    if (data?.data) {
+      const realisations: Realisation[] = data.data.map((realisation: any) => ({
+        id: realisation.documentId,
+        title: realisation.Titre || 'Titre indisponible',
+        image_url: realisation.Images?.[0]?.url ? getImageUrl(realisation.Images[0].url) : undefined,
+        description: realisation.Description || 'Description indisponible',
+        prix: realisation.Prix,
+      }));
+      return json<LoaderData>({ realisations, error: null });
+    }
+    return json<LoaderData>({ realisations: [], error: 'Aucune réalisation trouvée.' });
+  } catch (err: any) {
+    console.error('Loader error:', err);
+    return json<LoaderData>({ realisations: [], error: 'Erreur lors du chargement des réalisations' });
+  }
+}
+
 export default function Realisations() {
-  const [realisations, setRealisations] = useState<Realisation[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { realisations, error } = useLoaderData<LoaderData>();
   const [showPopup, setShowPopup] = useState(true);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const navigate = useNavigate();
 
-  const scrollRef = useScrollAnimations([realisations, showPopup]);
-
-  useEffect(() => {
-    async function fetchRealisations() {
-      try {
-        const response = await fetch(apiEndpoints.realisations);
-        if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
-        const data = await response.json();
-
-        if (data && data.data) {
-          const realisationsData: Realisation[] = data.data.map((realisation: any) => ({
-            id: realisation.documentId,
-            title: realisation.Titre || 'Titre indisponible',
-            image_url: realisation.Images?.[0]?.url ? getImageUrl(realisation.Images[0].url) : undefined,
-            description: realisation.Description || 'Description indisponible',
-            prix: realisation.Prix,
-          }));
-          setRealisations(realisationsData);
-        } else {
-          setError('Aucune réalisation trouvée.');
-        }
-      } catch (error: any) {
-        console.error('Erreur lors du chargement des réalisations :', error);
-        setError('Erreur lors du chargement des réalisations');
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchRealisations();
-  }, []);
+  const scrollRef = useScrollAnimations([showPopup]);
 
   const handleBelgiqueClick = () => {
     setShowPopup(false);
@@ -154,13 +151,7 @@ const handleBeninClick = () => {
         </div>
         <div className="mb-8 sm:mb-10 md:mb-12"></div>
 
-        {/* Loading & Error states */}
-        {loading && (
-          <div className="flex items-center justify-center py-12 sm:py-16 md:py-20">
-            <p className="font-basecoat text-lg sm:text-xl md:text-2xl text-gray-600">Chargement...</p>
-          </div>
-        )}
-
+        {/* Error state */}
         {error && (
           <div className="flex items-center justify-center py-12 sm:py-16 md:py-20">
             <p className="font-basecoat text-red-500 text-center text-base sm:text-lg md:text-xl">{error}</p>
@@ -235,7 +226,7 @@ const handleBeninClick = () => {
 </div>
 
         {/* Empty state */}
-        {!loading && !error && realisations.length === 0 && (
+        {!error && realisations.length === 0 && (
           <div className="flex items-center justify-center py-12 sm:py-16 md:py-20">
             <p className="font-basecoat text-gray-600 text-center text-base sm:text-lg md:text-xl">
               Aucune réalisation disponible pour le moment.
