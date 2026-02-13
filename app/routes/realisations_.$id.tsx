@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from '@remix-run/react';
 import { getApiUrl, getImageUrl } from '../config/api';
 import { useCartStore } from '../store/cartStore';
+import { useScrollAnimations } from '../hooks/useScrollAnimations';
 
 interface ImageData {
   id: number;
@@ -42,6 +43,8 @@ export default function RealisationDetail() {
   const [quantity, setQuantity] = useState(1);
   const [addedToCart, setAddedToCart] = useState(false);
 
+  const scrollRef = useScrollAnimations([realisation]);
+
   useEffect(() => {
     async function fetchRealisation() {
       try {
@@ -54,10 +57,9 @@ export default function RealisationDetail() {
         if (data && data.data) {
           const item = data.data;
 
-          // 🔹 Déclinaisons
           const declinaisons: Declinaison[] = item.Declinaison?.map((decl: any) => {
             const imgData = decl.Image;
-            
+
             const image: ImageData = imgData
               ? {
                   id: imgData.id,
@@ -81,7 +83,6 @@ export default function RealisationDetail() {
             };
           }) || [];
 
-          // 🔹 Images principales (catégorie)
           const mainImages: ImageData[] =
             item.Images?.map((img: any) => ({
               id: img.id,
@@ -131,15 +132,13 @@ export default function RealisationDetail() {
       </div>
     );
 
-  // 🔹 Toutes les images à afficher
   const allImages = [...realisation.mainImages, ...realisation.declinaisons.map((d) => d.Image)];
   const currentImage = allImages[selectedImageIndex];
-  
-  // 🔹 Déterminer si on est sur l'image de catégorie ou sur une déclinaison
+
   const isOnCategoryImage = selectedImageIndex < realisation.mainImages.length;
   const declinaisonIndex = selectedImageIndex - realisation.mainImages.length;
-  const currentDeclinaison = !isOnCategoryImage && declinaisonIndex >= 0 
-    ? realisation.declinaisons[declinaisonIndex] 
+  const currentDeclinaison = !isOnCategoryImage && declinaisonIndex >= 0
+    ? realisation.declinaisons[declinaisonIndex]
     : null;
 
   const isInStock = currentDeclinaison ? currentDeclinaison.Stock > 0 : false;
@@ -162,9 +161,9 @@ export default function RealisationDetail() {
   };
 
   return (
-    <div className="py-6 sm:py-8 md:py-[60px] mt-[60px] sm:mt-[70px] md:mt-[80px] px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
+    <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] mt-[60px] sm:mt-[70px] md:mt-[80px] px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
       {/* Breadcrumb */}
-      <nav className="mb-6 text-xs sm:text-sm font-basecoat">
+      <nav className="anim-fade-up mb-6 text-xs sm:text-sm font-basecoat">
         <Link to="/" className="text-indigo-600 hover:text-indigo-800">Accueil</Link> /{' '}
         <Link to="/realisations" className="text-indigo-600 hover:text-indigo-800">Catégories</Link> /{' '}
         <span className="text-gray-600 uppercase">{realisation.title}</span>
@@ -173,7 +172,8 @@ export default function RealisationDetail() {
       {/* Bouton retour */}
       <button
         onClick={() => navigate(-1)}
-        className="font-basecoat inline-flex items-center text-gray-600 hover:text-gray-900 mb-6 sm:mb-8 transition text-sm sm:text-base"
+        className="anim-fade-up font-basecoat inline-flex items-center text-gray-600 hover:text-gray-900 mb-6 sm:mb-8 transition text-sm sm:text-base"
+        data-delay="0.05"
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
@@ -183,8 +183,8 @@ export default function RealisationDetail() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10">
         {/* Images */}
-        <div>
-          {/* Grande image - hauteur réduite */}
+        <div className="anim-fade-right" data-delay="0.1">
+          {/* Grande image */}
           <div className="relative rounded-xl overflow-hidden shadow-lg mb-4 bg-gray-100">
             {currentImage?.url ? (
               <img src={currentImage.formats?.large?.url || currentImage.url} alt={realisation.title} className="w-full h-[280px] sm:h-[320px] md:h-[380px] object-cover" />
@@ -195,7 +195,7 @@ export default function RealisationDetail() {
             )}
           </div>
 
-          {/* Galerie de miniatures - plus grandes */}
+          {/* Galerie de miniatures */}
           <div className="grid grid-cols-4 sm:grid-cols-5 gap-2 sm:gap-3">
             {allImages.map((img, idx) => (
               <button
@@ -219,7 +219,7 @@ export default function RealisationDetail() {
         </div>
 
         {/* Infos produit */}
-        <div className="flex flex-col font-basecoat">
+        <div className="anim-fade-left flex flex-col font-basecoat" data-delay="0.2">
           <h1 className="text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 leading-tight">{realisation.title}</h1>
           <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 mb-4"></div>
 

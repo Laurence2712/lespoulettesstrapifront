@@ -3,8 +3,8 @@ import { Link } from '@remix-run/react';
 import { useCartStore } from '../store/cartStore';
 import { apiEndpoints } from '../config/api';
 import { loadStripe } from '@stripe/stripe-js';
+import { useScrollAnimations } from '../hooks/useScrollAnimations';
 
-// ⚠️ Remplace par ta vraie clé publique Stripe
 const stripePromise = loadStripe('pk_test_51Su85f3f5uvksVoPH7wJNkn1H091R2WqOeo3xxqowooxN7P5aHHAcqvt9fhwxD5wx7BHlNjFY63TVAXGI6AiUSaD00xeG2aK8r');
 
 export default function Panier() {
@@ -17,6 +17,8 @@ export default function Panier() {
   const [showCheckout, setShowCheckout] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [mounted, setMounted] = useState(false);
+
+  const scrollRef = useScrollAnimations([mounted, items.length]);
 
   useEffect(() => {
     setMounted(true);
@@ -82,22 +84,22 @@ export default function Panier() {
   }
 
   return (
-    <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]">
+    <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]">
       {/* Breadcrumb */}
-      <nav className="font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
+      <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
         <Link to="/" className="text-indigo-600 hover:text-indigo-800 transition">Accueil</Link>
         <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
         <span className="text-gray-600">Panier</span>
       </nav>
 
-      <h1 className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+      <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900" data-delay="0.1">
         Votre panier
       </h1>
-      <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-6 sm:mb-8"></div>
+      <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-6 sm:mb-8" data-delay="0.15"></div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
         {/* Liste des articles */}
-        <div className="lg:col-span-2 space-y-3 sm:space-y-4">
+        <div className="lg:col-span-2 anim-stagger space-y-3 sm:space-y-4" data-stagger="0.1">
           {items.map((item) => (
             <div key={item.id} className="bg-white rounded-lg shadow-md p-4 sm:p-5 md:p-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
               {/* Image */}
@@ -108,7 +110,7 @@ export default function Panier() {
                   className="w-full sm:w-20 md:w-24 h-32 sm:h-20 md:h-24 object-cover rounded"
                 />
               )}
-              
+
               <div className="flex-1">
                 <h3 className="font-basecoat text-base sm:text-lg md:text-xl font-semibold">
                   {item.title}
@@ -116,7 +118,7 @@ export default function Panier() {
                 <p className="font-basecoat text-gray-600 mt-1 text-sm sm:text-base">
                   {item.prix} € l'unité
                 </p>
-                
+
                 <div className="flex items-center gap-3 sm:gap-4 mt-3 sm:mt-4">
                   {/* Quantity selector */}
                   <div className="flex items-center border border-gray-300 rounded">
@@ -153,7 +155,7 @@ export default function Panier() {
                   </button>
                 </div>
               </div>
-              
+
               {/* Prix total */}
               <div className="text-left sm:text-right">
                 <p className="font-basecoat text-lg sm:text-xl md:text-2xl font-bold">
@@ -165,12 +167,12 @@ export default function Panier() {
         </div>
 
         {/* Résumé */}
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 anim-fade-left" data-delay="0.3">
           <div className="bg-gray-100 rounded-lg p-4 sm:p-5 md:p-6 lg:sticky lg:top-4">
             <h2 className="font-basecoat text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
               Résumé
             </h2>
-            
+
             <div className="space-y-2 mb-3 sm:mb-4">
               <div className="font-basecoat flex justify-between text-sm sm:text-base">
                 <span>Sous-total</span>
@@ -181,7 +183,7 @@ export default function Panier() {
                 <span>À calculer</span>
               </div>
             </div>
-            
+
             <div className="border-t border-gray-300 pt-3 sm:pt-4 mb-4 sm:mb-6">
               <div className="font-basecoat flex justify-between text-lg sm:text-xl md:text-2xl font-bold">
                 <span>Total</span>
@@ -230,13 +232,12 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
   const [error, setError] = useState('');
   const isSubmittingRef = useRef(false);
 
-  // Préchauffer le serveur Strapi au chargement du formulaire
+  const scrollRef = useScrollAnimations([paymentMethod]);
+
   useEffect(() => {
     fetch(apiEndpoints.commandes, { method: 'HEAD' }).catch(() => {});
   }, []);
 
-  // Helper: fetch with timeout to avoid hanging requests
-  // Render free tier can take up to 60s to wake up, so we use a generous timeout
   const fetchWithTimeout = async (url: string, options: RequestInit, timeoutMs = 90000) => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
@@ -264,7 +265,6 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
     setLoadingMessage('Envoi en cours...');
     setError('');
 
-    // Message progressif si le serveur met du temps
     const slowTimer = setTimeout(() => {
       setLoadingMessage('Le serveur demarre, patientez quelques secondes...');
     }, 5000);
@@ -304,7 +304,6 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
         throw new Error(responseData.message || 'Erreur lors de l\'enregistrement de la commande');
       }
 
-      // Show success BEFORE clearing cart to avoid parent unmounting this component
       onSuccess();
       clearCart();
     } catch (err: any) {
@@ -386,37 +385,38 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
   };
 
   return (
-    <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]">
+    <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]">
       <button
         onClick={onBack}
-        className="font-basecoat text-indigo-600 hover:text-indigo-800 mb-4 sm:mb-6 flex items-center text-sm sm:text-base"
+        className="anim-fade-up font-basecoat text-indigo-600 hover:text-indigo-800 mb-4 sm:mb-6 flex items-center text-sm sm:text-base"
       >
         ← Retour au panier
       </button>
 
-      <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 uppercase">
+      <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 uppercase" data-delay="0.1">
         Finaliser la commande
       </h1>
 
       {/* Récapitulatif */}
-      <div className="bg-gray-100 rounded-lg p-4 sm:p-5 md:p-6 mb-6 sm:mb-8">
+      <div className="anim-fade-up bg-gray-100 rounded-lg p-4 sm:p-5 md:p-6 mb-6 sm:mb-8" data-delay="0.15">
         <h2 className="font-basecoat font-bold mb-2 text-sm sm:text-base">Récapitulatif</h2>
         <p className="font-basecoat text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">
           {cart.reduce((sum, item) => sum + item.quantity, 0)} article(s) - Total: {total.toFixed(2)} €
         </p>
       </div>
 
-      {/* 🔹 CHOIX DU MODE DE PAIEMENT */}
+      {/* CHOIX DU MODE DE PAIEMENT */}
       {!paymentMethod && (
         <div className="space-y-4 mb-8">
-          <h2 className="font-basecoat text-xl sm:text-2xl font-semibold mb-4">
+          <h2 className="anim-fade-up font-basecoat text-xl sm:text-2xl font-semibold mb-4" data-delay="0.2">
             Choisissez votre mode de paiement
           </h2>
 
           {/* Option 1 : Virement */}
           <button
             onClick={() => setPaymentMethod('virement')}
-            className="w-full border-2 border-gray-300 hover:border-yellow-400 rounded-xl p-6 text-left transition-all duration-300 hover:shadow-lg group"
+            className="anim-fade-up w-full border-2 border-gray-300 hover:border-yellow-400 rounded-xl p-6 text-left transition-all duration-300 hover:shadow-lg group"
+            data-delay="0.25"
           >
             <div className="flex items-start gap-4">
               <div className="text-3xl">🏦</div>
@@ -437,7 +437,8 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
           {/* Option 2 : Carte bancaire */}
           <button
             onClick={() => setPaymentMethod('carte')}
-            className="w-full border-2 border-gray-300 hover:border-yellow-400 rounded-xl p-6 text-left transition-all duration-300 hover:shadow-lg group"
+            className="anim-fade-up w-full border-2 border-gray-300 hover:border-yellow-400 rounded-xl p-6 text-left transition-all duration-300 hover:shadow-lg group"
+            data-delay="0.35"
           >
             <div className="flex items-start gap-4">
               <div className="text-3xl">💳</div>
@@ -465,12 +466,12 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
         </div>
       )}
 
-      {/* 🔹 FORMULAIRE (affiché après choix du mode de paiement) */}
+      {/* FORMULAIRE (affiché après choix du mode de paiement) */}
       {paymentMethod && (
         <form onSubmit={paymentMethod === 'virement' ? handleVirementCheckout : (e) => { e.preventDefault(); handleStripeCheckout(); }} className="space-y-4 sm:space-y-5 md:space-y-6">
-          
+
           {/* Indication du mode choisi */}
-          <div className="bg-blue-50 border-2 border-blue-300 rounded-lg p-4 flex items-center justify-between">
+          <div className="anim-fade-up bg-blue-50 border-2 border-blue-300 rounded-lg p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <span className="text-2xl">{paymentMethod === 'virement' ? '🏦' : '💳'}</span>
               <span className="font-basecoat font-semibold">
@@ -488,7 +489,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
           {/* Instructions selon le mode */}
           {paymentMethod === 'virement' && (
-            <div className="bg-yellow-50 border-2 border-yellow-400 rounded-lg p-4 sm:p-5 md:p-6">
+            <div className="anim-fade-up bg-yellow-50 border-2 border-yellow-400 rounded-lg p-4 sm:p-5 md:p-6" data-delay="0.1">
               <div className="flex items-start gap-2 sm:gap-3">
                 <span className="text-2xl sm:text-3xl">💳</span>
                 <div>
@@ -506,7 +507,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
           )}
 
           {paymentMethod === 'carte' && (
-            <div className="bg-green-50 border-2 border-green-400 rounded-lg p-4 sm:p-5 md:p-6">
+            <div className="anim-fade-up bg-green-50 border-2 border-green-400 rounded-lg p-4 sm:p-5 md:p-6" data-delay="0.1">
               <div className="flex items-start gap-2 sm:gap-3">
                 <span className="text-2xl sm:text-3xl">🔒</span>
                 <div>
@@ -523,7 +524,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             </div>
           )}
 
-          <div>
+          <div className="anim-fade-up" data-delay="0.15">
             <label className="font-basecoat block font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
               Nom complet *
             </label>
@@ -536,7 +537,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             />
           </div>
 
-          <div>
+          <div className="anim-fade-up" data-delay="0.2">
             <label className="font-basecoat block font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
               Email *
             </label>
@@ -549,7 +550,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             />
           </div>
 
-          <div>
+          <div className="anim-fade-up" data-delay="0.25">
             <label className="font-basecoat block font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
               Téléphone *
             </label>
@@ -562,7 +563,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             />
           </div>
 
-          <div>
+          <div className="anim-fade-up" data-delay="0.3">
             <label className="font-basecoat block font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
               Adresse de livraison *
             </label>
@@ -575,7 +576,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             />
           </div>
 
-          <div>
+          <div className="anim-fade-up" data-delay="0.35">
             <label className="font-basecoat block font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
               Notes (optionnel)
             </label>
@@ -597,7 +598,8 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
           <button
             type="submit"
             disabled={loading}
-            className="font-basecoat w-full bg-yellow-400 hover:bg-yellow-500 text-black py-2.5 sm:py-3 rounded-lg font-semibold transition transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm sm:text-base"
+            className="anim-fade-up font-basecoat w-full bg-yellow-400 hover:bg-yellow-500 text-black py-2.5 sm:py-3 rounded-lg font-semibold transition transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm sm:text-base"
+            data-delay="0.4"
           >
             {loading
               ? (loadingMessage || (paymentMethod === 'virement' ? 'Envoi en cours...' : 'Redirection vers le paiement...'))

@@ -1,38 +1,33 @@
-import { motion } from "framer-motion";
+import { useScrollAnimations } from "../hooks/useScrollAnimations";
 
 export default function Contact() {
+  const scrollRef = useScrollAnimations();
+
   return (
-    <section className="min-h-screen bg-gray-50 mt-[60px] sm:mt-[70px] md:mt-[80px] py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
+    <section ref={scrollRef} className="min-h-screen bg-gray-50 mt-[60px] sm:mt-[70px] md:mt-[80px] py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-start md:items-center">
-        
+
         {/* Bloc gauche : infos et formulaire */}
         <div className="order-1">
-          <motion.h1
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold text-gray-900 uppercase"
+          <h1
+            className="anim-fade-down font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold text-gray-900 uppercase"
           >
             Contactez-nous
-          </motion.h1>
-          <div className="w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-4 sm:mb-6"></div>
+          </h1>
+          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-4 sm:mb-6" data-delay="0.1"></div>
 
-          <motion.p
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="font-basecoat text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 leading-relaxed"
+          <p
+            className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 leading-relaxed"
+            data-delay="0.2"
           >
-            Vous avez une question, un projet ou simplement envie de dire bonjour ? 
+            Vous avez une question, un projet ou simplement envie de dire bonjour ?
             Nous sommes à Cotonou, Bénin — et toujours ravis d'échanger !
-          </motion.p>
+          </p>
 
           {/* Carte Google Map - Responsive height */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg mb-6 sm:mb-8 border border-gray-200"
+          <div
+            className="anim-fade-up rounded-xl sm:rounded-2xl overflow-hidden shadow-lg mb-6 sm:mb-8 border border-gray-200"
+            data-delay="0.3"
           >
             <iframe
               title="Carte Cotonou"
@@ -44,14 +39,12 @@ export default function Contact() {
               allowFullScreen
               loading="lazy"
             ></iframe>
-          </motion.div>
+          </div>
 
           {/* Formulaire - Responsive spacing */}
-          <motion.form
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="space-y-3 sm:space-y-4"
+          <form
+            className="anim-fade-up space-y-3 sm:space-y-4"
+            data-delay="0.4"
             onSubmit={(e) => e.preventDefault()}
           >
             <div>
@@ -96,19 +89,17 @@ export default function Contact() {
             >
               Envoyer le message
             </button>
-          </motion.form>
+          </form>
         </div>
 
         {/* Bloc droit : Image visuelle - Responsive order & height */}
-        <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.6 }}
-          className="relative order-2 mt-8 md:mt-0"
+        <div
+          className="anim-fade-left relative order-2 mt-8 md:mt-0"
+          data-delay="0.5"
         >
-        
+
           <div className="absolute inset-0 bg-yellow-400 opacity-20 rounded-xl sm:rounded-2xl pointer-events-none"></div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
