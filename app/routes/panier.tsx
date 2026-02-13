@@ -132,12 +132,19 @@ export default function Panier() {
                     </span>
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      className="font-basecoat px-2.5 sm:px-3 py-1 hover:bg-gray-100 text-sm sm:text-base"
+                      className="font-basecoat px-2.5 sm:px-3 py-1 hover:bg-gray-100 text-sm sm:text-base disabled:opacity-40 disabled:cursor-not-allowed"
+                      disabled={item.stock !== undefined && item.quantity >= item.stock}
                     >
                       +
                     </button>
                   </div>
-                  
+
+                  {item.stock !== undefined && item.quantity >= item.stock && (
+                    <span className="font-basecoat text-orange-600 text-xs sm:text-sm font-medium">
+                      Stock max : {item.stock}
+                    </span>
+                  )}
+
                   <button
                     onClick={() => removeFromCart(item.id)}
                     className="font-basecoat text-red-600 hover:text-red-800 text-xs sm:text-sm font-medium"
