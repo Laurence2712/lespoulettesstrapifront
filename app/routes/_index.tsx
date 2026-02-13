@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link } from '@remix-run/react';
+import { Link, useLoaderData } from '@remix-run/react';
+import { json } from '@remix-run/node';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -26,18 +27,98 @@ interface Actualite {
   image_url?: string;
 }
 
+interface LoaderData {
+  homepageData: HomepageData | null;
+  realisations: Realisation[];
+  actualites: Actualite[];
+  error: string | null;
+}
+
+export async function loader() {
+  try {
+    const [homepageRes, realisationsRes, actualitesRes] = await Promise.all([
+      fetch(apiEndpoints.homepages).catch(() => null),
+      fetch(apiEndpoints.realisations).catch(() => null),
+      fetch(apiEndpoints.latestActualite).catch(() => null),
+    ]);
+
+    let homepageData: HomepageData | null = null;
+    let realisations: Realisation[] = [];
+    let actualites: Actualite[] = [];
+
+    // Process homepage
+    if (homepageRes?.ok) {
+      const data = await homepageRes.json();
+      if (data?.data?.length) {
+        const homepage = data.data[0];
+        const bannerImageUrl = homepage.banner_image?.formats?.large?.url
+          ? getImageUrl(homepage.banner_image.formats.large.url)
+          : homepage.banner_image?.url
+          ? getImageUrl(homepage.banner_image.url)
+          : '';
+        let descriptionText = '';
+        if (Array.isArray(homepage.description)) {
+          homepage.description.forEach((block: any) => {
+            block.children?.forEach((child: any) => {
+              descriptionText += child.text + ' ';
+            });
+          });
+        }
+        homepageData = { image_url: bannerImageUrl, description: descriptionText.trim() };
+      }
+    }
+
+    // Process realisations
+    if (realisationsRes?.ok) {
+      const data = await realisationsRes.json();
+      if (data?.data) {
+        realisations = data.data.map((realisation: any) => ({
+          id: realisation.documentId,
+          title: realisation.Titre || 'Titre indisponible',
+          image_url: realisation.Images?.[0]?.url ? getImageUrl(realisation.Images[0].url) : undefined,
+          description: realisation.Description || 'Description indisponible',
+          prix: realisation.Prix,
+        }));
+      }
+    }
+
+    // Process actualites
+    if (actualitesRes?.ok) {
+      const data = await actualitesRes.json();
+      if (data?.data) {
+        actualites = data.data.map((item: any) => ({
+          id: item.id,
+          title: item.Title || 'Titre indisponible',
+          content: item.content || '',
+          image_url: item.image?.formats?.large?.url
+            ? getImageUrl(item.image.formats.large.url)
+            : item.image?.url
+            ? getImageUrl(item.image.url)
+            : '',
+        }));
+      }
+    }
+
+    return json<LoaderData>({ homepageData, realisations, actualites, error: null });
+  } catch (err: any) {
+    console.error('Loader error:', err);
+    return json<LoaderData>({
+      homepageData: null,
+      realisations: [],
+      actualites: [],
+      error: 'Erreur lors du chargement des données',
+    });
+  }
+}
+
 export default function Index() {
-  const [homepageData, setHomepageData] = useState<HomepageData | null>(null);
-  const [realisations, setRealisations] = useState<Realisation[]>([]);
-  const [actualites, setActualites] = useState<Actualite[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { homepageData, realisations, actualites, error } = useLoaderData<LoaderData>();
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
 
   const heroRef = useParallaxHero();
-  const scrollRef = useScrollAnimations([loading]);
+  const scrollRef = useScrollAnimations([]);
 
   // Mark as mounted to avoid hydration mismatch on client-only state
   useEffect(() => {
@@ -57,90 +138,6 @@ export default function Index() {
 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  // Fetch all data in parallel
-  useEffect(() => {
-    async function fetchAllData() {
-      try {
-        const [homepageRes, realisationsRes, actualitesRes] = await Promise.all([
-          fetch(apiEndpoints.homepages),
-          fetch(apiEndpoints.realisations),
-          fetch(apiEndpoints.latestActualite),
-        ]);
-
-        // Process homepage
-        if (homepageRes.ok) {
-          const data = await homepageRes.json();
-          if (data?.data?.length) {
-            const homepage = data.data[0];
-            const bannerImageUrl = homepage.banner_image?.formats?.large?.url
-              ? getImageUrl(homepage.banner_image.formats.large.url)
-              : homepage.banner_image?.url
-              ? getImageUrl(homepage.banner_image.url)
-              : '';
-            let descriptionText = '';
-            if (Array.isArray(homepage.description)) {
-              homepage.description.forEach((block: any) => {
-                block.children?.forEach((child: any) => {
-                  descriptionText += child.text + ' ';
-                });
-              });
-            }
-            setHomepageData({ image_url: bannerImageUrl, description: descriptionText.trim() });
-          }
-        }
-
-        // Process realisations
-        if (realisationsRes.ok) {
-          const data = await realisationsRes.json();
-          if (data?.data) {
-            const realisationsData: Realisation[] = data.data.map((realisation: any) => ({
-              id: realisation.documentId,
-              title: realisation.Titre || 'Titre indisponible',
-              image_url: realisation.Images?.[0]?.url ? getImageUrl(realisation.Images[0].url) : undefined,
-              description: realisation.Description || 'Description indisponible',
-              prix: realisation.Prix,
-            }));
-            setRealisations(realisationsData);
-          }
-        }
-
-        // Process actualites
-        if (actualitesRes.ok) {
-          const data = await actualitesRes.json();
-          if (data?.data) {
-            const actualitesData: Actualite[] = data.data.map((item: any) => ({
-              id: item.id,
-              title: item.Title || 'Titre indisponible',
-              content: item.content || '',
-              image_url: item.image?.formats?.large?.url
-                ? getImageUrl(item.image.formats.large.url)
-                : item.image?.url
-                ? getImageUrl(item.image.url)
-                : '',
-            }));
-            setActualites(actualitesData);
-          }
-        }
-
-        if (!homepageRes.ok && !realisationsRes.ok) {
-          setError('Erreur lors du chargement des données');
-        }
-      } catch (err: any) {
-        console.error(err);
-        setError('Erreur lors du chargement des données');
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchAllData();
-  }, []);
-
-  if (loading) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <p className="text-xl font-basecoat">Chargement...</p>
-    </div>
-  );
 
   if (error) return (
     <div className="min-h-screen flex items-center justify-center">

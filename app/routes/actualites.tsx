@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
+import { json } from "@remix-run/node";
 import { apiEndpoints, getImageUrl } from "../config/api";
 import { useScrollAnimations } from "../hooks/useScrollAnimations";
 
@@ -11,43 +11,42 @@ interface Actualite {
   date?: string;
 }
 
-export default function ActualitesPage() {
-  const [actualites, setActualites] = useState<Actualite[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+interface LoaderData {
+  actualites: Actualite[];
+  error: string | null;
+}
 
-  const scrollRef = useScrollAnimations([actualites]);
+export async function loader() {
+  try {
+    const response = await fetch(apiEndpoints.actualites);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
 
-  useEffect(() => {
-    async function fetchActualites() {
-      try {
-        const response = await fetch(apiEndpoints.actualites);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const data = await response.json();
-        if (data?.data) {
-          const actualitesData: Actualite[] = data.data.map((item: any) => ({
-            id: item.id,
-            title: item.Title || 'Titre indisponible',
-            content: item.content || '',
-            image_url: item.image?.formats?.large?.url
-              ? getImageUrl(item.image.formats.large.url)
-              : item.image?.url
-              ? getImageUrl(item.image.url)
-              : '',
-            date: item.publishedAt || item.date || '',
-          }));
-          setActualites(actualitesData);
-        }
-      } catch (err: any) {
-        console.error(err);
-        setError("Erreur lors du chargement des actualités");
-      } finally {
-        setLoading(false);
-      }
+    if (data?.data) {
+      const actualites: Actualite[] = data.data.map((item: any) => ({
+        id: item.id,
+        title: item.Title || 'Titre indisponible',
+        content: item.content || '',
+        image_url: item.image?.formats?.large?.url
+          ? getImageUrl(item.image.formats.large.url)
+          : item.image?.url
+          ? getImageUrl(item.image.url)
+          : '',
+        date: item.publishedAt || item.date || '',
+      }));
+      return json<LoaderData>({ actualites, error: null });
     }
+    return json<LoaderData>({ actualites: [], error: null });
+  } catch (err: any) {
+    console.error('Loader error:', err);
+    return json<LoaderData>({ actualites: [], error: "Erreur lors du chargement des actualités" });
+  }
+}
 
-    fetchActualites();
-  }, []);
+export default function ActualitesPage() {
+  const { actualites, error } = useLoaderData<LoaderData>();
+
+  const scrollRef = useScrollAnimations([]);
 
   return (
     <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]">
@@ -65,13 +64,6 @@ export default function ActualitesPage() {
         Toutes les actualités
       </h1>
       <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.15"></div>
-
-      {/* Loading */}
-      {loading && (
-        <div className="flex items-center justify-center py-12 sm:py-16 md:py-20">
-          <p className="font-basecoat text-lg sm:text-xl md:text-2xl text-gray-600">Chargement...</p>
-        </div>
-      )}
 
       {/* Error */}
       {error && (
@@ -135,7 +127,7 @@ export default function ActualitesPage() {
       </div>
 
       {/* Empty state */}
-      {!loading && !error && actualites.length === 0 && (
+      {!error && actualites.length === 0 && (
         <div className="flex items-center justify-center py-12 sm:py-16 md:py-20">
           <p className="font-basecoat text-gray-600 text-center text-base sm:text-lg md:text-xl">
             Aucune actualité disponible pour le moment.

@@ -1,6 +1,4 @@
-const API_URL = typeof window !== 'undefined' 
-  ? (import.meta.env.VITE_API_URL || 'http://localhost:1337')
-  : (process.env.VITE_API_URL || 'http://localhost:1337');
+const API_URL = import.meta.env.VITE_API_URL || (typeof process !== 'undefined' && process.env?.VITE_API_URL) || 'http://localhost:1337';
 
 export const getApiUrl = () => API_URL;
 

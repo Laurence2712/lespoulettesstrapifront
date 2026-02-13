@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from '@remix-run/react';
-import { getApiUrl, getImageUrl } from '../config/api';
+import { useState } from 'react';
+import { useParams, Link, useNavigate, useLoaderData } from '@remix-run/react';
+import { json } from '@remix-run/node';
+import type { LoaderFunctionArgs } from '@remix-run/node';
+import { getImageUrl } from '../config/api';
 import { useCartStore } from '../store/cartStore';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 
@@ -31,95 +33,96 @@ interface Realisation {
   declinaisons: Declinaison[];
 }
 
+interface LoaderData {
+  realisation: Realisation | null;
+  error: string | null;
+}
+
+export async function loader({ params }: LoaderFunctionArgs) {
+  const { id } = params;
+  const API_URL = import.meta.env.VITE_API_URL || (typeof process !== 'undefined' && process.env?.VITE_API_URL) || 'http://localhost:1337';
+
+  try {
+    const url = `${API_URL}/api/realisations/${id}?populate[0]=Images&populate[1]=Declinaison&populate[2]=Declinaison.Image`;
+    const response = await fetch(url);
+
+    if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
+    const data = await response.json();
+
+    if (data?.data) {
+      const item = data.data;
+
+      const declinaisons: Declinaison[] = item.Declinaison?.map((decl: any) => {
+        const imgData = decl.Image;
+
+        const image: ImageData = imgData
+          ? {
+              id: imgData.id,
+              url: getImageUrl(imgData.url),
+              formats: imgData.formats
+                ? {
+                    large: imgData.formats.large ? { url: getImageUrl(imgData.formats.large.url) } : undefined,
+                    medium: imgData.formats.medium ? { url: getImageUrl(imgData.formats.medium.url) } : undefined,
+                    small: imgData.formats.small ? { url: getImageUrl(imgData.formats.small.url) } : undefined,
+                    thumbnail: imgData.formats.thumbnail ? { url: getImageUrl(imgData.formats.thumbnail.url) } : undefined,
+                  }
+                : undefined,
+            }
+          : { id: 0, url: '' };
+
+        return {
+          id: decl.id,
+          Stock: decl.Stock ?? 0,
+          Description: decl.Description ?? '',
+          Image: image,
+        };
+      }) || [];
+
+      const mainImages: ImageData[] =
+        item.Images?.map((img: any) => ({
+          id: img.id,
+          url: getImageUrl(img.url),
+          formats: img.formats
+            ? {
+                large: img.formats.large ? { url: getImageUrl(img.formats.large.url) } : undefined,
+                medium: img.formats.medium ? { url: getImageUrl(img.formats.medium.url) } : undefined,
+                small: img.formats.small ? { url: getImageUrl(img.formats.small.url) } : undefined,
+                thumbnail: img.formats.thumbnail ? { url: getImageUrl(img.formats.thumbnail.url) } : undefined,
+              }
+            : undefined,
+        })) || [];
+
+      return json<LoaderData>({
+        realisation: {
+          id: item.id,
+          title: item.Titre || 'Titre indisponible',
+          description: item.Description || '',
+          prix: item.Prix,
+          mainImages,
+          declinaisons,
+        },
+        error: null,
+      });
+    }
+    return json<LoaderData>({ realisation: null, error: 'Catégorie introuvable' });
+  } catch (err: any) {
+    console.error('Loader error:', err);
+    return json<LoaderData>({ realisation: null, error: 'Erreur lors du chargement de la catégorie' });
+  }
+}
+
 export default function RealisationDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const addToCart = useCartStore((state) => state.addToCart);
+  const { realisation, error } = useLoaderData<LoaderData>();
 
-  const [realisation, setRealisation] = useState<Realisation | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [addedToCart, setAddedToCart] = useState(false);
 
-  const scrollRef = useScrollAnimations([realisation]);
+  const scrollRef = useScrollAnimations([]);
 
-  useEffect(() => {
-    async function fetchRealisation() {
-      try {
-        const url = `${getApiUrl()}/api/realisations/${id}?populate[0]=Images&populate[1]=Declinaison&populate[2]=Declinaison.Image`;
-        const response = await fetch(url);
-
-        if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
-        const data = await response.json();
-
-        if (data && data.data) {
-          const item = data.data;
-
-          const declinaisons: Declinaison[] = item.Declinaison?.map((decl: any) => {
-            const imgData = decl.Image;
-
-            const image: ImageData = imgData
-              ? {
-                  id: imgData.id,
-                  url: getImageUrl(imgData.url),
-                  formats: imgData.formats
-                    ? {
-                        large: imgData.formats.large ? { url: getImageUrl(imgData.formats.large.url) } : undefined,
-                        medium: imgData.formats.medium ? { url: getImageUrl(imgData.formats.medium.url) } : undefined,
-                        small: imgData.formats.small ? { url: getImageUrl(imgData.formats.small.url) } : undefined,
-                        thumbnail: imgData.formats.thumbnail ? { url: getImageUrl(imgData.formats.thumbnail.url) } : undefined,
-                      }
-                    : undefined,
-                }
-              : { id: 0, url: '' };
-
-            return {
-              id: decl.id,
-              Stock: decl.Stock ?? 0,
-              Description: decl.Description ?? '',
-              Image: image,
-            };
-          }) || [];
-
-          const mainImages: ImageData[] =
-            item.Images?.map((img: any) => ({
-              id: img.id,
-              url: getImageUrl(img.url),
-              formats: img.formats
-                ? {
-                    large: img.formats.large ? { url: getImageUrl(img.formats.large.url) } : undefined,
-                    medium: img.formats.medium ? { url: getImageUrl(img.formats.medium.url) } : undefined,
-                    small: img.formats.small ? { url: getImageUrl(img.formats.small.url) } : undefined,
-                    thumbnail: img.formats.thumbnail ? { url: getImageUrl(img.formats.thumbnail.url) } : undefined,
-                  }
-                : undefined,
-            })) || [];
-
-          setRealisation({
-            id: item.id,
-            title: item.Titre || 'Titre indisponible',
-            description: item.Description || '',
-            prix: item.Prix,
-            mainImages,
-            declinaisons,
-          });
-        } else {
-          setError('Catégorie introuvable');
-        }
-      } catch (error: any) {
-        console.error('Erreur lors du chargement :', error);
-        setError('Erreur lors du chargement de la catégorie');
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    if (id) fetchRealisation();
-  }, [id]);
-
-  if (loading) return <div className="min-h-screen flex items-center justify-center">Chargement...</div>;
   if (error || !realisation)
     return (
       <div className="min-h-screen flex items-center justify-center">
