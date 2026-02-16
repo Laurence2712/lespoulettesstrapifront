@@ -266,12 +266,14 @@ export default function RealisationDetail() {
           )}
 
           {/* Description */}
-          <div className="mb-6">
-            <h2 className="text-base sm:text-lg font-bold uppercase mb-2">Description</h2>
-            <p className="text-gray-700 text-sm sm:text-base leading-relaxed whitespace-pre-line">
-              {realisation.description}
-            </p>
-          </div>
+      {realisation.description && realisation.description.trim() !== '' && (
+  <div className="mb-6">
+    <h2 className="text-base sm:text-lg font-bold uppercase mb-2">Description</h2>
+    <p className="text-gray-700 text-sm sm:text-base leading-relaxed whitespace-pre-line">
+      {realisation.description}
+    </p>
+  </div>
+)}
 
           {/* Sélecteur de quantité (uniquement sur déclinaison avec stock) */}
           {!isOnCategoryImage && isInStock && (
