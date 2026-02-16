@@ -376,7 +376,8 @@ export default function Index() {
             Où nous trouver
           </h2>
           <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
-          <p className='anim-fade-up mt-6 mb-6 font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed' data-delay="0.2">Contactez-nous pour vos demandes spéciales</p>
+          <p className='anim-fade-up mt-6 mb-6 font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed' data-delay="0.2">Un évènement à fêter ? Les Poulettes répondent à vos demandes spéciales : mariage, baby shower, naissance, baptême, communion, anniversaire, ... 
+Des sachets de dragées aux cadeaux personnalisés pour vos invités, Les Poulettes sont prêtes à confectionner ce que vous souhaitez pour que la fête soit réussie !</p>
           <p className="anim-fade-up mb-6 font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed" data-delay="0.3">
             <a
               href="https://wa.me/2290162007580"
