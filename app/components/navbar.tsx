@@ -81,7 +81,7 @@ export default function NavBar() {
 
             {/* Menu déroulant */}
             {menuOpen && (
-              <div className="bg-white shadow-lg rounded-lg mt-2 p-4 absolute top-full left-0 sm:left-auto sm:right-0 w-64 z-50">
+              <div className="bg-beige shadow-lg rounded-lg mt-2 p-4 absolute top-full left-0 sm:left-auto sm:right-0 w-64 z-50">
                 <div className="flex flex-col space-y-1">
                  <Link
   to="/#qui-sommes-nous"
