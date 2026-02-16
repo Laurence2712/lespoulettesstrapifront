@@ -107,7 +107,7 @@ export default function Panier() {
                 <img
                   src={item.image_url}
                   alt={item.title}
-                  className="w-full sm:w-20 md:w-24 h-32 sm:h-20 md:h-24 object-cover rounded"
+                  className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 object-cover rounded-lg"
                 />
               )}
 

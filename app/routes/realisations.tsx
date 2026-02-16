@@ -60,7 +60,7 @@ const handleBeninClick = () => {
     <>
       {/* Popup plein écran */}
       {showPopup && (
-        <div className="fixed inset-0 bg-gradient-to-br from-gray-50 to-white z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-beige z-50 flex items-center justify-center p-4">
           <div className="text-center max-w-5xl w-full">
             {/* Titre */}
             <h1 className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase mb-16 sm:mb-20 md:mb-24 tracking-wide text-gray-900">
@@ -72,7 +72,7 @@ const handleBeninClick = () => {
               {/* Bouton Belgique/Europe */}
               <button
                 onClick={handleBelgiqueClick}
-                className="font-basecoat flex-1 bg-yellow-400 hover:bg-yellow-500 text-black px-8 py-8 rounded-xl text-xl sm:text-2xl md:text-3xl font-medium uppercase transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-lg"
+                className="font-basecoat flex-1 bg-yellow-400 hover:bg-yellow-500 text-white px-8 py-8 rounded-xl text-xl sm:text-2xl md:text-3xl font-medium uppercase transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-lg"
               >
                 La Belgique<br className="hidden sm:block" />
                 <span className="sm:hidden"> / </span>

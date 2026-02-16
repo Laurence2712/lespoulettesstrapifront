@@ -18,6 +18,9 @@ export default {
         ogg: ["Ogg", "serif"], 
         basecoat: ["Basecoat-Light", "sans-serif"],
       },
+      colors: {
+    beige: "#F5F1E8",
+  },
     },
   },
   plugins: [],

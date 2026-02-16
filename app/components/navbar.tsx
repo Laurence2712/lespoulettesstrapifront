@@ -39,7 +39,7 @@ export default function NavBar() {
 
   return (
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-      isTransparent ? 'bg-transparent' : 'bg-white shadow-md'
+      isTransparent ? 'bg-transparent' : 'bg-beige shadow-md'
     }`}>
       <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
         <div className="flex items-center justify-between h-16 sm:h-20 md:h-24">
@@ -95,7 +95,7 @@ export default function NavBar() {
                     onClick={handleLinkClick}
                     className="font-basecoat font-medium text-black hover:bg-gray-100 px-4 py-3 rounded-lg transition text-lg sm:text-base"
                   >
-                    Nos créations
+                    Nos Créations
                   </Link>
                 <Link
   to="/#ou-nous-trouver"

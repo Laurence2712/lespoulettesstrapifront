@@ -40,8 +40,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
 
-      <body className="font-inter bg-white text-gray-900 flex flex-col min-h-screen overflow-x-hidden">
-        {/* Barre de navigation */}
+<body className="font-inter bg-beige text-gray-900 flex flex-col min-h-screen overflow-x-hidden">        {/* Barre de navigation */}
         <NavBar />
 
         {/* Contenu principal */}
