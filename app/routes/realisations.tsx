@@ -185,7 +185,7 @@ const handleBeninClick = () => {
       </div>
 
       <div className="p-3 sm:p-4 md:p-5 flex-grow flex flex-col">
-        <h3 className="font-basecoat text-base sm:text-lg md:text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
+        <h3 className="font-basecoat text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-2 line-clamp-2">
           {realisation.title}
         </h3>
 

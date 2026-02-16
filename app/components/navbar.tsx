@@ -46,14 +46,23 @@ export default function NavBar() {
           {/* Conteneur gauche : Logo + Bouton Catégories */}
           <div className="flex items-center gap-3 sm:gap-4 md:gap-6 relative">
             {/* Logo */}
-            <Link to="/" className="flex items-center" onClick={handleLinkClick}>
+            {/* <Link to="/" className="flex items-center" onClick={handleLinkClick}>
               <img
                 src={isTransparent ? "/assets/logo_t_poulettes_white.png" : "/assets/logo_t_poulettes.png"}
                 alt="Les Poulettes"
                 className="h-[100px] sm:h-[100px] md:h-[200px] w-auto"
               />
-            </Link>
+            </Link> */}
 
+<Link to="/" className="flex items-center" onClick={handleLinkClick}>
+  <img
+    src={isTransparent ? "/assets/logo_t_poulettes_white.png" : "/assets/logo_t_poulettes.png"}
+    alt="Les Poulettes"
+    className={`h-[100px] sm:h-[100px] md:h-[200px] w-auto transition-transform duration-500 ease-in-out transform ${
+      scrolled ? 'scale-90' : 'scale-100'
+    }`}
+  />
+</Link>
             {/* Bouton Menu "Catégories" */}
    <button
   onClick={() => setMenuOpen(!menuOpen)}
