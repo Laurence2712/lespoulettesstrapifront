@@ -33,7 +33,7 @@ export async function loader() {
           : item.image?.url
           ? getImageUrl(item.image.url)
           : '',
-        date: item.publishedAt || item.date || '',
+        date: item.date || '',
       }));
       return json<LoaderData>({ actualites, error: null });
     }
