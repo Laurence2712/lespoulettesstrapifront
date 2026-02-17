@@ -96,8 +96,11 @@ export async function loader() {
         realisations = data.data.map((realisation: any) => ({
           id: realisation.documentId,
           title: realisation.Titre || 'Titre indisponible',
-          image_url: realisation.Images?.[0]?.url ? getImageUrl(realisation.Images[0].url) : undefined,
-          description: realisation.Description || 'Description indisponible',
+image_url: realisation.ImagePrincipale?.url 
+  ? getImageUrl(realisation.ImagePrincipale.url) 
+  : realisation.Images?.[0]?.url 
+    ? getImageUrl(realisation.Images[0].url) 
+    : undefined,          description: realisation.Description || 'Description indisponible',
           prix: realisation.Prix,
         }));
       }
@@ -286,8 +289,15 @@ export default function Index() {
         <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
       </div>
 
-      <section className="anim-fade-up actualites py-6 sm:py-8 md:py-[60px] bg-yellow-100 mx-4 sm:mx-6 md:mx-[60px] lg:mx-[120px] px-4 sm:px-6 md:px-8 rounded-lg shadow-md mt-8 sm:mt-10 md:mt-12" data-delay="0.2">
-        {actualites.length > 0 ? (
+<section
+  className="anim-fade-up actualites py-6 sm:py-8 md:py-[60px] 
+             bg-yellow-100 mx-4 sm:mx-6 md:mx-[60px] lg:mx-[120px] 
+             px-4 sm:px-6 md:px-8 rounded-lg shadow-md 
+             mt-8 sm:mt-10 md:mt-12 
+             max-w-full md:max-w-[70%] lg:max-w-[50%]"
+  data-delay="0.2"
+>
+         {actualites.length > 0 ? (
           actualites.map((actu) => (
             <div key={actu.id} className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
               <div className="w-full md:w-1/2 order-2 md:order-1 anim-fade-right" data-delay="0.3">

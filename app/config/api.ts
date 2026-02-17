@@ -10,12 +10,18 @@ export const getImageUrl = (path: string) => {
 
 export const apiEndpoints = {
   homepages: `${API_URL}/api/homepages?populate=*`,
+
+  // ✅ populate=* suffit pour le listing (1 niveau)
   realisations: `${API_URL}/api/realisations?populate=*`,
+
   actualites: `${API_URL}/api/actualites?populate=*`,
   latestActualite: `${API_URL}/api/actualites?populate=*&sort[0]=publishedAt:desc&pagination[limit]=1`,
   commandes: `${API_URL}/api/commandes`,
   createCheckoutSession: `${API_URL}/api/commandes/create-checkout-session`,
   createBankTransferOrder: `${API_URL}/api/commandes/create-bank-transfer-order`,
-  realisationById: (id: string) => `${API_URL}/api/realisations/${id}?populate=*`,
+
+  // ✅ Populate profond pour la page détail (images des déclinaisons)
+realisationById: (id: string) => `${API_URL}/api/realisations/${id}?populate=*`,
+
   actualiteById: (id: number) => `${API_URL}/api/actualites/${id}?populate=*`,
 };
