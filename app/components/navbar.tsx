@@ -147,7 +147,7 @@ export default function NavBar() {
               className="relative font-basecoat inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-4 lg:px-5 py-2 lg:py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-base lg:text-lg"
             >
              <ShoppingCartIcon className="w-5 h-5 lg:w-6 lg:h-6" />
-              <span className="hidden lg:inline">Panier</span>
+              <span className="hidden lg:inline uppercase"></span>
               {totalItems > 0 && (
                 <span key={totalItems} className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center animate-bounce">
                   {totalItems}
