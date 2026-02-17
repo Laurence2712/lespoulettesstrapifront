@@ -95,7 +95,7 @@ export default function NavBar() {
                     onClick={handleLinkClick}
                     className="font-basecoat font-medium text-black hover:bg-gray-100 px-4 py-3 rounded-lg transition text-lg sm:text-base"
                   >
-                    Nos Créations
+                    Nos créations
                   </Link>
                 <Link
   to="/#ou-nous-trouver"

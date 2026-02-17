@@ -203,7 +203,7 @@ export default function Realisations() {
 
                   {/* Badge Nouveau */}
                   {realisation.isNew && (
-                    <div className="absolute top-3 left-3 bg-yellow-400 text-black text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
+                    <div className="absolute top-3 left-3 bg-yellow-400 text-black text-xl font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
                       Nouveau
                     </div>
                   )}
