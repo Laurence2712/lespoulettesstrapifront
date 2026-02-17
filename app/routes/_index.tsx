@@ -1,11 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { Link, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
-import Slider from 'react-slick';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import type { LinksFunction } from '@remix-run/node';
 import { apiEndpoints, getImageUrl } from '../config/api';
 import { useScrollAnimations, useParallaxHero } from '../hooks/useScrollAnimations';
+
+// ✅ Chargement lazy côté client uniquement — évite le crash SSR
+const Slider = lazy(() => import('react-slick'));
+
+// ✅ CSS du slider via CDN (remplace les imports directs incompatibles SSR)
+export const links: LinksFunction = () => [
+  {
+    rel: "stylesheet",
+    href: "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css",
+  },
+  {
+    rel: "stylesheet",
+    href: "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css",
+  },
+];
 
 interface HomepageData {
   image_url?: string;
@@ -34,12 +47,20 @@ interface LoaderData {
   error: string | null;
 }
 
+// ✅ Fetch avec timeout pour éviter les blocages si Strapi est lent
+function fetchWithTimeout(url: string, timeoutMs = 8000): Promise<Response | null> {
+  return Promise.race([
+    fetch(url).catch(() => null),
+    new Promise<null>((resolve) => setTimeout(() => resolve(null), timeoutMs)),
+  ]);
+}
+
 export async function loader() {
   try {
     const [homepageRes, realisationsRes, actualitesRes] = await Promise.all([
-      fetch(apiEndpoints.homepages).catch(() => null),
-      fetch(apiEndpoints.realisations).catch(() => null),
-      fetch(apiEndpoints.latestActualite).catch(() => null),
+      fetchWithTimeout(apiEndpoints.homepages, 8000),
+      fetchWithTimeout(apiEndpoints.realisations, 8000),
+      fetchWithTimeout(apiEndpoints.latestActualite, 8000),
     ]);
 
     let homepageData: HomepageData | null = null;
@@ -112,7 +133,7 @@ export async function loader() {
 }
 
 export default function Index() {
-  const { homepageData, realisations, actualites, error } = useLoaderData<LoaderData>();
+  const { homepageData, realisations, actualites } = useLoaderData<LoaderData>();
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
@@ -120,7 +141,7 @@ export default function Index() {
   const heroRef = useParallaxHero();
   const scrollRef = useScrollAnimations([]);
 
-  // Mark as mounted to avoid hydration mismatch on client-only state
+  // ✅ Monté uniquement côté client
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -132,22 +153,13 @@ export default function Index() {
       setIsMobile(width <= 767);
       setIsTablet(width > 767 && width <= 1024);
     };
-
     handleResize();
     window.addEventListener('resize', handleResize);
-
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  if (error) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <p className="text-red-500 text-xl font-basecoat">{error}</p>
-    </div>
-  );
-
-  // Configuration slider dynamique - use responsive config to avoid hydration mismatch
   const getSlidesToShow = () => {
-    if (!mounted) return 3; // Default for SSR
+    if (!mounted) return 3;
     if (isMobile) return 1;
     if (isTablet) return 2;
     return 3;
@@ -156,36 +168,62 @@ export default function Index() {
   const sliderSettings = {
     dots: false,
     infinite: true,
-
     slidesToShow: getSlidesToShow(),
     slidesToScroll: 1,
-
     autoplay: true,
     autoplaySpeed: 0,
     speed: 10000,
     cssEase: "linear",
-
     arrows: false,
     swipeToSlide: true,
     pauseOnHover: true,
     pauseOnFocus: true,
-
     responsive: [
-      {
-        breakpoint: 767,
-        settings: { slidesToShow: 1 },
-      },
-      {
-        breakpoint: 1024,
-        settings: { slidesToShow: 2 },
-      },
+      { breakpoint: 767, settings: { slidesToShow: 1 } },
+      { breakpoint: 1024, settings: { slidesToShow: 2 } },
     ],
   };
+
+  // ✅ Carte réalisation — extraite pour lisibilité
+  const RealisationCard = ({ realisation }: { realisation: Realisation }) => (
+    <div key={realisation.id} className="px-3 sm:px-4 md:px-6">
+      <Link to={`/realisations/${realisation.id}`}>
+        <div className="group rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-shadow duration-500 h-full">
+          <div className="relative overflow-hidden h-64 sm:h-72 md:h-80 lg:h-[380px]">
+            {realisation.image_url ? (
+              <img
+                src={realisation.image_url}
+                alt={realisation.title}
+                loading="lazy"
+                className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 transform origin-center"
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-300 flex items-center justify-center">
+                <span className="font-basecoat text-gray-500">Aucune image</span>
+              </div>
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+            <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6 md:p-7">
+              <h3 className="font-basecoat text-white text-lg sm:text-xl md:text-2xl font-semibold leading-tight mb-2">
+                {realisation.title}
+              </h3>
+              <div className="inline-flex items-center gap-2 font-basecoat text-yellow-400 font-semibold text-sm sm:text-base transition-transform duration-300 group-hover:translate-x-2">
+                Voir plus
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Link>
+    </div>
+  );
 
   return (
     <div className="overflow-x-hidden" ref={scrollRef}>
 
-      {/* Header Banner - Responsive heights */}
+      {/* ── Hero Banner ── */}
       <header
         ref={heroRef}
         className="banner relative bg-cover bg-center h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[100vh] flex flex-col justify-center items-center text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24"
@@ -195,7 +233,6 @@ export default function Index() {
           <h1 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-[44px] font-bold uppercase tracking-wide mb-8 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-tight lg:leading-snug">
             Une marque d'accessoires made in Bénin, éco-trendy/éco-friendly qui surfe sur la vague du wax !
           </h1>
-
           <div className="mt-4 sm:mt-6 anim-fade-up" data-delay="0.3">
             <Link
               to="/realisations"
@@ -208,7 +245,7 @@ export default function Index() {
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
       </header>
 
-      {/* Qui sommes-nous */}
+      {/* ── Qui sommes-nous ── */}
       <section id="qui-sommes-nous" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-6 sm:py-8 md:py-[60px]">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
@@ -216,8 +253,6 @@ export default function Index() {
           </h2>
           <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.1"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
-
-            {/* Texte */}
             <div className="order-2 md:order-1 anim-fade-right" data-delay="0.2">
               <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
                 Les Poulettes est une marque d'accessoires éco-responsables créée au Bénin.
@@ -230,11 +265,8 @@ export default function Index() {
                 élégants et respectueux de l'environnement.
               </p>
             </div>
-
-            {/* Photos circulaires - 2 personnes */}
             <div className="order-1 md:order-2 flex justify-center items-center anim-scale" data-delay="0.3">
               <div className="relative w-full h-[300px] sm:h-[350px]">
-                {/* Photo 1 - Gauche */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
                   <div className="relative w-[160px] h-[160px] xl:h-[400px] xl:w-[400px] sm:w-[200px] sm:h-[200px] rounded-full overflow-hidden border-4 border-yellow-400 shadow-2xl transform hover:scale-110 transition duration-300">
                     <img src="/assets/equipe-1.jpg" alt="Fondatrice 1" loading="lazy" className="w-full h-full object-cover" />
@@ -242,12 +274,11 @@ export default function Index() {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* Actualités - Titre aligné à gauche */}
+      {/* ── Actualités ── */}
       <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
         <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
           Actualités
@@ -255,7 +286,6 @@ export default function Index() {
         <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
       </div>
 
-      {/* Actualités Section - Responsive layout */}
       <section className="anim-fade-up actualites py-6 sm:py-8 md:py-[60px] bg-yellow-100 mx-4 sm:mx-6 md:mx-[60px] lg:mx-[120px] px-4 sm:px-6 md:px-8 rounded-lg shadow-md mt-8 sm:mt-10 md:mt-12" data-delay="0.2">
         {actualites.length > 0 ? (
           actualites.map((actu) => (
@@ -275,11 +305,7 @@ export default function Index() {
                     Toutes les actualités
                   </button>
                 </Link>
-
               </div>
-
-
-
               {actu.image_url && (
                 <div className="w-full md:w-1/2 order-1 md:order-2 anim-fade-left" data-delay="0.2">
                   <img
@@ -297,9 +323,8 @@ export default function Index() {
         )}
       </section>
 
-      {/* Slider Réalisations - Pleine largeur */}
+      {/* ── Nos créations (Slider) ── */}
       <section className="products py-6 sm:py-8 md:py-[60px] w-full relative z-10">
-        {/* Titre aligné à gauche */}
         <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10 md:mb-12 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Nos créations
@@ -307,78 +332,47 @@ export default function Index() {
           <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
         </div>
 
-        {/* Slider pleine largeur avec padding sur les côtés */}
         <div className="anim-fade-up px-4 sm:px-6 md:px-[60px] lg:px-[120px] overflow-hidden" data-delay="0.2">
-          <Slider {...sliderSettings} className="mt-4 sm:mt-6 md:mt-8 relative z-0">
-            {realisations.map((realisation) => (
-              <div key={realisation.id} className="px-3 sm:px-4 md:px-6">
-                <Link to={`/realisations/${realisation.id}`}>
-                 <div className="group rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-shadow duration-500 h-full">
-  {/* Image principale */}
-  <div className="relative overflow-hidden h-64 sm:h-72 md:h-80 lg:h-[380px]">
-    {realisation.image_url ? (
-      <img
-        src={realisation.image_url}
-        alt={realisation.title}
-        loading="lazy"
-        className="w-full h-full object-cover object-center transition-transform duration-700 ease-out
-                   group-hover:scale-105 transform origin-center"
-      />
-    ) : (
-      <div className="w-full h-full bg-gray-300 flex items-center justify-center">
-        <span className="font-basecoat text-gray-500">Aucune image</span>
-      </div>
-    )}
-
-    {/* Overlay permanent pour lisibilité */}
-    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-
-    {/* Contenu sur l’image */}
-    <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6 md:p-7">
-      <h3 className="font-basecoat text-white text-lg sm:text-xl md:text-2xl font-semibold leading-tight mb-2">
-        {realisation.title}
-      </h3>
-
-      <div className="inline-flex items-center gap-2 font-basecoat text-yellow-400 font-semibold text-sm sm:text-base
-                      transition-transform duration-300 group-hover:translate-x-2">
-        Voir plus
-        <svg
-          className="w-4 h-4 sm:w-5 sm:h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </div>
-    </div>
-  </div>
-</div>
-                </Link>
+          {mounted ? (
+            // ✅ Slider chargé uniquement côté client après hydration
+            <Suspense fallback={
+              <div className="mt-4 sm:mt-6 md:mt-8 flex gap-6 overflow-hidden">
+                {[1, 2, 3].map(i => (
+                  <div key={i} className="flex-1 min-w-0 rounded-2xl bg-gray-200 animate-pulse h-64 sm:h-72 md:h-80 lg:h-[380px]" />
+                ))}
               </div>
-            ))}
-          </Slider>
+            }>
+              <Slider {...sliderSettings} className="mt-4 sm:mt-6 md:mt-8 relative z-0">
+                {realisations.map((realisation) => (
+                  <RealisationCard key={realisation.id} realisation={realisation} />
+                ))}
+              </Slider>
+            </Suspense>
+          ) : (
+            // ✅ Placeholder SSR — le serveur n'essaie jamais de rendre react-slick
+            <div className="mt-4 sm:mt-6 md:mt-8 flex gap-6 overflow-hidden">
+              {realisations.slice(0, 3).map((realisation) => (
+                <div key={realisation.id} className="flex-1 min-w-0">
+                  <RealisationCard realisation={realisation} />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
-
-
-
-
-
-
-
-
-
+      {/* ── Où nous trouver ── */}
       <section id="ou-nous-trouver" className="w-full">
         <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10 md:mb-12 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Où nous trouver
           </h2>
           <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
-          <p className='anim-fade-up mt-6 mb-6 font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed' data-delay="0.2">Un évènement à fêter ? Les Poulettes répondent à vos demandes spéciales : mariage, baby shower, naissance, baptême, communion, anniversaire, ... 
-Des sachets de dragées aux cadeaux personnalisés pour vos invités, Les Poulettes sont prêtes à confectionner ce que vous souhaitez pour que la fête soit réussie !</p>
-          <p className="anim-fade-up mb-6 font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed" data-delay="0.3">
+          <p className="anim-fade-up mt-6 mb-6 font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed" data-delay="0.2">
+            Un évènement à fêter ? Les Poulettes répondent à vos demandes spéciales : mariage, baby shower, naissance, baptême, communion, anniversaire, ...{'\n'}
+            Des sachets de dragées aux cadeaux personnalisés pour vos invités, Les Poulettes sont prêtes à confectionner ce que vous souhaitez pour que la fête soit réussie !
+          </p>
+          <p className="anim-fade-up mb-6 font-basecoat text-gray-800 text-base sm:text-lg md:text-xl leading-relaxed" data-delay="0.3">
             <a
               href="https://wa.me/2290162007580"
               target="_blank"
@@ -388,12 +382,9 @@ Des sachets de dragées aux cadeaux personnalisés pour vos invités, Les Poulet
               WhatsApp : +229 01 62 00 75 80
             </a>
           </p>
-          {/* Texte descriptif */}
-          <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 mt-4 sm:mt-6 px-4">
-          </p>
         </div>
 
-        {/* Google Map - Pleine largeur */}
+        {/* Google Map — pleine largeur */}
         <div className="anim-fade-up w-full h-[400px] sm:h-[500px] md:h-[600px]" data-delay="0.3">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126169.02214257128!2d2.3522219!3d6.3702928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1024a9a5c8d5f6c5%3A0x7a7a7a7a7a7a7a7a!2sCotonou%2C%20B%C3%A9nin!5e0!3m2!1sfr!2sbe!4v1234567890123!5m2!1sfr!2sbe"
@@ -407,6 +398,7 @@ Des sachets de dragées aux cadeaux personnalisés pour vos invités, Les Poulet
           ></iframe>
         </div>
       </section>
+
     </div>
   );
 }

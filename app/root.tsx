@@ -4,6 +4,8 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useRouteError,
+  isRouteErrorResponse,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
 import { useEffect } from "react";
@@ -39,17 +41,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-
-<body className="font-inter bg-beige text-gray-900 flex flex-col min-h-screen overflow-x-hidden">        {/* Barre de navigation */}
+      <body className="font-inter bg-beige text-gray-900 flex flex-col min-h-screen overflow-x-hidden">
         <NavBar />
-
-        {/* Contenu principal */}
         <main className="flex-grow">{children}</main>
-
-        {/* Pied de page global */}
         <Footer />
-
-        {/* Scripts Remix */}
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -61,16 +56,63 @@ export default function App() {
   const checkExpiration = useCartStore((state) => state.checkExpiration);
 
   useEffect(() => {
-    // Vérifier l'expiration du panier au chargement de la page
     checkExpiration();
-    
-    // Vérifier l'expiration toutes les 5 minutes (optionnel)
     const interval = setInterval(() => {
       checkExpiration();
-    }, 5 * 60 * 1000); // 5 minutes
-
+    }, 5 * 60 * 1000);
     return () => clearInterval(interval);
   }, [checkExpiration]);
 
   return <Outlet />;
+}
+
+// ✅ AJOUT : Gestion globale des erreurs
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  let message = "Une erreur inattendue s'est produite.";
+  let details = "";
+
+  if (isRouteErrorResponse(error)) {
+    message = `Erreur ${error.status}`;
+    details = error.data || "";
+  } else if (error instanceof Error) {
+    details = error.message;
+  }
+
+  return (
+    <html lang="fr" className="overflow-x-hidden">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <Meta />
+        <Links />
+      </head>
+      <body className="font-inter bg-beige text-gray-900 flex flex-col min-h-screen overflow-x-hidden">
+        <NavBar />
+        <main className="flex-grow flex items-center justify-center py-20 px-4">
+          <div className="text-center max-w-md">
+            <img src="/assets/logo_t_poulettes.png" alt="Les Poulettes" className="mx-auto mb-8 h-16" />
+            <h1 className="font-basecoat text-2xl font-bold text-gray-900 mb-4">
+              Oups, une petite erreur !
+            </h1>
+            <p className="font-basecoat text-gray-600 mb-2">
+              Nos créations sont toujours là, mais la page a eu un petit souci au chargement.
+            </p>
+            {details && (
+              <p className="text-sm text-gray-400 mb-6 font-mono">{details}</p>
+            )}
+            <a
+              href="/"
+              className="inline-block bg-yellow-400 hover:bg-yellow-500 text-black font-basecoat font-bold px-8 py-3 rounded-lg uppercase tracking-wider transition hover:scale-105"
+            >
+              Retour à l'accueil
+            </a>
+          </div>
+        </main>
+        <Footer />
+        <Scripts />
+      </body>
+    </html>
+  );
 }
