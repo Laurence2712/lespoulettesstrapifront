@@ -294,7 +294,7 @@ export default function Index() {
              bg-yellow-100 mx-4 sm:mx-6 md:mx-[60px] lg:mx-[120px] 
              px-4 sm:px-6 md:px-8 rounded-lg shadow-md 
              mt-8 sm:mt-10 md:mt-12 
-             max-w-full md:max-w-[70%] lg:max-w-[50%]"
+             max-w-full md:max-w-[70%] lg:max-w-[80%]"
   data-delay="0.2"
 >
          {actualites.length > 0 ? (
