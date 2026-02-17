@@ -20,9 +20,8 @@ interface LoaderData {
 
 export async function loader() {
   const API_URL =
-    typeof process !== 'undefined' && process.env?.VITE_API_URL
-      ? process.env.VITE_API_URL
-      : 'http://localhost:1337';
+    (typeof process !== 'undefined' && (process.env.API_URL || process.env.VITE_API_URL)) ||
+    'http://localhost:1337';
 
   try {
     const url = `${API_URL}/api/realisations?populate=*`;
