@@ -209,7 +209,7 @@ export default function Realisations() {
                   )}
 
                   {/* Prix */}
-                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-gray-900 font-basecoat font-bold text-sm px-3 py-1 rounded-full shadow">
+                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-gray-900 font-basecoat font-bold text-xl px-3 py-1 rounded-full shadow">
                     {realisation.prix ? `${realisation.prix} €` : 'Sur demande'}
                   </div>
 
