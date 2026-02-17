@@ -337,14 +337,23 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
   };
 
   // PAIEMENT PAR CARTE (Stripe)
-  const handleStripeCheckout = async () => {
+  const handleStripeCheckout = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (isSubmittingRef.current) return;
+
     if (!formData.nom || !formData.email || !formData.telephone || !formData.adresse) {
       setError('Veuillez remplir tous les champs obligatoires');
       return;
     }
 
+    isSubmittingRef.current = true;
     setLoading(true);
+    setLoadingMessage('Redirection vers le paiement...');
     setError('');
+
+    const slowTimer = setTimeout(() => {
+      setLoadingMessage('Le serveur démarre, patientez quelques secondes...');
+    }, 5000);
 
     try {
       const payload = {
@@ -381,7 +390,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
       const { url: checkoutUrl } = responseData;
       if (!checkoutUrl) {
-        throw new Error('URL de paiement manquante');
+        throw new Error('URL de paiement manquante dans la réponse du serveur');
       }
 
       window.location.href = checkoutUrl;
@@ -392,7 +401,11 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
       } else {
         setError(err.message || 'Erreur lors de la création de la session de paiement');
       }
+    } finally {
+      clearTimeout(slowTimer);
       setLoading(false);
+      setLoadingMessage('');
+      isSubmittingRef.current = false;
     }
   };
 
@@ -497,7 +510,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
       {/* FORMULAIRE */}
       {paymentMethod && (
-        <form onSubmit={paymentMethod === 'virement' ? handleVirementCheckout : (e) => { e.preventDefault(); handleStripeCheckout(); }} className="space-y-5 sm:space-y-6 max-w-2xl">
+        <form onSubmit={paymentMethod === 'virement' ? handleVirementCheckout : handleStripeCheckout} className="space-y-5 sm:space-y-6 max-w-2xl">
 
           {/* Mode choisi */}
           <div className="anim-fade-up flex items-center justify-between bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
@@ -641,6 +654,21 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
               : (paymentMethod === 'virement' ? 'Envoyer la commande' : 'Payer en ligne')
             }
           </button>
+
+          {loading && (
+            <button
+              type="button"
+              onClick={() => {
+                setLoading(false);
+                setLoadingMessage('');
+                isSubmittingRef.current = false;
+                setError('Opération annulée. Vous pouvez réessayer.');
+              }}
+              className="font-basecoat w-full text-center py-3 text-gray-500 hover:text-gray-700 text-sm font-medium transition"
+            >
+              Annuler
+            </button>
+          )}
         </form>
       )}
     </div>
