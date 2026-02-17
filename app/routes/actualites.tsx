@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import { apiEndpoints, getImageUrl } from "../config/api";
@@ -45,93 +46,131 @@ export async function loader() {
 
 export default function ActualitesPage() {
   const { actualites, error } = useLoaderData<LoaderData>();
+  const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc');
 
-  const scrollRef = useScrollAnimations([]);
+  const scrollRef = useScrollAnimations([sortOrder]);
+
+  const sortedActualites = [...actualites].sort((a, b) => {
+    const dateA = a.date ? new Date(a.date).getTime() : 0;
+    const dateB = b.date ? new Date(b.date).getTime() : 0;
+    return sortOrder === 'desc' ? dateB - dateA : dateA - dateB;
+  });
 
   return (
     <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]">
       {/* Breadcrumb */}
       <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
-        <Link to="/" className="text-yellow-600 hover:text-yellow-800 font-medium transition">
+        <Link to="/" className="text-yellow-600 hover:text-yellow-700 font-medium transition">
           Accueil
         </Link>
         <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
         <span className="text-gray-600">Actualités</span>
       </nav>
 
-      {/* Titre */}
-      <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900" data-delay="0.1">
-        Toutes les actualités
-      </h1>
-      <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.15"></div>
+      {/* Titre + Tri */}
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10 md:mb-12">
+        <div>
+          <h1
+            className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900"
+            data-delay="0.1"
+          >
+            Nos actualités
+          </h1>
+          <div
+            className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4"
+            data-delay="0.15"
+          ></div>
+          <p className="anim-fade-up font-basecoat text-gray-500 text-sm sm:text-base mt-3" data-delay="0.2">
+            {actualites.length} actualité{actualites.length > 1 ? 's' : ''}
+          </p>
+        </div>
+        <div className="anim-fade-up flex items-center gap-2" data-delay="0.2">
+          <label
+            htmlFor="sort-date"
+            className="font-basecoat text-sm text-gray-600 whitespace-nowrap"
+          >
+            Trier par :
+          </label>
+          <select
+            id="sort-date"
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value as 'desc' | 'asc')}
+            className="font-basecoat text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+          >
+            <option value="desc">Plus récent</option>
+            <option value="asc">Plus ancien</option>
+          </select>
+        </div>
+      </div>
 
       {/* Error */}
       {error && (
-        <div className="flex items-center justify-center py-12 sm:py-16 md:py-20">
-          <p className="font-basecoat text-red-500 text-center text-base sm:text-lg md:text-xl">{error}</p>
+        <div className="flex items-center justify-center py-20">
+          <p className="font-basecoat text-red-500 text-center text-lg">{error}</p>
         </div>
       )}
 
-      {/* Liste actualités avec alternance */}
-      <div className="flex flex-col gap-6 sm:gap-8 md:gap-10">
-        {actualites.map((actu, index) => (
-          <div
-            key={actu.id}
-            className={`flex flex-col md:flex-row items-center gap-6 sm:gap-8 actu-card bg-white rounded-xl shadow-lg overflow-hidden p-4 sm:p-5 md:p-6 transform transition hover:scale-[1.01] ${index % 2 === 0 ? 'anim-fade-right' : 'anim-fade-left'}`}
-            data-delay={`${0.1 + index * 0.1}`}
-          >
-            {/* Image à GAUCHE si index PAIR (0, 2, 4...) */}
-            {index % 2 === 0 && actu.image_url && (
-              <div className="w-full md:w-1/2 order-1">
-                <img
-                  src={actu.image_url}
-                  alt={actu.title}
-                  loading="lazy"
-                  className="w-full h-48 sm:h-56 md:h-64 lg:h-80 object-cover rounded-lg shadow-md"
-                />
-              </div>
-            )}
+      {/* Liste actualités */}
+      {!error && (
+        <div className="flex flex-col gap-12 sm:gap-16 md:gap-20">
+          {sortedActualites.map((actu, index) => (
+            <div
+              key={actu.id}
+              className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center"
+            >
+              {/* Image */}
+              {actu.image_url && (
+                <div
+                  className={`anim-fade-right rounded-2xl overflow-hidden shadow-xl ${index % 2 !== 0 ? 'md:order-2' : ''}`}
+                  data-delay="0.2"
+                >
+                  <img
+                    src={actu.image_url}
+                    alt={actu.title}
+                    loading="lazy"
+                    className="w-full h-64 sm:h-72 md:h-80 lg:h-[400px] object-cover transition-transform duration-700 hover:scale-105"
+                  />
+                </div>
+              )}
 
-            {/* Contenu texte */}
-            <div className={`w-full md:w-1/2 flex flex-col justify-center ${index % 2 === 0 ? 'order-2' : 'order-2 md:order-1'}`}>
-              <p className="font-basecoat text-xs sm:text-sm text-gray-500 mb-2 sm:mb-3 italic">
-                {actu.date
-                  ? new Date(actu.date).toLocaleDateString("fr-FR", {
-                      day: "2-digit",
-                      month: "long",
-                      year: "numeric",
-                    })
-                  : "Date inconnue"}
-              </p>
-              <h2 className="font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-3 sm:mb-4">
-                {actu.title}
-              </h2>
-              <p className="font-basecoat text-gray-800 text-sm sm:text-base md:text-lg whitespace-pre-line leading-relaxed">
-                {actu.content}
-              </p>
+              {/* Contenu texte */}
+              <div
+                className={`anim-fade-left ${!actu.image_url ? 'md:col-span-2' : ''} ${index % 2 !== 0 ? 'md:order-1' : ''}`}
+                data-delay="0.3"
+              >
+                <p className="font-basecoat text-sm text-yellow-600 font-semibold mb-3 tracking-wider uppercase">
+                  {actu.date
+                    ? new Date(actu.date).toLocaleDateString("fr-FR", {
+                        day: "2-digit",
+                        month: "long",
+                        year: "numeric",
+                      })
+                    : "Date inconnue"}
+                </p>
+                <h2 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-5 leading-tight">
+                  {actu.title}
+                </h2>
+                <p className="font-basecoat text-gray-700 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed">
+                  {actu.content}
+                </p>
+              </div>
             </div>
-
-            {/* Image à DROITE si index IMPAIR (1, 3, 5...) */}
-            {index % 2 !== 0 && actu.image_url && (
-              <div className="w-full md:w-1/2 order-1 md:order-2">
-                <img
-                  src={actu.image_url}
-                  alt={actu.title}
-                  loading="lazy"
-                  className="w-full h-48 sm:h-56 md:h-64 lg:h-80 object-cover rounded-lg shadow-md"
-                />
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Empty state */}
       {!error && actualites.length === 0 && (
-        <div className="flex items-center justify-center py-12 sm:py-16 md:py-20">
-          <p className="font-basecoat text-gray-600 text-center text-base sm:text-lg md:text-xl">
+        <div className="flex flex-col items-center justify-center py-20 gap-4">
+          <p className="font-basecoat text-gray-500 text-center text-lg">
             Aucune actualité disponible pour le moment.
           </p>
+          <Link
+            to="/"
+            className="font-basecoat text-yellow-600 hover:text-yellow-700 underline text-sm transition"
+          >
+            Retour à l'accueil
+          </Link>
         </div>
       )}
     </div>
