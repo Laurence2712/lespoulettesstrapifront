@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs } from '@remix-run/node';
-import { getImageUrl } from '../config/api';
+import { getApiUrl, getImageUrl } from '../config/api';
 import { useCartStore } from '../store/cartStore';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 import CartDrawer from '../components/CartDrawer';
@@ -41,9 +41,7 @@ interface LoaderData {
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { id } = params;
-const API_URL =
-  (typeof process !== 'undefined' && (process.env.API_URL || process.env.VITE_API_URL)) ||
-  'http://localhost:1337';
+  const API_URL = getApiUrl();
 
   try {
     const url = `${API_URL}/api/realisations/${id}?populate[0]=Images&populate[1]=Declinaison&populate[2]=Declinaison.Image`;

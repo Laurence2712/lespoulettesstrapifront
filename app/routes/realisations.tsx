@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLoaderData, useNavigate } from '@remix-run/react';
 import { json } from '@remix-run/node';
-import { apiEndpoints, getImageUrl } from '../config/api';
+import { getApiUrl, getImageUrl } from '../config/api';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 
 interface Realisation {
@@ -19,9 +19,7 @@ interface LoaderData {
 }
 
 export async function loader() {
-  const API_URL =
-    (typeof process !== 'undefined' && (process.env.API_URL || process.env.VITE_API_URL)) ||
-    'http://localhost:1337';
+  const API_URL = getApiUrl();
 
   try {
     const url = `${API_URL}/api/realisations?populate=*`;
