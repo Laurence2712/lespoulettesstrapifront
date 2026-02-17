@@ -1,11 +1,97 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link } from '@remix-run/react';
+import { Link, useFetcher } from '@remix-run/react';
+import { json } from '@remix-run/node';
+import type { ActionFunctionArgs } from '@remix-run/node';
 import { useCartStore } from '../store/cartStore';
-import { apiEndpoints } from '../config/api';
-import { loadStripe } from '@stripe/stripe-js';
+import { getApiUrl } from '../config/api';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 
-const stripePromise = loadStripe('pk_test_51Su85f3f5uvksVoPH7wJNkn1H091R2WqOeo3xxqowooxN7P5aHHAcqvt9fhwxD5wx7BHlNjFY63TVAXGI6AiUSaD00xeG2aK8r');
+// ===== SERVER ACTION (runs on Vercel server, no CORS issues) =====
+export async function action({ request }: ActionFunctionArgs) {
+  const formData = await request.formData();
+  const paymentMethod = formData.get('paymentMethod') as string;
+  const cart = JSON.parse(formData.get('cart') as string);
+  const email = formData.get('email') as string;
+  const nom = formData.get('nom') as string;
+  const telephone = formData.get('telephone') as string;
+  const adresse = formData.get('adresse') as string;
+  const notes = formData.get('notes') as string;
+
+  const API_URL = getApiUrl();
+  const payload = { items: cart, email, nom, telephone, adresse, notes };
+
+  const endpoint = paymentMethod === 'virement'
+    ? `${API_URL}/api/commandes/create-bank-transfer-order`
+    : `${API_URL}/api/commandes/create-checkout-session`;
+
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 90000);
+
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    let responseData;
+    try {
+      responseData = await response.json();
+    } catch {
+      return json({
+        success: false,
+        error: `Erreur serveur (${response.status}). Veuillez réessayer ou contacter le support.`,
+      }, { status: 500 });
+    }
+
+    if (!response.ok) {
+      const errorMessage =
+        responseData?.error?.message ||
+        responseData?.message ||
+        (response.status === 403
+          ? 'Accès refusé. Contactez l\'administrateur.'
+          : 'Erreur lors de l\'envoi de la commande');
+      return json({ success: false, error: errorMessage }, { status: response.status });
+    }
+
+    if (paymentMethod === 'virement') {
+      if (!responseData.success) {
+        return json({
+          success: false,
+          error: responseData.message || 'Erreur lors de l\'enregistrement de la commande',
+        }, { status: 400 });
+      }
+      return json({ success: true, method: 'virement' });
+    }
+
+    // Stripe: return the checkout URL
+    const checkoutUrl = responseData.url;
+    if (!checkoutUrl) {
+      return json({
+        success: false,
+        error: 'URL de paiement manquante dans la réponse du serveur',
+      }, { status: 500 });
+    }
+
+    return json({ success: true, method: 'carte', redirectUrl: checkoutUrl });
+
+  } catch (err: any) {
+    if (err.name === 'AbortError') {
+      return json({
+        success: false,
+        error: 'Le serveur met du temps à répondre (il est peut-être en train de démarrer). Veuillez réessayer dans 30 secondes.',
+      }, { status: 504 });
+    }
+    console.error('Checkout error:', err);
+    return json({
+      success: false,
+      error: 'Impossible de contacter le serveur. Réessayez plus tard.',
+    }, { status: 500 });
+  }
+}
 
 export default function Panier() {
   const items = useCartStore((state) => state.items);
@@ -235,6 +321,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
   onBack: () => void,
   onSuccess: () => void
 }) {
+  const fetcher = useFetcher<{ success: boolean; error?: string; method?: string; redirectUrl?: string }>();
   const [paymentMethod, setPaymentMethod] = useState<'virement' | 'carte' | null>(null);
   const [formData, setFormData] = useState({
     nom: '',
@@ -243,170 +330,70 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
     adresse: '',
     notes: ''
   });
-  const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('');
   const [error, setError] = useState('');
-  const isSubmittingRef = useRef(false);
+  const slowTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const scrollRef = useScrollAnimations([paymentMethod]);
 
+  const isLoading = fetcher.state === 'submitting' || fetcher.state === 'loading';
+
+  // Handle fetcher response
   useEffect(() => {
-    fetch(apiEndpoints.commandes, { method: 'HEAD' }).catch(() => {});
-  }, []);
-
-  const fetchWithTimeout = async (url: string, options: RequestInit, timeoutMs = 90000) => {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-    try {
-      const response = await fetch(url, { ...options, signal: controller.signal });
-      return response;
-    } catch (err: any) {
-      if (err.name === 'AbortError') {
-        throw new Error('Le serveur met du temps à répondre (il est peut-être en train de démarrer). Veuillez réessayer dans 30 secondes.');
+    if (fetcher.data) {
+      // Clear slow timer
+      if (slowTimerRef.current) {
+        clearTimeout(slowTimerRef.current);
+        slowTimerRef.current = null;
       }
-      throw err;
-    } finally {
-      clearTimeout(timeoutId);
-    }
-  };
+      setLoadingMessage('');
 
-  // PAIEMENT PAR VIREMENT
-  const handleVirementCheckout = async (e: React.FormEvent) => {
+      if (fetcher.data.success) {
+        if (fetcher.data.method === 'virement') {
+          onSuccess();
+          clearCart();
+        } else if (fetcher.data.method === 'carte' && fetcher.data.redirectUrl) {
+          window.location.href = fetcher.data.redirectUrl;
+        }
+      } else if (fetcher.data.error) {
+        setError(fetcher.data.error);
+      }
+    }
+  }, [fetcher.data, clearCart, onSuccess]);
+
+  // Show slow server message after 5 seconds
+  useEffect(() => {
+    if (isLoading) {
+      setError('');
+      setLoadingMessage(paymentMethod === 'virement' ? 'Envoi en cours...' : 'Redirection vers le paiement...');
+      slowTimerRef.current = setTimeout(() => {
+        setLoadingMessage('Le serveur démarre, patientez quelques secondes...');
+      }, 5000);
+    } else {
+      if (slowTimerRef.current) {
+        clearTimeout(slowTimerRef.current);
+        slowTimerRef.current = null;
+      }
+      if (!fetcher.data?.success) {
+        setLoadingMessage('');
+      }
+    }
+  }, [isLoading, paymentMethod, fetcher.data]);
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (isSubmittingRef.current) return;
+    if (!paymentMethod) return;
 
-    isSubmittingRef.current = true;
-    setLoading(true);
-    setLoadingMessage('Envoi en cours...');
-    setError('');
+    const submitData = new FormData();
+    submitData.set('paymentMethod', paymentMethod);
+    submitData.set('cart', JSON.stringify(cart));
+    submitData.set('email', formData.email);
+    submitData.set('nom', formData.nom);
+    submitData.set('telephone', formData.telephone);
+    submitData.set('adresse', formData.adresse);
+    submitData.set('notes', formData.notes);
 
-    const slowTimer = setTimeout(() => {
-      setLoadingMessage('Le serveur démarre, patientez quelques secondes...');
-    }, 5000);
-
-    try {
-      const payload = {
-        items: cart,
-        email: formData.email,
-        nom: formData.nom,
-        telephone: formData.telephone,
-        adresse: formData.adresse,
-        notes: formData.notes,
-      };
-
-      const response = await fetchWithTimeout(apiEndpoints.createBankTransferOrder, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      let responseData;
-      try {
-        responseData = await response.json();
-      } catch {
-        throw new Error(`Erreur serveur (${response.status}). Veuillez réessayer ou contacter le support.`);
-      }
-
-      if (!response.ok) {
-        if (response.status === 403) {
-          throw new Error('Accès refusé : les commandes ne sont pas activées sur le serveur. Contactez l\'administrateur.');
-        }
-        const errorMessage = responseData?.error?.message || responseData?.message || 'Erreur lors de l\'envoi';
-        throw new Error(errorMessage);
-      }
-
-      if (!responseData.success) {
-        throw new Error(responseData.message || 'Erreur lors de l\'enregistrement de la commande');
-      }
-
-      onSuccess();
-      clearCart();
-    } catch (err: any) {
-      console.error('Erreur:', err);
-      if (err.message === 'Failed to fetch' || err.name === 'TypeError') {
-        setError('Impossible de contacter le serveur. Vérifiez votre connexion internet ou réessayez plus tard.');
-      } else {
-        setError(err.message || 'Erreur inconnue');
-      }
-    } finally {
-      clearTimeout(slowTimer);
-      setLoading(false);
-      setLoadingMessage('');
-      isSubmittingRef.current = false;
-    }
-  };
-
-  // PAIEMENT PAR CARTE (Stripe)
-  const handleStripeCheckout = async (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    if (isSubmittingRef.current) return;
-
-    if (!formData.nom || !formData.email || !formData.telephone || !formData.adresse) {
-      setError('Veuillez remplir tous les champs obligatoires');
-      return;
-    }
-
-    isSubmittingRef.current = true;
-    setLoading(true);
-    setLoadingMessage('Redirection vers le paiement...');
-    setError('');
-
-    const slowTimer = setTimeout(() => {
-      setLoadingMessage('Le serveur démarre, patientez quelques secondes...');
-    }, 5000);
-
-    try {
-      const payload = {
-        items: cart,
-        email: formData.email,
-        nom: formData.nom,
-        telephone: formData.telephone,
-        adresse: formData.adresse,
-        notes: formData.notes,
-      };
-
-      const response = await fetchWithTimeout(apiEndpoints.createCheckoutSession, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      let responseData;
-      try {
-        responseData = await response.json();
-      } catch {
-        if (response.status === 405) {
-          throw new Error('Le paiement en ligne n\'est pas encore configuré sur le serveur. Contactez l\'administrateur.');
-        }
-        throw new Error(`Erreur serveur (${response.status}). Veuillez réessayer ou contacter le support.`);
-      }
-
-      if (!response.ok) {
-        if (response.status === 403) {
-          throw new Error('Accès refusé : le paiement en ligne n\'est pas activé. Contactez l\'administrateur.');
-        }
-        throw new Error(responseData?.error?.message || 'Erreur lors de la création de la session de paiement');
-      }
-
-      const { url: checkoutUrl } = responseData;
-      if (!checkoutUrl) {
-        throw new Error('URL de paiement manquante dans la réponse du serveur');
-      }
-
-      window.location.href = checkoutUrl;
-    } catch (err: any) {
-      console.error('Erreur:', err);
-      if (err.message === 'Failed to fetch' || err.name === 'TypeError') {
-        setError('Impossible de contacter le serveur. Vérifiez votre connexion internet ou réessayez plus tard.');
-      } else {
-        setError(err.message || 'Erreur lors de la création de la session de paiement');
-      }
-    } finally {
-      clearTimeout(slowTimer);
-      setLoading(false);
-      setLoadingMessage('');
-      isSubmittingRef.current = false;
-    }
+    fetcher.submit(submitData, { method: 'POST' });
   };
 
   return (
@@ -510,7 +497,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
       {/* FORMULAIRE */}
       {paymentMethod && (
-        <form onSubmit={paymentMethod === 'virement' ? handleVirementCheckout : handleStripeCheckout} className="space-y-5 sm:space-y-6 max-w-2xl">
+        <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6 max-w-2xl">
 
           {/* Mode choisi */}
           <div className="anim-fade-up flex items-center justify-between bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
@@ -645,30 +632,15 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={isLoading}
             className="anim-fade-up font-basecoat w-full bg-yellow-400 hover:bg-yellow-500 text-black py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm sm:text-base"
             data-delay="0.4"
           >
-            {loading
+            {isLoading
               ? (loadingMessage || (paymentMethod === 'virement' ? 'Envoi en cours...' : 'Redirection vers le paiement...'))
               : (paymentMethod === 'virement' ? 'Envoyer la commande' : 'Payer en ligne')
             }
           </button>
-
-          {loading && (
-            <button
-              type="button"
-              onClick={() => {
-                setLoading(false);
-                setLoadingMessage('');
-                isSubmittingRef.current = false;
-                setError('Opération annulée. Vous pouvez réessayer.');
-              }}
-              className="font-basecoat w-full text-center py-3 text-gray-500 hover:text-gray-700 text-sm font-medium transition"
-            >
-              Annuler
-            </button>
-          )}
         </form>
       )}
     </div>
