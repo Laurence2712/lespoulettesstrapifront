@@ -282,55 +282,46 @@ export default function Index() {
       </section>
 
       {/* ── Actualités ── */}
-      <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
-        <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
-          Actualités
-        </h2>
-        <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
-      </div>
+      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-6 sm:py-8 md:py-[60px]">
+        <div className="mb-8 sm:mb-10 md:mb-12">
+          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+            Actualités
+          </h2>
+          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.1"></div>
 
-<section
-  className="anim-fade-up actualites py-6 sm:py-8 md:py-[60px] 
-             bg-yellow-100 mx-4 sm:mx-6 md:mx-[60px] lg:mx-[120px] 
-             px-4 sm:px-6 md:px-8 rounded-lg shadow-md 
-             mt-8 sm:mt-10 md:mt-12 
-             max-w-full md:max-w-[70%] lg:max-w-[80%]"
-  data-delay="0.2"
->
-         {actualites.length > 0 ? (
-          actualites.map((actu) => (
-            <div key={actu.id} className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
-              <div className="w-full md:w-1/2 order-2 md:order-1 anim-fade-right" data-delay="0.3">
-                <h2 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-semibold text-black mb-3 sm:mb-4">
-                  {actu.title}
-                </h2>
-                <p className="mb-6 font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed">
-                  {actu.content}
-                </p>
-                <Link to="/actualites">
-                  <button
-                    type="button"
-                    className="font-basecoat uppercase bg-yellow-400 hover:bg-yellow-500 text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base transform transition hover:scale-105 font-semibold inline-block"
+          {actualites.length > 0 ? (
+            actualites.map((actu) => (
+              <div key={actu.id} className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
+                {actu.image_url && (
+                  <div className="anim-fade-right rounded-2xl overflow-hidden shadow-xl" data-delay="0.2">
+                    <img
+                      src={actu.image_url}
+                      alt={actu.title}
+                      loading="lazy"
+                      className="w-full h-64 sm:h-72 md:h-80 lg:h-[400px] object-cover transition-transform duration-700 hover:scale-105"
+                    />
+                  </div>
+                )}
+                <div className={`anim-fade-left ${!actu.image_url ? 'md:col-span-2' : ''}`} data-delay="0.3">
+                  <h3 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-5 leading-tight">
+                    {actu.title}
+                  </h3>
+                  <p className="mb-6 sm:mb-8 font-basecoat text-gray-700 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed">
+                    {actu.content}
+                  </p>
+                  <Link
+                    to="/actualites"
+                    className="font-basecoat uppercase bg-yellow-400 hover:bg-yellow-500 text-black px-8 sm:px-10 py-3 sm:py-4 rounded-lg text-sm sm:text-base transform transition hover:scale-105 font-bold inline-block shadow-md hover:shadow-lg"
                   >
                     Toutes les actualités
-                  </button>
-                </Link>
-              </div>
-              {actu.image_url && (
-                <div className="w-full md:w-1/2 order-1 md:order-2 anim-fade-left" data-delay="0.2">
-                  <img
-                    src={actu.image_url}
-                    alt={actu.title}
-                    loading="lazy"
-                    className="w-full h-48 sm:h-56 md:h-64 lg:h-72 object-cover rounded-md shadow-md"
-                  />
+                  </Link>
                 </div>
-              )}
-            </div>
-          ))
-        ) : (
-          <p className="text-center text-gray-600 text-base sm:text-lg">Aucune actualité disponible.</p>
-        )}
+              </div>
+            ))
+          ) : (
+            <p className="text-center text-gray-500 text-base sm:text-lg font-basecoat">Aucune actualité disponible.</p>
+          )}
+        </div>
       </section>
 
       {/* ── Nos créations (Slider) ── */}
