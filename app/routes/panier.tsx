@@ -1,97 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, useFetcher } from '@remix-run/react';
-import { json } from '@remix-run/node';
-import type { ActionFunctionArgs } from '@remix-run/node';
+import { Link } from '@remix-run/react';
 import { useCartStore } from '../store/cartStore';
 import { getApiUrl } from '../config/api';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 
-// ===== SERVER ACTION (runs on Vercel server, no CORS issues) =====
-export async function action({ request }: ActionFunctionArgs) {
-  const formData = await request.formData();
-  const paymentMethod = formData.get('paymentMethod') as string;
-  const cart = JSON.parse(formData.get('cart') as string);
-  const email = formData.get('email') as string;
-  const nom = formData.get('nom') as string;
-  const telephone = formData.get('telephone') as string;
-  const adresse = formData.get('adresse') as string;
-  const notes = formData.get('notes') as string;
-
-  const API_URL = getApiUrl();
-  const payload = { items: cart, email, nom, telephone, adresse, notes };
-
-  const endpoint = paymentMethod === 'virement'
-    ? `${API_URL}/api/commandes/create-bank-transfer-order`
-    : `${API_URL}/api/commandes/create-checkout-session`;
-
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 90000);
-
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      signal: controller.signal,
-    });
-
-    clearTimeout(timeoutId);
-
-    let responseData;
-    try {
-      responseData = await response.json();
-    } catch {
-      return json({
-        success: false,
-        error: `Erreur serveur (${response.status}). Veuillez réessayer ou contacter le support.`,
-      }, { status: 500 });
-    }
-
-    if (!response.ok) {
-      const errorMessage =
-        responseData?.error?.message ||
-        responseData?.message ||
-        (response.status === 403
-          ? 'Accès refusé. Contactez l\'administrateur.'
-          : 'Erreur lors de l\'envoi de la commande');
-      return json({ success: false, error: errorMessage }, { status: response.status });
-    }
-
-    if (paymentMethod === 'virement') {
-      if (!responseData.success) {
-        return json({
-          success: false,
-          error: responseData.message || 'Erreur lors de l\'enregistrement de la commande',
-        }, { status: 400 });
-      }
-      return json({ success: true, method: 'virement' });
-    }
-
-    // Stripe: return the checkout URL
-    const checkoutUrl = responseData.url;
-    if (!checkoutUrl) {
-      return json({
-        success: false,
-        error: 'URL de paiement manquante dans la réponse du serveur',
-      }, { status: 500 });
-    }
-
-    return json({ success: true, method: 'carte', redirectUrl: checkoutUrl });
-
-  } catch (err: any) {
-    if (err.name === 'AbortError') {
-      return json({
-        success: false,
-        error: 'Le serveur met du temps à répondre (il est peut-être en train de démarrer). Veuillez réessayer dans 30 secondes.',
-      }, { status: 504 });
-    }
-    console.error('Checkout error:', err);
-    return json({
-      success: false,
-      error: 'Impossible de contacter le serveur. Réessayez plus tard.',
-    }, { status: 500 });
-  }
-}
+const API_URL = getApiUrl();
 
 export default function Panier() {
   const items = useCartStore((state) => state.items);
@@ -108,6 +21,8 @@ export default function Panier() {
 
   useEffect(() => {
     setMounted(true);
+    // Pre-warm Render backend on page load
+    fetch(`${API_URL}/api/commandes`, { method: 'HEAD', mode: 'no-cors' }).catch(() => {});
   }, []);
 
   const total = mounted ? getTotalPrice() : 0;
@@ -200,7 +115,6 @@ export default function Panier() {
         <div className="lg:col-span-2 anim-stagger space-y-5" data-stagger="0.1">
           {items.map((item) => (
             <div key={item.id} className="flex gap-4 sm:gap-5 p-4 sm:p-5 rounded-2xl bg-white border border-gray-100 shadow-sm">
-              {/* Image */}
               {item.image_url && (
                 <img
                   src={item.image_url}
@@ -220,7 +134,6 @@ export default function Panier() {
                 </div>
 
                 <div className="flex items-center gap-3 sm:gap-4 mt-3">
-                  {/* Quantity */}
                   <div className="inline-flex items-center border border-gray-200 rounded-xl overflow-hidden">
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
@@ -258,7 +171,6 @@ export default function Panier() {
                 </div>
               </div>
 
-              {/* Prix total ligne */}
               <div className="hidden sm:flex items-start pt-1">
                 <p className="font-basecoat text-xl lg:text-2xl font-bold text-gray-900 whitespace-nowrap">
                   {(Number(item.prix) * item.quantity).toFixed(2)} €
@@ -313,7 +225,7 @@ export default function Panier() {
   );
 }
 
-// FORMULAIRE AVEC CHOIX DE PAIEMENT
+// ========== CHECKOUT FORM (client-side fetch, no Vercel timeout) ==========
 function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
   cart: any[],
   total: number,
@@ -321,7 +233,6 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
   onBack: () => void,
   onSuccess: () => void
 }) {
-  const fetcher = useFetcher<{ success: boolean; error?: string; method?: string; redirectUrl?: string }>();
   const [paymentMethod, setPaymentMethod] = useState<'virement' | 'carte' | null>(null);
   const [formData, setFormData] = useState({
     nom: '',
@@ -330,70 +241,102 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
     adresse: '',
     notes: ''
   });
+  const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('');
   const [error, setError] = useState('');
-  const slowTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isSubmittingRef = useRef(false);
 
   const scrollRef = useScrollAnimations([paymentMethod]);
 
-  const isLoading = fetcher.state === 'submitting' || fetcher.state === 'loading';
-
-  // Handle fetcher response
+  // Pre-warm backend when checkout form mounts
   useEffect(() => {
-    if (fetcher.data) {
-      // Clear slow timer
-      if (slowTimerRef.current) {
-        clearTimeout(slowTimerRef.current);
-        slowTimerRef.current = null;
-      }
-      setLoadingMessage('');
+    fetch(`${API_URL}/api/commandes`, { method: 'HEAD', mode: 'no-cors' }).catch(() => {});
+  }, []);
 
-      if (fetcher.data.success) {
-        if (fetcher.data.method === 'virement') {
-          onSuccess();
-          clearCart();
-        } else if (fetcher.data.method === 'carte' && fetcher.data.redirectUrl) {
-          window.location.href = fetcher.data.redirectUrl;
-        }
-      } else if (fetcher.data.error) {
-        setError(fetcher.data.error);
-      }
-    }
-  }, [fetcher.data, clearCart, onSuccess]);
-
-  // Show slow server message after 5 seconds
-  useEffect(() => {
-    if (isLoading) {
-      setError('');
-      setLoadingMessage(paymentMethod === 'virement' ? 'Envoi en cours...' : 'Redirection vers le paiement...');
-      slowTimerRef.current = setTimeout(() => {
-        setLoadingMessage('Le serveur démarre, patientez quelques secondes...');
-      }, 5000);
-    } else {
-      if (slowTimerRef.current) {
-        clearTimeout(slowTimerRef.current);
-        slowTimerRef.current = null;
-      }
-      if (!fetcher.data?.success) {
-        setLoadingMessage('');
-      }
-    }
-  }, [isLoading, paymentMethod, fetcher.data]);
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!paymentMethod) return;
+    if (isSubmittingRef.current || !paymentMethod) return;
 
-    const submitData = new FormData();
-    submitData.set('paymentMethod', paymentMethod);
-    submitData.set('cart', JSON.stringify(cart));
-    submitData.set('email', formData.email);
-    submitData.set('nom', formData.nom);
-    submitData.set('telephone', formData.telephone);
-    submitData.set('adresse', formData.adresse);
-    submitData.set('notes', formData.notes);
+    isSubmittingRef.current = true;
+    setLoading(true);
+    setLoadingMessage(paymentMethod === 'virement' ? 'Envoi en cours...' : 'Redirection vers le paiement...');
+    setError('');
 
-    fetcher.submit(submitData, { method: 'POST' });
+    const slowTimer = setTimeout(() => {
+      setLoadingMessage('Le serveur démarre, patientez quelques secondes...');
+    }, 5000);
+
+    const verySlowTimer = setTimeout(() => {
+      setLoadingMessage('Le serveur est en cours de réveil, encore un instant...');
+    }, 15000);
+
+    const endpoint = paymentMethod === 'virement'
+      ? `${API_URL}/api/commandes/create-bank-transfer-order`
+      : `${API_URL}/api/commandes/create-checkout-session`;
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 120000);
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: cart,
+          email: formData.email,
+          nom: formData.nom,
+          telephone: formData.telephone,
+          adresse: formData.adresse,
+          notes: formData.notes,
+        }),
+        signal: controller.signal,
+      });
+
+      let responseData;
+      try {
+        responseData = await response.json();
+      } catch {
+        throw new Error(`Erreur serveur (${response.status}). Veuillez réessayer.`);
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          responseData?.error?.message ||
+          responseData?.message ||
+          `Erreur ${response.status}. Veuillez réessayer.`
+        );
+      }
+
+      if (paymentMethod === 'virement') {
+        if (!responseData.success) {
+          throw new Error(responseData.message || 'Erreur lors de l\'enregistrement');
+        }
+        onSuccess();
+        clearCart();
+      } else {
+        const checkoutUrl = responseData.url;
+        if (!checkoutUrl) {
+          throw new Error('URL de paiement manquante');
+        }
+        window.location.href = checkoutUrl;
+      }
+    } catch (err: any) {
+      console.error('Erreur checkout:', err);
+      if (err.name === 'AbortError') {
+        setError('Le serveur met trop de temps à répondre. Veuillez réessayer.');
+      } else if (err.message === 'Failed to fetch' || err.name === 'TypeError') {
+        setError('Impossible de contacter le serveur. Vérifiez votre connexion ou réessayez dans quelques secondes.');
+      } else {
+        setError(err.message || 'Erreur inconnue');
+      }
+    } finally {
+      clearTimeout(timeoutId);
+      clearTimeout(slowTimer);
+      clearTimeout(verySlowTimer);
+      setLoading(false);
+      setLoadingMessage('');
+      isSubmittingRef.current = false;
+    }
   };
 
   return (
@@ -497,7 +440,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
       {/* FORMULAIRE */}
       {paymentMethod && (
-        <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6 max-w-2xl">
+        <form onSubmit={handleCheckout} className="space-y-5 sm:space-y-6 max-w-2xl">
 
           {/* Mode choisi */}
           <div className="anim-fade-up flex items-center justify-between bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
@@ -632,15 +575,30 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={loading}
             className="anim-fade-up font-basecoat w-full bg-yellow-400 hover:bg-yellow-500 text-black py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm sm:text-base"
             data-delay="0.4"
           >
-            {isLoading
-              ? (loadingMessage || (paymentMethod === 'virement' ? 'Envoi en cours...' : 'Redirection vers le paiement...'))
+            {loading
+              ? loadingMessage
               : (paymentMethod === 'virement' ? 'Envoyer la commande' : 'Payer en ligne')
             }
           </button>
+
+          {loading && (
+            <button
+              type="button"
+              onClick={() => {
+                setLoading(false);
+                setLoadingMessage('');
+                isSubmittingRef.current = false;
+                setError('Opération annulée. Vous pouvez réessayer.');
+              }}
+              className="font-basecoat w-full text-center py-3 text-gray-500 hover:text-gray-700 text-sm font-medium transition"
+            >
+              Annuler
+            </button>
+          )}
         </form>
       )}
     </div>
