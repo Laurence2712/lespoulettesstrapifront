@@ -233,7 +233,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
   onBack: () => void,
   onSuccess: () => void
 }) {
-  const [paymentMethod, setPaymentMethod] = useState<'virement' | 'carte' | null>(null);
+  const [paymentMethod] = useState<'carte'>('carte');
   const [formData, setFormData] = useState({
     nom: '',
     email: '',
@@ -259,7 +259,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
     isSubmittingRef.current = true;
     setLoading(true);
-    setLoadingMessage(paymentMethod === 'virement' ? 'Envoi en cours...' : 'Redirection vers le paiement...');
+    setLoadingMessage('Redirection vers le paiement...');
     setError('');
 
     const slowTimer = setTimeout(() => {
@@ -270,9 +270,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
       setLoadingMessage('Le serveur est en cours de réveil, encore un instant...');
     }, 15000);
 
-    const endpoint = paymentMethod === 'virement'
-      ? `${API_URL}/api/commandes/create-bank-transfer-order`
-      : `${API_URL}/api/commandes/create-checkout-session`;
+    const endpoint = `${API_URL}/api/commandes/create-checkout-session`;
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 120000);
@@ -307,19 +305,11 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
         );
       }
 
-      if (paymentMethod === 'virement') {
-        if (!responseData.success) {
-          throw new Error(responseData.message || 'Erreur lors de l\'enregistrement');
-        }
-        onSuccess();
-        clearCart();
-      } else {
-        const checkoutUrl = responseData.url;
-        if (!checkoutUrl) {
-          throw new Error('URL de paiement manquante');
-        }
-        window.location.href = checkoutUrl;
+      const checkoutUrl = responseData.url;
+      if (!checkoutUrl) {
+        throw new Error('URL de paiement manquante');
       }
+      window.location.href = checkoutUrl;
     } catch (err: any) {
       console.error('Erreur checkout:', err);
       if (err.name === 'AbortError') {
@@ -369,142 +359,51 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
         </div>
       </div>
 
-      {/* CHOIX DU MODE DE PAIEMENT */}
-      {!paymentMethod && (
-        <div className="space-y-5 mb-8">
-          <h2 className="anim-fade-up font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900 mb-2" data-delay="0.2">
-            Mode de paiement
-          </h2>
-
-          <button
-            onClick={() => setPaymentMethod('virement')}
-            className="anim-fade-up w-full border border-gray-200 hover:border-yellow-400 rounded-2xl p-6 sm:p-7 text-left transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 group bg-white"
-            data-delay="0.25"
-          >
-            <div className="flex items-start gap-4 sm:gap-5">
-              <div className="w-14 h-14 rounded-xl bg-yellow-50 group-hover:bg-yellow-100 flex items-center justify-center flex-shrink-0 transition-colors">
-                <span className="text-2xl">🏦</span>
-              </div>
-              <div className="flex-1">
-                <h3 className="font-basecoat font-bold text-lg sm:text-xl text-gray-900 mb-1 group-hover:text-yellow-600 transition">
-                  Virement bancaire
-                </h3>
-                <p className="font-basecoat text-sm sm:text-base text-gray-500 mb-3">
-                  Effectuez un virement sur notre compte bancaire
-                </p>
-                <span className="inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">
-                  Sans frais
-                </span>
-              </div>
-              <svg className="w-5 h-5 text-gray-300 group-hover:text-yellow-400 mt-1 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </div>
-          </button>
-
-          <button
-            onClick={() => setPaymentMethod('carte')}
-            className="anim-fade-up w-full border border-gray-200 hover:border-yellow-400 rounded-2xl p-6 sm:p-7 text-left transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 group bg-white"
-            data-delay="0.35"
-          >
-            <div className="flex items-start gap-4 sm:gap-5">
-              <div className="w-14 h-14 rounded-xl bg-blue-50 group-hover:bg-blue-100 flex items-center justify-center flex-shrink-0 transition-colors">
-                <span className="text-2xl">💳</span>
-              </div>
-              <div className="flex-1">
-                <h3 className="font-basecoat font-bold text-lg sm:text-xl text-gray-900 mb-1 group-hover:text-yellow-600 transition">
-                  Carte bancaire
-                </h3>
-                <p className="font-basecoat text-sm sm:text-base text-gray-500 mb-3">
-                  Paiement immédiat et sécurisé via Stripe
-                </p>
-                <div className="flex gap-2 flex-wrap">
-                  <span className="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">
-                    Sécurisé
-                  </span>
-                  <span className="inline-block bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-bold">
-                    Instantané
-                  </span>
-                </div>
-                <p className="font-basecoat text-xs text-gray-400 mt-2">
-                  Frais Stripe : 2,9% + 0,25€ (soit {(total * 1.029 + 0.25).toFixed(2)}€ pour {total.toFixed(2)}€)
-                </p>
-              </div>
-              <svg className="w-5 h-5 text-gray-300 group-hover:text-yellow-400 mt-1 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </div>
-          </button>
-        </div>
-      )}
-
       {/* FORMULAIRE */}
-      {paymentMethod && (
-        <form onSubmit={handleCheckout} className="space-y-5 sm:space-y-6 max-w-2xl">
+      <form onSubmit={handleCheckout} className="space-y-5 sm:space-y-6 max-w-2xl">
 
-          {/* Mode choisi */}
-          <div className="anim-fade-up flex items-center justify-between bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-yellow-50 flex items-center justify-center">
-                <span className="text-xl">{paymentMethod === 'virement' ? '🏦' : '💳'}</span>
-              </div>
-              <span className="font-basecoat font-bold text-gray-900">
-                {paymentMethod === 'virement' ? 'Virement bancaire' : 'Carte bancaire'}
-              </span>
+          {/* En-tête paiement sécurisé */}
+          <div className="anim-fade-up bg-green-50 border border-green-100 rounded-2xl p-5 sm:p-6" data-delay="0.1">
+            <div className="flex items-center gap-3 mb-4">
+              <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>
+              <span className="font-basecoat font-bold text-gray-900 text-sm sm:text-base">Paiement 100% sécurisé par Stripe</span>
             </div>
-            <button
-              type="button"
-              onClick={() => setPaymentMethod(null)}
-              className="font-basecoat text-yellow-600 hover:text-yellow-700 text-sm font-semibold transition"
-            >
-              Changer
-            </button>
+            <div className="flex gap-2 flex-wrap items-center">
+              {/* Visa */}
+              <svg viewBox="0 0 48 30" className="h-8 rounded-md shadow-sm border border-gray-200 bg-white">
+                <rect width="48" height="30" rx="3" fill="#1A1F71"/>
+                <text x="24" y="20" textAnchor="middle" fill="white" fontSize="13" fontStyle="italic" fontFamily="Arial, sans-serif" fontWeight="bold">VISA</text>
+              </svg>
+              {/* Mastercard */}
+              <svg viewBox="0 0 48 30" className="h-8 rounded-md shadow-sm border border-gray-200 bg-white">
+                <rect width="48" height="30" rx="3" fill="#fff"/>
+                <circle cx="19" cy="15" r="9" fill="#EB001B"/>
+                <circle cx="29" cy="15" r="9" fill="#F79E1B"/>
+                <path d="M24 7.7 a9 9 0 0 1 0 14.6 a9 9 0 0 1 0-14.6z" fill="#FF5F00"/>
+              </svg>
+              {/* CB */}
+              <svg viewBox="0 0 48 30" className="h-8 rounded-md shadow-sm border border-gray-200 bg-white">
+                <rect width="48" height="30" rx="3" fill="#0052A5"/>
+                <text x="24" y="20" textAnchor="middle" fill="white" fontSize="14" fontFamily="Arial, sans-serif" fontWeight="bold">CB</text>
+              </svg>
+              {/* Amex */}
+              <svg viewBox="0 0 48 30" className="h-8 rounded-md shadow-sm border border-gray-200 bg-white">
+                <rect width="48" height="30" rx="3" fill="#007BC1"/>
+                <text x="24" y="14" textAnchor="middle" fill="white" fontSize="7.5" fontFamily="Arial, sans-serif" fontWeight="bold">AMERICAN</text>
+                <text x="24" y="23" textAnchor="middle" fill="white" fontSize="7.5" fontFamily="Arial, sans-serif" fontWeight="bold">EXPRESS</text>
+              </svg>
+              {/* Bancontact */}
+              <svg viewBox="0 0 48 30" className="h-8 rounded-md shadow-sm border border-gray-200 bg-white">
+                <rect width="48" height="30" rx="3" fill="#fff"/>
+                <rect width="24" height="30" rx="0" fill="#005498"/>
+                <rect x="24" width="24" height="30" rx="0" fill="#F7A800"/>
+                <text x="24" y="20" textAnchor="middle" fill="white" fontSize="7" fontFamily="Arial, sans-serif" fontWeight="bold">BCT</text>
+              </svg>
+            </div>
+            <p className="font-basecoat text-xs text-gray-400 mt-3">
+              Frais Stripe : 2,9% + 0,25€ — soit {(total * 1.029 + 0.25).toFixed(2)}€ pour {total.toFixed(2)}€
+            </p>
           </div>
-
-          {/* Instructions */}
-          {paymentMethod === 'virement' && (
-            <div className="anim-fade-up bg-amber-50 border-l-4 border-yellow-400 rounded-r-xl p-5 sm:p-6" data-delay="0.1">
-              <h3 className="font-basecoat font-bold text-gray-900 mb-3 text-sm sm:text-base">
-                Instructions de paiement
-              </h3>
-              <ul className="font-basecoat text-sm text-gray-700 space-y-2">
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-500 font-bold mt-0.5">1.</span>
-                  Remplissez le formulaire ci-dessous
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-500 font-bold mt-0.5">2.</span>
-                  Effectuez un virement sur le compte <strong>BE71 XXXX XXXX XXXX</strong>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-500 font-bold mt-0.5">3.</span>
-                  Votre commande sera préparée dès réception du paiement
-                </li>
-              </ul>
-            </div>
-          )}
-
-          {paymentMethod === 'carte' && (
-            <div className="anim-fade-up bg-green-50 border-l-4 border-green-400 rounded-r-xl p-5 sm:p-6" data-delay="0.1">
-              <h3 className="font-basecoat font-bold text-gray-900 mb-3 text-sm sm:text-base">
-                Paiement sécurisé par Stripe
-              </h3>
-              <ul className="font-basecoat text-sm text-gray-700 space-y-2">
-                <li className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-                  Carte bancaire (Visa, Mastercard, Amex)
-                </li>
-                <li className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-                  Bancontact, iDEAL
-                </li>
-                <li className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-                  Paiement instantané et sécurisé
-                </li>
-              </ul>
-            </div>
-          )}
 
           {/* Champs formulaire */}
           <div className="anim-fade-up" data-delay="0.15">
@@ -579,10 +478,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             className="anim-fade-up font-basecoat w-full bg-yellow-400 hover:bg-yellow-500 text-black py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm sm:text-base"
             data-delay="0.4"
           >
-            {loading
-              ? loadingMessage
-              : (paymentMethod === 'virement' ? 'Envoyer la commande' : 'Payer en ligne')
-            }
+            {loading ? loadingMessage : 'Payer en ligne'}
           </button>
 
           {loading && (
@@ -600,7 +496,6 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             </button>
           )}
         </form>
-      )}
     </div>
   );
 }
