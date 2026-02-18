@@ -222,7 +222,7 @@ export default function RealisationDetail() {
             </div>
 
             {/* Galerie de vignettes — angles de l'image principale */}
-            {realisation.mainImages.length > 1 && (
+            {realisation.mainImages.length >= 1 && (
               <div className="mt-4">
                 <p className="text-xs font-basecoat font-semibold uppercase text-gray-400 tracking-widest mb-2">
                   Autres vues
