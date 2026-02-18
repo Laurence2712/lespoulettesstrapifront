@@ -270,12 +270,16 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
       setLoadingMessage('Le serveur est en cours de réveil, encore un instant...');
     }, 15000);
 
+    const extraSlowTimer = setTimeout(() => {
+      setLoadingMessage('Le serveur met du temps à démarrer, merci de patienter...');
+    }, 60000);
+
     const endpoint = paymentMethod === 'virement'
       ? `${API_URL}/api/commandes/create-bank-transfer-order`
       : `${API_URL}/api/commandes/create-checkout-session`;
 
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 120000);
+    const timeoutId = setTimeout(() => controller.abort(), 180000);
 
     try {
       const response = await fetch(endpoint, {
@@ -333,6 +337,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
       clearTimeout(timeoutId);
       clearTimeout(slowTimer);
       clearTimeout(verySlowTimer);
+      clearTimeout(extraSlowTimer);
       setLoading(false);
       setLoadingMessage('');
       isSubmittingRef.current = false;
