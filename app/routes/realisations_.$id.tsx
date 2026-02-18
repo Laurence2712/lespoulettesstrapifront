@@ -221,29 +221,38 @@ export default function RealisationDetail() {
               </div>
             </div>
 
-            {/* ✅ Miniatures — uniquement les angles de l'image principale */}
+            {/* Galerie de vignettes — angles de l'image principale */}
             {realisation.mainImages.length > 1 && (
-              <div className="flex flex-wrap gap-2 sm:gap-3 mt-4">
-                {realisation.mainImages.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => {
-                      setMainImageIndex(idx);
-                      setSelectedDeclinaisonId(null); // ✅ désélectionne la déclinaison
-                    }}
-                    className={`relative rounded-xl overflow-hidden transition-all flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 ${
-                      !selectedDeclinaisonId && mainImageIndex === idx
-                        ? 'ring-2 ring-yellow-400 ring-offset-2 scale-105'
-                        : 'ring-1 ring-gray-200 hover:ring-yellow-300 opacity-70 hover:opacity-100'
-                    }`}
-                  >
-                    <img
-                      src={img.formats?.thumbnail?.url || img.url}
-                      alt={`Vue ${idx + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
+              <div className="mt-4">
+                <p className="text-xs font-basecoat font-semibold uppercase text-gray-400 tracking-widest mb-2">
+                  Autres vues
+                </p>
+                <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-yellow-300 scrollbar-track-gray-100">
+                  {realisation.mainImages.map((img, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        setMainImageIndex(idx);
+                        setSelectedDeclinaisonId(null);
+                      }}
+                      className={`relative rounded-xl overflow-hidden transition-all flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 ${
+                        !selectedDeclinaisonId && mainImageIndex === idx
+                          ? 'ring-2 ring-yellow-400 ring-offset-2 scale-105 shadow-md'
+                          : 'ring-1 ring-gray-200 hover:ring-yellow-300 opacity-60 hover:opacity-100 hover:scale-105'
+                      }`}
+                      aria-label={`Vue ${idx + 1}`}
+                    >
+                      <img
+                        src={img.formats?.thumbnail?.url || img.formats?.small?.url || img.url}
+                        alt={`Vue ${idx + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                      {!selectedDeclinaisonId && mainImageIndex === idx && (
+                        <div className="absolute inset-0 bg-yellow-400/10 rounded-xl" />
+                      )}
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
           </div>
