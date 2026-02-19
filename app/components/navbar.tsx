@@ -143,16 +143,8 @@ export default function NavBar() {
             </div>
           </div>
 
-          {/* Menu Desktop — masqué, on utilise le burger partout */}
-          <div className="hidden items-center space-x-4 lg:space-x-6">
-            <Link
-              to="/#qui-sommes-nous"
-              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
-                isTransparent ? 'text-white' : 'text-black'
-              }`}
-            >
-              Qui sommes-nous
-            </Link>
+          {/* Menu Desktop */}
+          <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
             <Link
               to="/realisations"
               className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
@@ -172,14 +164,6 @@ export default function NavBar() {
               }`}
             >
               Actualités
-            </Link>
-            <Link
-              to="/#ou-nous-trouver"
-              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
-                isTransparent ? 'text-white' : 'text-black'
-              }`}
-            >
-              Où nous trouver
             </Link>
             <Link
               to="/contact"
@@ -204,10 +188,10 @@ export default function NavBar() {
             </Link>
           </div>
 
-          {/* Bouton Panier - Tous les écrans */}
+          {/* Bouton Panier - Mobile uniquement */}
           <Link
             to="/panier"
-            className="relative font-basecoat inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-base"
+            className="relative md:hidden font-basecoat inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-base"
           >
             <ShoppingCartIcon className="w-6 h-6" />
             {totalItems > 0 && (
