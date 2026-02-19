@@ -146,14 +146,6 @@ export default function NavBar() {
           {/* Menu Desktop */}
           <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
             <Link
-              to="/#qui-sommes-nous"
-              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
-                isTransparent ? 'text-white' : 'text-black'
-              }`}
-            >
-              Qui sommes-nous
-            </Link>
-            <Link
               to="/realisations"
               className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
                 isActive('/realisations')
@@ -172,14 +164,6 @@ export default function NavBar() {
               }`}
             >
               Actualités
-            </Link>
-            <Link
-              to="/#ou-nous-trouver"
-              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
-                isTransparent ? 'text-white' : 'text-black'
-              }`}
-            >
-              Où nous trouver
             </Link>
             <Link
               to="/contact"
