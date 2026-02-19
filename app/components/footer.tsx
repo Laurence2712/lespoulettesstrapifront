@@ -45,7 +45,7 @@ export default function Footer() {
           <ul className="space-y-3 text-gray-400 font-basecoat text-sm sm:text-base">
             <li>
               <Link to="/realisations" className="hover:text-yellow-400 transition">
-                Créations
+                Boutique
               </Link>
             </li>
             <li>
@@ -144,7 +144,7 @@ export default function Footer() {
       </div>
 
       {/* Ligne du bas */}
-      <div className="border-t border-gray-800 mt-10 sm:mt-12 pt-6 sm:pt-8 px-4 sm:px-6 md:px-[60px] lg:px-[120px] flex flex-col sm:flex-row items-center justify-between gap-3 text-gray-500 text-sm font-basecoat">
+      <div className="border-t border-gray-800 mt-10 sm:mt-12 py-6 sm:py-8 px-4 sm:px-6 md:px-[60px] lg:px-[120px] flex flex-col sm:flex-row items-center justify-between gap-3 text-gray-500 text-sm font-basecoat">
         <p>© {currentYear} Les Poulettes. Tous droits réservés.</p>
         <Link to="/mentions-legales" className="hover:text-yellow-400 transition">
           Mentions légales &amp; CGV
