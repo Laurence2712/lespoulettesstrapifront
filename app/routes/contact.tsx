@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "@remix-run/react";
 import { useScrollAnimations } from "../hooks/useScrollAnimations";
+import { useToast } from "../components/ToastProvider";
 
 export function meta() {
   return [
@@ -20,6 +21,7 @@ export function meta() {
 
 export default function Contact() {
   const scrollRef = useScrollAnimations();
+  const { showToast } = useToast();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -33,6 +35,7 @@ export default function Contact() {
     );
     window.location.href = `mailto:lespoulettes.benin@gmail.com?subject=${subject}&body=${body}`;
     setSent(true);
+    showToast("Votre application email s'ouvre !", "info");
   };
 
   return (

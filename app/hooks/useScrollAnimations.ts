@@ -26,6 +26,19 @@ export function useScrollAnimations(deps: any[] = []) {
     let timeout: ReturnType<typeof setTimeout>;
 
     // Dynamic import to avoid SSR crash
+    // Si l'utilisateur préfère moins de mouvement, on rend les éléments visibles sans animation
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const allAnimated = container.querySelectorAll(
+        '.anim-fade-up, .anim-fade-down, .anim-fade-left, .anim-fade-right, .anim-fade, .anim-scale'
+      );
+      allAnimated.forEach((el) => {
+        const htmlEl = el as HTMLElement;
+        htmlEl.style.opacity = '1';
+        htmlEl.style.transform = 'none';
+      });
+      return;
+    }
+
     Promise.all([
       import("gsap"),
       import("gsap/ScrollTrigger"),
@@ -135,6 +148,8 @@ export function useParallaxHero() {
       import("gsap"),
       import("gsap/ScrollTrigger"),
     ]).then(([gsapModule, scrollTriggerModule]) => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
       const gsap = gsapModule.gsap;
       const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
       gsap.registerPlugin(ScrollTrigger);

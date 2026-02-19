@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { Link, useNavigate, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
@@ -6,13 +6,17 @@ import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { getApiUrl, getImageUrl } from '../config/api';
 import { useCartStore } from '../store/cartStore';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
+import { useToast } from '../components/ToastProvider';
 import CartDrawer from '../components/CartDrawer';
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   const title = data?.realisation?.title;
   const description = data?.realisation?.description;
   const prix = data?.realisation?.prix;
-  const imageUrl = data?.realisation?.mainImages?.[0]?.url;
+  // Préférer le format large pour les partages sociaux (meilleure qualité)
+  const imageUrl =
+    data?.realisation?.mainImages?.[0]?.formats?.large?.url ||
+    data?.realisation?.mainImages?.[0]?.url;
 
   if (!title) {
     return [{ title: "Réalisation — Les Poulettes" }];
@@ -31,7 +35,11 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
     { property: "og:description", content: metaDescription },
     { property: "og:type", content: "product" },
     { property: "og:url", content: pageUrl },
-    ...(imageUrl ? [{ property: "og:image", content: imageUrl }] : []),
+    { property: "og:site_name", content: "Les Poulettes" },
+    ...(imageUrl ? [
+      { property: "og:image", content: imageUrl },
+      { property: "og:image:alt", content: `${title} — Les Poulettes` },
+    ] : []),
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: `${title} — Les Poulettes` },
     { name: "twitter:description", content: metaDescription },
@@ -66,8 +74,16 @@ interface Realisation {
   declinaisons: Declinaison[];
 }
 
+interface RelatedProduct {
+  id: string;
+  title: string;
+  image_url: string;
+  prix?: string | number;
+}
+
 interface LoaderData {
   realisation: Realisation | null;
+  relatedProducts: RelatedProduct[];
   error: string | null;
 }
 
@@ -76,10 +92,37 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const API_URL = getApiUrl();
 
   try {
-    const url = `${API_URL}/api/realisations/${id}?populate[0]=Images&populate[1]=Declinaison&populate[2]=Declinaison.Image`;
-    const response = await fetch(url);
+    const productUrl = `${API_URL}/api/realisations/${id}?populate[0]=Images&populate[1]=Declinaison&populate[2]=Declinaison.Image`;
+    const relatedUrl = `${API_URL}/api/realisations?populate[0]=ImagePrincipale&populate[1]=Images&pagination[limit]=5`;
+
+    const [response, relatedRes] = await Promise.all([
+      fetch(productUrl),
+      fetch(relatedUrl).catch(() => null),
+    ]);
+
     if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
     const data = await response.json();
+
+    // Produits similaires
+    let relatedProducts: RelatedProduct[] = [];
+    if (relatedRes?.ok) {
+      const relatedData = await relatedRes.json();
+      if (relatedData?.data) {
+        relatedProducts = relatedData.data
+          .filter((r: any) => r.documentId !== id)
+          .slice(0, 4)
+          .map((r: any) => ({
+            id: r.documentId,
+            title: r.Titre || 'Titre indisponible',
+            image_url: r.ImagePrincipale?.url
+              ? getImageUrl(r.ImagePrincipale.url)
+              : r.Images?.[0]?.url
+                ? getImageUrl(r.Images[0].url)
+                : '',
+            prix: r.Prix,
+          }));
+      }
+    }
 
     if (data?.data) {
       const item = data.data;
@@ -133,26 +176,26 @@ export async function loader({ params }: LoaderFunctionArgs) {
           mainImages,
           declinaisons,
         },
+        relatedProducts,
         error: null,
       });
     }
 
-    return json<LoaderData>({ realisation: null, error: 'Produit introuvable' });
+    return json<LoaderData>({ realisation: null, relatedProducts: [], error: 'Produit introuvable' });
   } catch (err: any) {
-    return json<LoaderData>({ realisation: null, error: 'Erreur lors du chargement du produit' });
+    return json<LoaderData>({ realisation: null, relatedProducts: [], error: 'Erreur lors du chargement du produit' });
   }
 }
 
 export default function RealisationDetail() {
   const navigate = useNavigate();
   const addToCart = useCartStore((state) => state.addToCart);
-  const { realisation, error } = useLoaderData<LoaderData>();
+  const { realisation, relatedProducts, error } = useLoaderData<LoaderData>();
+  const { showToast } = useToast();
 
-  // ✅ États séparés : index des miniatures du bas / déclinaison sélectionnée
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [selectedDeclinaisonId, setSelectedDeclinaisonId] = useState<number | null>(null);
   const [quantity, setQuantity] = useState(1);
-  const [addedToCart, setAddedToCart] = useState(false);
 
   const imageRef = useRef<HTMLDivElement>(null);
   const scrollRef = useScrollAnimations([]);
@@ -206,26 +249,35 @@ export default function RealisationDetail() {
         declinaisonId: selectedDeclinaison.id,
         stock: selectedDeclinaison.Stock,
       });
-      setAddedToCart(true);
-      setTimeout(() => setAddedToCart(false), 2500);
+      showToast(`${realisation.title} ajouté au panier !`);
     }
   };
 
-  // JSON-LD données structurées produit
+  // JSON-LD données structurées produit (enrichi pour Google Shopping / SEO)
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: realisation.title,
     ...(realisation.description?.trim() ? { description: realisation.description } : {}),
-    ...(realisation.mainImages[0]?.url ? { image: realisation.mainImages[0].url } : {}),
+    image: realisation.mainImages.map((img) => img.formats?.large?.url || img.url).filter(Boolean),
     brand: { '@type': 'Brand', name: 'Les Poulettes' },
+    manufacturer: {
+      '@type': 'Organization',
+      name: 'Les Poulettes',
+      url: 'https://lespoulettes.be',
+    },
     offers: {
       '@type': 'Offer',
+      url: `https://lespoulettes.be/realisations/${realisation.id}`,
       priceCurrency: 'EUR',
       ...(realisation.prix ? { price: String(realisation.prix) } : {}),
       availability: realisation.declinaisons.some((d) => d.Stock > 0)
         ? 'https://schema.org/InStock'
         : 'https://schema.org/OutOfStock',
+      seller: {
+        '@type': 'Organization',
+        name: 'Les Poulettes',
+      },
     },
   };
 
@@ -480,17 +532,58 @@ export default function RealisationDetail() {
                     ? 'Rupture de stock'
                     : <span className="inline-flex items-center gap-2"><ShoppingCartIcon className="w-5 h-5" />Ajouter au panier</span>}
                 </button>
-
-                {addedToCart && (
-                  <div className="mt-3 text-center text-green-700 font-semibold bg-green-50 py-2 rounded-lg">
-                    ✔ Ajouté au panier !
-                  </div>
-                )}
               </div>
             )}
 
           </div>
         </div>
+
+        {/* ── Produits similaires ── */}
+        {relatedProducts.length > 0 && (
+          <div className="mt-16 sm:mt-20">
+            <h2 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl font-bold uppercase text-gray-900 mb-2">
+              Vous aimerez aussi
+            </h2>
+            <div className="anim-fade-up w-14 h-1 bg-yellow-400 mb-8" data-delay="0.1"></div>
+            <div className="anim-stagger grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5" data-stagger="0.08">
+              {relatedProducts.map((product) => (
+                <Link
+                  key={product.id}
+                  to={`/realisations/${product.id}`}
+                  className="group relative rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 hover:-translate-y-1 block"
+                >
+                  <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
+                    {product.image_url ? (
+                      <img
+                        src={product.image_url}
+                        alt={product.title}
+                        loading="lazy"
+                        width={400}
+                        height={300}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                        <span className="font-basecoat text-gray-400 text-xs">Aucune image</span>
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+                    {product.prix && (
+                      <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm text-gray-900 font-basecoat font-bold text-sm px-2.5 py-1 rounded-full shadow">
+                        {product.prix} €
+                      </div>
+                    )}
+                    <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4">
+                      <h3 className="font-basecoat text-white text-sm sm:text-base font-bold uppercase leading-tight">
+                        {product.title}
+                      </h3>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <CartDrawer />

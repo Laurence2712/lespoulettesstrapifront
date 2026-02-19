@@ -4,6 +4,7 @@ import { json } from '@remix-run/node';
 import type { LinksFunction } from '@remix-run/node';
 import { apiEndpoints, getImageUrl } from '../config/api';
 import { useScrollAnimations, useParallaxHero } from '../hooks/useScrollAnimations';
+import NewsletterForm from '../components/NewsletterForm';
 
 export function meta() {
   return [
@@ -76,6 +77,12 @@ function fetchWithTimeout(url: string, timeoutMs = 8000): Promise<Response | nul
   ]);
 }
 
+export function headers({ loaderHeaders }: { loaderHeaders: Headers }) {
+  const link = loaderHeaders.get('Link');
+  if (link) return { Link: link };
+  return {};
+}
+
 export async function loader() {
   try {
     const [homepageRes, realisationsRes, actualitesRes] = await Promise.all([
@@ -109,6 +116,9 @@ export async function loader() {
         homepageData = { image_url: bannerImageUrl, description: descriptionText.trim() };
       }
     }
+
+    // Précharge de l'image hero via response header Link
+    const heroImageUrl = homepageData?.image_url;
 
     // Process realisations
     if (realisationsRes?.ok) {
@@ -144,7 +154,12 @@ image_url: realisation.ImagePrincipale?.url
       }
     }
 
-    return json<LoaderData>({ homepageData, realisations, actualites, error: null });
+    const responseHeaders = new Headers();
+    if (heroImageUrl) {
+      responseHeaders.set('Link', `<${heroImageUrl}>; rel=preload; as=image`);
+    }
+
+    return json<LoaderData>({ homepageData, realisations, actualites, error: null }, { headers: responseHeaders });
   } catch (err: any) {
     return json<LoaderData>({
       homepageData: null,
@@ -383,6 +398,25 @@ export default function Index() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* ── Newsletter ── */}
+      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-16">
+        <div className="bg-yellow-400 rounded-3xl p-8 sm:p-10 md:p-12">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8">
+            <div className="text-center lg:text-left">
+              <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl font-bold uppercase text-black">
+                Restez informé·e
+              </h2>
+              <p className="anim-fade-up font-basecoat text-black/70 text-sm sm:text-base mt-2 max-w-md" data-delay="0.1">
+                Nouveautés, événements, collections exclusives... Soyez les premiers au courant !
+              </p>
+            </div>
+            <div className="anim-fade-left w-full lg:w-auto lg:min-w-[400px]" data-delay="0.15">
+              <NewsletterForm variant="light" />
+            </div>
+          </div>
         </div>
       </section>
 

@@ -12,6 +12,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     { url: `${BASE_URL}/realisations`, priority: '0.9', changefreq: 'weekly' },
     { url: `${BASE_URL}/actualites`, priority: '0.7', changefreq: 'weekly' },
     { url: `${BASE_URL}/contact`, priority: '0.6', changefreq: 'monthly' },
+    { url: `${BASE_URL}/faq`, priority: '0.6', changefreq: 'monthly' },
   ];
 
   // Dynamic product routes

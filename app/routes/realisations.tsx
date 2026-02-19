@@ -32,6 +32,7 @@ interface Realisation {
   description?: string;
   prix?: string | number;
   isNew?: boolean;
+  totalStock?: number | null;
 }
 
 interface LoaderData {
@@ -64,6 +65,9 @@ export async function loader() {
         description: realisation.Description || '',
         prix: realisation.Prix,
         isNew: realisation.isNew || false,
+        totalStock: Array.isArray(realisation.Declinaison)
+          ? realisation.Declinaison.reduce((sum: number, d: any) => sum + (d.Stock ?? 0), 0)
+          : null,
       }));
       return json<LoaderData>({ realisations, error: null });
     }
@@ -270,6 +274,19 @@ export default function Realisations() {
                     <div className="absolute top-3 left-3 bg-yellow-400 text-black text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
                       Nouveau
                     </div>
+                  )}
+
+                  {/* Badge stock faible / épuisé */}
+                  {!realisation.isNew && realisation.totalStock !== null && realisation.totalStock !== undefined && (
+                    realisation.totalStock === 0 ? (
+                      <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
+                        Épuisé
+                      </div>
+                    ) : realisation.totalStock <= 5 ? (
+                      <div className="absolute top-3 left-3 bg-orange-500 text-white text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
+                        Plus que {realisation.totalStock}
+                      </div>
+                    ) : null
                   )}
 
                   {/* Prix */}
