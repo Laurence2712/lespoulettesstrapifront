@@ -121,7 +121,7 @@ export default function NavBar() {
                       isActive('/realisations') ? 'text-yellow-600 bg-yellow-50' : 'text-black'
                     }`}
                   >
-                    Nos créations
+                    Boutique
                   </Link>
                   <Link
                     to="/#ou-nous-trouver"
@@ -161,7 +161,7 @@ export default function NavBar() {
                   : isTransparent ? 'text-white' : 'text-black'
               }`}
             >
-              Créations
+              Boutique
             </Link>
             <Link
               to="/actualites"
