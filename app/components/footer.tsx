@@ -1,13 +1,31 @@
 import { Link } from "@remix-run/react";
 import { useScrollAnimations } from "../hooks/useScrollAnimations";
+import NewsletterForm from "./NewsletterForm";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const scrollRef = useScrollAnimations();
 
   return (
-    <footer ref={scrollRef} className="bg-black text-white py-12 sm:py-16">
-      <div className="anim-stagger px-4 sm:px-6 md:px-[60px] lg:px-[120px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-x-8 sm:gap-y-12 lg:gap-12" data-stagger="0.1">
+    <footer ref={scrollRef} className="bg-black text-white">
+      {/* ── Bannière Newsletter ── */}
+      <div className="anim-fade-up border-b border-gray-800 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-12">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 lg:gap-12">
+          <div className="flex-shrink-0">
+            <h3 className="font-basecoat font-bold text-lg sm:text-xl text-white uppercase tracking-wider">
+              Restez informé·e
+            </h3>
+            <p className="font-basecoat text-gray-400 text-sm mt-1 max-w-xs">
+              Nouveautés, collections, événements... Recevez nos actualités en avant-première.
+            </p>
+          </div>
+          <div className="w-full lg:max-w-md">
+            <NewsletterForm variant="dark" />
+          </div>
+        </div>
+      </div>
+
+      <div className="anim-stagger px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-12 sm:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-x-8 sm:gap-y-12 lg:gap-12" data-stagger="0.1">
 
         {/* Colonne 1 : Logo */}
         <div className="flex flex-col">
@@ -40,6 +58,11 @@ export default function Footer() {
             <li>
               <Link to="/contact" className="hover:text-yellow-400 transition">
                 Contact
+              </Link>
+            </li>
+            <li>
+              <Link to="/faq" className="hover:text-yellow-400 transition">
+                FAQ
               </Link>
             </li>
             <li>

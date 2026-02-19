@@ -6,15 +6,24 @@ import {
   ScrollRestoration,
   useRouteError,
   isRouteErrorResponse,
+  useLoaderData,
 } from "@remix-run/react";
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { useEffect } from "react";
 import NavBar from "./components/navbar";
 import Footer from "./components/footer";
 import CookieBanner from "./components/CookieBanner";
 import BackToTop from "./components/BackToTop";
+import { ToastProvider } from "./components/ToastProvider";
 import { useCartStore } from "./store/cartStore";
 import "./tailwind.css";
+
+export async function loader() {
+  return json({
+    gaId: process.env.GA_MEASUREMENT_ID || "",
+  });
+}
 
 export const meta: MetaFunction = () => [
   { title: "Les Poulettes — Accessoires wax fait main au Bénin" },
@@ -74,6 +83,28 @@ export const links: LinksFunction = () => [
   },
 ];
 
+// JSON-LD Organisation — référence le site sur toutes les pages
+const orgJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Les Poulettes",
+  url: "https://lespoulettes.be",
+  logo: "https://lespoulettes.be/assets/logo_t_poulettes.png",
+  description:
+    "Marque d'accessoires éco-responsables faits main au Bénin. Trousses, sacs et housses en tissu wax authentique.",
+  email: "lespoulettes.benin@gmail.com",
+  telephone: "+2290162007580",
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "BJ",
+    addressLocality: "Cotonou",
+  },
+  sameAs: [
+    "https://www.facebook.com/lespoulettescouture",
+    "https://www.instagram.com/lespoulettes.benin/",
+  ],
+};
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className="overflow-x-hidden">
@@ -82,6 +113,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
       </head>
       <body className="font-inter bg-beige text-gray-900 flex flex-col min-h-screen overflow-x-hidden">
         <a
@@ -103,6 +138,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const { gaId } = useLoaderData<typeof loader>();
   const checkExpiration = useCartStore((state) => state.checkExpiration);
 
   useEffect(() => {
@@ -113,7 +149,29 @@ export default function App() {
     return () => clearInterval(interval);
   }, [checkExpiration]);
 
-  return <Outlet />;
+  // Google Analytics 4 — injecté dynamiquement côté client
+  useEffect(() => {
+    if (!gaId || typeof window === "undefined") return;
+
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+    document.head.appendChild(script);
+
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    function gtag(...args: any[]) {
+      (window as any).dataLayer.push(args);
+    }
+    (window as any).gtag = gtag;
+    gtag("js", new Date());
+    gtag("config", gaId, { anonymize_ip: true });
+  }, [gaId]);
+
+  return (
+    <ToastProvider>
+      <Outlet />
+    </ToastProvider>
+  );
 }
 
 export function ErrorBoundary() {

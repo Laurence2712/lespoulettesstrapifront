@@ -51,3 +51,27 @@ body {
   font-style: normal;
   font-display: swap;
 }
+
+/* ── Focus visible global (accessibilité clavier) ── */
+*:focus-visible {
+  outline: 2px solid #facc15;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ── Reduced motion : désactive les animations CSS pour les utilisateurs sensibles ── */
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-up,
+  .anim-fade-down,
+  .anim-fade-left,
+  .anim-fade-right,
+  .anim-fade,
+  .anim-scale {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
