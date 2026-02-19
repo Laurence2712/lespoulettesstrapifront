@@ -35,6 +35,16 @@ export default function NavBar() {
     setMenuOpen(false);
   }, [location]);
 
+  // Fermer le menu avec Escape
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [menuOpen]);
+
   // Fermer le menu quand on clique sur un lien
   const handleLinkClick = () => {
     setMenuOpen(false);

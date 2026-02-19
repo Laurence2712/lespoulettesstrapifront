@@ -9,6 +9,10 @@ import {
 } from "@remix-run/react";
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { useEffect } from "react";
+import NavBar from "./components/navbar";
+import Footer from "./components/footer";
+import { useCartStore } from "./store/cartStore";
+import "./tailwind.css";
 
 export const meta: MetaFunction = () => [
   { title: "Les Poulettes — Accessoires wax fait main au Bénin" },
@@ -21,11 +25,6 @@ export const meta: MetaFunction = () => [
   { property: "og:type", content: "website" },
   { property: "og:locale", content: "fr_FR" },
 ];
-
-import NavBar from "./components/navbar";
-import Footer from "./components/footer";
-import { useCartStore } from "./store/cartStore";
-import "./tailwind.css";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -54,8 +53,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="font-inter bg-beige text-gray-900 flex flex-col min-h-screen overflow-x-hidden">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-yellow-400 focus:text-black focus:font-bold focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg"
+        >
+          Aller au contenu principal
+        </a>
         <NavBar />
-        <main className="flex-grow">{children}</main>
+        <main id="main-content" className="flex-grow">{children}</main>
         <Footer />
         <ScrollRestoration />
         <Scripts />
