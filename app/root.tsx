@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import NavBar from "./components/navbar";
 import Footer from "./components/footer";
 import CookieBanner from "./components/CookieBanner";
+import BackToTop from "./components/BackToTop";
 import { useCartStore } from "./store/cartStore";
 import "./tailwind.css";
 
@@ -22,11 +23,38 @@ export const meta: MetaFunction = () => [
     content:
       "Les Poulettes, marque d'accessoires éco-responsables faits main au Bénin. Trousses, sacs et housses en tissu wax authentique.",
   },
+  {
+    name: "keywords",
+    content:
+      "Les Poulettes, accessoires wax, tissu wax, fait main, Bénin, Afrique, éco-responsable, trousse, sac, housse, artisanat",
+  },
+  { name: "robots", content: "index, follow" },
+  { name: "theme-color", content: "#F5F1E8" },
   { property: "og:site_name", content: "Les Poulettes" },
   { property: "og:type", content: "website" },
   { property: "og:locale", content: "fr_FR" },
+  {
+    property: "og:title",
+    content: "Les Poulettes — Accessoires wax fait main au Bénin",
+  },
+  {
+    property: "og:description",
+    content:
+      "Accessoires éco-responsables faits main au Bénin. Trousses, sacs et housses en tissu wax authentique.",
+  },
+  { property: "og:image", content: "/assets/logo_t_poulettes.png" },
   { name: "twitter:card", content: "summary_large_image" },
   { name: "twitter:site", content: "@lespoulettes" },
+  {
+    name: "twitter:title",
+    content: "Les Poulettes — Accessoires wax fait main au Bénin",
+  },
+  {
+    name: "twitter:description",
+    content:
+      "Accessoires éco-responsables faits main au Bénin. Trousses, sacs et housses en tissu wax authentique.",
+  },
+  { name: "twitter:image", content: "/assets/logo_t_poulettes.png" },
 ];
 
 export const links: LinksFunction = () => [
@@ -66,6 +94,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <main id="main-content" className="flex-grow">{children}</main>
         <Footer />
         <CookieBanner />
+        <BackToTop />
         <ScrollRestoration />
         <Scripts />
       </body>
