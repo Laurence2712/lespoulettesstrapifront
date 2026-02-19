@@ -29,7 +29,7 @@ export default function PaiementReussi() {
           Votre commande sera préparée et expédiée dans les plus brefs délais.
         </p>
         {sessionId && (
-          <p className="font-basecoat text-xs text-gray-500 mb-6">
+          <p className="font-basecoat text-xs text-gray-500 mb-6 break-all px-2">
             Référence : {sessionId}
           </p>
         )}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Link, useNavigate, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs } from '@remix-run/node';
@@ -124,6 +124,7 @@ export default function RealisationDetail() {
   const [quantity, setQuantity] = useState(1);
   const [addedToCart, setAddedToCart] = useState(false);
 
+  const imageRef = useRef<HTMLDivElement>(null);
   const scrollRef = useScrollAnimations([]);
 
   if (error || !realisation) {
@@ -155,6 +156,12 @@ export default function RealisationDetail() {
   const handleSelectDeclinaison = (decl: Declinaison) => {
     setSelectedDeclinaisonId(decl.id);
     setQuantity(1);
+    // Sur mobile/tablet (< 1024px), scroll vers l'image principale pour voir le résultat
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      setTimeout(() => {
+        imageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    }
   };
 
   const handleAddToCart = () => {
@@ -203,7 +210,7 @@ export default function RealisationDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
 
           {/* ── COLONNE IMAGES ── */}
-          <div className="anim-fade-right">
+          <div className="anim-fade-right" ref={imageRef}>
 
             {/* Image principale */}
             <div className="relative rounded-2xl overflow-hidden shadow-xl mb-4 bg-gray-100 group">
