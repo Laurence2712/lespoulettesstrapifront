@@ -5,6 +5,23 @@ import type { LinksFunction } from '@remix-run/node';
 import { apiEndpoints, getImageUrl } from '../config/api';
 import { useScrollAnimations, useParallaxHero } from '../hooks/useScrollAnimations';
 
+export function meta() {
+  return [
+    { title: "Les Poulettes — Accessoires wax fait main au Bénin" },
+    {
+      name: "description",
+      content:
+        "Les Poulettes, marque d'accessoires éco-responsables faits main au Bénin. Découvrez nos trousses, sacs et housses en tissu wax authentique.",
+    },
+    { property: "og:title", content: "Les Poulettes — Accessoires wax fait main au Bénin" },
+    {
+      property: "og:description",
+      content: "Accessoires wax faits main au Bénin par Les Poulettes.",
+    },
+    { property: "og:type", content: "website" },
+  ];
+}
+
 // ✅ Chargement lazy côté client uniquement — évite le crash SSR
 const Slider = lazy(() => import('react-slick'));
 

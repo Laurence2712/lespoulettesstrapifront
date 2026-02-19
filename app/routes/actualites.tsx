@@ -4,6 +4,19 @@ import { json } from "@remix-run/node";
 import { apiEndpoints, getImageUrl } from "../config/api";
 import { useScrollAnimations } from "../hooks/useScrollAnimations";
 
+export function meta() {
+  return [
+    { title: "Actualités — Les Poulettes" },
+    {
+      name: "description",
+      content:
+        "Restez informés des dernières actualités de Les Poulettes : nouveautés, événements et inspirations wax.",
+    },
+    { property: "og:title", content: "Actualités — Les Poulettes" },
+    { property: "og:type", content: "website" },
+  ];
+}
+
 interface Actualite {
   id: number;
   title: string;

@@ -1,8 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLoaderData, useNavigate } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import { getApiUrl, getImageUrl } from '../config/api';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
+
+export function meta() {
+  return [
+    { title: "Nos Créations — Les Poulettes" },
+    {
+      name: "description",
+      content:
+        "Découvrez toutes nos créations : trousses, sacs et housses en tissu wax authentique, faits main au Bénin par Les Poulettes.",
+    },
+    { property: "og:title", content: "Nos Créations — Les Poulettes" },
+    {
+      property: "og:description",
+      content: "Trousses, sacs et housses en tissu wax, faits main au Bénin.",
+    },
+    { property: "og:type", content: "website" },
+  ];
+}
 
 interface Realisation {
   id: string;
@@ -68,6 +85,16 @@ export default function Realisations() {
   const scrollRef = useScrollAnimations([showPopup]);
 
   const navigate = useNavigate();
+
+  // Fermer le popup avec Escape
+  useEffect(() => {
+    if (!showPopup) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowPopup(false);
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [showPopup]);
 
   const handleBelgiqueClick = () => setShowPopup(false);
   const handleBeninClick = () => {

@@ -5,6 +5,13 @@ import { useCartStore } from '../store/cartStore';
 import { getApiUrl } from '../config/api';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 
+export function meta() {
+  return [
+    { title: "Mon panier — Les Poulettes" },
+    { name: "robots", content: "noindex, nofollow" },
+  ];
+}
+
 const API_URL = getApiUrl();
 
 export default function Panier() {
@@ -137,6 +144,7 @@ export default function Panier() {
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
                       disabled={item.quantity <= 1}
+                      aria-label="Diminuer la quantité"
                       className="w-10 h-10 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition font-bold disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       -
@@ -147,6 +155,7 @@ export default function Panier() {
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
                       disabled={item.stock !== undefined && item.quantity >= item.stock}
+                      aria-label="Augmenter la quantité"
                       className="w-10 h-10 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition font-bold disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       +
@@ -161,6 +170,7 @@ export default function Panier() {
 
                   <button
                     onClick={() => removeFromCart(item.id)}
+                    aria-label={`Supprimer ${item.title} du panier`}
                     className="w-10 h-10 rounded-xl bg-red-50 hover:bg-red-100 flex items-center justify-center text-red-400 hover:text-red-600 transition ml-auto"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
@@ -275,7 +285,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
     const endpoint = `${API_URL}/api/commandes/create-checkout-session`;
 
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 120000);
+    const timeoutId = setTimeout(() => controller.abort(), 60000);
 
     try {
       const response = await fetch(endpoint, {
