@@ -98,6 +98,8 @@ export default function CartDrawer() {
                   <img
                     src={item.image_url}
                     alt={item.title}
+                    width={112}
+                    height={112}
                     className="w-24 h-24 sm:w-28 sm:h-28 object-cover rounded-xl flex-shrink-0"
                   />
 

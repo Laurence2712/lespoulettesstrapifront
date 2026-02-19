@@ -103,7 +103,6 @@ export const useCartStore = create<CartState>()(
         if (lastActivity === 0) return;
 
         if (now - lastActivity > EXPIRATION_TIME) {
-          console.log('Panier expire - Reinitialisation');
           get().clearCart();
         }
       },

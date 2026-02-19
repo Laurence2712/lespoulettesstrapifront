@@ -11,6 +11,7 @@ import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { useEffect } from "react";
 import NavBar from "./components/navbar";
 import Footer from "./components/footer";
+import CookieBanner from "./components/CookieBanner";
 import { useCartStore } from "./store/cartStore";
 import "./tailwind.css";
 
@@ -24,6 +25,8 @@ export const meta: MetaFunction = () => [
   { property: "og:site_name", content: "Les Poulettes" },
   { property: "og:type", content: "website" },
   { property: "og:locale", content: "fr_FR" },
+  { name: "twitter:card", content: "summary_large_image" },
+  { name: "twitter:site", content: "@lespoulettes" },
 ];
 
 export const links: LinksFunction = () => [
@@ -62,6 +65,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <NavBar />
         <main id="main-content" className="flex-grow">{children}</main>
         <Footer />
+        <CookieBanner />
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -83,15 +87,12 @@ export default function App() {
   return <Outlet />;
 }
 
-// ✅ AJOUT : Gestion globale des erreurs
 export function ErrorBoundary() {
   const error = useRouteError();
 
-  let message = "Une erreur inattendue s'est produite.";
   let details = "";
 
   if (isRouteErrorResponse(error)) {
-    message = `Erreur ${error.status}`;
     details = error.data || "";
   } else if (error instanceof Error) {
     details = error.message;
@@ -109,7 +110,13 @@ export function ErrorBoundary() {
         <NavBar />
         <main className="flex-grow flex items-center justify-center py-20 px-4">
           <div className="text-center max-w-md">
-            <img src="/assets/logo_t_poulettes.png" alt="Les Poulettes" className="mx-auto mb-8 h-16" />
+            <img
+              src="/assets/logo_t_poulettes.png"
+              alt="Les Poulettes"
+              width={120}
+              height={64}
+              className="mx-auto mb-8 h-16 w-auto"
+            />
             <h1 className="font-basecoat text-2xl font-bold text-gray-900 mb-4">
               Oups, une petite erreur !
             </h1>

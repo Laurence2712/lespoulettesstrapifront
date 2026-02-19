@@ -15,6 +15,8 @@ export default function Footer() {
             <img
               src="/assets/logo_t_poulettes_white.png"
               alt="Les Poulettes"
+              width={160}
+              height={120}
               className="h-[80px] sm:h-[100px] md:h-[120px] w-auto"
             />
           </Link>
@@ -40,6 +42,11 @@ export default function Footer() {
             <li>
               <Link to="/contact" className="hover:text-yellow-400 transition">
                 Contact
+              </Link>
+            </li>
+            <li>
+              <Link to="/mentions-legales" className="hover:text-yellow-400 transition">
+                Mentions légales & CGV
               </Link>
             </li>
           </ul>

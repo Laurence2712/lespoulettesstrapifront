@@ -8,7 +8,7 @@ import { useCartStore } from '../store/cartStore';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 import CartDrawer from '../components/CartDrawer';
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   const title = data?.realisation?.title;
   const description = data?.realisation?.description;
   const prix = data?.realisation?.prix;
@@ -22,13 +22,20 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     description?.trim() ||
     `${title} — Accessoire wax fait main au Bénin par Les Poulettes.${prix ? ` À partir de ${prix} €.` : ''}`;
 
+  const pageUrl = `https://lespoulettes.be/realisations/${params.id}`;
+
   return [
     { title: `${title} — Les Poulettes` },
     { name: "description", content: metaDescription },
     { property: "og:title", content: `${title} — Les Poulettes` },
     { property: "og:description", content: metaDescription },
     { property: "og:type", content: "product" },
+    { property: "og:url", content: pageUrl },
     ...(imageUrl ? [{ property: "og:image", content: imageUrl }] : []),
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: `${title} — Les Poulettes` },
+    { name: "twitter:description", content: metaDescription },
+    ...(imageUrl ? [{ name: "twitter:image", content: imageUrl }] : []),
   ];
 };
 
@@ -132,7 +139,6 @@ export async function loader({ params }: LoaderFunctionArgs) {
 
     return json<LoaderData>({ realisation: null, error: 'Produit introuvable' });
   } catch (err: any) {
-    console.error('Loader error:', err);
     return json<LoaderData>({ realisation: null, error: 'Erreur lors du chargement du produit' });
   }
 }
@@ -264,6 +270,8 @@ export default function RealisationDetail() {
                 <img
                   src={currentImage.formats?.large?.url || currentImage.url}
                   alt={realisation.title}
+                  width={800}
+                  height={580}
                   className="w-full h-[380px] sm:h-[460px] md:h-[540px] lg:h-[580px] object-cover object-center transition-transform duration-500 group-hover:scale-105"
                 />
               ) : (
@@ -300,6 +308,8 @@ export default function RealisationDetail() {
                       <img
                         src={img.formats?.thumbnail?.url || img.formats?.small?.url || img.url}
                         alt={`Vue ${idx + 1}`}
+                        width={96}
+                        height={96}
                         className="w-full h-full object-cover"
                       />
                       {!selectedDeclinaisonId && mainImageIndex === idx && (
@@ -362,6 +372,8 @@ export default function RealisationDetail() {
                           <img
                             src={decl.Image.formats?.thumbnail?.url || decl.Image.url}
                             alt={decl.Description || 'Déclinaison'}
+                            width={80}
+                            height={80}
                             className="w-full h-full object-cover"
                           />
                         ) : (
