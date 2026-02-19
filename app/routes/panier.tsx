@@ -125,6 +125,8 @@ export default function Panier() {
                 <img
                   src={item.image_url}
                   alt={item.title}
+                  width={160}
+                  height={160}
                   className="w-28 h-28 sm:w-36 sm:h-36 lg:w-40 lg:h-40 object-cover rounded-xl flex-shrink-0"
                 />
               )}
@@ -323,7 +325,6 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
       }
       window.location.href = checkoutUrl;
     } catch (err: any) {
-      console.error('Erreur checkout:', err);
       if (err.name === 'AbortError') {
         setError('Le serveur met trop de temps à répondre. Veuillez réessayer.');
       } else if (err.message === 'Failed to fetch' || err.name === 'TypeError') {

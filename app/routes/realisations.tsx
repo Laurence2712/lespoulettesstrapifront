@@ -18,6 +18,10 @@ export function meta() {
       content: "Trousses, sacs et housses en tissu wax, faits main au Bénin.",
     },
     { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://lespoulettes.be/realisations" },
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: "Nos Créations — Les Poulettes" },
+    { name: "twitter:description", content: "Trousses, sacs et housses en tissu wax, faits main au Bénin." },
   ];
 }
 
@@ -40,12 +44,9 @@ export async function loader() {
 
   try {
     const url = `${API_URL}/api/realisations?populate=*`;
-    console.log('Fetching realisations:', url);
     const response = await fetch(url);
 
     if (!response.ok) {
-      const text = await response.text();
-      console.error('Strapi error:', response.status, text);
       throw new Error(`Erreur HTTP : ${response.status}`);
     }
 
@@ -69,7 +70,6 @@ export async function loader() {
 
     return json<LoaderData>({ realisations: [], error: 'Aucune réalisation trouvée.' });
   } catch (err: any) {
-    console.error('Loader error:', err);
     return json<LoaderData>({
       realisations: [],
       error: 'Erreur lors du chargement des réalisations',
@@ -77,27 +77,63 @@ export async function loader() {
   }
 }
 
+const REGION_KEY = 'lespoulettes_region';
+const REGION_EXPIRY_DAYS = 30;
+
+function getSavedRegion(): boolean {
+  try {
+    const raw = localStorage.getItem(REGION_KEY);
+    if (!raw) return false;
+    const { value, expires } = JSON.parse(raw);
+    if (Date.now() > expires) {
+      localStorage.removeItem(REGION_KEY);
+      return false;
+    }
+    return value === 'belgique';
+  } catch {
+    return false;
+  }
+}
+
+function saveRegion(region: 'belgique' | 'benin') {
+  const expires = Date.now() + REGION_EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+  localStorage.setItem(REGION_KEY, JSON.stringify({ value: region, expires }));
+}
+
 export default function Realisations() {
   const { realisations, error } = useLoaderData<LoaderData>();
-  const [showPopup, setShowPopup] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
   const scrollRef = useScrollAnimations([showPopup]);
 
   const navigate = useNavigate();
 
+  // Vérifier localStorage au montage côté client
+  useEffect(() => {
+    const alreadyChosen = getSavedRegion();
+    if (!alreadyChosen) setShowPopup(true);
+  }, []);
+
   // Fermer le popup avec Escape
   useEffect(() => {
     if (!showPopup) return;
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setShowPopup(false);
+      if (e.key === 'Escape') {
+        saveRegion('belgique');
+        setShowPopup(false);
+      }
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
   }, [showPopup]);
 
-  const handleBelgiqueClick = () => setShowPopup(false);
+  const handleBelgiqueClick = () => {
+    saveRegion('belgique');
+    setShowPopup(false);
+  };
   const handleBeninClick = () => {
+    saveRegion('benin');
     navigate('/#ou-nous-trouver');
   };
 
@@ -216,6 +252,8 @@ export default function Realisations() {
                       src={realisation.image_url}
                       alt={realisation.title}
                       loading="lazy"
+                      width={600}
+                      height={400}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   ) : (

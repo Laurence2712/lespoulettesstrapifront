@@ -14,6 +14,9 @@ export function meta() {
     },
     { property: "og:title", content: "Actualités — Les Poulettes" },
     { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://lespoulettes.be/actualites" },
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: "Actualités — Les Poulettes" },
   ];
 }
 
@@ -52,7 +55,6 @@ export async function loader() {
     }
     return json<LoaderData>({ actualites: [], error: null });
   } catch (err: any) {
-    console.error('Loader error:', err);
     return json<LoaderData>({ actualites: [], error: "Erreur lors du chargement des actualités" });
   }
 }
@@ -141,6 +143,8 @@ export default function ActualitesPage() {
                     src={actu.image_url}
                     alt={actu.title}
                     loading="lazy"
+                    width={800}
+                    height={400}
                     className="w-full h-64 sm:h-72 md:h-80 lg:h-[400px] object-cover transition-transform duration-700 hover:scale-105"
                   />
                 </div>

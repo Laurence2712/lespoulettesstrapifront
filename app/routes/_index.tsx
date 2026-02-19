@@ -19,6 +19,10 @@ export function meta() {
       content: "Accessoires wax faits main au Bénin par Les Poulettes.",
     },
     { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://lespoulettes.be" },
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: "Les Poulettes — Accessoires wax fait main au Bénin" },
+    { name: "twitter:description", content: "Accessoires wax faits main au Bénin par Les Poulettes." },
   ];
 }
 
@@ -142,7 +146,6 @@ image_url: realisation.ImagePrincipale?.url
 
     return json<LoaderData>({ homepageData, realisations, actualites, error: null });
   } catch (err: any) {
-    console.error('Loader error:', err);
     return json<LoaderData>({
       homepageData: null,
       realisations: [],
@@ -215,6 +218,8 @@ export default function Index() {
                 src={realisation.image_url}
                 alt={realisation.title}
                 loading="lazy"
+                width={600}
+                height={380}
                 className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 transform origin-center"
               />
             ) : (
@@ -289,7 +294,7 @@ export default function Index() {
               <div className="relative w-full h-[300px] sm:h-[350px]">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
                   <div className="relative w-[160px] h-[160px] xl:h-[400px] xl:w-[400px] sm:w-[200px] sm:h-[200px] rounded-full overflow-hidden border-4 border-yellow-400 shadow-2xl transform hover:scale-110 transition duration-300">
-                    <img src="/assets/equipe-1.jpg" alt="Fondatrice 1" loading="lazy" className="w-full h-full object-cover" />
+                    <img src="/assets/equipe-1.jpg" alt="Fondatrice 1" loading="lazy" width={400} height={400} className="w-full h-full object-cover" />
                   </div>
                 </div>
               </div>
@@ -315,6 +320,8 @@ export default function Index() {
                       src={actu.image_url}
                       alt={actu.title}
                       loading="lazy"
+                      width={800}
+                      height={400}
                       className="w-full h-64 sm:h-72 md:h-80 lg:h-[400px] object-cover transition-transform duration-700 hover:scale-105"
                     />
                   </div>
