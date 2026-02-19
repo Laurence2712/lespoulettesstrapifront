@@ -65,16 +65,16 @@ export default function NavBar() {
               <img
                 src={isTransparent ? "/assets/logo_t_poulettes_white.png" : "/assets/logo_t_poulettes.png"}
                 alt="Les Poulettes"
-                className={`h-12 sm:h-14 md:h-16 lg:h-20 w-auto max-w-[160px] sm:max-w-[180px] lg:max-w-[220px] block object-contain transition-transform duration-500 ease-in-out ${
+                className={`h-16 sm:h-20 md:h-24 lg:h-28 w-auto max-w-[200px] sm:max-w-[240px] lg:max-w-[300px] block object-contain transition-transform duration-500 ease-in-out ${
                   scrolled ? 'scale-90' : 'scale-100'
                 }`}
               />
             </Link>
 
-            {/* Bouton Menu hamburger — masqué sur desktop */}
+            {/* Bouton Menu hamburger — visible sur tous les écrans */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className={`md:hidden group flex items-center gap-1.5 sm:gap-2 focus:outline-none px-2 sm:px-3 py-2 rounded-lg transition`}
+              className={`group flex items-center gap-1.5 sm:gap-2 focus:outline-none px-2 sm:px-3 py-2 rounded-lg transition`}
               aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
@@ -143,8 +143,8 @@ export default function NavBar() {
             </div>
           </div>
 
-          {/* Menu Desktop */}
-          <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
+          {/* Menu Desktop — masqué, on utilise le burger partout */}
+          <div className="hidden items-center space-x-4 lg:space-x-6">
             <Link
               to="/#qui-sommes-nous"
               className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
@@ -204,10 +204,10 @@ export default function NavBar() {
             </Link>
           </div>
 
-          {/* Bouton Panier - Mobile uniquement */}
+          {/* Bouton Panier - Tous les écrans */}
           <Link
             to="/panier"
-            className="relative md:hidden font-basecoat inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-base"
+            className="relative font-basecoat inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-base"
           >
             <ShoppingCartIcon className="w-6 h-6" />
             {totalItems > 0 && (
