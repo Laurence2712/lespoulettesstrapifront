@@ -1,8 +1,7 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Hook pour animer les elements au scroll (style resyne.be)
- * Ajouter les classes CSS suivantes aux elements :
+ * Hook pour animer les elements au scroll
  *
  * - .anim-fade-up     : fade in + slide up
  * - .anim-fade-down   : fade in + slide down
@@ -15,6 +14,18 @@ import { useEffect, useRef } from "react";
  * data-delay="0.2"    : delai avant animation (en secondes)
  * data-duration="0.8" : duree de l'animation
  */
+
+function showAllAnimated(container: HTMLElement) {
+  const allAnimated = container.querySelectorAll(
+    '.anim-fade-up, .anim-fade-down, .anim-fade-left, .anim-fade-right, .anim-fade, .anim-scale'
+  );
+  allAnimated.forEach((el) => {
+    const htmlEl = el as HTMLElement;
+    htmlEl.style.opacity = '1';
+    htmlEl.style.transform = 'none';
+  });
+}
+
 export function useScrollAnimations(deps: any[] = []) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -22,22 +33,15 @@ export function useScrollAnimations(deps: any[] = []) {
     const container = containerRef.current;
     if (!container || typeof window === "undefined") return;
 
-    let ctx: any;
-    let timeout: ReturnType<typeof setTimeout>;
-
-    // Dynamic import to avoid SSR crash
-    // Si l'utilisateur préfère moins de mouvement, on rend les éléments visibles sans animation
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const allAnimated = container.querySelectorAll(
-        '.anim-fade-up, .anim-fade-down, .anim-fade-left, .anim-fade-right, .anim-fade, .anim-scale'
-      );
-      allAnimated.forEach((el) => {
-        const htmlEl = el as HTMLElement;
-        htmlEl.style.opacity = '1';
-        htmlEl.style.transform = 'none';
-      });
+    // Sur mobile : pas d'animation GSAP, affichage direct
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      showAllAnimated(container);
       return;
     }
+
+    let ctx: any;
+    let timeout: ReturnType<typeof setTimeout>;
 
     Promise.all([
       import("gsap"),
@@ -47,10 +51,8 @@ export function useScrollAnimations(deps: any[] = []) {
       const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
       gsap.registerPlugin(ScrollTrigger);
 
-      // Small delay to ensure DOM is fully rendered
       timeout = setTimeout(() => {
         ctx = gsap.context(() => {
-          // Individual element animations
           const animElements = container.querySelectorAll(
             ".anim-fade-up, .anim-fade-down, .anim-fade-left, .anim-fade-right, .anim-fade, .anim-scale"
           );
@@ -58,20 +60,20 @@ export function useScrollAnimations(deps: any[] = []) {
           animElements.forEach((el) => {
             const htmlEl = el as HTMLElement;
             const delay = parseFloat(htmlEl.dataset.delay || "0");
-            const duration = parseFloat(htmlEl.dataset.duration || "0.8");
+            const duration = parseFloat(htmlEl.dataset.duration || "0.6");
 
             let fromVars: any = { opacity: 0 };
 
             if (el.classList.contains("anim-fade-up")) {
-              fromVars = { opacity: 0, y: 60 };
+              fromVars = { opacity: 0, y: 25 };
             } else if (el.classList.contains("anim-fade-down")) {
-              fromVars = { opacity: 0, y: -40 };
+              fromVars = { opacity: 0, y: -20 };
             } else if (el.classList.contains("anim-fade-left")) {
-              fromVars = { opacity: 0, x: -60 };
+              fromVars = { opacity: 0, x: -30 };
             } else if (el.classList.contains("anim-fade-right")) {
-              fromVars = { opacity: 0, x: 60 };
+              fromVars = { opacity: 0, x: 30 };
             } else if (el.classList.contains("anim-scale")) {
-              fromVars = { opacity: 0, scale: 0.85 };
+              fromVars = { opacity: 0, scale: 0.92 };
             }
 
             gsap.fromTo(
@@ -84,43 +86,42 @@ export function useScrollAnimations(deps: any[] = []) {
                 scale: 1,
                 duration,
                 delay,
-                ease: "power3.out",
+                ease: "power2.out",
                 scrollTrigger: {
                   trigger: el,
-                  start: "top 88%",
-                  end: "bottom 20%",
+                  start: "top 95%",
                   toggleActions: "play none none none",
                 },
               }
             );
           });
 
-          // Stagger container: animate direct children
+          // Stagger containers
           const staggerContainers = container.querySelectorAll(".anim-stagger");
           staggerContainers.forEach((parent) => {
             const htmlParent = parent as HTMLElement;
             const children = parent.children;
-            const staggerDelay = parseFloat(htmlParent.dataset.stagger || "0.15");
+            const staggerDelay = parseFloat(htmlParent.dataset.stagger || "0.1");
 
             gsap.fromTo(
               children,
-              { opacity: 0, y: 50 },
+              { opacity: 0, y: 20 },
               {
                 opacity: 1,
                 y: 0,
-                duration: 0.7,
+                duration: 0.5,
                 stagger: staggerDelay,
-                ease: "power3.out",
+                ease: "power2.out",
                 scrollTrigger: {
                   trigger: parent,
-                  start: "top 85%",
+                  start: "top 95%",
                   toggleActions: "play none none none",
                 },
               }
             );
           });
         }, container);
-      }, 100);
+      }, 50);
     });
 
     return () => {
@@ -134,6 +135,7 @@ export function useScrollAnimations(deps: any[] = []) {
 
 /**
  * Hook pour l'animation parallax du hero banner
+ * Désactivé sur mobile pour éviter le jank de scroll
  */
 export function useParallaxHero() {
   const heroRef = useRef<HTMLElement>(null);
@@ -142,20 +144,21 @@ export function useParallaxHero() {
     const hero = heroRef.current;
     if (!hero || typeof window === "undefined") return;
 
+    // Pas de parallax sur mobile — trop lourd pour le scroll
+    if (window.innerWidth <= 768) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     let ctx: any;
 
     Promise.all([
       import("gsap"),
       import("gsap/ScrollTrigger"),
     ]).then(([gsapModule, scrollTriggerModule]) => {
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
       const gsap = gsapModule.gsap;
       const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
       gsap.registerPlugin(ScrollTrigger);
 
       ctx = gsap.context(() => {
-        // Parallax effect on background
         gsap.to(hero, {
           backgroundPositionY: "30%",
           ease: "none",
@@ -167,12 +170,11 @@ export function useParallaxHero() {
           },
         });
 
-        // Fade out hero content on scroll
         const content = hero.querySelector(".banner-content");
         if (content) {
           gsap.to(content, {
             opacity: 0,
-            y: -50,
+            y: -40,
             ease: "none",
             scrollTrigger: {
               trigger: hero,
