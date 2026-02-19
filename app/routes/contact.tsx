@@ -7,6 +7,7 @@ export default function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [sent, setSent] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,12 +16,13 @@ export default function Contact() {
       `Nom : ${name}\nEmail : ${email}\n\n${message}`
     );
     window.location.href = `mailto:lespoulettes.benin@gmail.com?subject=${subject}&body=${body}`;
+    setSent(true);
   };
 
   return (
     <div
       ref={scrollRef}
-      className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]"
+      className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24"
     >
       {/* Breadcrumb */}
       <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
@@ -102,6 +104,27 @@ export default function Contact() {
             >
               Envoyer le message
             </button>
+
+            {sent && (
+              <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+                <div className="flex items-start gap-3">
+                  <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  <div>
+                    <p className="font-basecoat text-green-700 font-semibold text-sm">
+                      Votre application email s'ouvre...
+                    </p>
+                    <p className="font-basecoat text-green-600 text-xs mt-1 leading-relaxed">
+                      Si rien ne se passe, contactez-nous directement à{' '}
+                      <a href="mailto:lespoulettes.benin@gmail.com" className="underline font-semibold">
+                        lespoulettes.benin@gmail.com
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
           </form>
         </div>
 

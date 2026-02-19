@@ -67,9 +67,11 @@ export default function Realisations() {
 
   const scrollRef = useScrollAnimations([showPopup]);
 
+  const navigate = useNavigate();
+
   const handleBelgiqueClick = () => setShowPopup(false);
   const handleBeninClick = () => {
-    window.location.href = '/#ou-nous-trouver';
+    navigate('/#ou-nous-trouver');
   };
 
   const sortedRealisations = [...realisations].sort((a, b) => {
@@ -90,7 +92,7 @@ export default function Realisations() {
             <div className="flex flex-col sm:flex-row gap-6 sm:gap-10 justify-center items-stretch max-w-3xl mx-auto">
               <button
                 onClick={handleBelgiqueClick}
-                className="font-basecoat flex-1 bg-yellow-400 hover:bg-yellow-500 text-white px-8 py-8 rounded-xl text-xl sm:text-2xl md:text-3xl font-medium uppercase transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-lg"
+                className="font-basecoat flex-1 bg-yellow-400 hover:bg-yellow-500 text-black px-8 py-8 rounded-xl text-xl sm:text-2xl md:text-3xl font-medium uppercase transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-lg"
               >
                 La Belgique
                 <br className="hidden sm:block" />
@@ -115,7 +117,7 @@ export default function Realisations() {
       <div
         ref={scrollRef}
         className={`${showPopup ? 'hidden' : 'block'
-          } py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]`}
+          } py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24`}
       >
         {/* Breadcrumb */}
         <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
@@ -200,7 +202,7 @@ export default function Realisations() {
 
                   {/* Badge Nouveau */}
                   {realisation.isNew && (
-                    <div className="absolute top-3 left-3 bg-yellow-400 text-black text-xl font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
+                    <div className="absolute top-3 left-3 bg-yellow-400 text-black text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
                       Nouveau
                     </div>
                   )}
