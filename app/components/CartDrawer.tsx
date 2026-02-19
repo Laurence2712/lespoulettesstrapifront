@@ -11,6 +11,7 @@ export default function CartDrawer() {
 
   const [isOpen, setIsOpen] = useState(false);
   const prevCartLength = useRef(cart.length);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   // Ouvre le drawer si un nouvel item est ajouté
   useEffect(() => {
@@ -20,13 +21,15 @@ export default function CartDrawer() {
     prevCartLength.current = cart.length;
   }, [cart]);
 
-  // Fermer avec Escape
+  // Fermer avec Escape + focus sur le bouton fermer à l'ouverture
   useEffect(() => {
     if (!isOpen) return;
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setIsOpen(false);
     };
     window.addEventListener('keydown', handleKey);
+    // Focus sur le bouton fermer pour accessibilité clavier
+    setTimeout(() => closeButtonRef.current?.focus(), 50);
     return () => window.removeEventListener('keydown', handleKey);
   }, [isOpen]);
 
@@ -66,6 +69,7 @@ export default function CartDrawer() {
             </p>
           </div>
           <button
+            ref={closeButtonRef}
             aria-label="Fermer le panier"
             className="w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-900 transition"
             onClick={() => setIsOpen(false)}

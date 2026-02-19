@@ -1,7 +1,12 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
+import { ShoppingCartIcon } from '@heroicons/react/24/outline';
+import { getApiUrl, getImageUrl } from '../config/api';
+import { useCartStore } from '../store/cartStore';
+import { useScrollAnimations } from '../hooks/useScrollAnimations';
+import CartDrawer from '../components/CartDrawer';
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const title = data?.realisation?.title;
@@ -26,11 +31,6 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     ...(imageUrl ? [{ property: "og:image", content: imageUrl }] : []),
   ];
 };
-import { ShoppingCartIcon } from '@heroicons/react/24/outline';
-import { getApiUrl, getImageUrl } from '../config/api';
-import { useCartStore } from '../store/cartStore';
-import { useScrollAnimations } from '../hooks/useScrollAnimations';
-import CartDrawer from '../components/CartDrawer';
 
 interface ImageData {
   id: number;
@@ -205,8 +205,30 @@ export default function RealisationDetail() {
     }
   };
 
+  // JSON-LD données structurées produit
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: realisation.title,
+    ...(realisation.description?.trim() ? { description: realisation.description } : {}),
+    ...(realisation.mainImages[0]?.url ? { image: realisation.mainImages[0].url } : {}),
+    brand: { '@type': 'Brand', name: 'Les Poulettes' },
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'EUR',
+      ...(realisation.prix ? { price: String(realisation.prix) } : {}),
+      availability: realisation.declinaisons.some((d) => d.Stock > 0)
+        ? 'https://schema.org/InStock'
+        : 'https://schema.org/OutOfStock',
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div
         ref={scrollRef}
         className="py-6 sm:py-8 md:py-[60px] mt-16 sm:mt-20 md:mt-24 px-4 sm:px-6 md:px-[60px] lg:px-[120px]"
@@ -407,6 +429,7 @@ export default function RealisationDetail() {
                 <div className="inline-flex items-center border border-gray-200 rounded-xl overflow-hidden">
                   <button
                     onClick={() => quantity > 1 && setQuantity(quantity - 1)}
+                    aria-label="Diminuer la quantité"
                     className="w-11 h-11 flex items-center justify-center text-xl font-bold text-gray-600 hover:bg-gray-100 transition"
                   >
                     −
@@ -418,6 +441,7 @@ export default function RealisationDetail() {
                     onClick={() =>
                       selectedDeclinaison && quantity < selectedDeclinaison.Stock && setQuantity(quantity + 1)
                     }
+                    aria-label="Augmenter la quantité"
                     className="w-11 h-11 flex items-center justify-center text-xl font-bold text-gray-600 hover:bg-gray-100 transition"
                   >
                     +

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /panier
+Disallow: /panier/success
+Disallow: /paiement-reussi
+
+Sitemap: https://lespoulettes.be/sitemap.xml

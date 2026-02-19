@@ -117,8 +117,8 @@ export default function Panier() {
       </p>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12">
-        {/* Liste des articles */}
-        <div className="lg:col-span-2 anim-stagger space-y-5" data-stagger="0.1">
+        {/* Liste des articles — order-2 sur mobile pour que le résumé apparaisse en premier */}
+        <div className="lg:col-span-2 order-2 lg:order-1 anim-stagger space-y-5" data-stagger="0.1">
           {items.map((item) => (
             <div key={item.id} className="flex gap-4 sm:gap-5 p-4 sm:p-5 rounded-2xl bg-white border border-gray-100 shadow-sm">
               {item.image_url && (
@@ -189,8 +189,8 @@ export default function Panier() {
           ))}
         </div>
 
-        {/* Résumé */}
-        <div className="lg:col-span-1 anim-fade-left" data-delay="0.3">
+        {/* Résumé — order-1 sur mobile pour apparaître au-dessus des articles */}
+        <div className="lg:col-span-1 order-1 lg:order-2 anim-fade-left" data-delay="0.3">
           <div className="bg-white border border-gray-100 rounded-2xl p-6 sm:p-7 shadow-sm lg:sticky lg:top-[100px]">
             <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900 mb-5">
               Résumé
