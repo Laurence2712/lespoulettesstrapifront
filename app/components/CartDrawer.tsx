@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from '@remix-run/react';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 
+
 export default function CartDrawer() {
   const cart = useCartStore((state) => state.items);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
@@ -18,6 +19,16 @@ export default function CartDrawer() {
     }
     prevCartLength.current = cart.length;
   }, [cart]);
+
+  // Fermer avec Escape
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [isOpen]);
 
   const total = cart.reduce(
     (acc, item) => acc + (Number(item.prix) || 0) * item.quantity,
@@ -37,7 +48,12 @@ export default function CartDrawer() {
       ></div>
 
       {/* DRAWER */}
-      <div className="fixed top-0 right-0 h-full w-[90vw] sm:w-[480px] md:w-[520px] bg-white shadow-2xl z-[1000] flex flex-col">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Panier"
+        className="fixed top-0 right-0 h-full w-[90vw] sm:w-[480px] md:w-[520px] bg-white shadow-2xl z-[1000] flex flex-col"
+      >
 
         {/* Header */}
         <div className="flex justify-between items-center px-6 sm:px-8 py-5 border-b border-gray-100">
@@ -50,6 +66,7 @@ export default function CartDrawer() {
             </p>
           </div>
           <button
+            aria-label="Fermer le panier"
             className="w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-900 transition"
             onClick={() => setIsOpen(false)}
           >
@@ -99,6 +116,7 @@ export default function CartDrawer() {
                             item.quantity > 1 &&
                             updateQuantity(item.id, item.quantity - 1)
                           }
+                          aria-label="Diminuer la quantité"
                           className="w-9 h-9 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition font-bold"
                         >
                           -
@@ -110,6 +128,7 @@ export default function CartDrawer() {
                           onClick={() =>
                             updateQuantity(item.id, item.quantity + 1)
                           }
+                          aria-label="Augmenter la quantité"
                           className="w-9 h-9 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition font-bold"
                         >
                           +
@@ -119,6 +138,7 @@ export default function CartDrawer() {
                       {/* Delete */}
                       <button
                         onClick={() => removeFromCart(item.id)}
+                        aria-label={`Supprimer ${item.title} du panier`}
                         className="w-9 h-9 rounded-xl bg-red-50 hover:bg-red-100 flex items-center justify-center text-red-400 hover:text-red-600 transition"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>

@@ -65,7 +65,9 @@ export default function NavBar() {
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className={`md:hidden group flex items-center gap-1.5 sm:gap-2 focus:outline-none px-2 sm:px-3 py-2 rounded-lg transition`}
-              aria-label="Toggle menu"
+              aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
             >
               <svg
                 className={`w-6 h-6 transition-colors duration-300 ${
@@ -86,7 +88,7 @@ export default function NavBar() {
 
             {/* Menu déroulant mobile */}
             {menuOpen && (
-              <div className="bg-beige shadow-lg rounded-lg mt-2 p-4 absolute top-full left-0 w-64 z-50">
+              <div id="mobile-menu" className="bg-beige shadow-lg rounded-lg mt-2 p-4 absolute top-full left-0 w-64 z-50">
                 <div className="flex flex-col space-y-1">
                   <Link
                     to="/#qui-sommes-nous"

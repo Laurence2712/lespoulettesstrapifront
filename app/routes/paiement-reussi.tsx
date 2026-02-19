@@ -2,6 +2,13 @@ import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from '@remix-run/react';
 import { useCartStore } from '../store/cartStore';
 
+export function meta() {
+  return [
+    { title: "Paiement réussi — Les Poulettes" },
+    { name: "robots", content: "noindex, nofollow" },
+  ];
+}
+
 export default function PaiementReussi() {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get('session_id');

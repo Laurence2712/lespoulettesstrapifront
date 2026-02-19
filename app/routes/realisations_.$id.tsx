@@ -1,7 +1,31 @@
 import { useState, useRef } from 'react';
 import { Link, useNavigate, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
-import type { LoaderFunctionArgs } from '@remix-run/node';
+import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const title = data?.realisation?.title;
+  const description = data?.realisation?.description;
+  const prix = data?.realisation?.prix;
+  const imageUrl = data?.realisation?.mainImages?.[0]?.url;
+
+  if (!title) {
+    return [{ title: "Réalisation — Les Poulettes" }];
+  }
+
+  const metaDescription =
+    description?.trim() ||
+    `${title} — Accessoire wax fait main au Bénin par Les Poulettes.${prix ? ` À partir de ${prix} €.` : ''}`;
+
+  return [
+    { title: `${title} — Les Poulettes` },
+    { name: "description", content: metaDescription },
+    { property: "og:title", content: `${title} — Les Poulettes` },
+    { property: "og:description", content: metaDescription },
+    { property: "og:type", content: "product" },
+    ...(imageUrl ? [{ property: "og:image", content: imageUrl }] : []),
+  ];
+};
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { getApiUrl, getImageUrl } from '../config/api';
 import { useCartStore } from '../store/cartStore';

@@ -7,8 +7,20 @@ import {
   useRouteError,
   isRouteErrorResponse,
 } from "@remix-run/react";
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { useEffect } from "react";
+
+export const meta: MetaFunction = () => [
+  { title: "Les Poulettes — Accessoires wax fait main au Bénin" },
+  {
+    name: "description",
+    content:
+      "Les Poulettes, marque d'accessoires éco-responsables faits main au Bénin. Trousses, sacs et housses en tissu wax authentique.",
+  },
+  { property: "og:site_name", content: "Les Poulettes" },
+  { property: "og:type", content: "website" },
+  { property: "og:locale", content: "fr_FR" },
+];
 
 import NavBar from "./components/navbar";
 import Footer from "./components/footer";

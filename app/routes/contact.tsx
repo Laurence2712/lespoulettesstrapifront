@@ -2,6 +2,19 @@ import { useState } from "react";
 import { Link } from "@remix-run/react";
 import { useScrollAnimations } from "../hooks/useScrollAnimations";
 
+export function meta() {
+  return [
+    { title: "Nous contacter — Les Poulettes" },
+    {
+      name: "description",
+      content:
+        "Contactez Les Poulettes pour toute question, commande personnalisée ou partenariat. Retrouvez-nous sur WhatsApp, email, Facebook et Instagram.",
+    },
+    { property: "og:title", content: "Nous contacter — Les Poulettes" },
+    { property: "og:type", content: "website" },
+  ];
+}
+
 export default function Contact() {
   const scrollRef = useScrollAnimations();
   const [name, setName] = useState("");
