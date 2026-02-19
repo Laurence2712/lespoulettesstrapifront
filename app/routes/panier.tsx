@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from '@remix-run/react';
+import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useCartStore } from '../store/cartStore';
 import { getApiUrl } from '../config/api';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
@@ -31,7 +32,7 @@ export default function Panier() {
   // Success screen
   if (orderSuccess) {
     return (
-      <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px] min-h-[60vh] flex items-center justify-center">
+      <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24 min-h-[60vh] flex items-center justify-center">
         <div className="text-center max-w-lg">
           <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
             <svg className="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
@@ -60,7 +61,7 @@ export default function Panier() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen flex items-center justify-center mt-[60px]">
+      <div className="min-h-screen flex items-center justify-center mt-16">
         <p className="text-xl font-basecoat text-gray-400">Chargement...</p>
       </div>
     );
@@ -69,10 +70,8 @@ export default function Panier() {
   // Empty cart
   if (items.length === 0) {
     return (
-      <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px] min-h-[60vh] flex flex-col items-center justify-center gap-4">
-        <svg className="w-20 h-20 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-        </svg>
+      <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24 min-h-[60vh] flex flex-col items-center justify-center gap-4">
+        <ShoppingCartIcon className="w-20 h-20 text-gray-200" strokeWidth={1} />
         <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-gray-900">
           Votre panier est vide
         </h1>
@@ -94,7 +93,7 @@ export default function Panier() {
   }
 
   return (
-    <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]">
+    <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24">
       {/* Breadcrumb */}
       <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
         <Link to="/" className="text-yellow-600 hover:text-yellow-700 font-medium transition">Accueil</Link>
@@ -194,8 +193,11 @@ export default function Panier() {
               </div>
               <div className="font-basecoat flex justify-between text-sm text-gray-400">
                 <span>Livraison</span>
-                <span>À calculer</span>
+                <span>Calculée après commande</span>
               </div>
+              <p className="font-basecoat text-xs text-gray-400 leading-relaxed">
+                Les frais de livraison vous seront communiqués par email.
+              </p>
             </div>
 
             <div className="border-t border-gray-100 pt-5 mb-6">
@@ -330,7 +332,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
   };
 
   return (
-    <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-[60px] sm:mt-[70px] md:mt-[80px]">
+    <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24">
       <button
         onClick={onBack}
         className="anim-fade-up font-basecoat text-yellow-600 hover:text-yellow-700 mb-6 sm:mb-8 flex items-center gap-2 text-sm sm:text-base font-medium transition"
@@ -401,7 +403,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
               </svg>
             </div>
             <p className="font-basecoat text-xs text-gray-400 mt-3">
-              Frais Stripe : 2,9% + 0,25€ — soit {(total * 1.029 + 0.25).toFixed(2)}€ pour {total.toFixed(2)}€
+              Des frais de traitement (2,9% + 0,25€) s'appliquent au paiement en ligne via Stripe.
             </p>
           </div>
 
@@ -478,7 +480,15 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             className="anim-fade-up font-basecoat w-full bg-yellow-400 hover:bg-yellow-500 text-black py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm sm:text-base"
             data-delay="0.4"
           >
-            {loading ? loadingMessage : 'Payer en ligne'}
+            {loading ? (
+              <span className="inline-flex items-center justify-center gap-2">
+                <svg className="animate-spin h-5 w-5 text-black flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                </svg>
+                {loadingMessage}
+              </span>
+            ) : 'Payer en ligne'}
           </button>
 
           {loading && (

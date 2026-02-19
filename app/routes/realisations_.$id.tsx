@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs } from '@remix-run/node';
+import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { getApiUrl, getImageUrl } from '../config/api';
 import { useCartStore } from '../store/cartStore';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
@@ -115,7 +116,6 @@ export async function loader({ params }: LoaderFunctionArgs) {
 export default function RealisationDetail() {
   const navigate = useNavigate();
   const addToCart = useCartStore((state) => state.addToCart);
-  const openCart = useCartStore((state) => state.openCart);
   const { realisation, error } = useLoaderData<LoaderData>();
 
   // ✅ États séparés : index des miniatures du bas / déclinaison sélectionnée
@@ -170,7 +170,6 @@ export default function RealisationDetail() {
         stock: selectedDeclinaison.Stock,
       });
       setAddedToCart(true);
-      openCart();
       setTimeout(() => setAddedToCart(false), 2500);
     }
   };
@@ -179,7 +178,7 @@ export default function RealisationDetail() {
     <>
       <div
         ref={scrollRef}
-        className="py-6 sm:py-8 md:py-[60px] mt-[60px] sm:mt-[70px] md:mt-[80px] px-4 sm:px-6 md:px-[60px] lg:px-[120px]"
+        className="py-6 sm:py-8 md:py-[60px] mt-16 sm:mt-20 md:mt-24 px-4 sm:px-6 md:px-[60px] lg:px-[120px]"
       >
         {/* Breadcrumb */}
         <nav className="anim-fade-up mb-4 text-xs sm:text-sm font-basecoat text-gray-500">
@@ -195,7 +194,10 @@ export default function RealisationDetail() {
           onClick={() => navigate(-1)}
           className="anim-fade-up font-basecoat inline-flex items-center gap-2 text-gray-500 hover:text-gray-900 mb-6 sm:mb-8 transition text-sm"
         >
-          ← Retour
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Retour
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
@@ -409,7 +411,7 @@ export default function RealisationDetail() {
                     ? 'Choisir un motif'
                     : !isInStock
                     ? 'Rupture de stock'
-                    : '🛒 Ajouter au panier'}
+                    : <span className="inline-flex items-center gap-2"><ShoppingCartIcon className="w-5 h-5" />Ajouter au panier</span>}
                 </button>
 
                 {addedToCart && (
