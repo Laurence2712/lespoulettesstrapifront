@@ -65,9 +65,7 @@ export default function NavBar() {
               <img
                 src={isTransparent ? "/assets/logo_t_poulettes_white.png" : "/assets/logo_t_poulettes.png"}
                 alt="Les Poulettes"
-                width={120}
-                height={80}
-                className={`h-12 sm:h-14 md:h-20 w-auto transition-transform duration-500 ease-in-out transform ${
+                className={`h-12 sm:h-14 md:h-16 lg:h-20 w-auto max-w-[160px] sm:max-w-[180px] lg:max-w-[220px] block object-contain transition-transform duration-500 ease-in-out ${
                   scrolled ? 'scale-90' : 'scale-100'
                 }`}
               />
