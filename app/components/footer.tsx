@@ -1,15 +1,13 @@
 import { Link } from "@remix-run/react";
-import { useScrollAnimations } from "../hooks/useScrollAnimations";
 import NewsletterForm from "./NewsletterForm";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const scrollRef = useScrollAnimations();
 
   return (
-    <footer ref={scrollRef} className="bg-black text-white">
+    <footer className="bg-black text-white">
       {/* ── Bannière Newsletter ── */}
-      <div className="anim-fade-up border-b border-gray-800 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-12">
+      <div className="border-b border-gray-800 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-12">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 lg:gap-12">
           <div className="flex-shrink-0">
             <h3 className="font-basecoat font-bold text-lg sm:text-xl text-white uppercase tracking-wider">
@@ -25,7 +23,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="anim-stagger px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-12 sm:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-x-8 sm:gap-y-12 lg:gap-12" data-stagger="0.1">
+      <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-12 sm:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-x-8 sm:gap-y-12 lg:gap-12">
 
         {/* Colonne 1 : Logo */}
         <div className="flex flex-col">
@@ -146,7 +144,7 @@ export default function Footer() {
       </div>
 
       {/* Ligne du bas */}
-      <div className="anim-fade-up border-t border-gray-800 mt-10 sm:mt-12 pt-6 sm:pt-8 px-4 sm:px-6 md:px-[60px] lg:px-[120px] flex flex-col sm:flex-row items-center justify-between gap-3 text-gray-500 text-sm font-basecoat">
+      <div className="border-t border-gray-800 mt-10 sm:mt-12 pt-6 sm:pt-8 px-4 sm:px-6 md:px-[60px] lg:px-[120px] flex flex-col sm:flex-row items-center justify-between gap-3 text-gray-500 text-sm font-basecoat">
         <p>© {currentYear} Les Poulettes. Tous droits réservés.</p>
         <Link to="/mentions-legales" className="hover:text-yellow-400 transition">
           Mentions légales &amp; CGV
