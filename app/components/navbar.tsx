@@ -65,9 +65,7 @@ export default function NavBar() {
               <img
                 src={isTransparent ? "/assets/logo_t_poulettes_white.png" : "/assets/logo_t_poulettes.png"}
                 alt="Les Poulettes"
-                width={120}
-                height={80}
-                className={`h-12 sm:h-14 md:h-20 w-auto transition-transform duration-500 ease-in-out transform ${
+                className={`h-12 sm:h-14 md:h-16 lg:h-20 w-auto max-w-[160px] sm:max-w-[180px] lg:max-w-[220px] block object-contain transition-transform duration-500 ease-in-out ${
                   scrolled ? 'scale-90' : 'scale-100'
                 }`}
               />
@@ -99,8 +97,15 @@ export default function NavBar() {
             </button>
 
             {/* Menu déroulant mobile */}
-            {menuOpen && (
-              <div id="mobile-menu" className="bg-beige shadow-lg rounded-lg mt-2 p-4 absolute top-full left-0 w-64 z-50">
+            <div
+              id="mobile-menu"
+              aria-hidden={!menuOpen}
+              className={`bg-beige shadow-lg rounded-lg mt-2 p-4 absolute top-full left-0 w-64 z-50 transition-all duration-200 ease-out ${
+                menuOpen
+                  ? 'opacity-100 translate-y-0 pointer-events-auto'
+                  : 'opacity-0 -translate-y-2 pointer-events-none'
+              }`}
+            >
                 <div className="flex flex-col space-y-1">
                   <Link
                     to="/#qui-sommes-nous"
@@ -135,15 +140,22 @@ export default function NavBar() {
                     Nous contacter
                   </Link>
                 </div>
-              </div>
-            )}
+            </div>
           </div>
 
           {/* Menu Desktop */}
-          <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
+          <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
+            <Link
+              to="/#qui-sommes-nous"
+              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
+                isTransparent ? 'text-white' : 'text-black'
+              }`}
+            >
+              Qui sommes-nous
+            </Link>
             <Link
               to="/realisations"
-              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-base ${
+              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
                 isActive('/realisations')
                   ? 'text-yellow-400'
                   : isTransparent ? 'text-white' : 'text-black'
@@ -153,7 +165,7 @@ export default function NavBar() {
             </Link>
             <Link
               to="/actualites"
-              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-base ${
+              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
                 isActive('/actualites')
                   ? 'text-yellow-400'
                   : isTransparent ? 'text-white' : 'text-black'
@@ -162,8 +174,16 @@ export default function NavBar() {
               Actualités
             </Link>
             <Link
+              to="/#ou-nous-trouver"
+              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
+                isTransparent ? 'text-white' : 'text-black'
+              }`}
+            >
+              Où nous trouver
+            </Link>
+            <Link
               to="/contact"
-              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-base ${
+              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
                 isActive('/contact')
                   ? 'text-yellow-400'
                   : isTransparent ? 'text-white' : 'text-black'

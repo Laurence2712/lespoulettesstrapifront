@@ -7,17 +7,15 @@ export default function Footer() {
 
   return (
     <footer ref={scrollRef} className="bg-black text-white py-12 sm:py-16">
-      <div className="anim-stagger px-4 sm:px-6 md:px-[60px] lg:px-[120px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12" data-stagger="0.1">
+      <div className="anim-stagger px-4 sm:px-6 md:px-[60px] lg:px-[120px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-x-8 sm:gap-y-12 lg:gap-12" data-stagger="0.1">
 
         {/* Colonne 1 : Logo */}
-        <div>
-          <Link to="/">
+        <div className="flex flex-col">
+          <Link to="/" className="inline-block">
             <img
               src="/assets/logo_t_poulettes_white.png"
               alt="Les Poulettes"
-              width={160}
-              height={120}
-              className="h-[80px] sm:h-[100px] md:h-[120px] w-auto"
+              className="h-20 sm:h-24 md:h-28 w-auto max-w-[200px] block object-contain"
             />
           </Link>
           <p className="font-basecoat text-gray-400 text-sm sm:text-base mt-4 leading-relaxed">
@@ -125,8 +123,11 @@ export default function Footer() {
       </div>
 
       {/* Ligne du bas */}
-      <div className="anim-fade-up border-t border-gray-800 mt-10 sm:mt-12 pt-6 sm:pt-8 text-center text-gray-500 text-sm sm:text-base font-basecoat px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
+      <div className="anim-fade-up border-t border-gray-800 mt-10 sm:mt-12 pt-6 sm:pt-8 px-4 sm:px-6 md:px-[60px] lg:px-[120px] flex flex-col sm:flex-row items-center justify-between gap-3 text-gray-500 text-sm font-basecoat">
         <p>© {currentYear} Les Poulettes. Tous droits réservés.</p>
+        <Link to="/mentions-legales" className="hover:text-yellow-400 transition">
+          Mentions légales &amp; CGV
+        </Link>
       </div>
     </footer>
   );
