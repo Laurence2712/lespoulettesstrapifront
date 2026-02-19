@@ -324,7 +324,7 @@ export default function RealisationDetail() {
                   alt={realisation.title}
                   width={800}
                   height={580}
-                  className="w-full h-[380px] sm:h-[460px] md:h-[540px] lg:h-[580px] object-contain bg-white transition-transform duration-500 group-hover:scale-[1.02]"
+                  className="w-full h-[380px] sm:h-[460px] md:h-[540px] lg:h-[580px] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                 />
               ) : (
                 <div className="w-full h-[380px] flex items-center justify-center text-gray-400 font-basecoat">
