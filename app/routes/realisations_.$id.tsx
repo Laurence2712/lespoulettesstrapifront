@@ -362,7 +362,7 @@ export default function RealisationDetail() {
                         alt={`Vue ${idx + 1}`}
                         width={96}
                         height={96}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain bg-gray-50"
                       />
                       {!selectedDeclinaisonId && mainImageIndex === idx && (
                         <div className="absolute inset-0 bg-yellow-400/10 rounded-xl" />
