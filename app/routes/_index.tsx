@@ -187,12 +187,12 @@ export default function Index() {
             {[0, 1].map((copy) => (
               <span key={copy} className="inline-flex items-center">
                 {[
-                  { icon: '✂️', label: '100% fait main' },
-                  { icon: '🌿', label: 'Éco-responsable' },
-                  { icon: '🚀', label: 'Livraison Belgique & Bénin' },
-                  { icon: '🎨', label: 'Tissus wax authentiques' },
-                  { icon: '🤝', label: 'Artisanat solidaire' },
-                  { icon: '🌍', label: 'Fabriqué au Bénin' },
+                  { icon: '', label: '100% fait main' },
+                  { icon: '', label: 'Éco-responsable' },
+                  { icon: '', label: 'Livraison Belgique/Europe & Bénin' },
+                  { icon: '', label: 'Tissus wax authentiques' },
+                  { icon: '', label: 'Artisanat solidaire' },
+                  { icon: '', label: 'Fabriqué au Bénin' },
                 ].map((item) => (
                   <span key={`${copy}-${item.label}`} className="inline-flex items-center gap-2 font-basecoat font-bold text-white text-xs sm:text-sm md:text-base px-6 sm:px-10">
                     <span className="text-base sm:text-lg">{item.icon}</span>
