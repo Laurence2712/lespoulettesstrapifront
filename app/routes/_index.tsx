@@ -182,19 +182,26 @@ export default function Index() {
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
       </header>
 
-      {/* ── Social Proof ── */}
-      <div className="bg-yellow-400 py-4 px-4">
-        <div className="flex flex-wrap justify-center gap-6 sm:gap-10 md:gap-16">
-          {[
-            { icon: '🎁', label: '+500 commandes livrées' },
-            { icon: '✂️', label: '100% fait main' },
-            { icon: '🌿', label: 'Éco-responsable' },
-            { icon: '🚀', label: 'Livraison Belgique & Bénin' },
-          ].map((item) => (
-            <div key={item.label} className="flex items-center gap-2 text-black font-basecoat font-bold text-xs sm:text-sm md:text-base">
-              <span className="text-xl sm:text-2xl">{item.icon}</span>
-              <span>{item.label}</span>
-            </div>
+      {/* ── Ticker social proof ── */}
+      <div className="bg-yellow-400 py-3 overflow-hidden select-none">
+        <div className="animate-ticker flex whitespace-nowrap w-max">
+          {[0, 1].map((copy) => (
+            <span key={copy} className="inline-flex items-center">
+              {[
+                { icon: '✂️', label: '100% fait main' },
+                { icon: '🌿', label: 'Éco-responsable' },
+                { icon: '🚀', label: 'Livraison Belgique & Bénin' },
+                { icon: '🎨', label: 'Tissus wax authentiques' },
+                { icon: '🤝', label: 'Artisanat solidaire' },
+                { icon: '🌍', label: 'Fabriqué au Bénin' },
+              ].map((item) => (
+                <span key={`${copy}-${item.label}`} className="inline-flex items-center gap-2 font-basecoat font-bold text-black text-xs sm:text-sm md:text-base px-6 sm:px-10">
+                  <span className="text-base sm:text-lg">{item.icon}</span>
+                  <span>{item.label}</span>
+                  <span className="ml-6 sm:ml-10 text-black/25 text-xs">◆</span>
+                </span>
+              ))}
+            </span>
           ))}
         </div>
       </div>
