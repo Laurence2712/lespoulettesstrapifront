@@ -75,3 +75,14 @@ body {
     transform: none !important;
   }
 }
+
+/* ── Utilitaire : masquer la scrollbar tout en gardant le scroll ── */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
