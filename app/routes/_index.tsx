@@ -176,12 +176,6 @@ export default function Index() {
             >
               Je craque !
             </Link>
-            <a
-              href="#nouveaux-arrivages"
-              className="font-basecoat bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white border border-white/40 px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg uppercase tracking-wider font-bold transform transition hover:scale-105 inline-block"
-            >
-              Voir la boutique
-            </a>
           </div>
         </div>
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>

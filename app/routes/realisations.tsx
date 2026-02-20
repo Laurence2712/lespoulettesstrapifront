@@ -192,7 +192,7 @@ export default function Realisations() {
             Accueil
           </Link>
           <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
-          <span className="text-gray-600">Réalisations</span>
+          <span className="text-gray-600">Boutique</span>
         </nav>
 
         {/* Titre + Tri */}
@@ -202,7 +202,7 @@ export default function Realisations() {
               className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900"
               data-delay="0.1"
             >
-              Nos réalisations
+              Notre boutique
             </h1>
             <div
               className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4"
