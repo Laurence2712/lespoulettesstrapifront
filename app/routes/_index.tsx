@@ -181,63 +181,6 @@ export default function Index() {
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
       </header>
 
-      {/* ── Slider Catégories ── */}
-      <section className="py-10 sm:py-14 md:py-16 px-4 sm:px-6 md:px-[60px] lg:px-[120px] bg-white">
-        <div className="mb-6 sm:mb-8">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[36px] font-bold uppercase text-gray-900">
-            Nos collections
-          </h2>
-          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
-        </div>
-        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 md:grid md:grid-cols-4">
-          {[
-            {
-              name: 'Trousses',
-              emoji: '👜',
-              desc: 'Cosmétiques, crayons, rangements…',
-              gradient: 'from-yellow-400 to-orange-400',
-              text: 'text-black',
-            },
-            {
-              name: 'Sacs',
-              emoji: '🛍️',
-              desc: 'Totes, besaces et pochettes',
-              gradient: 'from-gray-800 to-gray-950',
-              text: 'text-white',
-            },
-            {
-              name: 'Housses',
-              emoji: '📱',
-              desc: 'Téléphone, tablette, ordinateur',
-              gradient: 'from-emerald-500 to-teal-700',
-              text: 'text-white',
-            },
-            {
-              name: 'Accessoires',
-              emoji: '✨',
-              desc: 'Bandanas, bijoux, petites pièces',
-              gradient: 'from-rose-400 to-pink-600',
-              text: 'text-white',
-            },
-          ].map((cat) => (
-            <Link
-              key={cat.name}
-              to="/realisations"
-              className={`snap-start flex-shrink-0 w-52 sm:w-60 md:w-auto bg-gradient-to-br ${cat.gradient} ${cat.text} rounded-2xl p-6 flex flex-col justify-between min-h-[180px] md:min-h-[200px] hover:scale-[1.03] transition-transform duration-300 shadow-md hover:shadow-xl`}
-            >
-              <span className="text-4xl mb-3">{cat.emoji}</span>
-              <div>
-                <p className="font-basecoat font-bold text-xl uppercase tracking-wide mb-1">{cat.name}</p>
-                <p className={`font-basecoat text-sm font-light opacity-80`}>{cat.desc}</p>
-              </div>
-              <span className="font-basecoat text-xs font-semibold uppercase tracking-widest mt-4 opacity-70">
-                Découvrir →
-              </span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
       {/* ── Nouveaux arrivages ── */}
       <section id="nouveaux-arrivages" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-gray-50">
         <div className="mb-8 sm:mb-10 md:mb-12">
@@ -433,6 +376,95 @@ export default function Index() {
             referrerPolicy="no-referrer-when-downgrade"
             title="Localisation Les Poulettes - Cotonou, Bénin"
           ></iframe>
+        </div>
+      </section>
+
+      {/* ── Slider Catégories ── */}
+      <section className="py-10 sm:py-14 md:py-16 px-4 sm:px-6 md:px-[60px] lg:px-[120px] bg-white">
+        <div className="mb-6 sm:mb-8">
+          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[36px] font-bold uppercase text-gray-900">
+            Nos collections
+          </h2>
+          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
+        </div>
+        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 md:grid md:grid-cols-4">
+          {[
+            {
+              name: 'Trousses',
+              emoji: '👜',
+              desc: 'Cosmétiques, crayons, rangements…',
+              gradient: 'from-yellow-400 to-orange-400',
+              text: 'text-black',
+            },
+            {
+              name: 'Sacs',
+              emoji: '🛍️',
+              desc: 'Totes, besaces et pochettes',
+              gradient: 'from-gray-800 to-gray-950',
+              text: 'text-white',
+            },
+            {
+              name: 'Housses',
+              emoji: '📱',
+              desc: 'Téléphone, tablette, ordinateur',
+              gradient: 'from-emerald-500 to-teal-700',
+              text: 'text-white',
+            },
+            {
+              name: 'Accessoires',
+              emoji: '✨',
+              desc: 'Bandanas, bijoux, petites pièces',
+              gradient: 'from-rose-400 to-pink-600',
+              text: 'text-white',
+            },
+          ].map((cat) => (
+            <Link
+              key={cat.name}
+              to="/realisations"
+              className={`snap-start flex-shrink-0 w-52 sm:w-60 md:w-auto bg-gradient-to-br ${cat.gradient} ${cat.text} rounded-2xl p-6 flex flex-col justify-between min-h-[180px] md:min-h-[200px] hover:scale-[1.03] transition-transform duration-300 shadow-md hover:shadow-xl`}
+            >
+              <span className="text-4xl mb-3">{cat.emoji}</span>
+              <div>
+                <p className="font-basecoat font-bold text-xl uppercase tracking-wide mb-1">{cat.name}</p>
+                <p className="font-basecoat text-sm font-light opacity-80">{cat.desc}</p>
+              </div>
+              <span className="font-basecoat text-xs font-semibold uppercase tracking-widest mt-4 opacity-70">
+                Découvrir →
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Newsletter ── */}
+      <section className="bg-gray-900 py-12 sm:py-16 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
+        <div className="max-w-xl mx-auto text-center">
+          <h2 className="font-basecoat text-2xl sm:text-3xl font-bold uppercase text-white mb-2">
+            Restez dans la boucle
+          </h2>
+          <p className="font-basecoat text-gray-400 text-sm sm:text-base mb-8">
+            Nouveautés, promotions et coulisses de l'atelier — directement dans votre boîte mail.
+          </p>
+          <form
+            className="flex flex-col sm:flex-row gap-3"
+            onSubmit={(e) => e.preventDefault()}
+          >
+            <input
+              type="email"
+              required
+              placeholder="votre@email.com"
+              className="flex-1 rounded-xl px-4 py-3 text-sm font-basecoat bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            />
+            <button
+              type="submit"
+              className="bg-yellow-400 hover:bg-yellow-300 transition-colors text-black font-basecoat font-bold text-sm uppercase tracking-widest px-6 py-3 rounded-xl whitespace-nowrap"
+            >
+              S'inscrire
+            </button>
+          </form>
+          <p className="font-basecoat text-gray-600 text-xs mt-4">
+            Pas de spam. Désinscription à tout moment.
+          </p>
         </div>
       </section>
 
