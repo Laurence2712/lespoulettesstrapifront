@@ -323,48 +323,54 @@ export default function Index() {
       </section>
 
       {/* ── Actualités ── */}
-      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-6 sm:py-8 md:py-[60px]">
-        <div className="mb-8 sm:mb-10 md:mb-12">
+      <section>
+        <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] pt-6 sm:pt-8 md:pt-[60px] pb-8 sm:pb-10 md:pb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Actualités
           </h2>
-          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.1"></div>
+          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
+        </div>
 
-          {actualites.length > 0 ? (
-            actualites.map((actu) => (
-              <div key={actu.id} className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
-                {actu.image_url && (
-                  <div className="anim-fade-right rounded-2xl overflow-hidden shadow-xl" data-delay="0.2">
-                    <img
-                      src={actu.image_url}
-                      alt={actu.title}
-                      loading="lazy"
-                      width={800}
-                      height={400}
-                      className="w-full h-64 sm:h-72 md:h-80 lg:h-[400px] object-cover transition-transform duration-700 hover:scale-105"
-                    />
+        {actualites.length > 0 ? (
+          actualites.map((actu, idx) => (
+            <div key={actu.id} className={idx % 2 === 0 ? 'bg-amber-50' : 'bg-white'}>
+              <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-8 sm:py-10 md:py-14">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
+                  {actu.image_url && (
+                    <div className="anim-fade-right rounded-2xl overflow-hidden shadow-xl" data-delay="0.2">
+                      <img
+                        src={actu.image_url}
+                        alt={actu.title}
+                        loading="lazy"
+                        width={800}
+                        height={400}
+                        className="w-full h-64 sm:h-72 md:h-80 lg:h-[400px] object-cover transition-transform duration-700 hover:scale-105"
+                      />
+                    </div>
+                  )}
+                  <div className={`anim-fade-left ${!actu.image_url ? 'lg:col-span-2' : ''}`} data-delay="0.3">
+                    <h3 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-5 leading-tight">
+                      {actu.title}
+                    </h3>
+                    <p className="mb-6 sm:mb-8 font-basecoat text-gray-700 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed">
+                      {actu.content}
+                    </p>
+                    <Link
+                      to="/actualites"
+                      className="font-basecoat uppercase bg-yellow-400 hover:bg-yellow-500 text-black px-8 sm:px-10 py-3 sm:py-4 rounded-lg text-sm sm:text-base transform transition hover:scale-105 font-bold inline-block shadow-md hover:shadow-lg"
+                    >
+                      Toutes les actualités
+                    </Link>
                   </div>
-                )}
-                <div className={`anim-fade-left ${!actu.image_url ? 'md:col-span-2' : ''}`} data-delay="0.3">
-                  <h3 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-5 leading-tight">
-                    {actu.title}
-                  </h3>
-                  <p className="mb-6 sm:mb-8 font-basecoat text-gray-700 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed">
-                    {actu.content}
-                  </p>
-                  <Link
-                    to="/actualites"
-                    className="font-basecoat uppercase bg-yellow-400 hover:bg-yellow-500 text-black px-8 sm:px-10 py-3 sm:py-4 rounded-lg text-sm sm:text-base transform transition hover:scale-105 font-bold inline-block shadow-md hover:shadow-lg"
-                  >
-                    Toutes les actualités
-                  </Link>
                 </div>
               </div>
-            ))
-          ) : (
+            </div>
+          ))
+        ) : (
+          <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] pb-10">
             <p className="text-center text-gray-500 text-base sm:text-lg font-basecoat">Aucune actualité disponible.</p>
-          )}
-        </div>
+          </div>
+        )}
       </section>
 
       {/* ── Où nous trouver ── */}
