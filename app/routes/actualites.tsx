@@ -134,7 +134,7 @@ export default function ActualitesPage() {
           {sortedActualites.map((actu, index) => (
             <section
               key={actu.id}
-              className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
+              className={index % 2 === 0 ? 'bg-white' : 'bg-beige'}
             >
               <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-16 sm:py-20 md:py-24">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
