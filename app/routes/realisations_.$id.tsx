@@ -350,7 +350,7 @@ export default function RealisationDetail() {
                         setMainImageIndex(idx);
                         setSelectedDeclinaisonId(null);
                       }}
-                      className={`relative rounded-xl overflow-hidden transition-all flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 bg-gray-50 ${
+                      className={`relative rounded-xl overflow-hidden transition-all flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 ${
                         !selectedDeclinaisonId && mainImageIndex === idx
                           ? 'ring-2 ring-yellow-400 shadow-md scale-105'
                           : 'ring-1 ring-gray-200 hover:ring-yellow-300 opacity-60 hover:opacity-100 hover:scale-105'
@@ -362,7 +362,7 @@ export default function RealisationDetail() {
                         alt={`Vue ${idx + 1}`}
                         width={96}
                         height={96}
-                        className="w-full h-full object-contain p-1"
+                        className="w-full h-full object-cover"
                       />
                       {!selectedDeclinaisonId && mainImageIndex === idx && (
                         <div className="absolute inset-0 bg-yellow-400/10 rounded-xl pointer-events-none" />

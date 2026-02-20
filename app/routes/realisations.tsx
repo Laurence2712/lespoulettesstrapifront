@@ -113,10 +113,11 @@ const CATEGORIES = ['Tout', 'Trousses', 'Sacs', 'Housses', 'Accessoires'];
 function matchesCategory(realisation: Realisation, category: string): boolean {
   if (category === 'Tout') return true;
   const text = `${realisation.title} ${realisation.description}`.toLowerCase();
+  if (category === 'Sacs') return text.includes('tote');
   if (category === 'Accessoires') {
-    return !text.includes('trousse') && !text.includes('sac') && !text.includes('housse');
+    return !text.includes('trousse') && !text.includes('tote') && !text.includes('housse');
   }
-  return text.includes(category.toLowerCase().slice(0, -1)); // "Trousses" → "trousse", "Sacs" → "sac", "Housses" → "housse"
+  return text.includes(category.toLowerCase().slice(0, -1)); // "Trousses" → "trousse", "Housses" → "housse"
 }
 
 export default function Realisations() {
@@ -292,23 +293,6 @@ export default function Realisations() {
           </div>
         )}
 
-        {/* ── Bande de réassurance ── */}
-        {!error && (
-          <div className="anim-fade-up flex flex-wrap gap-3 mb-8 sm:mb-10" data-delay="0.3">
-            {[
-              { icon: '✂', label: 'Fait main au Bénin' },
-              { icon: '🌍', label: 'Livraison Belgique & Europe' },
-              { icon: '🎨', label: 'Tissu wax authentique' },
-              { icon: '💛', label: 'Commerce équitable' },
-            ].map(({ icon, label }) => (
-              <div key={label} className="flex items-center gap-2 bg-amber-50 border border-yellow-200 px-4 py-2 rounded-full">
-                <span className="text-base leading-none">{icon}</span>
-                <span className="font-basecoat text-sm text-gray-700 font-medium whitespace-nowrap">{label}</span>
-              </div>
-            ))}
-          </div>
-        )}
-
         {/* Error state */}
         {error && (
           <div className="flex items-center justify-center py-20">
@@ -364,10 +348,7 @@ export default function Realisations() {
                     ) : null
                   )}
 
-                  {/* Tag fait main */}
-                  <div className="absolute top-3 right-3 bg-black/65 backdrop-blur-sm text-white text-xs font-basecoat px-2.5 py-1 rounded-full">
-                    ✂ Fait main
-                  </div>
+
                 </div>
 
                 {/* Info section */}

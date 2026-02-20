@@ -184,7 +184,7 @@ export default function App() {
     <ToastProvider>
       {isNavigating && (
         <div className="fixed top-0 left-0 right-0 z-[9999] h-10 bg-yellow-400/90 backdrop-blur-sm flex items-center justify-center gap-3 shadow-md">
-          <span className="text-black font-basecoat font-bold text-sm uppercase tracking-widest">Chargement…</span>
+          <span className="text-black font-basecoat font-bold text-sm uppercase tracking-widest">Chargement</span>
           <div className="flex gap-1">
             <span className="w-2 h-2 rounded-full bg-black/70" style={{ animation: 'dot 1.2s ease-in-out infinite' }} />
             <span className="w-2 h-2 rounded-full bg-black/70" style={{ animation: 'dot 1.2s ease-in-out 0.2s infinite' }} />
