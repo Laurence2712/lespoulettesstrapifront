@@ -436,38 +436,6 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ── Newsletter ── */}
-      <section className="bg-gray-900 py-12 sm:py-16 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
-        <div className="max-w-xl mx-auto text-center">
-          <h2 className="font-basecoat text-2xl sm:text-3xl font-bold uppercase text-white mb-2">
-            Restez dans la boucle
-          </h2>
-          <p className="font-basecoat text-gray-400 text-sm sm:text-base mb-8">
-            Nouveautés, promotions et coulisses de l'atelier — directement dans votre boîte mail.
-          </p>
-          <form
-            className="flex flex-col sm:flex-row gap-3"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <input
-              type="email"
-              required
-              placeholder="votre@email.com"
-              className="flex-1 rounded-xl px-4 py-3 text-sm font-basecoat bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-            />
-            <button
-              type="submit"
-              className="bg-yellow-400 hover:bg-yellow-300 transition-colors text-black font-basecoat font-bold text-sm uppercase tracking-widest px-6 py-3 rounded-xl whitespace-nowrap"
-            >
-              S'inscrire
-            </button>
-          </form>
-          <p className="font-basecoat text-gray-600 text-xs mt-4">
-            Pas de spam. Désinscription à tout moment.
-          </p>
-        </div>
-      </section>
-
     </div>
   );
 }
