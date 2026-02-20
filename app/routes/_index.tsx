@@ -1,7 +1,5 @@
-import { useEffect, useState, lazy, Suspense } from 'react';
 import { Link, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
-import type { LinksFunction } from '@remix-run/node';
 import { apiEndpoints, getImageUrl } from '../config/api';
 import { useScrollAnimations, useParallaxHero } from '../hooks/useScrollAnimations';
 
@@ -25,21 +23,6 @@ export function meta() {
     { name: "twitter:description", content: "Accessoires wax faits main au Bénin par Les Poulettes." },
   ];
 }
-
-// ✅ Chargement lazy côté client uniquement — évite le crash SSR
-const Slider = lazy(() => import('react-slick'));
-
-// ✅ CSS du slider via CDN (remplace les imports directs incompatibles SSR)
-export const links: LinksFunction = () => [
-  {
-    rel: "stylesheet",
-    href: "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css",
-  },
-];
 
 interface HomepageData {
   image_url?: string;
@@ -68,7 +51,6 @@ interface LoaderData {
   error: string | null;
 }
 
-// ✅ Fetch avec timeout pour éviter les blocages si Strapi est lent
 function fetchWithTimeout(url: string, timeoutMs = 8000): Promise<Response | null> {
   return Promise.race([
     fetch(url).catch(() => null),
@@ -94,7 +76,6 @@ export async function loader() {
     let realisations: Realisation[] = [];
     let actualites: Actualite[] = [];
 
-    // Process homepage
     if (homepageRes?.ok) {
       const data = await homepageRes.json();
       if (data?.data?.length) {
@@ -116,27 +97,25 @@ export async function loader() {
       }
     }
 
-    // Précharge de l'image hero via response header Link
     const heroImageUrl = homepageData?.image_url;
 
-    // Process realisations
     if (realisationsRes?.ok) {
       const data = await realisationsRes.json();
       if (data?.data) {
         realisations = data.data.map((realisation: any) => ({
           id: realisation.documentId,
           title: realisation.Titre || 'Titre indisponible',
-image_url: realisation.ImagePrincipale?.url 
-  ? getImageUrl(realisation.ImagePrincipale.url) 
-  : realisation.Images?.[0]?.url 
-    ? getImageUrl(realisation.Images[0].url) 
-    : undefined,          description: realisation.Description || 'Description indisponible',
+          image_url: realisation.ImagePrincipale?.url
+            ? getImageUrl(realisation.ImagePrincipale.url)
+            : realisation.Images?.[0]?.url
+              ? getImageUrl(realisation.Images[0].url)
+              : undefined,
+          description: realisation.Description || 'Description indisponible',
           prix: realisation.Prix,
         }));
       }
     }
 
-    // Process actualites
     if (actualitesRes?.ok) {
       const data = await actualitesRes.json();
       if (data?.data) {
@@ -171,93 +150,11 @@ image_url: realisation.ImagePrincipale?.url
 
 export default function Index() {
   const { homepageData, realisations, actualites } = useLoaderData<LoaderData>();
-  const [mounted, setMounted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isTablet, setIsTablet] = useState(false);
 
   const heroRef = useParallaxHero();
   const scrollRef = useScrollAnimations([]);
 
-  // ✅ Monté uniquement côté client
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Détection taille écran
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      setIsMobile(width <= 767);
-      setIsTablet(width > 767 && width <= 1024);
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const getSlidesToShow = () => {
-    if (!mounted) return 3;
-    if (isMobile) return 1;
-    if (isTablet) return 2;
-    return 3;
-  };
-
-  const sliderSettings = {
-    dots: false,
-    infinite: true,
-    slidesToShow: getSlidesToShow(),
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 0,
-    speed: 40000,
-    cssEase: "linear",
-    arrows: false,
-    swipeToSlide: true,
-    pauseOnHover: true,
-    pauseOnFocus: true,
-    responsive: [
-      { breakpoint: 767, settings: { slidesToShow: 1 } },
-      { breakpoint: 1024, settings: { slidesToShow: 2 } },
-    ],
-  };
-
-  // ✅ Carte réalisation — extraite pour lisibilité
-  const RealisationCard = ({ realisation }: { realisation: Realisation }) => (
-    <div key={realisation.id} className="px-3 sm:px-4 md:px-6">
-      <Link to={`/realisations/${realisation.id}`}>
-        <div className="group rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-shadow duration-500 h-full">
-          <div className="relative overflow-hidden h-64 sm:h-72 md:h-80 lg:h-[380px]">
-            {realisation.image_url ? (
-              <img
-                src={realisation.image_url}
-                alt={realisation.title}
-                loading="lazy"
-                width={600}
-                height={380}
-                className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 transform origin-center"
-              />
-            ) : (
-              <div className="w-full h-full bg-gray-300 flex items-center justify-center">
-                <span className="font-basecoat text-gray-500">Aucune image</span>
-              </div>
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-            <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6 md:p-7">
-              <h3 className="font-basecoat text-white text-lg sm:text-xl md:text-2xl font-semibold leading-tight mb-2">
-                {realisation.title}
-              </h3>
-              <div className="inline-flex items-center gap-2 font-basecoat text-yellow-400 font-semibold text-sm sm:text-base transition-transform duration-300 group-hover:translate-x-2">
-                Voir plus
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Link>
-    </div>
-  );
+  const featured = realisations.slice(0, 4);
 
   return (
     <div className="overflow-x-hidden" ref={scrollRef}>
@@ -272,17 +169,106 @@ export default function Index() {
           <h1 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-[44px] font-bold uppercase tracking-wide mb-8 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-tight lg:leading-snug">
             Une marque d'accessoires made in Bénin, éco-trendy/éco-friendly qui surfe sur la vague du wax !
           </h1>
-          <div className="mt-4 sm:mt-6 anim-fade-up" data-delay="0.3">
+          <div className="mt-4 sm:mt-6 anim-fade-up flex flex-col sm:flex-row gap-3 sm:gap-4" data-delay="0.3">
             <Link
               to="/realisations"
               className="font-basecoat bg-yellow-400 hover:bg-yellow-500 text-black px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg uppercase tracking-wider font-bold transform transition hover:scale-105 inline-block"
             >
               Je craque !
             </Link>
+            <a
+              href="#nouveaux-arrivages"
+              className="font-basecoat bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white border border-white/40 px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg uppercase tracking-wider font-bold transform transition hover:scale-105 inline-block"
+            >
+              Voir la boutique
+            </a>
           </div>
         </div>
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
       </header>
+
+      {/* ── Nouveaux arrivages ── */}
+      <section id="nouveaux-arrivages" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-gray-50">
+        <div className="mb-8 sm:mb-10 md:mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-3 sm:mb-4">
+            <div>
+              <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+                Nouveaux arrivages
+              </h2>
+              <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
+            </div>
+            <Link
+              to="/realisations"
+              className="anim-fade-up font-basecoat text-sm sm:text-base font-semibold text-yellow-600 hover:text-yellow-700 transition flex items-center gap-1.5 self-start sm:self-auto pb-1"
+              data-delay="0.1"
+            >
+              Voir tout
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+          <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg mt-4 mb-8 sm:mb-10" data-delay="0.15">
+            Des pièces uniques, faites main au Bénin en tissu wax authentique.
+          </p>
+        </div>
+
+        {featured.length > 0 ? (
+          <>
+            <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6" data-stagger="0.1">
+              {featured.map((realisation) => (
+                <Link key={realisation.id} to={`/realisations/${realisation.id}`} className="group">
+                  <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                    <div className="relative overflow-hidden aspect-square">
+                      {realisation.image_url ? (
+                        <img
+                          src={realisation.image_url}
+                          alt={realisation.title}
+                          loading="lazy"
+                          width={500}
+                          height={500}
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                          <span className="font-basecoat text-gray-400 text-sm">Aucune image</span>
+                        </div>
+                      )}
+                      {realisation.prix && (
+                        <div className="absolute top-3 right-3 bg-yellow-400 text-black font-basecoat font-bold text-sm px-3 py-1 rounded-full shadow-sm">
+                          {Number(realisation.prix).toFixed(2)} €
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-4 flex flex-col flex-1 justify-between">
+                      <h3 className="font-basecoat font-semibold text-gray-900 text-base leading-snug mb-3">
+                        {realisation.title}
+                      </h3>
+                      <span className="font-basecoat text-sm font-semibold text-yellow-600 group-hover:text-yellow-700 flex items-center gap-1 transition">
+                        Voir le produit
+                        <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+
+            <div className="anim-fade-up text-center mt-10 sm:mt-12" data-delay="0.3">
+              <Link
+                to="/realisations"
+                className="font-basecoat inline-block bg-yellow-400 hover:bg-yellow-500 text-black px-10 sm:px-14 py-3 sm:py-4 rounded-xl text-sm sm:text-base uppercase tracking-wider font-bold transform transition hover:scale-105 shadow-md hover:shadow-lg"
+              >
+                Voir toute la boutique
+              </Link>
+            </div>
+          </>
+        ) : (
+          <p className="text-center text-gray-400 font-basecoat">Aucun produit disponible pour l'instant.</p>
+        )}
+      </section>
 
       {/* ── Qui sommes-nous ── */}
       <section id="qui-sommes-nous" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-6 sm:py-8 md:py-[60px]">
@@ -362,44 +348,6 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ── Nos créations (Slider) ── */}
-      <section className="products py-6 sm:py-8 md:py-[60px] w-full relative z-10">
-        <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10 md:mb-12 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
-            Nos créations
-          </h2>
-          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
-        </div>
-
-        <div className="anim-fade-up px-4 sm:px-6 md:px-[60px] lg:px-[120px] overflow-hidden" data-delay="0.2">
-          {mounted ? (
-            // ✅ Slider chargé uniquement côté client après hydration
-            <Suspense fallback={
-              <div className="mt-4 sm:mt-6 md:mt-8 flex gap-6 overflow-hidden">
-                {[1, 2, 3].map(i => (
-                  <div key={i} className="flex-1 min-w-0 rounded-2xl bg-gray-200 animate-pulse h-64 sm:h-72 md:h-80 lg:h-[380px]" />
-                ))}
-              </div>
-            }>
-              <Slider {...sliderSettings} className="mt-4 sm:mt-6 md:mt-8 relative z-0">
-                {realisations.map((realisation) => (
-                  <RealisationCard key={realisation.id} realisation={realisation} />
-                ))}
-              </Slider>
-            </Suspense>
-          ) : (
-            // ✅ Placeholder SSR — le serveur n'essaie jamais de rendre react-slick
-            <div className="mt-4 sm:mt-6 md:mt-8 flex gap-6 overflow-hidden">
-              {realisations.slice(0, 3).map((realisation) => (
-                <div key={realisation.id} className="flex-1 min-w-0">
-                  <RealisationCard realisation={realisation} />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
       {/* ── Où nous trouver ── */}
       <section id="ou-nous-trouver" className="w-full">
         <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10 md:mb-12 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
@@ -423,7 +371,6 @@ export default function Index() {
           </p>
         </div>
 
-        {/* Google Map — pleine largeur */}
         <div className="anim-fade-up w-full h-[400px] sm:h-[500px] md:h-[600px]" data-delay="0.3">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126169.02214257128!2d2.3522219!3d6.3702928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1024a9a5c8d5f6c5%3A0x7a7a7a7a7a7a7a7a!2sCotonou%2C%20B%C3%A9nin!5e0!3m2!1sfr!2sbe!4v1234567890123!5m2!1sfr!2sbe"
