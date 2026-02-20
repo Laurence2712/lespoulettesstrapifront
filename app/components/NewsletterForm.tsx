@@ -1,5 +1,15 @@
-import { useFetcher } from '@remix-run/react';
+import { useFetcher, useRouteLoaderData } from '@remix-run/react';
 import { useState } from 'react';
+import type { loader as rootLoader } from '~/root';
+
+declare global {
+  interface Window {
+    grecaptcha: {
+      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+      ready: (callback: () => void) => void;
+    };
+  }
+}
 
 interface NewsletterFormProps {
   variant?: 'dark' | 'light';
@@ -7,11 +17,39 @@ interface NewsletterFormProps {
 
 export default function NewsletterForm({ variant = 'dark' }: NewsletterFormProps) {
   const fetcher = useFetcher<{ success?: boolean; error?: string }>();
+  const rootData = useRouteLoaderData<typeof rootLoader>('root');
+  const recaptchaSiteKey = rootData?.recaptchaSiteKey || '';
   const [email, setEmail] = useState('');
+  const [isExecuting, setIsExecuting] = useState(false);
 
-  const isSubmitting = fetcher.state !== 'idle';
+  const isSubmitting = fetcher.state !== 'idle' || isExecuting;
   const isSuccess = fetcher.data?.success;
   const isLight = variant === 'light';
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setIsExecuting(true);
+    try {
+      let recaptchaToken = '';
+      if (recaptchaSiteKey && typeof window !== 'undefined' && window.grecaptcha) {
+        await new Promise<void>((resolve) => window.grecaptcha.ready(resolve));
+        recaptchaToken = await window.grecaptcha.execute(recaptchaSiteKey, { action: 'newsletter' });
+      }
+      fetcher.submit(
+        { email, recaptchaToken },
+        { method: 'post', action: '/newsletter-subscribe' }
+      );
+    } catch {
+      fetcher.submit(
+        { email },
+        { method: 'post', action: '/newsletter-subscribe' }
+      );
+    } finally {
+      setIsExecuting(false);
+    }
+  };
 
   if (isSuccess) {
     return (
@@ -27,9 +65,8 @@ export default function NewsletterForm({ variant = 'dark' }: NewsletterFormProps
   }
 
   return (
-    <fetcher.Form
-      method="post"
-      action="/newsletter-subscribe"
+    <form
+      onSubmit={handleSubmit}
       className="flex flex-col sm:flex-row gap-3 w-full"
     >
       <label htmlFor="newsletter-email" className="sr-only">
@@ -65,6 +102,6 @@ export default function NewsletterForm({ variant = 'dark' }: NewsletterFormProps
           {fetcher.data.error}
         </p>
       )}
-    </fetcher.Form>
+    </form>
   );
 }
