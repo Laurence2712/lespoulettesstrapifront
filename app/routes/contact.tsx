@@ -165,10 +165,6 @@ export default function Contact() {
 
         {/* ── Reseaux & Coordonnees ── */}
         <div className="anim-fade-left flex flex-col gap-5" data-delay="0.3">
-          <h2 className="font-basecoat text-xl sm:text-2xl font-bold text-gray-900 mb-1 uppercase tracking-wider">
-            Retrouvez-nous
-          </h2>
-
           {/* WhatsApp */}
           <a
             href="https://wa.me/2290162007580"
