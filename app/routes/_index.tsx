@@ -323,7 +323,7 @@ export default function Index() {
       </section>
 
       {/* ── Actualités ── */}
-      <section>
+      <section className="bg-gray-50">
         <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] pt-6 sm:pt-8 md:pt-[60px] pb-8 sm:pb-10 md:pb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Actualités
