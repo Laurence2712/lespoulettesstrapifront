@@ -317,17 +317,17 @@ export default function RealisationDetail() {
           <div className="anim-fade-right" ref={imageRef}>
 
             {/* Image principale */}
-            <div className="relative rounded-2xl overflow-hidden shadow-xl mb-4 bg-gray-100 group">
+            <div className="relative rounded-2xl overflow-hidden shadow-xl mb-4 bg-white group">
               {currentImage?.url ? (
                 <img
                   src={currentImage.formats?.large?.url || currentImage.url}
                   alt={realisation.title}
                   width={800}
-                  height={580}
-                  className="w-full h-[380px] sm:h-[460px] md:h-[540px] lg:h-[580px] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                  height={500}
+                  className="w-full h-[300px] sm:h-[380px] md:h-[440px] lg:h-[480px] object-contain transition-transform duration-500 group-hover:scale-[1.02]"
                 />
               ) : (
-                <div className="w-full h-[380px] flex items-center justify-center text-gray-400 font-basecoat">
+                <div className="w-full h-[300px] flex items-center justify-center text-gray-400 font-basecoat">
                   Aucune image disponible
                 </div>
               )}
@@ -362,7 +362,7 @@ export default function RealisationDetail() {
                         alt={`Vue ${idx + 1}`}
                         width={96}
                         height={96}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain bg-white"
                       />
                       {!selectedDeclinaisonId && mainImageIndex === idx && (
                         <div className="absolute inset-0 bg-yellow-400/10 rounded-xl pointer-events-none" />
@@ -427,7 +427,7 @@ export default function RealisationDetail() {
                             alt={decl.Description || 'Déclinaison'}
                             width={80}
                             height={80}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-contain bg-white"
                           />
                         ) : (
                           <div className="w-full h-full bg-gray-200 flex items-center justify-center text-xs text-gray-400">
