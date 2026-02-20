@@ -333,7 +333,7 @@ export default function Index() {
 
         {actualites.length > 0 ? (
           actualites.map((actu, idx) => (
-            <div key={actu.id} className={idx % 2 === 0 ? 'bg-amber-50' : 'bg-white'}>
+            <div key={actu.id}>
               <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-8 sm:py-10 md:py-14">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
                   {actu.image_url && (
