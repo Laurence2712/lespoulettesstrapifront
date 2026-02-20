@@ -185,9 +185,7 @@ const BELGIAN_CITIES: Record<string, string> = {
 // Frais de livraison
 const SHIPPING_COSTS: Record<string, { label: string; cost: number }> = {
   belgique: { label: 'Belgique', cost: 4.95 },
-  france: { label: 'France', cost: 6.95 },
   europe: { label: 'Autre pays Europe', cost: 9.95 },
-  monde: { label: 'Reste du monde', cost: 14.95 },
 };
 
 export default function Panier() {
@@ -385,13 +383,24 @@ export default function Panier() {
               )}
 
               <div className="flex-1 flex flex-col justify-between min-w-0">
-                <div>
-                  <h3 className="font-basecoat text-base sm:text-lg font-bold text-gray-900 leading-tight">
-                    {item.title}
-                  </h3>
-                  <p className="font-basecoat text-yellow-500 font-bold text-lg sm:text-xl mt-1">
-                    {item.prix} €
-                  </p>
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <h3 className="font-basecoat text-base sm:text-lg font-bold text-gray-900 leading-tight">
+                      {item.title}
+                    </h3>
+                    <p className="font-basecoat text-yellow-500 font-bold text-lg sm:text-xl mt-1">
+                      {item.prix} €
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => removeFromCart(item.id)}
+                    aria-label={`Supprimer ${item.title} du panier`}
+                    className="w-10 h-10 rounded-xl bg-red-50 hover:bg-red-100 flex items-center justify-center text-red-400 hover:text-red-600 transition flex-shrink-0"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                    </svg>
+                  </button>
                 </div>
 
                 <div className="flex items-center gap-3 sm:gap-4 mt-3">
@@ -422,16 +431,6 @@ export default function Panier() {
                       Stock max : {item.stock}
                     </span>
                   )}
-
-                  <button
-                    onClick={() => removeFromCart(item.id)}
-                    aria-label={`Supprimer ${item.title} du panier`}
-                    className="w-10 h-10 rounded-xl bg-red-50 hover:bg-red-100 flex items-center justify-center text-red-400 hover:text-red-600 transition ml-auto"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                    </svg>
-                  </button>
                 </div>
               </div>
 
@@ -861,9 +860,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                 className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition bg-white"
               >
                 <option value="belgique">🇧🇪 Belgique — 4,95 €</option>
-                <option value="france">🇫🇷 France — 6,95 €</option>
                 <option value="europe">🌍 Autre pays Europe — 9,95 €</option>
-                <option value="monde">🌐 Reste du monde — 14,95 €</option>
               </select>
             </div>
 
