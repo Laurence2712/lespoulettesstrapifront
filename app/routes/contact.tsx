@@ -88,9 +88,6 @@ export default function Contact() {
 
         {/* ── Formulaire ── */}
         <div className="anim-fade-right" data-delay="0.2">
-          <h2 className="font-basecoat text-xl sm:text-2xl font-bold text-gray-900 mb-6 uppercase tracking-wider">
-            Envoyez-nous un message
-          </h2>
           <Form method="post" className="space-y-5">
             <div>
               <label htmlFor="name" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">
@@ -142,7 +139,7 @@ export default function Contact() {
               disabled={isSubmitting}
               className="font-basecoat w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold uppercase tracking-wider px-8 py-4 rounded-xl transition-all duration-200 transform hover:scale-[1.02] shadow-md hover:shadow-lg text-sm sm:text-base disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100"
             >
-              {isSubmitting ? "Envoi en cours..." : "Envoyer le message"}
+              {isSubmitting ? "Envoi en cours..." : "Envoyer"}
             </button>
 
             {actionData?.success && (
