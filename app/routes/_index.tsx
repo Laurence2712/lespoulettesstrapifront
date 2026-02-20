@@ -256,14 +256,16 @@ export default function Index() {
                     </div>
                     <div className="p-4 flex flex-col flex-1 justify-between">
                       <div>
-                        <h3 className="font-basecoat font-semibold text-gray-900 text-base leading-snug mb-1">
-                          {realisation.title}
-                        </h3>
-                        {realisation.prix && (
-                          <p className="font-basecoat text-gray-700 text-sm font-medium mb-3">
-                            {Number(realisation.prix).toFixed(2)} €
-                          </p>
-                        )}
+                        <div className="flex items-baseline justify-between gap-2 mb-3">
+                          <h3 className="font-basecoat font-semibold text-gray-900 text-base leading-snug">
+                            {realisation.title}
+                          </h3>
+                          {realisation.prix && (
+                            <p className="font-basecoat text-xl font-bold text-yellow-500 whitespace-nowrap flex-shrink-0">
+                              {Number(realisation.prix).toFixed(2)} €
+                            </p>
+                          )}
+                        </div>
                       </div>
                       <span className="font-basecoat text-sm font-semibold text-yellow-600 group-hover:text-yellow-700 flex items-center gap-1 transition">
                         Voir le produit
