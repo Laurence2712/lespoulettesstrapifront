@@ -295,7 +295,7 @@ export default function RealisationDetail() {
         <nav className="anim-fade-up mb-4 text-xs sm:text-sm font-basecoat text-gray-500">
           <Link to="/" className="hover:text-yellow-600 transition">Accueil</Link>
           <span className="mx-2">/</span>
-          <Link to="/realisations" className="hover:text-yellow-600 transition">Réalisations</Link>
+          <Link to="/realisations" className="hover:text-yellow-600 transition">Boutique</Link>
           <span className="mx-2">/</span>
           <span className="text-gray-800 uppercase font-semibold">{realisation.title}</span>
         </nav>
