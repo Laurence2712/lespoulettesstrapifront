@@ -22,6 +22,7 @@ import "./tailwind.css";
 export async function loader() {
   return json({
     gaId: process.env.GA_MEASUREMENT_ID || "",
+    recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY || "",
   });
 }
 
@@ -138,7 +139,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const { gaId } = useLoaderData<typeof loader>();
+  const { gaId, recaptchaSiteKey } = useLoaderData<typeof loader>();
   const checkExpiration = useCartStore((state) => state.checkExpiration);
 
   useEffect(() => {
@@ -148,6 +149,15 @@ export default function App() {
     }, 5 * 60 * 1000);
     return () => clearInterval(interval);
   }, [checkExpiration]);
+
+  // reCAPTCHA v3 — injecté dynamiquement côté client
+  useEffect(() => {
+    if (!recaptchaSiteKey || typeof window === "undefined") return;
+    const script = document.createElement("script");
+    script.src = `https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`;
+    script.async = true;
+    document.head.appendChild(script);
+  }, [recaptchaSiteKey]);
 
   // Google Analytics 4 — injecté dynamiquement côté client
   useEffect(() => {

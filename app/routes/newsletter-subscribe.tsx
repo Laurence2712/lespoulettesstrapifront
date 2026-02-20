@@ -10,9 +10,31 @@ import type { ActionFunctionArgs } from '@remix-run/node';
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const email = formData.get('email');
+  const recaptchaToken = formData.get('recaptchaToken');
 
   if (!email || typeof email !== 'string' || !email.includes('@') || !email.includes('.')) {
     return json({ error: 'Adresse email invalide.' }, { status: 400 });
+  }
+
+  const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
+  if (RECAPTCHA_SECRET_KEY) {
+    if (!recaptchaToken || typeof recaptchaToken !== 'string') {
+      return json({ error: 'Vérification anti-spam échouée. Réessayez.' }, { status: 400 });
+    }
+    try {
+      const verifyRes = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `secret=${RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
+      });
+      const verifyData = await verifyRes.json();
+      if (!verifyData.success || verifyData.score < 0.5) {
+        return json({ error: 'Vérification anti-spam échouée. Réessayez.' }, { status: 400 });
+      }
+    } catch (err) {
+      console.error('[Newsletter] Erreur vérification reCAPTCHA:', err);
+      // En cas d'échec de l'API Google, on laisse passer pour ne pas bloquer les vrais utilisateurs
+    }
   }
 
   const BREVO_API_KEY = process.env.BREVO_API_KEY;
