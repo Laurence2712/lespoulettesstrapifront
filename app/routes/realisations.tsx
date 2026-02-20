@@ -113,8 +113,9 @@ const CATEGORIES = ['Tout', 'Trousses', 'Sacs', 'Housses', 'Accessoires'];
 function matchesCategory(realisation: Realisation, category: string): boolean {
   if (category === 'Tout') return true;
   const text = `${realisation.title} ${realisation.description}`.toLowerCase();
-  if (category === 'Sacs') return text.includes('tote');
+  if (category === 'Sacs') return text.includes('tote') && !text.includes('porte-cl');
   if (category === 'Accessoires') {
+    if (text.includes('porte-cl')) return true;
     return !text.includes('trousse') && !text.includes('tote') && !text.includes('housse');
   }
   return text.includes(category.toLowerCase().slice(0, -1)); // "Trousses" → "trousse", "Housses" → "housse"
@@ -246,9 +247,6 @@ export default function Realisations() {
               className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4"
               data-delay="0.15"
             ></div>
-            <p className="anim-fade-up font-basecoat text-gray-500 text-sm sm:text-base mt-3" data-delay="0.2">
-              {filteredRealisations.length} création{filteredRealisations.length > 1 ? 's' : ''} faite{filteredRealisations.length > 1 ? 's' : ''} main au Bénin ✂
-            </p>
           </div>
           <div className="anim-fade-up flex items-center gap-2" data-delay="0.2">
             <label
