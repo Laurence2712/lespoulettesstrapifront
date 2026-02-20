@@ -340,7 +340,7 @@ export default function Realisations() {
               <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900">
                 Nos coups de cœur
               </h2>
-              <span className="text-yellow-400 text-xl">♥</span>
+             
             </div>
             <div className="w-14 h-1 bg-yellow-400 mb-6"></div>
             <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-yellow-300 scrollbar-track-gray-100">
@@ -365,8 +365,8 @@ export default function Realisations() {
                         <span className="font-basecoat text-gray-400 text-xs">Aucune image</span>
                       </div>
                     )}
-                    <div className="absolute top-2 left-2 bg-yellow-400 text-black text-xs font-basecoat font-bold px-2.5 py-1 rounded-full shadow">
-                      ♥ Coup de cœur
+                    <div className="absolute top-2 left-2 px-2.5 py-1 rounded-full">
+                      <span className="text-yellow-400 text-xl">♥</span>
                     </div>
                   </div>
                   <div className="p-3">
