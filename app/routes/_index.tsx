@@ -180,31 +180,31 @@ export default function Index() {
           </div>
         </div>
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
-      </header>
 
-      {/* ── Ticker social proof ── */}
-      <div className="bg-yellow-400 py-3 overflow-hidden select-none">
-        <div className="animate-ticker flex whitespace-nowrap w-max">
-          {[0, 1].map((copy) => (
-            <span key={copy} className="inline-flex items-center">
-              {[
-                { icon: '✂️', label: '100% fait main' },
-                { icon: '🌿', label: 'Éco-responsable' },
-                { icon: '🚀', label: 'Livraison Belgique & Bénin' },
-                { icon: '🎨', label: 'Tissus wax authentiques' },
-                { icon: '🤝', label: 'Artisanat solidaire' },
-                { icon: '🌍', label: 'Fabriqué au Bénin' },
-              ].map((item) => (
-                <span key={`${copy}-${item.label}`} className="inline-flex items-center gap-2 font-basecoat font-bold text-black text-xs sm:text-sm md:text-base px-6 sm:px-10">
-                  <span className="text-base sm:text-lg">{item.icon}</span>
-                  <span>{item.label}</span>
-                  <span className="ml-6 sm:ml-10 text-black/25 text-xs">◆</span>
-                </span>
-              ))}
-            </span>
-          ))}
+        {/* ── Ticker social proof (superposé sur le hero, fond transparent) ── */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 bg-white/10 backdrop-blur-sm py-3 overflow-hidden select-none">
+          <div className="animate-ticker flex whitespace-nowrap w-max">
+            {[0, 1].map((copy) => (
+              <span key={copy} className="inline-flex items-center">
+                {[
+                  { icon: '✂️', label: '100% fait main' },
+                  { icon: '🌿', label: 'Éco-responsable' },
+                  { icon: '🚀', label: 'Livraison Belgique & Bénin' },
+                  { icon: '🎨', label: 'Tissus wax authentiques' },
+                  { icon: '🤝', label: 'Artisanat solidaire' },
+                  { icon: '🌍', label: 'Fabriqué au Bénin' },
+                ].map((item) => (
+                  <span key={`${copy}-${item.label}`} className="inline-flex items-center gap-2 font-basecoat font-bold text-white text-xs sm:text-sm md:text-base px-6 sm:px-10">
+                    <span className="text-base sm:text-lg">{item.icon}</span>
+                    <span>{item.label}</span>
+                    <span className="ml-6 sm:ml-10 text-white/40 text-xs">◆</span>
+                  </span>
+                ))}
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
+      </header>
 
       {/* ── Nouveaux arrivages ── */}
       <section id="nouveaux-arrivages" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-gray-50">
