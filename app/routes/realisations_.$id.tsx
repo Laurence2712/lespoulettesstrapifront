@@ -478,10 +478,11 @@ export default function RealisationDetail() {
       
             {/* Pas de déclinaisons */}
             {!hasDeclinaisons && (
-              <div className="mb-5 p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
-                <p className="text-yellow-800 text-sm font-semibold text-center">
-                  🧵 Les petites mains sont en train de le fabriquer...
-                </p>
+              <div className="mb-5">
+                <span className="inline-flex items-center gap-2 bg-red-100 text-red-800 px-4 py-1.5 rounded-full text-sm font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
+                  Épuisé
+                </span>
               </div>
             )}
 
