@@ -317,7 +317,7 @@ export default function RealisationDetail() {
           <div className="anim-fade-right" ref={imageRef}>
 
             {/* Image principale */}
-            <div className="relative rounded-2xl overflow-hidden shadow-xl mb-4 bg-white group">
+            <div className="relative rounded-2xl overflow-hidden shadow-xl mb-4 bg-beige group">
               {currentImage?.url ? (
                 <img
                   src={currentImage.formats?.large?.url || currentImage.url}
@@ -362,7 +362,7 @@ export default function RealisationDetail() {
                         alt={`Vue ${idx + 1}`}
                         width={96}
                         height={96}
-                        className="w-full h-full object-contain bg-white"
+                        className="w-full h-full object-contain bg-beige"
                       />
                       {!selectedDeclinaisonId && mainImageIndex === idx && (
                         <div className="absolute inset-0 bg-yellow-400/10 rounded-xl pointer-events-none" />
@@ -427,7 +427,7 @@ export default function RealisationDetail() {
                             alt={decl.Description || 'Déclinaison'}
                             width={80}
                             height={80}
-                            className="w-full h-full object-contain bg-white"
+                            className="w-full h-full object-contain bg-beige"
                           />
                         ) : (
                           <div className="w-full h-full bg-gray-200 flex items-center justify-center text-xs text-gray-400">
