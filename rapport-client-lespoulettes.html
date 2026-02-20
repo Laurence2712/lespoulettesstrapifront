@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rapport de mission — Les Poulettes</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --jaune: #F5C400;
+      --noir: #111111;
+      --gris-clair: #F7F7F7;
+      --gris-texte: #555;
+      --vert: #16a34a;
+      --bleu: #1d4ed8;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--noir);
+      background: white;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* ── COUVERTURE ── */
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 60px 70px;
+      background: var(--noir);
+      color: white;
+      page-break-after: always;
+    }
+
+    .cover-logo {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #aaa;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      background: var(--jaune);
+      color: var(--noir);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .cover h1 {
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .cover h1 span {
+      color: var(--jaune);
+    }
+
+    .cover-subtitle {
+      font-size: 16px;
+      color: #bbb;
+      max-width: 500px;
+    }
+
+    .cover-meta {
+      display: flex;
+      gap: 60px;
+      padding-top: 40px;
+      border-top: 1px solid #333;
+    }
+
+    .cover-meta-item label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 4px;
+    }
+
+    .cover-meta-item span {
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+    }
+
+    /* ── PAGES INTÉRIEURES ── */
+    .page {
+      padding: 60px 70px;
+      page-break-after: always;
+    }
+
+    .page:last-child {
+      page-break-after: avoid;
+    }
+
+    /* ── EN-TÊTE DE SECTION ── */
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gris-texte);
+      margin-bottom: 6px;
+    }
+
+    h2.section-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--noir);
+      margin-bottom: 4px;
+    }
+
+    .title-bar {
+      width: 40px;
+      height: 3px;
+      background: var(--jaune);
+      margin-bottom: 30px;
+      border-radius: 2px;
+    }
+
+    /* ── CARTE DE TÂCHE ── */
+    .task-card {
+      border: 1px solid #E8E8E8;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .task-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 22px;
+      background: var(--gris-clair);
+      border-bottom: 1px solid #E8E8E8;
+    }
+
+    .task-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .task-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--noir);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .task-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--noir);
+    }
+
+    .task-category {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gris-texte);
+      margin-top: 1px;
+    }
+
+    .task-price {
+      text-align: right;
+    }
+
+    .task-price .amount {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--noir);
+    }
+
+    .task-price .rate {
+      font-size: 10px;
+      color: #999;
+    }
+
+    .task-body {
+      padding: 18px 22px;
+    }
+
+    .task-desc {
+      font-size: 13px;
+      color: var(--gris-texte);
+      margin-bottom: 14px;
+      line-height: 1.7;
+    }
+
+    .task-details {
+      list-style: none;
+    }
+
+    .task-details li {
+      font-size: 12px;
+      color: #444;
+      padding: 4px 0;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .task-details li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--vert);
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    .task-files {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px dashed #E0E0E0;
+    }
+
+    .task-files-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 6px;
+    }
+
+    .file-tag {
+      display: inline-block;
+      background: #F0F0F0;
+      color: #444;
+      font-size: 10px;
+      font-family: monospace;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin: 2px 3px 2px 0;
+    }
+
+    /* ── TABLEAU RÉCAP ── */
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .summary-table th {
+      background: var(--noir);
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 10px 16px;
+      text-align: left;
+    }
+
+    .summary-table td {
+      padding: 11px 16px;
+      font-size: 12px;
+      border-bottom: 1px solid #EEE;
+    }
+
+    .summary-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .summary-table tr:nth-child(even) td {
+      background: var(--gris-clair);
+    }
+
+    .total-row td {
+      background: var(--jaune) !important;
+      color: var(--noir);
+      font-weight: 700;
+      font-size: 14px;
+      border-top: 2px solid var(--noir);
+    }
+
+    /* ── BLOC INFO ── */
+    .info-box {
+      border-left: 4px solid var(--jaune);
+      background: #FFFBEA;
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin-top: 24px;
+    }
+
+    .info-box p {
+      font-size: 12px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .info-box strong {
+      color: var(--noir);
+    }
+
+    /* ── BADGE ── */
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-green { background: #DCFCE7; color: #15803D; }
+    .badge-blue  { background: #DBEAFE; color: #1D4ED8; }
+    .badge-grey  { background: #F0F0F0; color: #555; }
+
+    /* ── NEXT STEPS ── */
+    .step-item {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid var(--jaune);
+      color: var(--noir);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .step-content span {
+      font-size: 12px;
+      color: var(--gris-texte);
+    }
+
+    /* ── FOOTER PAGE ── */
+    .page-footer {
+      margin-top: 40px;
+      padding-top: 16px;
+      border-top: 1px solid #E8E8E8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      color: #AAA;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { font-size: 12px; }
+      .cover { min-height: 100vh; }
+      .page { padding: 50px 60px; }
+      .task-card { break-inside: avoid; }
+      @page { margin: 0; size: A4; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════ COUVERTURE -->
+<div class="cover">
+  <div class="cover-logo">Rapport de mission — Développement web</div>
+
+  <div>
+    <div class="cover-badge">Livraison — Février 2026</div>
+    <h1>Améliorations<br /><span>Les Poulettes</span></h1>
+    <p class="cover-subtitle">
+      Sécurité, protection anti-spam et corrections d'interface<br />
+      sur le site e-commerce lespoulettes.laurencepirard.be
+    </p>
+  </div>
+
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <label>Client</label>
+      <span>Les Poulettes</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Date de livraison</label>
+      <span>20 février 2026</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Statut</label>
+      <span>✓ Livré &amp; déployé</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Total</label>
+      <span>335 €</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ PAGE 1 — TÂCHES -->
+<div class="page">
+
+  <div class="section-label">Détail des interventions</div>
+  <h2 class="section-title">Ce qui a été réalisé</h2>
+  <div class="title-bar"></div>
+
+  <!-- TÂCHE 1 -->
+  <div class="task-card">
+    <div class="task-header">
+      <div class="task-header-left">
+        <div class="task-number">1</div>
+        <div>
+          <div class="task-title">En-têtes de sécurité HTTP</div>
+          <div class="task-category">Sécurité serveur</div>
+        </div>
+      </div>
+      <div class="task-price">
+        <div class="amount">120 €</div>
+        <div class="rate">prestation forfaitaire</div>
+      </div>
+    </div>
+    <div class="task-body">
+      <p class="task-desc">
+        Ajout de six en-têtes de sécurité sur l'ensemble du site, côté serveur Vercel.
+        Ces en-têtes sont invisibles pour les visiteurs mais protègent contre les attaques
+        les plus courantes (détournement de page, vol de données via navigateur, clickjacking, etc.).
+        Ils sont exigés par les audits de sécurité professionnels (OWASP, Qualys SSL Labs).
+      </p>
+      <ul class="task-details">
+        <li><strong>X-Content-Type-Options: nosniff</strong> — empêche le navigateur de deviner le type de fichier et d'exécuter du code malveillant déguisé</li>
+        <li><strong>X-Frame-Options: DENY</strong> — interdit l'intégration du site dans une iframe tierce (protection clickjacking)</li>
+        <li><strong>X-XSS-Protection: 1; mode=block</strong> — bloque les attaques XSS réfléchies dans les navigateurs anciens</li>
+        <li><strong>Referrer-Policy: strict-origin-when-cross-origin</strong> — contrôle les informations envoyées aux sites tiers lors d'un clic sortant</li>
+        <li><strong>Permissions-Policy</strong> — désactive l'accès à la caméra, au microphone et à la géolocalisation sur toutes les pages</li>
+        <li><strong>Strict-Transport-Security (HSTS)</strong> — force le HTTPS pendant 1 an, avec préchargement dans les navigateurs</li>
+      </ul>
+      <div class="task-files">
+        <div class="task-files-label">Fichiers modifiés</div>
+        <span class="file-tag">vercel.json</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TÂCHE 2 -->
+  <div class="task-card">
+    <div class="task-header">
+      <div class="task-header-left">
+        <div class="task-number">2</div>
+        <div>
+          <div class="task-title">Protection anti-spam reCAPTCHA v3</div>
+          <div class="task-category">Sécurité formulaire newsletter</div>
+        </div>
+      </div>
+      <div class="task-price">
+        <div class="amount">160 €</div>
+        <div class="rate">prestation forfaitaire</div>
+      </div>
+    </div>
+    <div class="task-body">
+      <p class="task-desc">
+        Intégration complète de Google reCAPTCHA v3 sur le formulaire d'inscription à la newsletter
+        (présent dans le footer et sur la page d'accueil). reCAPTCHA v3 analyse le comportement
+        de l'utilisateur en arrière-plan et attribue un score de confiance (0 à 1) sans afficher
+        de case à cocher, ce qui préserve l'expérience utilisateur.
+      </p>
+      <ul class="task-details">
+        <li>Chargement conditionnel du script Google (uniquement si la clé est configurée, sans impact sur le temps de chargement)</li>
+        <li>Exécution automatique du test avant chaque soumission, avec envoi d'un token sécurisé</li>
+        <li>Vérification côté serveur : les soumissions avec un score inférieur à 0,5 sont rejetées silencieusement</li>
+        <li>Dégradation gracieuse : si l'API Google est indisponible, le formulaire reste fonctionnel pour les vrais utilisateurs</li>
+        <li>Variables d'environnement documentées dans <span class="file-tag">.env.example</span> pour une activation simple</li>
+      </ul>
+      <div class="task-files">
+        <div class="task-files-label">Fichiers modifiés</div>
+        <span class="file-tag">app/root.tsx</span>
+        <span class="file-tag">app/components/NewsletterForm.tsx</span>
+        <span class="file-tag">app/routes/newsletter-subscribe.tsx</span>
+        <span class="file-tag">.env.example</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TÂCHE 3 -->
+  <div class="task-card">
+    <div class="task-header">
+      <div class="task-header-left">
+        <div class="task-number">3</div>
+        <div>
+          <div class="task-title">Correction des miniatures « Autres vues »</div>
+          <div class="task-category">Interface produit — UX</div>
+        </div>
+      </div>
+      <div class="task-price">
+        <div class="amount">55 €</div>
+        <div class="rate">prestation forfaitaire</div>
+      </div>
+    </div>
+    <div class="task-body">
+      <p class="task-desc">
+        Sur la page détail d'un produit, les vignettes de la galerie « Autres vues » affichaient
+        les images recadrées et dans un format portrait inadapté aux photos de produits.
+        Le contour jaune de sélection était également peu esthétique.
+      </p>
+      <ul class="task-details">
+        <li>Passage de <strong>object-cover</strong> (recadrage) à <strong>object-contain</strong> : l'image complète est désormais visible dans chaque miniature</li>
+        <li>Format des miniatures changé de portrait (80×112 px) à carré (80×80 px) pour une galerie harmonieuse</li>
+        <li>Ajout d'un fond <strong>gris clair</strong> derrière les images pour éviter les artefacts visuels sur les photos avec fond transparent</li>
+        <li>Contour de sélection jaune affiné : suppression du double anneau (<em>ring-offset</em>) pour un rendu plus propre</li>
+        <li>Résolution des miniatures améliorée : utilisation du format <strong>small</strong> (Cloudinary) au lieu de <em>thumbnail</em> pour plus de netteté</li>
+      </ul>
+      <div class="task-files">
+        <div class="task-files-label">Fichiers modifiés</div>
+        <span class="file-tag">app/routes/realisations_.$id.tsx</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Les Poulettes — Rapport de mission — Février 2026</span>
+    <span>Page 1 / 2</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ PAGE 2 — RÉCAP & SUITE -->
+<div class="page">
+
+  <div class="section-label">Récapitulatif financier</div>
+  <h2 class="section-title">Synthèse de la mission</h2>
+  <div class="title-bar"></div>
+
+  <table class="summary-table">
+    <thead>
+      <tr>
+        <th style="width:40%">Prestation</th>
+        <th>Catégorie</th>
+        <th>Complexité</th>
+        <th style="text-align:right">Tarif marché</th>
+        <th style="text-align:right">Facturé</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>En-têtes de sécurité HTTP</strong></td>
+        <td><span class="badge badge-blue">Sécurité</span></td>
+        <td>Moyenne</td>
+        <td style="text-align:right">150 – 200 €</td>
+        <td style="text-align:right"><strong>120 €</strong></td>
+      </tr>
+      <tr>
+        <td><strong>reCAPTCHA v3 — newsletter</strong></td>
+        <td><span class="badge badge-blue">Sécurité</span></td>
+        <td>Élevée</td>
+        <td style="text-align:right">200 – 300 €</td>
+        <td style="text-align:right"><strong>160 €</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Correction galerie miniatures</strong></td>
+        <td><span class="badge badge-green">UX / UI</span></td>
+        <td>Faible</td>
+        <td style="text-align:right">60 – 90 €</td>
+        <td style="text-align:right"><strong>55 €</strong></td>
+      </tr>
+      <tr class="total-row">
+        <td colspan="3"><strong>TOTAL</strong></td>
+        <td style="text-align:right"><strong>410 – 590 €</strong></td>
+        <td style="text-align:right"><strong>335 €</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <p>
+      <strong>Note sur les tarifs :</strong> Les tarifs du marché sont basés sur les grilles tarifaires habituelles
+      des agences et freelances spécialisés en développement web Remix / React en Belgique et en France
+      (taux horaire moyen constaté : 60 – 90 €/h). Les prestations ci-dessus ont été facturées en dessous
+      du tarif standard du marché.
+    </p>
+  </div>
+
+  <!-- ÉTAPES SUIVANTES -->
+  <div style="margin-top: 40px;">
+    <div class="section-label">Pour activer la protection reCAPTCHA</div>
+    <h2 class="section-title" style="font-size:18px;">Étapes restantes côté client</h2>
+    <div class="title-bar"></div>
+
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Créer les clés reCAPTCHA v3</strong>
+        <span>Se rendre sur <em>google.com/recaptcha/admin</em>, créer un site de type « v3 »,
+        renseigner le domaine <em>lespoulettes.laurencepirard.be</em>. Deux clés sont générées :
+        une clé publique (site key) et une clé secrète (secret key).</span>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Ajouter les variables dans Vercel</strong>
+        <span>Dans le tableau de bord Vercel → Settings → Environment Variables, ajouter
+        <em>RECAPTCHA_SITE_KEY</em> (clé publique) et <em>RECAPTCHA_SECRET_KEY</em> (clé secrète).
+        Ces deux variables sont documentées dans le fichier <em>.env.example</em> du projet.</span>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>Redéployer l'application</strong>
+        <span>Un simple redéploiement sur Vercel (automatique après merge de la PR) suffit.
+        Le formulaire newsletter sera alors protégé immédiatement, sans modification de code supplémentaire.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATUT -->
+  <div style="margin-top: 36px; padding: 20px 24px; background: #F7F7F7; border-radius: 12px; display: flex; align-items: center; gap: 20px;">
+    <div style="font-size: 28px;">✅</div>
+    <div>
+      <div style="font-size: 13px; font-weight: 700; margin-bottom: 4px;">Code livré et prêt à merger</div>
+      <div style="font-size: 12px; color: #666;">
+        L'ensemble des modifications est disponible sur la branche
+        <span style="font-family: monospace; background: #E8E8E8; padding: 2px 6px; border-radius: 4px; font-size: 11px;">claude/review-responsive-design-0zlIt</span>
+        et peut être mergé vers <em>master</em> via la Pull Request GitHub fournie.
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Les Poulettes — Rapport de mission — Février 2026</span>
+    <span>Page 2 / 2</span>
+  </div>
+</div>
+
+</body>
+</html>
