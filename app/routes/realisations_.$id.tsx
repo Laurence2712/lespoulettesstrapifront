@@ -350,22 +350,22 @@ export default function RealisationDetail() {
                         setMainImageIndex(idx);
                         setSelectedDeclinaisonId(null);
                       }}
-                      className={`relative rounded-xl overflow-hidden transition-all flex-shrink-0 w-20 h-28 sm:w-24 sm:h-32 ${
+                      className={`relative rounded-xl overflow-hidden transition-all flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 bg-gray-50 ${
                         !selectedDeclinaisonId && mainImageIndex === idx
-                          ? 'ring-2 ring-yellow-400 ring-offset-2 scale-105 shadow-md'
+                          ? 'ring-2 ring-yellow-400 shadow-md scale-105'
                           : 'ring-1 ring-gray-200 hover:ring-yellow-300 opacity-60 hover:opacity-100 hover:scale-105'
                       }`}
                       aria-label={`Vue ${idx + 1}`}
                     >
                       <img
-                        src={img.formats?.thumbnail?.url || img.formats?.small?.url || img.url}
+                        src={img.formats?.small?.url || img.formats?.thumbnail?.url || img.url}
                         alt={`Vue ${idx + 1}`}
                         width={96}
-                        height={128}
-                        className="w-full h-full object-cover"
+                        height={96}
+                        className="w-full h-full object-contain p-1"
                       />
                       {!selectedDeclinaisonId && mainImageIndex === idx && (
-                        <div className="absolute inset-0 bg-yellow-400/10 rounded-xl" />
+                        <div className="absolute inset-0 bg-yellow-400/10 rounded-xl pointer-events-none" />
                       )}
                     </button>
                   ))}
