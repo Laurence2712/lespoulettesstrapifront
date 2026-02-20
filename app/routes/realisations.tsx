@@ -69,7 +69,9 @@ export async function loader() {
           ? realisation.Declinaison.reduce((sum: number, d: any) => sum + (d.Stock ?? 0), 0)
           : null,
       }));
-      return json<LoaderData>({ realisations, error: null });
+      return json<LoaderData>({ realisations, error: null }, {
+        headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=60' },
+      });
     }
 
     return json<LoaderData>({ realisations: [], error: 'Aucune réalisation trouvée.' });
@@ -104,10 +106,13 @@ function saveRegion(region: 'belgique' | 'benin') {
   localStorage.setItem(REGION_KEY, JSON.stringify({ value: region, expires }));
 }
 
+const ITEMS_PER_PAGE = 9;
+
 export default function Realisations() {
   const { realisations, error } = useLoaderData<LoaderData>();
   const [showPopup, setShowPopup] = useState(false);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const scrollRef = useScrollAnimations([showPopup]);
 
@@ -147,35 +152,49 @@ export default function Realisations() {
     return sortOrder === 'asc' ? prixA - prixB : prixB - prixA;
   });
 
+  const totalPages = Math.ceil(sortedRealisations.length / ITEMS_PER_PAGE);
+  const paginatedRealisations = sortedRealisations.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const handleSortChange = (value: 'asc' | 'desc') => {
+    setSortOrder(value);
+    setCurrentPage(1);
+  };
+
   return (
     <>
-      {/* ── Popup région ── */}
+      {/* ── Bannière région (bottom) ── */}
       {showPopup && (
-        <div className="fixed inset-0 bg-beige z-50 flex items-center justify-center p-4">
-          <div className="text-center max-w-5xl w-full">
-            <h1 className="font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase mb-16 sm:mb-20 md:mb-24 tracking-wide text-gray-900">
-              Je commande depuis
-            </h1>
-            <div className="flex flex-col sm:flex-row gap-6 sm:gap-10 justify-center items-stretch max-w-3xl mx-auto">
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t-4 border-yellow-400 shadow-2xl p-4 sm:p-5">
+          <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center gap-3 sm:gap-6">
+            <p className="font-basecoat font-bold text-gray-900 text-center sm:text-left text-sm sm:text-base whitespace-nowrap">
+              Vous commandez depuis...
+            </p>
+            <div className="flex gap-3 flex-shrink-0">
               <button
                 onClick={handleBelgiqueClick}
-                className="font-basecoat flex-1 bg-yellow-400 hover:bg-yellow-500 text-black px-8 py-8 rounded-xl text-xl sm:text-2xl md:text-3xl font-medium uppercase transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-lg"
+                className="font-basecoat bg-yellow-400 hover:bg-yellow-500 text-black px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wide transition-all hover:scale-105 shadow"
               >
-                La Belgique
-                <br className="hidden sm:block" />
-                <span className="sm:hidden"> / </span>
-                <span className="font-light">ou</span> l'Europe
+                Belgique / Europe
               </button>
               <button
                 onClick={handleBeninClick}
-                className="font-basecoat flex-1 bg-gray-900 hover:bg-black text-white px-8 py-8 rounded-xl text-xl sm:text-2xl md:text-3xl font-medium uppercase transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-lg"
+                className="font-basecoat bg-gray-900 hover:bg-black text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wide transition-all hover:scale-105 shadow"
               >
-                Le Bénin
+                Bénin
               </button>
             </div>
-            <p className="font-basecoat text-gray-400 mt-16 sm:mt-20 text-xs sm:text-sm font-light tracking-wider">
-              Sélectionnez votre région pour continuer
-            </p>
+            <button
+              onClick={handleBelgiqueClick}
+              className="text-gray-400 hover:text-gray-600 transition sm:ml-auto flex-shrink-0"
+              aria-label="Fermer"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
         </div>
       )}
@@ -183,8 +202,7 @@ export default function Realisations() {
       {/* ── Contenu principal ── */}
       <div
         ref={scrollRef}
-        className={`${showPopup ? 'hidden' : 'block'
-          } py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24`}
+        className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24"
       >
         {/* Breadcrumb */}
         <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
@@ -222,7 +240,7 @@ export default function Realisations() {
             <select
               id="sort-price"
               value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}
+              onChange={(e) => handleSortChange(e.target.value as 'asc' | 'desc')}
               className="font-basecoat text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
             >
               <option value="asc">Prix croissant</option>
@@ -243,7 +261,7 @@ export default function Realisations() {
             className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
             data-stagger="0.1"
           >
-            {sortedRealisations.map((realisation) => (
+            {paginatedRealisations.map((realisation) => (
               <Link
                 key={realisation.id}
                 to={`/realisations/${realisation.id}`}
@@ -316,6 +334,45 @@ export default function Realisations() {
                 </div>
               </Link>
             ))}
+          </div>
+        )}
+
+        {/* ── Pagination ── */}
+        {!error && totalPages > 1 && (
+          <div className="flex items-center justify-center gap-2 mt-10 sm:mt-14 flex-wrap">
+            <button
+              onClick={() => { setCurrentPage((p) => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              disabled={currentPage === 1}
+              className="font-basecoat flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-yellow-400 hover:text-yellow-600 transition disabled:opacity-30 disabled:cursor-not-allowed bg-white"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+              Précédent
+            </button>
+
+            <div className="flex items-center gap-1">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <button
+                  key={page}
+                  onClick={() => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className={`w-10 h-10 rounded-xl font-basecoat text-sm font-bold transition ${
+                    page === currentPage
+                      ? 'bg-yellow-400 text-black shadow-md'
+                      : 'bg-white border border-gray-200 text-gray-700 hover:border-yellow-400 hover:text-yellow-600'
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={() => { setCurrentPage((p) => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              disabled={currentPage === totalPages}
+              className="font-basecoat flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-yellow-400 hover:text-yellow-600 transition disabled:opacity-30 disabled:cursor-not-allowed bg-white"
+            >
+              Suivant
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+            </button>
           </div>
         )}
 

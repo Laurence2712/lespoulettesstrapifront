@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Link } from "@remix-run/react";
+import { Link, Form, useActionData, useNavigation } from "@remix-run/react";
+import { json } from "@remix-run/node";
+import type { ActionFunctionArgs } from "@remix-run/node";
 import { useScrollAnimations } from "../hooks/useScrollAnimations";
-import { useToast } from "../components/ToastProvider";
+import { getApiUrl } from "../config/api";
 
 export function meta() {
   return [
@@ -19,24 +21,42 @@ export function meta() {
   ];
 }
 
+export async function action({ request }: ActionFunctionArgs) {
+  const formData = await request.formData();
+  const name = String(formData.get("name") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim();
+  const message = String(formData.get("message") ?? "").trim();
+
+  if (!name || !email || !message) {
+    return json({ success: false, error: "Tous les champs sont requis." });
+  }
+
+  const API_URL = getApiUrl();
+  try {
+    const res = await fetch(`${API_URL}/api/contact-messages`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: { name, email, message } }),
+    });
+    if (!res.ok) throw new Error("API error");
+    return json({ success: true, error: null });
+  } catch {
+    return json({
+      success: false,
+      error:
+        "Le message n'a pas pu être envoyé automatiquement. Contactez-nous directement via WhatsApp ou à lespoulettes.benin@gmail.com",
+    });
+  }
+}
+
 export default function Contact() {
   const scrollRef = useScrollAnimations();
-  const { showToast } = useToast();
+  const actionData = useActionData<typeof action>();
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [sent, setSent] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const subject = encodeURIComponent(`Message de ${name} via Les Poulettes`);
-    const body = encodeURIComponent(
-      `Nom : ${name}\nEmail : ${email}\n\n${message}`
-    );
-    window.location.href = `mailto:lespoulettes.benin@gmail.com?subject=${subject}&body=${body}`;
-    setSent(true);
-    showToast("Votre application email s'ouvre !", "info");
-  };
 
   return (
     <div
@@ -71,7 +91,7 @@ export default function Contact() {
           <h2 className="font-basecoat text-xl sm:text-2xl font-bold text-gray-900 mb-6 uppercase tracking-wider">
             Envoyez-nous un message
           </h2>
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <Form method="post" className="space-y-5">
             <div>
               <label htmlFor="name" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">
                 Nom
@@ -119,32 +139,31 @@ export default function Contact() {
 
             <button
               type="submit"
-              className="font-basecoat w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold uppercase tracking-wider px-8 py-4 rounded-xl transition-all duration-200 transform hover:scale-[1.02] shadow-md hover:shadow-lg text-sm sm:text-base"
+              disabled={isSubmitting}
+              className="font-basecoat w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold uppercase tracking-wider px-8 py-4 rounded-xl transition-all duration-200 transform hover:scale-[1.02] shadow-md hover:shadow-lg text-sm sm:text-base disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100"
             >
-              Envoyer le message
+              {isSubmitting ? "Envoi en cours..." : "Envoyer le message"}
             </button>
 
-            {sent && (
+            {actionData?.success && (
               <div className="bg-green-50 border border-green-200 rounded-xl p-4">
                 <div className="flex items-start gap-3">
                   <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                   </svg>
-                  <div>
-                    <p className="font-basecoat text-green-700 font-semibold text-sm">
-                      Votre application email s'ouvre...
-                    </p>
-                    <p className="font-basecoat text-green-600 text-xs mt-1 leading-relaxed">
-                      Si rien ne se passe, contactez-nous directement à{' '}
-                      <a href="mailto:lespoulettes.benin@gmail.com" className="underline font-semibold">
-                        lespoulettes.benin@gmail.com
-                      </a>
-                    </p>
-                  </div>
+                  <p className="font-basecoat text-green-700 font-semibold text-sm">
+                    Message envoyé ! Nous vous répondrons dans les plus brefs délais.
+                  </p>
                 </div>
               </div>
             )}
-          </form>
+
+            {actionData?.error && (
+              <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                <p className="font-basecoat text-amber-800 text-sm leading-relaxed">{actionData.error}</p>
+              </div>
+            )}
+          </Form>
         </div>
 
         {/* ── Reseaux & Coordonnees ── */}

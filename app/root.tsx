@@ -7,6 +7,7 @@ import {
   useRouteError,
   isRouteErrorResponse,
   useLoaderData,
+  useNavigation,
 } from "@remix-run/react";
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
@@ -141,6 +142,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   const { gaId, recaptchaSiteKey } = useLoaderData<typeof loader>();
   const checkExpiration = useCartStore((state) => state.checkExpiration);
+  const navigation = useNavigation();
+  const isNavigating = navigation.state === "loading";
 
   useEffect(() => {
     checkExpiration();
@@ -179,6 +182,19 @@ export default function App() {
 
   return (
     <ToastProvider>
+      {isNavigating && (
+        <div
+          className="fixed top-0 left-0 right-0 z-[9999] h-1 bg-yellow-400"
+          style={{ animation: 'loadingBar 1.2s ease-in-out infinite' }}
+        />
+      )}
+      <style>{`
+        @keyframes loadingBar {
+          0% { transform: translateX(-100%); }
+          50% { transform: translateX(0%); }
+          100% { transform: translateX(100%); }
+        }
+      `}</style>
       <Outlet />
     </ToastProvider>
   );
