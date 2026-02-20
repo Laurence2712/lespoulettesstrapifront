@@ -385,7 +385,10 @@ export default function Panier() {
 
             <div className="border-t border-gray-100 pt-5 mb-6">
               <div className="font-basecoat flex justify-between items-center">
-                <span className="text-base text-gray-500">Sous-total</span>
+                <div>
+                  <span className="font-bold text-gray-900 text-base">Total estimé</span>
+                  <p className="text-xs text-gray-400 mt-0.5">Hors frais de livraison</p>
+                </div>
                 <span className="text-2xl sm:text-3xl font-bold text-gray-900">{total.toFixed(2)} €</span>
               </div>
             </div>
@@ -832,14 +835,6 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
               />
             </div>
 
-            {/* Info frais */}
-            <div className="font-basecoat flex items-center gap-2 bg-yellow-50 border border-yellow-100 rounded-xl px-4 py-3 text-sm text-gray-700">
-              <svg className="w-4 h-4 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Frais de livraison : <span className="font-bold ml-1">{shippingCost.toFixed(2)} €</span>
-              <span className="text-gray-400 ml-1">({SHIPPING_COSTS[country]?.label})</span>
-            </div>
           </div>
         )}
 
