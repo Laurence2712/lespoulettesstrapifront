@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link } from '@remix-run/react';
+import { Link, useSearchParams } from '@remix-run/react';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useCartStore } from '../store/cartStore';
 import { getApiUrl } from '../config/api';
@@ -167,6 +167,9 @@ export default function Panier() {
   const getTotalPrice = useCartStore((state) => state.getTotalPrice);
   const clearCart = useCartStore((state) => state.clearCart);
 
+  const [searchParams] = useSearchParams();
+  const sessionId = searchParams.get('session_id');
+
   const [showCheckout, setShowCheckout] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -178,27 +181,50 @@ export default function Panier() {
     fetch(`${API_URL}/api/commandes`, { method: 'HEAD', mode: 'no-cors' }).catch(() => {});
   }, []);
 
+  // Stripe redirige vers /panier?session_id=xxx après paiement réussi
+  useEffect(() => {
+    if (sessionId) {
+      clearCart();
+      setOrderSuccess(true);
+    }
+  }, [sessionId, clearCart]);
+
   const total = mounted ? getTotalPrice() : 0;
   const totalItems = items.reduce((acc, item) => acc + item.quantity, 0);
 
   if (orderSuccess) {
+    const isPaid = Boolean(sessionId);
     return (
       <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24 min-h-[60vh] flex items-center justify-center">
         <div className="text-center max-w-lg">
-          <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
-            <svg className="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+          <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 ${isPaid ? 'bg-green-100' : 'bg-yellow-100'}`}>
+            <svg className={`w-10 h-10 ${isPaid ? 'text-green-500' : 'text-yellow-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
             </svg>
           </div>
           <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 uppercase">
-            Commande envoyée !
+            {isPaid ? 'Paiement réussi !' : 'Commande envoyée !'}
           </h1>
           <p className="font-basecoat text-gray-600 mb-3 text-base sm:text-lg leading-relaxed">
-            Nous avons bien reçu votre commande. Vous recevrez un email de confirmation.
+            {isPaid
+              ? 'Votre paiement a été effectué avec succès. Vous allez recevoir un email de confirmation.'
+              : 'Nous avons bien reçu votre commande. Vous recevrez un email de confirmation.'}
           </p>
-          <p className="font-basecoat text-gray-500 mb-8 text-sm sm:text-base">
-            Attention : La commande ne sera préparée et expédiée qu'à la réception du paiement.
-          </p>
+          {isPaid && (
+            <p className="font-basecoat text-gray-600 mb-3 text-sm sm:text-base">
+              Votre commande sera préparée et expédiée dans les plus brefs délais.
+            </p>
+          )}
+          {!isPaid && (
+            <p className="font-basecoat text-gray-500 mb-3 text-sm sm:text-base">
+              Attention : La commande ne sera préparée et expédiée qu'à la réception du paiement.
+            </p>
+          )}
+          {sessionId && (
+            <p className="font-basecoat text-xs text-gray-400 mb-6 break-all px-2">
+              Référence : {sessionId}
+            </p>
+          )}
           <Link
             to="/"
             className="font-basecoat inline-block bg-yellow-400 hover:bg-yellow-500 text-black px-8 sm:px-10 py-3 sm:py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] shadow-md hover:shadow-lg text-sm sm:text-base"
