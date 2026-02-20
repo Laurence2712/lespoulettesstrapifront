@@ -292,6 +292,23 @@ export default function Realisations() {
           </div>
         )}
 
+        {/* ── Bande de réassurance ── */}
+        {!error && (
+          <div className="anim-fade-up flex flex-wrap gap-3 mb-8 sm:mb-10" data-delay="0.3">
+            {[
+              { icon: '✂', label: 'Fait main au Bénin' },
+              { icon: '🌍', label: 'Livraison Belgique & Europe' },
+              { icon: '🎨', label: 'Tissu wax authentique' },
+              { icon: '💛', label: 'Commerce équitable' },
+            ].map(({ icon, label }) => (
+              <div key={label} className="flex items-center gap-2 bg-amber-50 border border-yellow-200 px-4 py-2 rounded-full">
+                <span className="text-base leading-none">{icon}</span>
+                <span className="font-basecoat text-sm text-gray-700 font-medium whitespace-nowrap">{label}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Error state */}
         {error && (
           <div className="flex items-center justify-center py-20">
@@ -308,10 +325,10 @@ export default function Realisations() {
               <Link
                 key={realisation.id}
                 to={`/realisations/${realisation.id}`}
-                className="group relative rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 block"
+                className="group flex flex-col rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-1.5 bg-white border border-gray-100"
               >
-                {/* Image pleine carte */}
-                <div className="relative h-64 sm:h-72 md:h-80 overflow-hidden">
+                {/* Image */}
+                <div className="relative h-60 sm:h-68 md:h-72 overflow-hidden bg-amber-50 flex-shrink-0">
                   {realisation.image_url ? (
                     <img
                       src={realisation.image_url}
@@ -322,13 +339,10 @@ export default function Realisations() {
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                    <div className="w-full h-full flex items-center justify-center">
                       <span className="font-basecoat text-gray-400 text-sm">Aucune image</span>
                     </div>
                   )}
-
-                  {/* Overlay gradient — plus marqué pour lisibilité */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 
                   {/* Badge Nouveau */}
                   {realisation.isNew && (
@@ -350,29 +364,34 @@ export default function Realisations() {
                     ) : null
                   )}
 
-                  {/* Prix */}
-                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-gray-900 font-basecoat font-bold text-xl px-3 py-1 rounded-full shadow">
-                    {realisation.prix ? `${realisation.prix} €` : 'Sur demande'}
+                  {/* Tag fait main */}
+                  <div className="absolute top-3 right-3 bg-black/65 backdrop-blur-sm text-white text-xs font-basecoat px-2.5 py-1 rounded-full">
+                    ✂ Fait main
                   </div>
+                </div>
 
-                  {/* Contenu bas de carte */}
-                  <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
-                    <h3 className="font-basecoat text-white text-xl sm:text-2xl font-bold uppercase leading-tight mb-2">
-                      {realisation.title}
-                    </h3>
+                {/* Info section */}
+                <div className="flex flex-col flex-1 p-5">
+                  <h3 className="font-basecoat text-gray-900 text-lg sm:text-xl font-bold uppercase leading-tight mb-2 group-hover:text-yellow-600 transition-colors duration-300">
+                    {realisation.title}
+                  </h3>
 
-                    {realisation.description && (
-                      <p className="font-basecoat text-white/80 text-sm sm:text-base leading-relaxed line-clamp-2 mb-3">
-                        {realisation.description}
-                      </p>
-                    )}
+                  {realisation.description && (
+                    <p className="font-basecoat text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4 flex-1">
+                      {realisation.description}
+                    </p>
+                  )}
 
-                    <div className="inline-flex items-center gap-2 font-basecoat text-yellow-400 font-semibold text-sm sm:text-base transition-transform duration-300 group-hover:translate-x-2">
-                      Choisir mon motif
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                    <span className="font-basecoat text-2xl font-bold text-yellow-500">
+                      {realisation.prix ? `${realisation.prix} €` : 'Sur demande'}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 font-basecoat text-sm font-bold uppercase tracking-wide text-black bg-yellow-400 group-hover:bg-yellow-500 px-4 py-2 rounded-xl transition-all duration-200 group-hover:shadow-md">
+                      Voir
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
-                    </div>
+                    </span>
                   </div>
                 </div>
               </Link>
