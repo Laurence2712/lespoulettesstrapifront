@@ -135,6 +135,18 @@ export default function Footer() {
       {/* Ligne du bas */}
       <div className="border-t border-gray-800 mt-10 sm:mt-12 py-6 sm:py-8 px-4 sm:px-6 md:px-[60px] lg:px-[120px] flex flex-col sm:flex-row items-center justify-between gap-3 text-gray-500 text-sm font-basecoat">
         <p>© {currentYear} Les Poulettes. Tous droits réservés.</p>
+        <p className="flex items-center gap-1.5">
+          <span>Site créé par</span>
+          <a
+            href="https://www.laurencepirard.be"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-yellow-400 hover:text-yellow-300 transition font-semibold"
+          >
+            Laurence Pirard
+          </a>
+          <span>✦</span>
+        </p>
         <Link to="/mentions-legales" className="hover:text-yellow-400 transition">
           Mentions légales &amp; CGV
         </Link>
