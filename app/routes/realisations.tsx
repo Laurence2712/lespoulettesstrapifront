@@ -306,9 +306,11 @@ export default function Realisations() {
           </div>
         </div>
 
+        <div className="flex flex-col">
+
         {/* ── Filtres catégories ── */}
         {!error && (
-          <div className="anim-fade-up flex gap-2 sm:gap-3 flex-wrap mb-8 sm:mb-10" data-delay="0.25">
+          <div className="order-2 sm:order-1 anim-fade-up flex gap-2 sm:gap-3 flex-wrap mb-8 sm:mb-10" data-delay="0.25">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
@@ -331,6 +333,7 @@ export default function Realisations() {
         )}
 
         {/* ── Coups de cœur ── */}
+        <div className="order-1 sm:order-2">
         {!error && coupsDeCoeur.length > 0 && (
           <div className="mb-12 sm:mb-14">
             <div className="flex items-center gap-2 mb-2">
@@ -382,7 +385,9 @@ export default function Realisations() {
             </div>
           </div>
         )}
+        </div>{/* end order-1 sm:order-2 */}
 
+        <div className="order-3">
         {/* Error state */}
         {error && (
           <div className="flex items-center justify-center py-20">
@@ -536,6 +541,9 @@ export default function Realisations() {
             </button>
           </div>
         )}
+        </div>{/* end order-3 */}
+
+        </div>{/* end flex flex-col */}
       </div>
     </>
   );
