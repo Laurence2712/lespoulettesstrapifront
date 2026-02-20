@@ -377,14 +377,15 @@ export default function RealisationDetail() {
           {/* ── COLONNE INFOS ── */}
           <div className="anim-fade-left flex flex-col font-basecoat">
 
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-gray-900 leading-tight">
-              {realisation.title}
-            </h1>
+            <div className="flex items-start justify-between gap-4">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-gray-900 leading-tight">
+                {realisation.title}
+              </h1>
+              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-yellow-500 whitespace-nowrap flex-shrink-0">
+                {realisation.prix ? `${realisation.prix} €` : 'Prix sur demande'}
+              </p>
+            </div>
             <div className="w-16 h-1 bg-yellow-400 mt-3 mb-5"></div>
-
-            <p className="text-3xl font-bold text-yellow-500 mb-5">
-              {realisation.prix ? `${realisation.prix} €` : 'Prix sur demande'}
-            </p>
 
             {/* Description */}
             {realisation.description?.trim() && (
@@ -477,10 +478,11 @@ export default function RealisationDetail() {
       
             {/* Pas de déclinaisons */}
             {!hasDeclinaisons && (
-              <div className="mb-5 p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
-                <p className="text-yellow-800 text-sm font-semibold text-center">
-                  🧵 Les petites mains sont en train de le fabriquer...
-                </p>
+              <div className="mb-5">
+                <span className="inline-flex items-center gap-2 bg-red-100 text-red-800 px-4 py-1.5 rounded-full text-sm font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
+                  Épuisé
+                </span>
               </div>
             )}
 
