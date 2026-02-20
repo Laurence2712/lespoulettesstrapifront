@@ -212,7 +212,7 @@ export default function Index() {
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-3 sm:mb-4">
             <div>
               <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
-                Nouveaux arrivages
+                Nouvelles créations
               </h2>
               <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
             </div>
@@ -253,16 +253,18 @@ export default function Index() {
                           <span className="font-basecoat text-gray-400 text-sm">Aucune image</span>
                         </div>
                       )}
-                      {realisation.prix && (
-                        <div className="absolute top-3 right-3 bg-yellow-400 text-black font-basecoat font-bold text-sm px-3 py-1 rounded-full shadow-sm">
-                          {Number(realisation.prix).toFixed(2)} €
-                        </div>
-                      )}
                     </div>
                     <div className="p-4 flex flex-col flex-1 justify-between">
-                      <h3 className="font-basecoat font-semibold text-gray-900 text-base leading-snug mb-3">
-                        {realisation.title}
-                      </h3>
+                      <div>
+                        <h3 className="font-basecoat font-semibold text-gray-900 text-base leading-snug mb-1">
+                          {realisation.title}
+                        </h3>
+                        {realisation.prix && (
+                          <p className="font-basecoat text-gray-700 text-sm font-medium mb-3">
+                            {Number(realisation.prix).toFixed(2)} €
+                          </p>
+                        )}
+                      </div>
                       <span className="font-basecoat text-sm font-semibold text-yellow-600 group-hover:text-yellow-700 flex items-center gap-1 transition">
                         Voir le produit
                         <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
