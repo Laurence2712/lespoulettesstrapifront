@@ -108,11 +108,23 @@ function saveRegion(region: 'belgique' | 'benin') {
 
 const ITEMS_PER_PAGE = 9;
 
+const CATEGORIES = ['Tout', 'Trousses', 'Sacs', 'Housses', 'Accessoires'];
+
+function matchesCategory(realisation: Realisation, category: string): boolean {
+  if (category === 'Tout') return true;
+  const text = `${realisation.title} ${realisation.description}`.toLowerCase();
+  if (category === 'Accessoires') {
+    return !text.includes('trousse') && !text.includes('sac') && !text.includes('housse');
+  }
+  return text.includes(category.toLowerCase().slice(0, -1)); // "Trousses" → "trousse", "Sacs" → "sac", "Housses" → "housse"
+}
+
 export default function Realisations() {
   const { realisations, error } = useLoaderData<LoaderData>();
   const [showPopup, setShowPopup] = useState(false);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState<string>('Tout');
 
   const scrollRef = useScrollAnimations([showPopup]);
 
@@ -146,7 +158,9 @@ export default function Realisations() {
     navigate('/#ou-nous-trouver');
   };
 
-  const sortedRealisations = [...realisations].sort((a, b) => {
+  const filteredRealisations = realisations.filter((r) => matchesCategory(r, selectedCategory));
+
+  const sortedRealisations = [...filteredRealisations].sort((a, b) => {
     const prixA = typeof a.prix === 'string' ? parseFloat(a.prix) : (a.prix ?? 0);
     const prixB = typeof b.prix === 'string' ? parseFloat(b.prix) : (b.prix ?? 0);
     return sortOrder === 'asc' ? prixA - prixB : prixB - prixA;
@@ -160,6 +174,11 @@ export default function Realisations() {
 
   const handleSortChange = (value: 'asc' | 'desc') => {
     setSortOrder(value);
+    setCurrentPage(1);
+  };
+
+  const handleCategoryChange = (cat: string) => {
+    setSelectedCategory(cat);
     setCurrentPage(1);
   };
 
@@ -227,7 +246,7 @@ export default function Realisations() {
               data-delay="0.15"
             ></div>
             <p className="anim-fade-up font-basecoat text-gray-500 text-sm sm:text-base mt-3" data-delay="0.2">
-              {realisations.length} création{realisations.length > 1 ? 's' : ''} faite{realisations.length > 1 ? 's' : ''} main au Bénin ✂
+              {filteredRealisations.length} création{filteredRealisations.length > 1 ? 's' : ''} faite{filteredRealisations.length > 1 ? 's' : ''} main au Bénin ✂
             </p>
           </div>
           <div className="anim-fade-up flex items-center gap-2" data-delay="0.2">
@@ -248,6 +267,30 @@ export default function Realisations() {
             </select>
           </div>
         </div>
+
+        {/* ── Filtres catégories ── */}
+        {!error && (
+          <div className="anim-fade-up flex gap-2 sm:gap-3 flex-wrap mb-8 sm:mb-10" data-delay="0.25">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => handleCategoryChange(cat)}
+                className={`font-basecoat text-sm sm:text-base font-semibold px-4 sm:px-5 py-2 rounded-full border-2 transition-all duration-200 ${
+                  selectedCategory === cat
+                    ? 'bg-yellow-400 border-yellow-400 text-black shadow-md'
+                    : 'bg-white border-gray-200 text-gray-700 hover:border-yellow-400 hover:text-yellow-600'
+                }`}
+              >
+                {cat}
+                {cat !== 'Tout' && (
+                  <span className="ml-1.5 text-xs opacity-60">
+                    ({realisations.filter((r) => matchesCategory(r, cat)).length})
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Error state */}
         {error && (
@@ -388,6 +431,19 @@ export default function Realisations() {
             >
               Retour à l'accueil
             </Link>
+          </div>
+        )}
+        {!error && realisations.length > 0 && filteredRealisations.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-20 gap-4">
+            <p className="font-basecoat text-gray-500 text-center text-lg">
+              Aucune création dans cette catégorie pour l'instant.
+            </p>
+            <button
+              onClick={() => handleCategoryChange('Tout')}
+              className="font-basecoat text-yellow-600 hover:text-yellow-700 underline text-sm transition"
+            >
+              Voir toutes les créations
+            </button>
           </div>
         )}
       </div>

@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, useSearchParams } from '@remix-run/react';
+import { Link, useSearchParams, useLoaderData } from '@remix-run/react';
+import { json } from '@remix-run/node';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useCartStore } from '../store/cartStore';
-import { getApiUrl } from '../config/api';
+import { getApiUrl, getImageUrl } from '../config/api';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 
 export function meta() {
@@ -10,6 +11,35 @@ export function meta() {
     { title: "Mon panier — Les Poulettes" },
     { name: "robots", content: "noindex, nofollow" },
   ];
+}
+
+interface FeaturedProduct {
+  id: string;
+  title: string;
+  image_url?: string;
+  prix?: string | number;
+}
+
+export async function loader() {
+  try {
+    const API_URL = getApiUrl();
+    const response = await fetch(`${API_URL}/api/realisations?populate=*`);
+    if (!response.ok) return json({ featuredProducts: [] });
+    const data = await response.json();
+    const featuredProducts: FeaturedProduct[] = (data?.data ?? []).slice(0, 4).map((r: any) => ({
+      id: r.documentId,
+      title: r.Titre || 'Titre indisponible',
+      image_url: r.ImagePrincipale?.url
+        ? getImageUrl(r.ImagePrincipale.url)
+        : r.Images?.[0]?.url
+          ? getImageUrl(r.Images[0].url)
+          : undefined,
+      prix: r.Prix,
+    }));
+    return json({ featuredProducts });
+  } catch {
+    return json({ featuredProducts: [] });
+  }
 }
 
 const API_URL = getApiUrl();
@@ -161,6 +191,7 @@ const SHIPPING_COSTS: Record<string, { label: string; cost: number }> = {
 };
 
 export default function Panier() {
+  const { featuredProducts } = useLoaderData<{ featuredProducts: FeaturedProduct[] }>();
   const items = useCartStore((state) => state.items);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
@@ -263,28 +294,56 @@ export default function Panier() {
           </Link>
         </div>
 
-        <div className="mt-10 sm:mt-14">
-          <h2 className="font-basecoat text-lg sm:text-xl font-bold uppercase text-gray-900 mb-6 text-center">
-            Nos catégories
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {[
-              { name: 'Trousses', emoji: '👜', gradient: 'from-yellow-400 to-orange-400', text: 'text-black' },
-              { name: 'Sacs', emoji: '🛍️', gradient: 'from-gray-800 to-gray-950', text: 'text-white' },
-              { name: 'Housses', emoji: '📱', gradient: 'from-emerald-500 to-teal-700', text: 'text-white' },
-              { name: 'Accessoires', emoji: '✨', gradient: 'from-rose-400 to-pink-600', text: 'text-white' },
-            ].map((cat) => (
-              <Link
-                key={cat.name}
-                to="/realisations"
-                className={`bg-gradient-to-br ${cat.gradient} ${cat.text} rounded-2xl p-5 sm:p-6 flex flex-col items-center justify-center text-center min-h-[120px] sm:min-h-[150px] hover:scale-[1.03] transition-transform duration-300 shadow-md hover:shadow-xl`}
-              >
-                <span className="text-3xl sm:text-4xl mb-2">{cat.emoji}</span>
-                <p className="font-basecoat font-bold text-sm sm:text-base uppercase tracking-wide">{cat.name}</p>
-              </Link>
-            ))}
+        {featuredProducts.length > 0 && (
+          <div className="mt-10 sm:mt-14">
+            <h2 className="font-basecoat text-lg sm:text-xl font-bold uppercase text-gray-900 mb-2 text-center">
+              Nos créations
+            </h2>
+            <p className="font-basecoat text-gray-500 text-sm text-center mb-6 sm:mb-8">
+              Des pièces uniques, faites main au Bénin en tissu wax authentique.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+              {featuredProducts.map((product) => (
+                <Link key={product.id} to={`/realisations/${product.id}`} className="group">
+                  <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                    <div className="relative overflow-hidden aspect-square">
+                      {product.image_url ? (
+                        <img
+                          src={product.image_url}
+                          alt={product.title}
+                          loading="lazy"
+                          width={500}
+                          height={500}
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                          <span className="font-basecoat text-gray-400 text-sm">Aucune image</span>
+                        </div>
+                      )}
+                      {product.prix && (
+                        <div className="absolute top-3 right-3 bg-yellow-400 text-black font-basecoat font-bold text-sm px-3 py-1 rounded-full shadow-sm">
+                          {Number(product.prix).toFixed(2)} €
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-4 flex flex-col flex-1 justify-between">
+                      <h3 className="font-basecoat font-semibold text-gray-900 text-base leading-snug mb-3">
+                        {product.title}
+                      </h3>
+                      <span className="font-basecoat text-sm font-semibold text-yellow-600 group-hover:text-yellow-700 flex items-center gap-1 transition">
+                        Voir le produit
+                        <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }
