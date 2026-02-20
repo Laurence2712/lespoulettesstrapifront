@@ -377,14 +377,15 @@ export default function RealisationDetail() {
           {/* ── COLONNE INFOS ── */}
           <div className="anim-fade-left flex flex-col font-basecoat">
 
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-gray-900 leading-tight">
-              {realisation.title}
-            </h1>
+            <div className="flex items-start justify-between gap-4">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-gray-900 leading-tight">
+                {realisation.title}
+              </h1>
+              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-yellow-500 whitespace-nowrap flex-shrink-0">
+                {realisation.prix ? `${realisation.prix} €` : 'Prix sur demande'}
+              </p>
+            </div>
             <div className="w-16 h-1 bg-yellow-400 mt-3 mb-5"></div>
-
-            <p className="text-3xl font-bold text-yellow-500 mb-5">
-              {realisation.prix ? `${realisation.prix} €` : 'Prix sur demande'}
-            </p>
 
             {/* Description */}
             {realisation.description?.trim() && (
