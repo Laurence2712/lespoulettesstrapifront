@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rapport de prestation — Les Poulettes</title>
+  <style>
+    /* ── Google Fonts ─────────────────────────────────── */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    /* ── Variables ────────────────────────────────────── */
+    :root {
+      --yellow:  #E8B84B;
+      --yellow2: #F5D080;
+      --black:   #1A1A1A;
+      --grey:    #4A4A4A;
+      --light:   #F9F6F0;
+      --border:  #E2DAD0;
+      --white:   #FFFFFF;
+    }
+
+    /* ── Reset ────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 15px; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #EDEBE5;
+      color: var(--black);
+      line-height: 1.6;
+    }
+
+    /* ── Page wrapper ─────────────────────────────────── */
+    .page {
+      max-width: 820px;
+      margin: 2rem auto;
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+    }
+
+    /* ── Cover ────────────────────────────────────────── */
+    .cover {
+      background: var(--black);
+      padding: 60px 56px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+    .cover-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .logo-wrapper img {
+      height: 64px;
+      object-fit: contain;
+    }
+    .cover-meta {
+      text-align: right;
+      color: rgba(255,255,255,0.55);
+      font-size: 0.82rem;
+      line-height: 1.9;
+    }
+    .cover-meta strong { color: var(--yellow); font-weight: 600; }
+    .cover-heading {
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 36px;
+    }
+    .cover-heading .label {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 10px;
+    }
+    .cover-heading h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .cover-heading p {
+      margin-top: 10px;
+      color: rgba(255,255,255,0.55);
+      font-size: 0.9rem;
+      max-width: 420px;
+    }
+    .cover-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      background: rgba(232,184,75,0.15);
+      border: 1px solid rgba(232,184,75,0.35);
+      color: var(--yellow2);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    /* ── Content area ─────────────────────────────────── */
+    .content { padding: 48px 56px; display: flex; flex-direction: column; gap: 48px; }
+
+    /* ── Section ──────────────────────────────────────── */
+    .section-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 18px;
+    }
+
+    /* ── Intro card ───────────────────────────────────── */
+    .intro-card {
+      background: var(--light);
+      border-left: 4px solid var(--yellow);
+      border-radius: 8px;
+      padding: 22px 26px;
+    }
+    .intro-card p { color: var(--grey); font-size: 0.92rem; line-height: 1.75; }
+
+    /* ── Info grid ────────────────────────────────────── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .info-item {
+      background: var(--light);
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+    .info-item .key {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 4px;
+    }
+    .info-item .val {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--black);
+    }
+    .info-item .val a { color: var(--yellow); text-decoration: none; }
+
+    /* ── Stack badges ─────────────────────────────────── */
+    .stack-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 14px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--black);
+    }
+    .badge-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--yellow);
+      flex-shrink: 0;
+    }
+
+    /* ── Pages table ──────────────────────────────────── */
+    .pages-list { display: flex; flex-direction: column; gap: 8px; }
+    .page-row {
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      background: var(--light);
+      border-radius: 8px;
+      padding: 13px 16px;
+      border: 1px solid var(--border);
+    }
+    .page-num {
+      width: 28px; height: 28px;
+      background: var(--black);
+      color: var(--yellow);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .page-name { font-weight: 600; font-size: 0.88rem; color: var(--black); }
+    .page-desc { font-size: 0.78rem; color: var(--grey); margin-top: 2px; }
+    .page-url {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--yellow);
+      background: rgba(232,184,75,0.10);
+      border: 1px solid rgba(232,184,75,0.25);
+      padding: 3px 9px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    /* ── Features two-col ─────────────────────────────── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .feature-card {
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .feature-card .fc-title {
+      font-size: 0.83rem;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .fc-icon {
+      width: 22px; height: 22px;
+      background: var(--yellow);
+      border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem;
+      color: var(--black);
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .feature-card ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .feature-card ul li {
+      font-size: 0.78rem;
+      color: var(--grey);
+      padding-left: 12px;
+      position: relative;
+    }
+    .feature-card ul li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--yellow);
+      font-weight: 700;
+    }
+
+    /* ── Pricing ──────────────────────────────────────── */
+    .pricing-block { display: flex; flex-direction: column; gap: 28px; }
+
+    .pricing-group {}
+    .pricing-group-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      background: var(--black);
+      border-radius: 8px 8px 0 0;
+    }
+    .pricing-group-header .gh-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .pricing-group-header .gh-date {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .pricing-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      overflow: hidden;
+    }
+    .pricing-table thead tr {
+      background: #f0ece3;
+    }
+    .pricing-table thead th {
+      padding: 9px 16px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-align: left;
+    }
+    .pricing-table thead th:last-child { text-align: right; }
+    .pricing-table tbody tr {
+      border-top: 1px solid var(--border);
+    }
+    .pricing-table tbody tr:nth-child(even) { background: var(--light); }
+    .pricing-table tbody td {
+      padding: 11px 16px;
+      font-size: 0.82rem;
+      color: var(--grey);
+      vertical-align: top;
+    }
+    .pricing-table tbody td:first-child {
+      font-weight: 600;
+      color: var(--black);
+    }
+    .pricing-table tbody td:last-child {
+      text-align: right;
+      font-weight: 700;
+      color: var(--black);
+      white-space: nowrap;
+    }
+    .pricing-table tfoot tr {
+      background: var(--light);
+      border-top: 2px solid var(--border);
+    }
+    .pricing-table tfoot td {
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--black);
+    }
+    .pricing-table tfoot td:last-child {
+      text-align: right;
+      color: var(--yellow);
+      font-size: 1rem;
+    }
+
+    /* ── Total banner ─────────────────────────────────── */
+    .total-banner {
+      background: var(--black);
+      border-radius: 10px;
+      padding: 24px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .total-banner .tb-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    .total-banner .tb-sub {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.3);
+      margin-top: 2px;
+    }
+    .total-banner .tb-price {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--yellow);
+      letter-spacing: -0.02em;
+    }
+    .total-banner .tb-vat {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.3);
+      text-align: right;
+      margin-top: 2px;
+    }
+
+    /* ── Footer ───────────────────────────────────────── */
+    .doc-footer {
+      padding: 28px 56px;
+      background: var(--light);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .doc-footer p {
+      font-size: 0.75rem;
+      color: var(--grey);
+      line-height: 1.6;
+    }
+    .doc-footer .brand {
+      font-weight: 700;
+      color: var(--black);
+      font-size: 0.85rem;
+    }
+
+    /* ── Divider ──────────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── PRINT ────────────────────────────────────────── */
+    @media print {
+      body { background: white; }
+      .page {
+        max-width: 100%;
+        margin: 0;
+        box-shadow: none;
+        border-radius: 0;
+      }
+      .cover { padding: 48px 48px 40px; }
+      .content { padding: 40px 48px; }
+      .doc-footer { padding: 24px 48px; }
+
+      .no-break { page-break-inside: avoid; }
+      .break-before { page-break-before: always; }
+
+      .pricing-block { page-break-inside: avoid; }
+      .total-banner { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══════════════════════════ COVER ═══════════════════════════ -->
+  <header class="cover">
+    <div class="cover-top">
+      <div class="logo-wrapper">
+        <!-- Logo : chemin relatif à ce fichier dans /public -->
+        <img src="/assets/logo_t_poulettes_white.png" alt="Les Poulettes" />
+      </div>
+      <div class="cover-meta">
+        <div><strong>Émis le</strong> 20 février 2026</div>
+        <div><strong>Réf.</strong> LP-2025-001</div>
+        <div><strong>Client</strong> Les Poulettes</div>
+        <div><strong>Prestataire</strong> Développement Web</div>
+      </div>
+    </div>
+
+    <div class="cover-heading">
+      <div class="label">Rapport de prestations</div>
+      <h1>Site e-commerce<br/>Les Poulettes</h1>
+      <p>Conception, développement et livraison d'un site vitrine e-commerce complet — accessoires en wax.</p>
+    </div>
+
+    <div class="cover-tags">
+      <span class="tag">Remix / React</span>
+      <span class="tag">Strapi CMS</span>
+      <span class="tag">Stripe</span>
+      <span class="tag">Brevo Newsletter</span>
+      <span class="tag">Resend Emails</span>
+      <span class="tag">Google Analytics 4</span>
+      <span class="tag">SEO complet</span>
+      <span class="tag">Sécurité HTTPS</span>
+      <span class="tag">reCAPTCHA v3</span>
+      <span class="tag">Déploiement Vercel</span>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════ BODY ════════════════════════════ -->
+  <main class="content">
+
+    <!-- 1. Présentation ─────────────────────────────────────────── -->
+    <section class="no-break">
+      <div class="section-title">01 — Présentation du projet</div>
+      <div class="intro-card">
+        <p>
+          Développement intégral d'un site e-commerce pour la marque <strong>Les Poulettes</strong>, spécialisée dans les accessoires artisanaux en tissu wax (bracelets, pochettes, bijoux).
+          Le site permet la présentation de la collection, la commande en ligne avec paiement sécurisé Stripe, la gestion du contenu via un CMS Strapi, et l'envoi automatique d'e-mails transactionnels.
+          Le projet inclut un volet SEO complet, une intégration newsletter Brevo, et des mesures de sécurité renforcées.
+        </p>
+      </div>
+    </section>
+
+    <!-- 2. Informations générales ───────────────────────────────── -->
+    <section class="no-break">
+      <div class="section-title">02 — Informations générales</div>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="key">URL du site</div>
+          <div class="val"><a href="https://lespoulettes.be">lespoulettes.be</a></div>
+        </div>
+        <div class="info-item">
+          <div class="key">Livraison initiale</div>
+          <div class="val">30 janvier 2026</div>
+        </div>
+        <div class="info-item">
+          <div class="key">Hébergement frontend</div>
+          <div class="val">Vercel (Edge Network)</div>
+        </div>
+        <div class="info-item">
+          <div class="key">Hébergement backend CMS</div>
+          <div class="val">Render.com (Strapi)</div>
+        </div>
+        <div class="info-item">
+          <div class="key">Base de données</div>
+          <div class="val">Neon PostgreSQL (cloud)</div>
+        </div>
+        <div class="info-item">
+          <div class="key">Stockage médias</div>
+          <div class="val">Cloudinary (CDN images)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Stack technique ──────────────────────────────────────── -->
+    <section class="no-break">
+      <div class="section-title">03 — Stack technique</div>
+      <div class="stack-grid">
+        <div class="badge"><span class="badge-dot"></span>Remix 2.16 (framework fullstack)</div>
+        <div class="badge"><span class="badge-dot"></span>React 18 + TypeScript</div>
+        <div class="badge"><span class="badge-dot"></span>Tailwind CSS 3.4</div>
+        <div class="badge"><span class="badge-dot"></span>Strapi 5 (CMS headless)</div>
+        <div class="badge"><span class="badge-dot"></span>Zustand (panier persisté)</div>
+        <div class="badge"><span class="badge-dot"></span>GSAP 3.12 (animations)</div>
+        <div class="badge"><span class="badge-dot"></span>Stripe (paiement)</div>
+        <div class="badge"><span class="badge-dot"></span>Resend (e-mails auto)</div>
+        <div class="badge"><span class="badge-dot"></span>Brevo (newsletter)</div>
+        <div class="badge"><span class="badge-dot"></span>Google reCAPTCHA v3</div>
+        <div class="badge"><span class="badge-dot"></span>Google Analytics 4</div>
+        <div class="badge"><span class="badge-dot"></span>Neon PostgreSQL</div>
+        <div class="badge"><span class="badge-dot"></span>Cloudinary CDN</div>
+        <div class="badge"><span class="badge-dot"></span>Vercel (déploiement)</div>
+        <div class="badge"><span class="badge-dot"></span>Vite 6 (build)</div>
+      </div>
+    </section>
+
+    <!-- 4. Pages livrées ────────────────────────────────────────── -->
+    <section class="no-break">
+      <div class="section-title">04 — Pages développées</div>
+      <div class="pages-list">
+
+        <div class="page-row">
+          <div class="page-num">1</div>
+          <div>
+            <div class="page-name">Page d'accueil</div>
+            <div class="page-desc">Hero animé, sélection de produits, dernières actualités, liens vers les collections</div>
+          </div>
+          <div class="page-url">/</div>
+        </div>
+
+        <div class="page-row">
+          <div class="page-num">2</div>
+          <div>
+            <div class="page-name">Catalogue — Réalisations</div>
+            <div class="page-desc">Grille de produits avec filtres, images haute qualité depuis Cloudinary</div>
+          </div>
+          <div class="page-url">/realisations</div>
+        </div>
+
+        <div class="page-row">
+          <div class="page-num">3</div>
+          <div>
+            <div class="page-name">Fiche produit détaillée</div>
+            <div class="page-desc">Galerie, déclinaisons (couleurs/tailles), gestion du stock, ajout panier, produits similaires</div>
+          </div>
+          <div class="page-url">/realisations/:id</div>
+        </div>
+
+        <div class="page-row">
+          <div class="page-num">4</div>
+          <div>
+            <div class="page-name">Panier &amp; Checkout</div>
+            <div class="page-desc">Récapitulatif commande, options livraison (Belgique / France / Europe / Monde / Retrait), formulaire client, paiement Stripe</div>
+          </div>
+          <div class="page-url">/panier</div>
+        </div>
+
+        <div class="page-row">
+          <div class="page-num">5</div>
+          <div>
+            <div class="page-name">Confirmation de commande</div>
+            <div class="page-desc">Page de succès après paiement Stripe, e-mail automatique envoyé</div>
+          </div>
+          <div class="page-url">/panier/success</div>
+        </div>
+
+        <div class="page-row">
+          <div class="page-num">6</div>
+          <div>
+            <div class="page-name">Actualités / Blog</div>
+            <div class="page-desc">Liste des articles publiés depuis le CMS Strapi, avec images et extraits</div>
+          </div>
+          <div class="page-url">/actualites</div>
+        </div>
+
+        <div class="page-row">
+          <div class="page-num">7</div>
+          <div>
+            <div class="page-name">Contact</div>
+            <div class="page-desc">Formulaire de contact sécurisé, coordonnées, carte</div>
+          </div>
+          <div class="page-url">/contact</div>
+        </div>
+
+        <div class="page-row">
+          <div class="page-num">8</div>
+          <div>
+            <div class="page-name">FAQ</div>
+            <div class="page-desc">Questions fréquentes en accordéon, entièrement éditable depuis le CMS</div>
+          </div>
+          <div class="page-url">/faq</div>
+        </div>
+
+        <div class="page-row">
+          <div class="page-num">9</div>
+          <div>
+            <div class="page-name">Mentions légales</div>
+            <div class="page-desc">RGPD, politique de confidentialité, conditions de vente</div>
+          </div>
+          <div class="page-url">/mentions-legales</div>
+        </div>
+
+        <div class="page-row">
+          <div class="page-num">10</div>
+          <div>
+            <div class="page-name">Page 404 personnalisée</div>
+            <div class="page-desc">Page d'erreur aux couleurs de la marque avec lien retour accueil</div>
+          </div>
+          <div class="page-url">/*</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. Fonctionnalités ──────────────────────────────────────── -->
+    <section class="break-before">
+      <div class="section-title">05 — Fonctionnalités transversales</div>
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <div class="fc-title"><span class="fc-icon">🛒</span>Panier intelligent</div>
+          <ul>
+            <li>Persistance localStorage (24h)</li>
+            <li>Déclinaisons produits (couleur, taille)</li>
+            <li>Contrôle des stocks en temps réel</li>
+            <li>Tiroir panier animé (Cart Drawer)</li>
+          </ul>
+        </div>
+
+        <div class="feature-card">
+          <div class="fc-title"><span class="fc-icon">💳</span>Paiement Stripe</div>
+          <ul>
+            <li>Checkout sécurisé hébergé Stripe</li>
+            <li>Webhooks pour confirmation commande</li>
+            <li>Enregistrement commande dans le CMS</li>
+            <li>4 zones de livraison + retrait gratuit</li>
+          </ul>
+        </div>
+
+        <div class="feature-card">
+          <div class="fc-title"><span class="fc-icon">📧</span>E-mails automatiques</div>
+          <ul>
+            <li>Confirmation commande (Resend)</li>
+            <li>Template HTML aux couleurs de la marque</li>
+            <li>Récapitulatif produits + montant</li>
+            <li>Envoi déclenché après paiement validé</li>
+          </ul>
+        </div>
+
+        <div class="feature-card">
+          <div class="fc-title"><span class="fc-icon">📰</span>Newsletter Brevo</div>
+          <ul>
+            <li>Formulaire dans le footer</li>
+            <li>Vérification anti-bot reCAPTCHA v3</li>
+            <li>Ajout automatique à la liste Brevo</li>
+            <li>Gestion des doublons (upsert)</li>
+          </ul>
+        </div>
+
+        <div class="feature-card">
+          <div class="fc-title"><span class="fc-icon">🔍</span>SEO complet</div>
+          <ul>
+            <li>Balises meta, Open Graph, Twitter Card</li>
+            <li>Données structurées JSON-LD (Organisation)</li>
+            <li>Sitemap XML dynamique (/sitemap.xml)</li>
+            <li>noindex sur les pages panier/checkout</li>
+          </ul>
+        </div>
+
+        <div class="feature-card">
+          <div class="fc-title"><span class="fc-icon">🔒</span>Sécurité &amp; RGPD</div>
+          <ul>
+            <li>En-têtes HTTP sécurité (HSTS, X-Frame, XSS…)</li>
+            <li>Google reCAPTCHA v3 (newsletter)</li>
+            <li>Bandeau cookies RGPD (localStorage)</li>
+            <li>Politique de confidentialité intégrée</li>
+          </ul>
+        </div>
+
+        <div class="feature-card">
+          <div class="fc-title"><span class="fc-icon">📊</span>Analytics &amp; suivi</div>
+          <ul>
+            <li>Google Analytics 4 (GA4)</li>
+            <li>IP anonymisée (anonymize_ip: true)</li>
+            <li>Monitoring uptime (UptimeRobot)</li>
+            <li>Tracking conditionnel au consentement</li>
+          </ul>
+        </div>
+
+        <div class="feature-card">
+          <div class="fc-title"><span class="fc-icon">✨</span>Design &amp; UX</div>
+          <ul>
+            <li>Design responsive mobile/tablette/desktop</li>
+            <li>Animations GSAP (parallax, scroll)</li>
+            <li>Notifications toast (succès / erreur)</li>
+            <li>Bouton retour en haut de page</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. CMS & Contenu ────────────────────────────────────────── -->
+    <section class="no-break">
+      <div class="section-title">06 — Gestion de contenu (CMS Strapi)</div>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="key">Produits / Réalisations</div>
+          <div class="val">Titre, description, prix, stock, déclinaisons, images</div>
+        </div>
+        <div class="info-item">
+          <div class="key">Actualités</div>
+          <div class="val">Articles, date, image de couverture, texte enrichi</div>
+        </div>
+        <div class="info-item">
+          <div class="key">Page d'accueil</div>
+          <div class="val">Contenu hero, sélection produits en avant</div>
+        </div>
+        <div class="info-item">
+          <div class="key">Commandes</div>
+          <div class="val">Historique des commandes Stripe enregistrées</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Déploiement ──────────────────────────────────────────── -->
+    <section class="no-break">
+      <div class="section-title">07 — Infrastructure &amp; déploiement</div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="fc-title"><span class="fc-icon">🚀</span>Vercel (frontend)</div>
+          <ul>
+            <li>Déploiement continu depuis GitHub</li>
+            <li>Edge Network mondial (CDN)</li>
+            <li>En-têtes sécurité configurés</li>
+            <li>Variables d'env. sécurisées</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <div class="fc-title"><span class="fc-icon">⚙️</span>Render (Strapi CMS)</div>
+          <ul>
+            <li>Strapi hébergé en service cloud</li>
+            <li>Base de données Neon PostgreSQL</li>
+            <li>Médias stockés sur Cloudinary</li>
+            <li>Monitoring uptime (UptimeRobot)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ PRICING ════════════════════════════════ -->
+    <div class="divider"></div>
+
+    <section class="break-before">
+      <div class="section-title">08 — Récapitulatif des prestations</div>
+      <div class="pricing-block">
+
+        <!-- Projet initial -->
+        <div class="pricing-group no-break">
+          <div class="pricing-group-header">
+            <div class="gh-title">Phase 1 — Projet initial</div>
+            <div class="gh-date">Livraison : 30 janvier 2026</div>
+          </div>
+          <table class="pricing-table">
+            <thead>
+              <tr>
+                <th style="width:40%">Prestation</th>
+                <th>Détail</th>
+                <th>Prix HT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Architecture &amp; Setup</td>
+                <td>Configuration Remix, Strapi, Neon, Cloudinary, Vercel, Render, CI/CD GitHub</td>
+                <td>500 €</td>
+              </tr>
+              <tr>
+                <td>Design &amp; charte graphique</td>
+                <td>Tailwind CSS sur mesure, typographies, responsive mobile / tablette / desktop</td>
+                <td>400 €</td>
+              </tr>
+              <tr>
+                <td>Pages (× 10)</td>
+                <td>Accueil, Réalisations, Fiche produit, Panier/Checkout, Confirmation, Actualités, Contact, FAQ, Mentions légales, 404</td>
+                <td>1 200 €</td>
+              </tr>
+              <tr>
+                <td>Système e-commerce</td>
+                <td>Panier Zustand persisté, déclinaisons produits, gestion stock, tiroir Cart Drawer</td>
+                <td>650 €</td>
+              </tr>
+              <tr>
+                <td>Intégration Stripe</td>
+                <td>Sessions de paiement, webhooks, calcul frais de port multi-zones</td>
+                <td>450 €</td>
+              </tr>
+              <tr>
+                <td>E-mails automatiques (Resend)</td>
+                <td>Template HTML marque, envoi confirmation commande après paiement validé</td>
+                <td>350 €</td>
+              </tr>
+              <tr>
+                <td>SEO complet</td>
+                <td>Meta/OG/Twitter, JSON-LD Organisation, sitemap.xml dynamique, noindex checkout</td>
+                <td>300 €</td>
+              </tr>
+              <tr>
+                <td>Animations GSAP + UX</td>
+                <td>Parallax, scroll animations, toasts, carrousel SSR, BackToTop</td>
+                <td>300 €</td>
+              </tr>
+              <tr>
+                <td>Newsletter Brevo</td>
+                <td>Formulaire footer, action serveur, API Brevo, gestion doublons</td>
+                <td>250 €</td>
+              </tr>
+              <tr>
+                <td>Analytics + RGPD</td>
+                <td>Google Analytics 4 (IP anonymisée), bandeau cookies RGPD localStorage</td>
+                <td>200 €</td>
+              </tr>
+              <tr>
+                <td>Déploiement &amp; monitoring</td>
+                <td>Config Vercel + variables env., UptimeRobot, optimisations Edge</td>
+                <td>200 €</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2">Sous-total — Phase 1</td>
+                <td>4 800 €</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <!-- Évolutions février 2026 -->
+        <div class="pricing-group no-break">
+          <div class="pricing-group-header">
+            <div class="gh-title">Phase 2 — Évolutions &amp; sécurité</div>
+            <div class="gh-date">Livraison : 20 février 2026</div>
+          </div>
+          <table class="pricing-table">
+            <thead>
+              <tr>
+                <th style="width:40%">Prestation</th>
+                <th>Détail</th>
+                <th>Prix HT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>En-têtes de sécurité HTTP</td>
+                <td>HSTS, X-Frame-Options, X-XSS-Protection, Referrer-Policy, Permissions-Policy (vercel.json)</td>
+                <td>120 €</td>
+              </tr>
+              <tr>
+                <td>Google reCAPTCHA v3</td>
+                <td>Injection script root.tsx, vérification côté serveur newsletter, seuil de score 0.5, fallback gracieux</td>
+                <td>160 €</td>
+              </tr>
+              <tr>
+                <td>Correction galerie miniatures</td>
+                <td>Correction affichage et navigation des miniatures dans la galerie fiche produit</td>
+                <td>55 €</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2">Sous-total — Phase 2</td>
+                <td>335 €</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <!-- Total -->
+        <div class="total-banner">
+          <div>
+            <div class="tb-label">Total général — Phases 1 &amp; 2</div>
+            <div class="tb-sub">Toutes prestations confondues · Janvier – Février 2026</div>
+          </div>
+          <div>
+            <div class="tb-price">5 135 €</div>
+            <div class="tb-vat">Montant HT · TVA en sus si applicable</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════ FOOTER ══════════════════════════ -->
+  <footer class="doc-footer">
+    <div>
+      <div class="brand">Les Poulettes</div>
+      <p>lespoulettes.be · contact@lespoulettes.be</p>
+    </div>
+    <p style="text-align:right;">
+      Document généré le 20 février 2026<br/>
+      Rapport de prestations — Usage confidentiel client
+    </p>
+  </footer>
+
+</div>
+
+<!-- ══ Print button (masqué à l'impression) ══════════════════════ -->
+<div style="text-align:center;padding:2rem;display:flex;gap:12px;justify-content:center;">
+  <button onclick="window.print()" style="
+    background:#1A1A1A;color:#E8B84B;
+    border:none;border-radius:8px;
+    padding:12px 28px;font-size:0.9rem;font-weight:600;
+    cursor:pointer;font-family:inherit;letter-spacing:0.04em;
+  ">🖨️ &nbsp; Imprimer / Télécharger en PDF</button>
+
+  <style>
+    @media print { div[style*="text-align:center"] { display:none !important; } }
+  </style>
+</div>
+
+</body>
+</html>
