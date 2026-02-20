@@ -35,8 +35,18 @@ interface Realisation {
   totalStock?: number | null;
 }
 
+interface CoupDeCoeur {
+  id: number;
+  productId: string;
+  productTitle: string;
+  prix?: string | number;
+  image_url: string;
+  motif?: string;
+}
+
 interface LoaderData {
   realisations: Realisation[];
+  coupsDeCoeur: CoupDeCoeur[];
   error: string | null;
 }
 
@@ -44,7 +54,7 @@ export async function loader() {
   const API_URL = getApiUrl();
 
   try {
-    const url = `${API_URL}/api/realisations?populate=*`;
+    const url = `${API_URL}/api/realisations?populate[0]=ImagePrincipale&populate[1]=Images&populate[2]=Declinaison&populate[3]=Declinaison.Image`;
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -54,30 +64,59 @@ export async function loader() {
     const data = await response.json();
 
     if (data?.data) {
-      const realisations: Realisation[] = data.data.map((realisation: any) => ({
-        id: realisation.documentId,
-        title: realisation.Titre || 'Titre indisponible',
-        image_url: realisation.ImagePrincipale?.url
-          ? getImageUrl(realisation.ImagePrincipale.url)
-          : realisation.Images?.[0]?.url
-            ? getImageUrl(realisation.Images[0].url)
-            : undefined,
-        description: realisation.Description || '',
-        prix: realisation.Prix,
-        isNew: realisation.isNew || false,
-        totalStock: Array.isArray(realisation.Declinaison)
-          ? realisation.Declinaison.reduce((sum: number, d: any) => sum + (d.Stock ?? 0), 0)
-          : null,
-      }));
-      return json<LoaderData>({ realisations, error: null }, {
+      const coupsDeCoeur: CoupDeCoeur[] = [];
+
+      const realisations: Realisation[] = data.data.map((realisation: any) => {
+        // Extraire les coups de cœur
+        if (Array.isArray(realisation.Declinaison)) {
+          realisation.Declinaison.forEach((decl: any) => {
+            if (decl.CoupDeCoeur === true) {
+              const imgUrl = decl.Image?.url
+                ? getImageUrl(decl.Image.url)
+                : realisation.ImagePrincipale?.url
+                  ? getImageUrl(realisation.ImagePrincipale.url)
+                  : realisation.Images?.[0]?.url
+                    ? getImageUrl(realisation.Images[0].url)
+                    : '';
+              coupsDeCoeur.push({
+                id: decl.id,
+                productId: realisation.documentId,
+                productTitle: realisation.Titre || 'Titre indisponible',
+                prix: realisation.Prix,
+                image_url: imgUrl,
+                motif: decl.Description || '',
+              });
+            }
+          });
+        }
+
+        return {
+          id: realisation.documentId,
+          title: realisation.Titre || 'Titre indisponible',
+          image_url: realisation.ImagePrincipale?.url
+            ? getImageUrl(realisation.ImagePrincipale.url)
+            : realisation.Images?.[0]?.url
+              ? getImageUrl(realisation.Images[0].url)
+              : undefined,
+          description: realisation.Description || '',
+          prix: realisation.Prix,
+          isNew: realisation.isNew || false,
+          totalStock: Array.isArray(realisation.Declinaison)
+            ? realisation.Declinaison.reduce((sum: number, d: any) => sum + (d.Stock ?? 0), 0)
+            : null,
+        };
+      });
+
+      return json<LoaderData>({ realisations, coupsDeCoeur, error: null }, {
         headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=60' },
       });
     }
 
-    return json<LoaderData>({ realisations: [], error: 'Aucune réalisation trouvée.' });
+    return json<LoaderData>({ realisations: [], coupsDeCoeur: [], error: 'Aucune réalisation trouvée.' });
   } catch (err: any) {
     return json<LoaderData>({
       realisations: [],
+      coupsDeCoeur: [],
       error: 'Erreur lors du chargement des réalisations',
     });
   }
@@ -122,7 +161,7 @@ function matchesCategory(realisation: Realisation, category: string): boolean {
 }
 
 export default function Realisations() {
-  const { realisations, error } = useLoaderData<LoaderData>();
+  const { realisations, coupsDeCoeur, error } = useLoaderData<LoaderData>();
   const [showPopup, setShowPopup] = useState(false);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [currentPage, setCurrentPage] = useState(1);
@@ -288,6 +327,59 @@ export default function Realisations() {
                 )}
               </button>
             ))}
+          </div>
+        )}
+
+        {/* ── Coups de cœur ── */}
+        {!error && coupsDeCoeur.length > 0 && (
+          <div className="mb-12 sm:mb-14">
+            <div className="flex items-center gap-2 mb-2">
+              <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900">
+                Nos coups de cœur
+              </h2>
+              <span className="text-yellow-400 text-xl">♥</span>
+            </div>
+            <div className="w-14 h-1 bg-yellow-400 mb-6"></div>
+            <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-yellow-300 scrollbar-track-gray-100">
+              {coupsDeCoeur.map((item) => (
+                <Link
+                  key={`${item.productId}-${item.id}`}
+                  to={`/realisations/${item.productId}`}
+                  className="group flex-shrink-0 w-44 sm:w-52 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white border border-gray-100"
+                >
+                  <div className="relative h-44 sm:h-52 overflow-hidden bg-amber-50">
+                    {item.image_url ? (
+                      <img
+                        src={item.image_url}
+                        alt={item.motif || item.productTitle}
+                        loading="lazy"
+                        width={300}
+                        height={300}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <span className="font-basecoat text-gray-400 text-xs">Aucune image</span>
+                      </div>
+                    )}
+                    <div className="absolute top-2 left-2 bg-yellow-400 text-black text-xs font-basecoat font-bold px-2.5 py-1 rounded-full shadow">
+                      ♥ Coup de cœur
+                    </div>
+                  </div>
+                  <div className="p-3">
+                    <h3 className="font-basecoat text-gray-900 text-sm font-bold uppercase leading-tight group-hover:text-yellow-600 transition-colors">
+                      {item.productTitle}
+                    </h3>
+                    {item.motif && (
+                      <p className="font-basecoat text-gray-500 text-xs mt-0.5">{item.motif}</p>
+                    )}
+                    <p className="font-basecoat text-yellow-500 font-bold text-base mt-1">
+                      {item.prix ? `${item.prix} €` : 'Sur demande'}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         )}
 
