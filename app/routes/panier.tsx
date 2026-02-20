@@ -246,20 +246,45 @@ export default function Panier() {
 
   if (items.length === 0) {
     return (
-      <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24 min-h-[60vh] flex flex-col items-center justify-center gap-4">
-        <ShoppingCartIcon className="w-20 h-20 text-gray-200" strokeWidth={1} />
-        <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-gray-900">
-          Votre panier est vide
-        </h1>
-        <p className="font-basecoat text-gray-500 text-base">
-          Découvrez nos créations !
-        </p>
-        <Link
-          to="/realisations"
-          className="font-basecoat bg-yellow-400 hover:bg-yellow-500 text-black px-8 sm:px-10 py-3 sm:py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] shadow-md hover:shadow-lg text-sm sm:text-base mt-2"
-        >
-          Voir nos créations
-        </Link>
+      <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24">
+        <div className="text-center py-12 sm:py-16">
+          <ShoppingCartIcon className="w-20 h-20 text-gray-200 mx-auto mb-6" strokeWidth={1} />
+          <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-gray-900 mb-3">
+            Votre panier est vide
+          </h1>
+          <p className="font-basecoat text-gray-500 text-base mb-8">
+            Commencez par choisir une de nos créations faites main !
+          </p>
+          <Link
+            to="/realisations"
+            className="font-basecoat bg-yellow-400 hover:bg-yellow-500 text-black px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] shadow-md hover:shadow-lg text-sm sm:text-base inline-block"
+          >
+            Voir toute la boutique
+          </Link>
+        </div>
+
+        <div className="mt-10 sm:mt-14">
+          <h2 className="font-basecoat text-lg sm:text-xl font-bold uppercase text-gray-900 mb-6 text-center">
+            Nos catégories
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {[
+              { name: 'Trousses', emoji: '👜', gradient: 'from-yellow-400 to-orange-400', text: 'text-black' },
+              { name: 'Sacs', emoji: '🛍️', gradient: 'from-gray-800 to-gray-950', text: 'text-white' },
+              { name: 'Housses', emoji: '📱', gradient: 'from-emerald-500 to-teal-700', text: 'text-white' },
+              { name: 'Accessoires', emoji: '✨', gradient: 'from-rose-400 to-pink-600', text: 'text-white' },
+            ].map((cat) => (
+              <Link
+                key={cat.name}
+                to="/realisations"
+                className={`bg-gradient-to-br ${cat.gradient} ${cat.text} rounded-2xl p-5 sm:p-6 flex flex-col items-center justify-center text-center min-h-[120px] sm:min-h-[150px] hover:scale-[1.03] transition-transform duration-300 shadow-md hover:shadow-xl`}
+              >
+                <span className="text-3xl sm:text-4xl mb-2">{cat.emoji}</span>
+                <p className="font-basecoat font-bold text-sm sm:text-base uppercase tracking-wide">{cat.name}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }

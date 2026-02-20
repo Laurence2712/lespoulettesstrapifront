@@ -136,6 +136,7 @@ export async function loader() {
     if (heroImageUrl) {
       responseHeaders.set('Link', `<${heroImageUrl}>; rel=preload; as=image`);
     }
+    responseHeaders.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
 
     return json<LoaderData>({ homepageData, realisations, actualites, error: null }, { headers: responseHeaders });
   } catch (err: any) {
@@ -180,6 +181,23 @@ export default function Index() {
         </div>
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
       </header>
+
+      {/* ── Social Proof ── */}
+      <div className="bg-yellow-400 py-4 px-4">
+        <div className="flex flex-wrap justify-center gap-6 sm:gap-10 md:gap-16">
+          {[
+            { icon: '🎁', label: '+500 commandes livrées' },
+            { icon: '✂️', label: '100% fait main' },
+            { icon: '🌿', label: 'Éco-responsable' },
+            { icon: '🚀', label: 'Livraison Belgique & Bénin' },
+          ].map((item) => (
+            <div key={item.label} className="flex items-center gap-2 text-black font-basecoat font-bold text-xs sm:text-sm md:text-base">
+              <span className="text-xl sm:text-2xl">{item.icon}</span>
+              <span>{item.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* ── Nouveaux arrivages ── */}
       <section id="nouveaux-arrivages" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-gray-50">
