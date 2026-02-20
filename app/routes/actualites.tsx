@@ -72,49 +72,52 @@ export default function ActualitesPage() {
   });
 
   return (
-    <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24">
-      {/* Breadcrumb */}
-      <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
-        <Link to="/" className="text-yellow-600 hover:text-yellow-700 font-medium transition">
-          Accueil
-        </Link>
-        <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
-        <span className="text-gray-600">Actualités</span>
-      </nav>
+    <div ref={scrollRef} className="mt-16 sm:mt-20 md:mt-24">
+      {/* Header */}
+      <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
+        {/* Breadcrumb */}
+        <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
+          <Link to="/" className="text-yellow-600 hover:text-yellow-700 font-medium transition">
+            Accueil
+          </Link>
+          <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
+          <span className="text-gray-600">Actualités</span>
+        </nav>
 
-      {/* Titre + Tri */}
-      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10 md:mb-12">
-        <div>
-          <h1
-            className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900"
-            data-delay="0.1"
-          >
-            Nos actualités
-          </h1>
-          <div
-            className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4"
-            data-delay="0.15"
-          ></div>
-          <p className="anim-fade-up font-basecoat text-gray-500 text-sm sm:text-base mt-3" data-delay="0.2">
-            {actualites.length} actualité{actualites.length > 1 ? 's' : ''}
-          </p>
-        </div>
-        <div className="anim-fade-up flex items-center gap-2" data-delay="0.2">
-          <label
-            htmlFor="sort-date"
-            className="font-basecoat text-sm text-gray-600 whitespace-nowrap"
-          >
-            Trier par :
-          </label>
-          <select
-            id="sort-date"
-            value={sortOrder}
-            onChange={(e) => setSortOrder(e.target.value as 'desc' | 'asc')}
-            className="font-basecoat text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
-          >
-            <option value="desc">Plus récent</option>
-            <option value="asc">Plus ancien</option>
-          </select>
+        {/* Titre + Tri */}
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6">
+          <div>
+            <h1
+              className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900"
+              data-delay="0.1"
+            >
+              Nos actualités
+            </h1>
+            <div
+              className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4"
+              data-delay="0.15"
+            ></div>
+            <p className="anim-fade-up font-basecoat text-gray-500 text-sm sm:text-base mt-3" data-delay="0.2">
+              {actualites.length} actualité{actualites.length > 1 ? 's' : ''}
+            </p>
+          </div>
+          <div className="anim-fade-up flex items-center gap-2" data-delay="0.2">
+            <label
+              htmlFor="sort-date"
+              className="font-basecoat text-sm text-gray-600 whitespace-nowrap"
+            >
+              Trier par :
+            </label>
+            <select
+              id="sort-date"
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value as 'desc' | 'asc')}
+              className="font-basecoat text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+            >
+              <option value="desc">Plus récent</option>
+              <option value="asc">Plus ancien</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -127,51 +130,55 @@ export default function ActualitesPage() {
 
       {/* Liste actualités */}
       {!error && (
-        <div className="flex flex-col gap-12 sm:gap-16 md:gap-20">
+        <div>
           {sortedActualites.map((actu, index) => (
-            <div
+            <section
               key={actu.id}
-              className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center"
+              className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
             >
-              {/* Image */}
-              {actu.image_url && (
-                <div
-                  className={`anim-fade-right rounded-2xl overflow-hidden shadow-xl ${index % 2 !== 0 ? 'md:order-2' : ''}`}
-                  data-delay="0.2"
-                >
-                  <img
-                    src={actu.image_url}
-                    alt={actu.title}
-                    loading="lazy"
-                    width={800}
-                    height={400}
-                    className="w-full h-64 sm:h-72 md:h-80 lg:h-[400px] object-cover transition-transform duration-700 hover:scale-105"
-                  />
-                </div>
-              )}
+              <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-16 sm:py-20 md:py-24">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+                  {/* Image */}
+                  {actu.image_url && (
+                    <div
+                      className={`anim-fade-right rounded-2xl overflow-hidden shadow-xl ${index % 2 !== 0 ? 'md:order-2' : ''}`}
+                      data-delay="0.2"
+                    >
+                      <img
+                        src={actu.image_url}
+                        alt={actu.title}
+                        loading="lazy"
+                        width={800}
+                        height={500}
+                        className="w-full h-72 sm:h-80 md:h-96 lg:h-[480px] object-cover transition-transform duration-700 hover:scale-105"
+                      />
+                    </div>
+                  )}
 
-              {/* Contenu texte */}
-              <div
-                className={`anim-fade-left ${!actu.image_url ? 'md:col-span-2' : ''} ${index % 2 !== 0 ? 'md:order-1' : ''}`}
-                data-delay="0.3"
-              >
-                <p className="font-basecoat text-sm text-yellow-600 font-semibold mb-3 tracking-wider uppercase">
-                  {actu.date
-                    ? new Date(actu.date).toLocaleDateString("fr-FR", {
-                        day: "2-digit",
-                        month: "long",
-                        year: "numeric",
-                      })
-                    : "Date inconnue"}
-                </p>
-                <h2 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-5 leading-tight">
-                  {actu.title}
-                </h2>
-                <p className="font-basecoat text-gray-700 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed">
-                  {actu.content}
-                </p>
+                  {/* Contenu texte */}
+                  <div
+                    className={`anim-fade-left ${index % 2 !== 0 ? 'md:order-1' : ''}`}
+                    data-delay="0.3"
+                  >
+                    <p className="font-basecoat text-sm text-yellow-600 font-semibold mb-3 tracking-wider uppercase">
+                      {actu.date
+                        ? new Date(actu.date).toLocaleDateString("fr-FR", {
+                            day: "2-digit",
+                            month: "long",
+                            year: "numeric",
+                          })
+                        : "Date inconnue"}
+                    </p>
+                    <h2 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
+                      {actu.title}
+                    </h2>
+                    <p className="font-basecoat text-gray-700 text-base sm:text-lg whitespace-pre-line leading-relaxed">
+                      {actu.content}
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
+            </section>
           ))}
         </div>
       )}
