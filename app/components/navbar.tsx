@@ -110,14 +110,14 @@ export default function NavBar() {
                   <Link
                     to="/#qui-sommes-nous"
                     onClick={handleLinkClick}
-                    className="font-basecoat font-medium text-black hover:bg-gray-100 px-4 py-3 rounded-lg transition text-base"
+                    className="font-basecoat uppercase font-medium text-black hover:text-yellow-400 px-4 py-3 rounded-lg transition text-base"
                   >
                     Qui sommes-nous
                   </Link>
                   <Link
                     to="/realisations"
                     onClick={handleLinkClick}
-                    className={`font-basecoat font-medium hover:bg-gray-100 px-4 py-3 rounded-lg transition text-base ${
+                    className={`font-basecoat uppercase font-medium hover:text-yellow-400 px-4 py-3 rounded-lg transition text-base ${
                       isActive('/realisations') ? 'text-yellow-600 bg-yellow-50' : 'text-black'
                     }`}
                   >
@@ -126,14 +126,14 @@ export default function NavBar() {
                   <Link
                     to="/#ou-nous-trouver"
                     onClick={handleLinkClick}
-                    className="font-basecoat font-medium text-black hover:bg-gray-100 px-4 py-3 rounded-lg transition text-base"
+                    className="font-basecoat uppercase font-medium text-black hover:text-yellow-400 px-4 py-3 rounded-lg transition text-base"
                   >
                     Où nous trouver
                   </Link>
                   <Link
                     to="/contact"
                     onClick={handleLinkClick}
-                    className={`font-basecoat font-medium hover:bg-gray-100 px-4 py-3 rounded-lg transition text-base ${
+                    className={`font-basecoat uppercase font-medium hover:text-yellow-400 px-4 py-3 rounded-lg transition text-base ${
                       isActive('/contact') ? 'text-yellow-600 bg-yellow-50' : 'text-black'
                     }`}
                   >
@@ -147,7 +147,7 @@ export default function NavBar() {
           <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
             <Link
               to="/realisations"
-              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
+              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-lg ${
                 isActive('/realisations')
                   ? 'text-yellow-400'
                   : isTransparent ? 'text-white' : 'text-black'
@@ -157,7 +157,7 @@ export default function NavBar() {
             </Link>
             <Link
               to="/actualites"
-              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
+              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-lg ${
                 isActive('/actualites')
                   ? 'text-yellow-400'
                   : isTransparent ? 'text-white' : 'text-black'
@@ -167,7 +167,7 @@ export default function NavBar() {
             </Link>
             <Link
               to="/contact"
-              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
+              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-lg ${
                 isActive('/contact')
                   ? 'text-yellow-400'
                   : isTransparent ? 'text-white' : 'text-black'
