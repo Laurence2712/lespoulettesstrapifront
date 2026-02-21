@@ -42,6 +42,7 @@ interface Actualite {
   title: string;
   content: string;
   image_url?: string;
+  date?: string;
 }
 
 interface LoaderData {
@@ -123,6 +124,7 @@ export async function loader() {
           id: item.id,
           title: item.Title || 'Titre indisponible',
           content: item.content || '',
+          date: item.date || '',
           image_url: item.image?.formats?.large?.url
             ? getImageUrl(item.image.formats.large.url)
             : item.image?.url
@@ -173,7 +175,7 @@ export default function Index() {
           <div className="mt-4 sm:mt-6 anim-fade-up flex flex-col sm:flex-row gap-3 sm:gap-4" data-delay="0.3">
             <Link
               to="/realisations"
-              className="font-basecoat bg-yellow-400 hover:bg-yellow-500 text-black px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg uppercase tracking-wider font-bold transform transition hover:scale-105 inline-block"
+              className="font-basecoat border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg uppercase tracking-wider font-bold transform transition hover:scale-105 inline-block"
             >
               Je craque !
             </Link>
@@ -282,7 +284,7 @@ export default function Index() {
             <div className="anim-fade-up text-center mt-10 sm:mt-12" data-delay="0.3">
               <Link
                 to="/realisations"
-                className="font-basecoat inline-block bg-yellow-400 hover:bg-yellow-500 text-black px-10 sm:px-14 py-3 sm:py-4 rounded-xl text-sm sm:text-base uppercase tracking-wider font-bold transform transition hover:scale-105 shadow-md hover:shadow-lg"
+                className="font-basecoat inline-block border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-10 sm:px-14 py-3 sm:py-4 rounded-xl text-sm sm:text-base uppercase tracking-wider font-bold transform transition hover:scale-105 hover:shadow-lg"
               >
                 Voir toute la boutique
               </Link>
@@ -353,6 +355,11 @@ export default function Index() {
                     </div>
                   )}
                   <div className={`anim-fade-left ${!actu.image_url ? 'lg:col-span-2' : ''}`} data-delay="0.3">
+                    {actu.date && (
+                      <p className="font-basecoat text-sm text-gray-500 uppercase mb-2">
+                        {new Date(actu.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
+                      </p>
+                    )}
                     <h3 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-5 leading-tight">
                       {actu.title}
                     </h3>
@@ -361,7 +368,7 @@ export default function Index() {
                     </p>
                     <Link
                       to="/actualites"
-                      className="font-basecoat uppercase bg-yellow-400 hover:bg-yellow-500 text-black px-8 sm:px-10 py-3 sm:py-4 rounded-lg text-sm sm:text-base transform transition hover:scale-105 font-bold inline-block shadow-md hover:shadow-lg"
+                      className="font-basecoat uppercase border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-8 sm:px-10 py-3 sm:py-4 rounded-lg text-sm sm:text-base transform transition hover:scale-105 font-bold inline-block hover:shadow-lg"
                     >
                       Toutes les actualités
                     </Link>

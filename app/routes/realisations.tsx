@@ -235,7 +235,7 @@ export default function Realisations() {
             <div className="flex gap-3 flex-shrink-0">
               <button
                 onClick={handleBelgiqueClick}
-                className="font-basecoat bg-yellow-400 hover:bg-yellow-500 text-black px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wide transition-all hover:scale-105 shadow"
+                className="font-basecoat border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wide transition-all hover:scale-105"
               >
                 Belgique / Europe
               </button>
@@ -336,13 +336,9 @@ export default function Realisations() {
         <div className="order-1 sm:order-2">
         {!error && coupsDeCoeur.length > 0 && (
           <div className="mb-12 sm:mb-14">
-            <div className="flex items-center gap-2 mb-2">
-              <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900">
-                Nos coups de cœur
-              </h2>
-             
+            <div className="mb-6">
+              <span className="text-yellow-400 text-4xl sm:text-5xl">♥</span>
             </div>
-            <div className="w-14 h-1 bg-yellow-400 mb-6"></div>
             <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-yellow-300 scrollbar-track-gray-100">
               {coupsDeCoeur.map((item) => (
                 <Link

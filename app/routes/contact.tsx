@@ -137,7 +137,7 @@ export default function Contact() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="font-basecoat w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold uppercase tracking-wider px-8 py-4 rounded-xl transition-all duration-200 transform hover:scale-[1.02] shadow-md hover:shadow-lg text-sm sm:text-base disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100"
+              className="font-basecoat w-full border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black font-bold uppercase tracking-wider px-8 py-4 rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg text-sm sm:text-base disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100"
             >
               {isSubmitting ? "Envoi en cours..." : "Envoyer"}
             </button>

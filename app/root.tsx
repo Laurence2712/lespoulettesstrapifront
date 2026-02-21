@@ -244,7 +244,7 @@ export function ErrorBoundary() {
             )}
             <a
               href="/"
-              className="inline-block bg-yellow-400 hover:bg-yellow-500 text-black font-basecoat font-bold px-8 py-3 rounded-lg uppercase tracking-wider transition hover:scale-105"
+              className="inline-block border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black font-basecoat font-bold px-8 py-3 rounded-lg uppercase tracking-wider transition hover:scale-105"
             >
               Retour à l'accueil
             </a>

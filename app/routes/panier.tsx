@@ -256,7 +256,7 @@ export default function Panier() {
           )}
           <Link
             to="/"
-            className="font-basecoat inline-block bg-yellow-400 hover:bg-yellow-500 text-black px-8 sm:px-10 py-3 sm:py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] shadow-md hover:shadow-lg text-sm sm:text-base"
+            className="font-basecoat inline-block border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-8 sm:px-10 py-3 sm:py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg text-sm sm:text-base"
           >
             Retour à l'accueil
           </Link>
@@ -286,7 +286,7 @@ export default function Panier() {
           </p>
           <Link
             to="/realisations"
-            className="font-basecoat bg-yellow-400 hover:bg-yellow-500 text-black px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] shadow-md hover:shadow-lg text-sm sm:text-base inline-block"
+            className="font-basecoat border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg text-sm sm:text-base inline-block"
           >
             Voir toute la boutique
           </Link>
@@ -478,7 +478,7 @@ export default function Panier() {
 
             <button
               onClick={() => setShowCheckout(true)}
-              className="font-basecoat w-full bg-yellow-400 hover:bg-yellow-500 text-black py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] shadow-md hover:shadow-lg mb-3 text-sm sm:text-base"
+              className="font-basecoat w-full border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg mb-3 text-sm sm:text-base"
             >
               Passer commande
             </button>
@@ -941,7 +941,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
         <button
           type="submit"
           disabled={loading}
-          className="anim-fade-up font-basecoat w-full bg-yellow-400 hover:bg-yellow-500 text-black py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm sm:text-base"
+          className="anim-fade-up font-basecoat w-full border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm sm:text-base"
           data-delay="0.4"
         >
           {loading ? (

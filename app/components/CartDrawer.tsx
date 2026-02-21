@@ -169,7 +169,7 @@ export default function CartDrawer() {
             <Link
               to="/panier"
               onClick={() => setIsOpen(false)}
-              className="block w-full bg-yellow-400 hover:bg-yellow-500 text-black text-center py-4 rounded-xl font-basecoat font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] shadow-md hover:shadow-lg text-sm sm:text-base"
+              className="block w-full border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black text-center py-4 rounded-xl font-basecoat font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg text-sm sm:text-base"
             >
               Passer à la caisse
             </Link>
