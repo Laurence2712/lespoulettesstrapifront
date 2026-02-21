@@ -42,6 +42,7 @@ interface Actualite {
   title: string;
   content: string;
   image_url?: string;
+  date?: string;
 }
 
 interface LoaderData {
@@ -123,6 +124,7 @@ export async function loader() {
           id: item.id,
           title: item.Title || 'Titre indisponible',
           content: item.content || '',
+          date: item.date || '',
           image_url: item.image?.formats?.large?.url
             ? getImageUrl(item.image.formats.large.url)
             : item.image?.url
@@ -353,6 +355,11 @@ export default function Index() {
                     </div>
                   )}
                   <div className={`anim-fade-left ${!actu.image_url ? 'lg:col-span-2' : ''}`} data-delay="0.3">
+                    {actu.date && (
+                      <p className="font-basecoat text-sm text-gray-500 uppercase mb-2">
+                        {new Date(actu.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
+                      </p>
+                    )}
                     <h3 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-5 leading-tight">
                       {actu.title}
                     </h3>
