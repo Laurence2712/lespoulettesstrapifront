@@ -235,7 +235,7 @@ export default function Realisations() {
             <div className="flex gap-3 flex-shrink-0">
               <button
                 onClick={handleBelgiqueClick}
-                className="font-basecoat bg-yellow-400 hover:bg-yellow-500 text-black px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wide transition-all hover:scale-105 shadow"
+                className="font-basecoat border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wide transition-all hover:scale-105"
               >
                 Belgique / Europe
               </button>
@@ -362,8 +362,8 @@ export default function Realisations() {
                         <span className="font-basecoat text-gray-400 text-xs">Aucune image</span>
                       </div>
                     )}
-                    <div className="absolute top-2 left-2 bg-yellow-400 text-black text-xs font-basecoat font-bold px-2.5 py-1 rounded-full shadow">
-                      ♥ Coup de cœur
+                    <div className="absolute top-2 left-2 px-2.5 py-1 rounded-full">
+                      <span className="text-yellow-400 text-xl">♥</span>
                     </div>
                   </div>
                   <div className="p-3">
@@ -459,7 +459,7 @@ export default function Realisations() {
                     <span className="font-basecoat text-2xl font-bold text-yellow-500">
                       {realisation.prix ? `${realisation.prix} €` : 'Sur demande'}
                     </span>
-                    <span className="inline-flex items-center gap-1.5 font-basecoat text-sm font-bold uppercase tracking-wide text-black bg-yellow-400 group-hover:bg-yellow-500 px-4 py-2 rounded-xl transition-all duration-200 group-hover:shadow-md">
+                    <span className="inline-flex items-center gap-1.5 font-basecoat text-sm font-bold uppercase tracking-wide text-black bg-beige group-hover:bg-yellow-500 px-4 py-2 rounded-xl transition-all duration-200 group-hover:shadow-md">
                       Voir
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

@@ -175,7 +175,7 @@ export default function Index() {
           <div className="mt-4 sm:mt-6 anim-fade-up flex flex-col sm:flex-row gap-3 sm:gap-4" data-delay="0.3">
             <Link
               to="/realisations"
-              className="font-basecoat bg-yellow-400 hover:bg-yellow-500 text-black px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg uppercase tracking-wider font-bold transform transition hover:scale-105 inline-block"
+              className="font-basecoat border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg uppercase tracking-wider font-bold transform transition hover:scale-105 inline-block"
             >
               Je craque !
             </Link>
@@ -189,12 +189,12 @@ export default function Index() {
             {[0, 1].map((copy) => (
               <span key={copy} className="inline-flex items-center">
                 {[
-                  { icon: '✂️', label: '100% fait main' },
-                  { icon: '🌿', label: 'Éco-responsable' },
-                  { icon: '🚀', label: 'Livraison Belgique & Bénin' },
-                  { icon: '🎨', label: 'Tissus wax authentiques' },
-                  { icon: '🤝', label: 'Artisanat solidaire' },
-                  { icon: '🌍', label: 'Fabriqué au Bénin' },
+                  { icon: '', label: '100% fait main' },
+                  { icon: '', label: 'Éco-responsable' },
+                  { icon: '', label: 'Livraison Belgique/Europe & Bénin' },
+                  { icon: '', label: 'Tissus wax authentiques' },
+                  { icon: '', label: 'Artisanat solidaire' },
+                  { icon: '', label: 'Fabriqué au Bénin' },
                 ].map((item) => (
                   <span key={`${copy}-${item.label}`} className="inline-flex items-center gap-2 font-basecoat font-bold text-white text-xs sm:text-sm md:text-base px-6 sm:px-10">
                     <span className="text-base sm:text-lg">{item.icon}</span>
@@ -284,7 +284,7 @@ export default function Index() {
             <div className="anim-fade-up text-center mt-10 sm:mt-12" data-delay="0.3">
               <Link
                 to="/realisations"
-                className="font-basecoat inline-block bg-yellow-400 hover:bg-yellow-500 text-black px-10 sm:px-14 py-3 sm:py-4 rounded-xl text-sm sm:text-base uppercase tracking-wider font-bold transform transition hover:scale-105 shadow-md hover:shadow-lg"
+                className="font-basecoat inline-block border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-10 sm:px-14 py-3 sm:py-4 rounded-xl text-sm sm:text-base uppercase tracking-wider font-bold transform transition hover:scale-105 hover:shadow-lg"
               >
                 Voir toute la boutique
               </Link>
@@ -368,7 +368,7 @@ export default function Index() {
                     </p>
                     <Link
                       to="/actualites"
-                      className="font-basecoat uppercase bg-yellow-400 hover:bg-yellow-500 text-black px-8 sm:px-10 py-3 sm:py-4 rounded-lg text-sm sm:text-base transform transition hover:scale-105 font-bold inline-block shadow-md hover:shadow-lg"
+                      className="font-basecoat uppercase border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-8 sm:px-10 py-3 sm:py-4 rounded-lg text-sm sm:text-base transform transition hover:scale-105 font-bold inline-block hover:shadow-lg"
                     >
                       Toutes les actualités
                     </Link>

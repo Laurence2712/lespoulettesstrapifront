@@ -65,7 +65,7 @@ export default function NavBar() {
               <img
                 src={isTransparent ? "/assets/logo_t_poulettes_white.png" : "/assets/logo_t_poulettes.png"}
                 alt="Les Poulettes"
-                className={`h-16 sm:h-20 md:h-24 lg:h-28 w-auto max-w-[200px] sm:max-w-[240px] lg:max-w-[300px] block object-contain transition-transform duration-500 ease-in-out ${
+                className={`h-16 sm:h-24 md:h-28 lg:h-40 w-auto max-w-[200px] sm:max-w-[240px] lg:max-w-[300px] block object-contain transition-transform duration-500 ease-in-out ${
                   scrolled ? 'scale-90' : 'scale-100'
                 }`}
               />
@@ -110,14 +110,14 @@ export default function NavBar() {
                   <Link
                     to="/#qui-sommes-nous"
                     onClick={handleLinkClick}
-                    className="font-basecoat font-medium text-black hover:bg-gray-100 px-4 py-3 rounded-lg transition text-base"
+                    className="font-basecoat uppercase font-medium text-black hover:text-yellow-400 px-4 py-3 rounded-lg transition text-base"
                   >
                     Qui sommes-nous
                   </Link>
                   <Link
                     to="/realisations"
                     onClick={handleLinkClick}
-                    className={`font-basecoat font-medium hover:bg-gray-100 px-4 py-3 rounded-lg transition text-base ${
+                    className={`font-basecoat uppercase font-medium hover:text-yellow-400 px-4 py-3 rounded-lg transition text-base ${
                       isActive('/realisations') ? 'text-yellow-600 bg-yellow-50' : 'text-black'
                     }`}
                   >
@@ -126,14 +126,14 @@ export default function NavBar() {
                   <Link
                     to="/#ou-nous-trouver"
                     onClick={handleLinkClick}
-                    className="font-basecoat font-medium text-black hover:bg-gray-100 px-4 py-3 rounded-lg transition text-base"
+                    className="font-basecoat uppercase font-medium text-black hover:text-yellow-400 px-4 py-3 rounded-lg transition text-base"
                   >
                     Où nous trouver
                   </Link>
                   <Link
                     to="/contact"
                     onClick={handleLinkClick}
-                    className={`font-basecoat font-medium hover:bg-gray-100 px-4 py-3 rounded-lg transition text-base ${
+                    className={`font-basecoat uppercase font-medium hover:text-yellow-400 px-4 py-3 rounded-lg transition text-base ${
                       isActive('/contact') ? 'text-yellow-600 bg-yellow-50' : 'text-black'
                     }`}
                   >
@@ -147,7 +147,7 @@ export default function NavBar() {
           <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
             <Link
               to="/realisations"
-              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
+              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-lg ${
                 isActive('/realisations')
                   ? 'text-yellow-400'
                   : isTransparent ? 'text-white' : 'text-black'
@@ -157,7 +157,7 @@ export default function NavBar() {
             </Link>
             <Link
               to="/actualites"
-              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
+              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-lg ${
                 isActive('/actualites')
                   ? 'text-yellow-400'
                   : isTransparent ? 'text-white' : 'text-black'
@@ -167,7 +167,7 @@ export default function NavBar() {
             </Link>
             <Link
               to="/contact"
-              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-xs lg:text-sm ${
+              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-lg ${
                 isActive('/contact')
                   ? 'text-yellow-400'
                   : isTransparent ? 'text-white' : 'text-black'

@@ -267,7 +267,7 @@ export default function FAQ() {
           </a>
           <Link
             to="/contact"
-            className="font-basecoat inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-5 py-2.5 rounded-xl transition hover:scale-105 text-sm"
+            className="font-basecoat inline-flex items-center gap-2 border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black font-bold px-5 py-2.5 rounded-xl transition hover:scale-105 text-sm"
           >
             Nous contacter
           </Link>
