@@ -336,10 +336,9 @@ export default function Realisations() {
         <div className="order-1 sm:order-2">
         {!error && coupsDeCoeur.length > 0 && (
           <div className="mb-12 sm:mb-14">
-            <div className="mb-2">
+            <div className="mb-6">
               <span className="text-yellow-400 text-4xl sm:text-5xl">♥</span>
             </div>
-            <div className="w-14 h-1 bg-yellow-400 mb-6"></div>
             <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-yellow-300 scrollbar-track-gray-100">
               {coupsDeCoeur.map((item) => (
                 <Link
