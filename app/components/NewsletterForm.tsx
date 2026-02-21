@@ -92,7 +92,7 @@ export default function NewsletterForm({ variant = 'dark' }: NewsletterFormProps
         className={`font-basecoat font-bold uppercase tracking-wider px-6 py-3 rounded-xl transition-all duration-200 hover:scale-[1.02] text-sm whitespace-nowrap disabled:opacity-60
           ${isLight
             ? 'bg-black hover:bg-gray-900 text-white'
-            : 'bg-yellow-400 hover:bg-yellow-500 text-black'
+            : 'border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black'
           }`}
       >
         {isSubmitting ? 'Envoi...' : "S'inscrire"}
