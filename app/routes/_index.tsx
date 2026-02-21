@@ -350,13 +350,13 @@ export default function Index() {
                         loading="lazy"
                         width={800}
                         height={400}
-                        className="w-full h-64 sm:h-72 md:h-80 lg:h-[400px] object-cover transition-transform duration-700 hover:scale-105"
+                        className="w-full h-72 sm:h-80 md:h-96 lg:h-[480px] object-cover transition-transform duration-700 hover:scale-105"
                       />
                     </div>
                   )}
                   <div className={`anim-fade-left ${!actu.image_url ? 'lg:col-span-2' : ''}`} data-delay="0.3">
                     {actu.date && (
-                      <p className="font-basecoat text-sm text-gray-500 uppercase mb-2">
+                      <p className="font-basecoat text-sm text-yellow-600 font-semibold mb-3 tracking-wider uppercase">
                         {new Date(actu.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
                       </p>
                     )}
