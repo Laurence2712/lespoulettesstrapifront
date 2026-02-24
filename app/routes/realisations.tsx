@@ -33,6 +33,7 @@ interface Realisation {
   prix?: string | number;
   isNew?: boolean;
   totalStock?: number | null;
+  categorie?: string;
 }
 
 interface CoupDeCoeur {
@@ -104,6 +105,7 @@ export async function loader() {
           totalStock: Array.isArray(realisation.Declinaison)
             ? realisation.Declinaison.reduce((sum: number, d: any) => sum + (d.Stock ?? 0), 0)
             : null,
+          categorie: realisation.Categorie || undefined,
         };
       });
 
@@ -151,13 +153,18 @@ const CATEGORIES = ['Tout', 'Trousses', 'Sacs', 'Housses', 'Accessoires'];
 
 function matchesCategory(realisation: Realisation, category: string): boolean {
   if (category === 'Tout') return true;
+  // Si le champ Categorie est renseigné dans Strapi, on l'utilise directement
+  if (realisation.categorie) {
+    return realisation.categorie === category;
+  }
+  // Fallback : matching sur le texte (tant que Strapi n'est pas encore rempli)
   const text = `${realisation.title} ${realisation.description}`.toLowerCase();
   if (category === 'Sacs') return text.includes('tote') && !text.includes('porte-cl');
   if (category === 'Accessoires') {
     if (text.includes('porte-cl')) return true;
     return !text.includes('trousse') && !text.includes('tote') && !text.includes('housse');
   }
-  return text.includes(category.toLowerCase().slice(0, -1)); // "Trousses" → "trousse", "Housses" → "housse"
+  return text.includes(category.toLowerCase().slice(0, -1));
 }
 
 export default function Realisations() {
