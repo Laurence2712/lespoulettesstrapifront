@@ -347,6 +347,34 @@ export default function Index() {
         </div>
       </section>
 
+      {/* ── Dans notre atelier ── */}
+      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-beige">
+        <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+          Dans notre atelier au Bénin
+        </h2>
+        <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-yellow mt-3 sm:mt-4 mb-6 sm:mb-8" data-delay="0.1"></div>
+        <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed max-w-3xl mb-10 sm:mb-12" data-delay="0.15">
+          Chaque création naît dans notre atelier de Cotonou, au rythme des mains habiles de nos artisanes. Des tissus wax soigneusement sélectionnés, une découpe précise, des finitions cousues avec amour — c'est ça, l'âme des Poulettes.
+        </p>
+        <div className="anim-stagger grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6" data-stagger="0.1">
+          <div className="bg-white rounded-2xl p-6 shadow-sm border-t-4 border-wax-turquoise">
+            <p className="font-basecoat text-3xl mb-3">✂️</p>
+            <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">Taillé à la main</h3>
+            <p className="font-basecoat text-sm text-gray-600 leading-relaxed">Chaque pièce est découpée et assemblée manuellement par nos artisanes béninoises.</p>
+          </div>
+          <div className="bg-white rounded-2xl p-6 shadow-sm border-t-4 border-wax-orange">
+            <p className="font-basecoat text-3xl mb-3">🌿</p>
+            <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">Matières responsables</h3>
+            <p className="font-basecoat text-sm text-gray-600 leading-relaxed">Nous privilégions des tissus wax de qualité, durables et issus de circuits courts locaux.</p>
+          </div>
+          <div className="bg-white rounded-2xl p-6 shadow-sm border-t-4 border-wax-green">
+            <p className="font-basecoat text-3xl mb-3">🤝</p>
+            <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">Artisanat solidaire</h3>
+            <p className="font-basecoat text-sm text-gray-600 leading-relaxed">Acheter Les Poulettes, c'est soutenir directement des artisanes et leur famille au Bénin.</p>
+          </div>
+        </div>
+      </section>
+
       {/* ── Actualités ── */}
       <section className="bg-gray-50">
         <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] pt-6 sm:pt-8 md:pt-[60px] pb-8 sm:pb-10 md:pb-12">
