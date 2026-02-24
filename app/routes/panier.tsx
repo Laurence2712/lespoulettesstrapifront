@@ -184,8 +184,8 @@ const BELGIAN_CITIES: Record<string, string> = {
 
 // Frais de livraison
 const SHIPPING_COSTS: Record<string, { label: string; cost: number }> = {
-  belgique: { label: 'Belgique', cost: 4.95 },
-  europe: { label: 'Autre pays Europe', cost: 9.95 },
+  belgique: { label: 'Belgique', cost: 4 },
+  europe: { label: 'Autre pays Europe', cost: 8 },
 };
 
 export default function Panier() {
@@ -459,11 +459,6 @@ export default function Panier() {
                 <span>Livraison</span>
                 <span>À définir à l'étape suivante</span>
               </div>
-              <div className="font-basecoat bg-green-50 border border-green-100 rounded-xl p-3 text-xs text-gray-500 space-y-1 leading-relaxed">
-                <p>🚚 Belgique : 4,95 € · France : 6,95 €</p>
-                <p>🌍 Autre Europe : 9,95 € · Monde : 14,95 €</p>
-                <p className="text-green-700 font-semibold">✅ Retrait gratuit en Belgique ou au Bénin</p>
-              </div>
             </div>
 
             <div className="border-t border-gray-100 pt-5 mb-6">
@@ -514,7 +509,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
   // Livraison
   const [deliveryMode, setDeliveryMode] = useState<'livraison' | 'retrait'>('livraison');
   const [country, setCountry] = useState('belgique');
-  const [pickupLocation, setPickupLocation] = useState<'belgique' | 'benin'>('belgique');
+  const [pickupLocation, setPickupLocation] = useState<'grimbergen' | 'watermael' | 'benin'>('grimbergen');
   const [postalCode, setPostalCode] = useState('');
   const [city, setCity] = useState('');
   const [street, setStreet] = useState('');
@@ -526,7 +521,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
   const scrollRef = useScrollAnimations([deliveryMode]);
 
-  const shippingCost = deliveryMode === 'retrait' ? 0 : (SHIPPING_COSTS[country]?.cost ?? 14.95);
+  const shippingCost = deliveryMode === 'retrait' ? 0 : (SHIPPING_COSTS[country]?.cost ?? 8);
   const shippingLabel = deliveryMode === 'retrait' ? 'GRATUIT' : `${shippingCost.toFixed(2)} €`;
   const grandTotal = total + shippingCost;
 
@@ -552,7 +547,8 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
   const buildAdresse = (): string => {
     if (deliveryMode === 'retrait') {
-      if (pickupLocation === 'belgique') return 'RETRAIT GRATUIT — Belgique (adresse communiquée par email)';
+      if (pickupLocation === 'grimbergen') return 'RETRAIT GRATUIT — Grimbergen, Belgique (adresse exacte communiquée par email)';
+      if (pickupLocation === 'watermael') return 'RETRAIT GRATUIT — Watermael-Boisfort, Belgique (adresse exacte communiquée par email)';
       return 'RETRAIT GRATUIT — Bénin, Cotonou (adresse communiquée par email)';
     }
     const countryLabel = SHIPPING_COSTS[country]?.label ?? country;
@@ -666,7 +662,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
           <div className="font-basecoat flex justify-between text-sm text-gray-600">
             <span>
               {deliveryMode === 'retrait'
-                ? `Retrait gratuit — ${pickupLocation === 'belgique' ? 'Belgique' : 'Bénin'}`
+                ? `Retrait gratuit — ${pickupLocation === 'grimbergen' ? 'Grimbergen' : pickupLocation === 'watermael' ? 'Watermael-Boisfort' : 'Bénin'}`
                 : `Livraison — ${SHIPPING_COSTS[country]?.label ?? country}`}
             </span>
             <span className={`font-semibold ${shippingCost === 0 ? 'text-green-600' : 'text-gray-900'}`}>
@@ -776,7 +772,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
               <span className="text-2xl">🚚</span>
               <div>
                 <p className="font-basecoat font-bold text-gray-900 text-sm">Livraison à domicile</p>
-                <p className="font-basecoat text-xs text-gray-500 mt-0.5">Belgique dès 4,95 €</p>
+                <p className="font-basecoat text-xs text-gray-500 mt-0.5">Belgique dès 4 €</p>
               </div>
             </button>
 
@@ -806,20 +802,38 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             <div className="space-y-3">
 
               <label className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition ${
-                pickupLocation === 'belgique' ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-white'
+                pickupLocation === 'grimbergen' ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-white'
               }`}>
                 <input
                   type="radio"
                   name="pickup"
-                  value="belgique"
-                  checked={pickupLocation === 'belgique'}
-                  onChange={() => setPickupLocation('belgique')}
+                  value="grimbergen"
+                  checked={pickupLocation === 'grimbergen'}
+                  onChange={() => setPickupLocation('grimbergen')}
                   className="accent-green-500 w-4 h-4"
                 />
                 <span className="text-xl">🇧🇪</span>
                 <div>
-                  <p className="font-basecoat font-bold text-gray-900 text-sm">Belgique</p>
-                  <p className="font-basecoat text-xs text-gray-500 mt-0.5">L'adresse exacte vous sera communiquée par email</p>
+                  <p className="font-basecoat font-bold text-gray-900 text-sm">Grimbergen</p>
+                  <p className="font-basecoat text-xs text-gray-500 mt-0.5">Le lieu exact vous sera communiqué par email après commande</p>
+                </div>
+              </label>
+
+              <label className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition ${
+                pickupLocation === 'watermael' ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-white'
+              }`}>
+                <input
+                  type="radio"
+                  name="pickup"
+                  value="watermael"
+                  checked={pickupLocation === 'watermael'}
+                  onChange={() => setPickupLocation('watermael')}
+                  className="accent-green-500 w-4 h-4"
+                />
+                <span className="text-xl">🇧🇪</span>
+                <div>
+                  <p className="font-basecoat font-bold text-gray-900 text-sm">Watermael-Boisfort</p>
+                  <p className="font-basecoat text-xs text-gray-500 mt-0.5">Le lieu exact vous sera communiqué par email après commande</p>
                 </div>
               </label>
 
@@ -859,8 +873,8 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                 onChange={(e) => handleCountryChange(e.target.value)}
                 className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition bg-white"
               >
-                <option value="belgique">🇧🇪 Belgique — 4,95 €</option>
-                <option value="europe">🌍 Autre pays Europe — 9,95 €</option>
+                <option value="belgique">🇧🇪 Belgique — 4 €</option>
+                <option value="europe">🌍 Autre pays Europe — 8 €</option>
               </select>
             </div>
 

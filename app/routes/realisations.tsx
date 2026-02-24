@@ -336,8 +336,9 @@ export default function Realisations() {
         <div className="order-1 sm:order-2">
         {!error && coupsDeCoeur.length > 0 && (
           <div className="mb-12 sm:mb-14">
-            <div className="mb-6">
-              <span className="text-yellow-400 text-4xl sm:text-5xl">♥</span>
+            <div className="mb-6 flex items-center gap-3">
+              <span className="text-yellow-400 text-2xl">♥</span>
+              <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900">Nos coups de cœur</h2>
             </div>
             <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-yellow-300 scrollbar-track-gray-100">
               {coupsDeCoeur.map((item) => (
