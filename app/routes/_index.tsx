@@ -211,6 +211,15 @@ export default function Index() {
         </div>
       </header>
 
+      {/* ── Bande wax ── */}
+      <div className="flex h-2 w-full" aria-hidden="true">
+        <div className="flex-1 bg-wax-turquoise" />
+        <div className="flex-1 bg-wax-yellow" />
+        <div className="flex-1 bg-wax-orange" />
+        <div className="flex-1 bg-wax-red" />
+        <div className="flex-1 bg-wax-green" />
+      </div>
+
       {/* ── Nouveaux arrivages ── */}
       <section id="nouveaux-arrivages" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-gray-50">
         <div className="mb-8 sm:mb-10 md:mb-12">
@@ -219,7 +228,7 @@ export default function Index() {
               <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
                 Nouvelles créations
               </h2>
-              <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
+              <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-turquoise mt-3 sm:mt-4" data-delay="0.1"></div>
             </div>
             <Link
               to="/realisations"
@@ -304,7 +313,7 @@ export default function Index() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Qui sommes-nous
           </h2>
-          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.1"></div>
+          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-orange mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.1"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
             <div className="order-2 md:order-1 anim-fade-right" data-delay="0.2">
               <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
@@ -337,7 +346,7 @@ export default function Index() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Actualités
           </h2>
-          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
+          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-red mt-3 sm:mt-4" data-delay="0.1"></div>
         </div>
 
         {actualites.length > 0 ? (
@@ -393,7 +402,7 @@ export default function Index() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Où nous trouver
           </h2>
-          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
+          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-green mt-3 sm:mt-4" data-delay="0.1"></div>
           <p className="anim-fade-up mt-6 mb-6 font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed" data-delay="0.2">
             Un évènement à fêter ? Les Poulettes répondent à vos demandes spéciales : mariage, baby shower, naissance, baptême, communion, anniversaire, ...{'\n'}
             Des sachets de dragées aux cadeaux personnalisés pour vos invités, Les Poulettes sont prêtes à confectionner ce que vous souhaitez pour que la fête soit réussie !
