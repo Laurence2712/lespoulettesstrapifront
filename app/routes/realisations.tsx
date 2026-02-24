@@ -227,7 +227,7 @@ export default function Realisations() {
     <>
       {/* ── Bannière région (bottom) ── */}
       {showPopup && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t-4 border-yellow-400 shadow-2xl p-4 sm:p-5">
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t-4 border-benin-jaune shadow-2xl p-4 sm:p-5">
           <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center gap-3 sm:gap-6">
             <p className="font-basecoat font-bold text-gray-900 text-center sm:text-left text-sm sm:text-base whitespace-nowrap">
               Vous commandez depuis...
@@ -235,7 +235,7 @@ export default function Realisations() {
             <div className="flex gap-3 flex-shrink-0">
               <button
                 onClick={handleBelgiqueClick}
-                className="font-basecoat border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wide transition-all hover:scale-105"
+                className="font-basecoat border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wide transition-all hover:scale-105"
               >
                 Belgique / Europe
               </button>
@@ -266,7 +266,7 @@ export default function Realisations() {
       >
         {/* Breadcrumb */}
         <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
-          <Link to="/" className="text-yellow-600 hover:text-yellow-700 font-medium transition">
+          <Link to="/" className="text-benin-jaune hover:text-benin-terre font-medium transition">
             Accueil
           </Link>
           <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
@@ -283,11 +283,11 @@ export default function Realisations() {
               Notre boutique
             </h1>
             <div
-              className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4"
+              className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4"
               data-delay="0.15"
             ></div>
             <p className="anim-fade-up font-basecoat text-xs text-gray-400 mt-3" data-delay="0.2">
-              <Link to="/guide-des-tailles" className="text-yellow-600 hover:text-yellow-700 hover:underline transition font-semibold">
+              <Link to="/guide-des-tailles" className="text-benin-jaune hover:text-benin-terre hover:underline transition font-semibold">
                 Guide des tailles & entretien →
               </Link>
             </p>
@@ -303,7 +303,7 @@ export default function Realisations() {
               id="sort-price"
               value={sortOrder}
               onChange={(e) => handleSortChange(e.target.value as 'asc' | 'desc')}
-              className="font-basecoat text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+              className="font-basecoat text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune"
             >
               <option value="asc">Prix croissant</option>
               <option value="desc">Prix décroissant</option>
@@ -322,8 +322,8 @@ export default function Realisations() {
                 onClick={() => handleCategoryChange(cat)}
                 className={`font-basecoat text-sm sm:text-base font-semibold px-4 sm:px-5 py-2 rounded-full border-2 transition-all duration-200 ${
                   selectedCategory === cat
-                    ? 'bg-yellow-400 border-yellow-400 text-black shadow-md'
-                    : 'bg-white border-gray-200 text-gray-700 hover:border-yellow-400 hover:text-yellow-600'
+                    ? 'bg-benin-jaune border-benin-jaune text-black shadow-md'
+                    : 'bg-white border-gray-200 text-gray-700 hover:border-benin-jaune hover:text-benin-jaune'
                 }`}
               >
                 {cat}
@@ -342,10 +342,10 @@ export default function Realisations() {
         {!error && coupsDeCoeur.length > 0 && (
           <div className="mb-12 sm:mb-14">
             <div className="mb-6 flex items-center gap-3">
-              <span className="text-yellow-400 text-2xl">♥</span>
+              <span className="text-benin-jaune text-2xl">♥</span>
               <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900">Nos coups de cœur</h2>
             </div>
-            <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-yellow-300 scrollbar-track-gray-100">
+            <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-benin-ocre scrollbar-track-gray-100">
               {coupsDeCoeur.map((item) => (
                 <Link
                   key={`${item.productId}-${item.id}`}
@@ -368,17 +368,17 @@ export default function Realisations() {
                       </div>
                     )}
                     <div className="absolute top-2 left-2 px-2.5 py-1 rounded-full">
-                      <span className="text-yellow-400 text-xl">♥</span>
+                      <span className="text-benin-jaune text-xl">♥</span>
                     </div>
                   </div>
                   <div className="p-3">
-                    <h3 className="font-basecoat text-gray-900 text-sm font-bold uppercase leading-tight group-hover:text-yellow-600 transition-colors">
+                    <h3 className="font-basecoat text-gray-900 text-sm font-bold uppercase leading-tight group-hover:text-benin-jaune transition-colors">
                       {item.productTitle}
                     </h3>
                     {item.motif && (
                       <p className="font-basecoat text-gray-500 text-xs mt-0.5">{item.motif}</p>
                     )}
-                    <p className="font-basecoat text-yellow-500 font-bold text-base mt-1">
+                    <p className="font-basecoat text-benin-jaune font-bold text-base mt-1">
                       {item.prix ? `${item.prix} €` : 'Sur demande'}
                     </p>
                   </div>
@@ -393,7 +393,7 @@ export default function Realisations() {
         {/* Error state */}
         {error && (
           <div className="flex items-center justify-center py-20">
-            <p className="font-basecoat text-red-500 text-center text-lg">{error}</p>
+            <p className="font-basecoat text-benin-rouge text-center text-lg">{error}</p>
           </div>
         )}
         {/* ── Grille produits ── */}
@@ -427,7 +427,7 @@ export default function Realisations() {
 
                   {/* Badge Nouveau */}
                   {realisation.isNew && (
-                    <div className="absolute top-3 left-3 bg-yellow-400 text-black text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
+                    <div className="absolute top-3 left-3 bg-benin-jaune text-black text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
                       Nouveau
                     </div>
                   )}
@@ -435,7 +435,7 @@ export default function Realisations() {
                   {/* Badge stock faible / épuisé */}
                   {!realisation.isNew && realisation.totalStock !== null && realisation.totalStock !== undefined && (
                     realisation.totalStock === 0 ? (
-                      <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
+                      <div className="absolute top-3 left-3 bg-benin-rouge/100 text-white text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
                         Épuisé
                       </div>
                     ) : realisation.totalStock <= 5 ? (
@@ -455,7 +455,7 @@ export default function Realisations() {
 
                 {/* Info section */}
                 <div className="flex flex-col flex-1 p-5">
-                  <h3 className="font-basecoat text-gray-900 text-lg sm:text-xl font-bold uppercase leading-tight mb-2 group-hover:text-yellow-600 transition-colors duration-300">
+                  <h3 className="font-basecoat text-gray-900 text-lg sm:text-xl font-bold uppercase leading-tight mb-2 group-hover:text-benin-jaune transition-colors duration-300">
                     {realisation.title}
                   </h3>
 
@@ -466,10 +466,10 @@ export default function Realisations() {
                   )}
 
                   <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
-                    <span className="font-basecoat text-2xl font-bold text-yellow-500">
+                    <span className="font-basecoat text-2xl font-bold text-benin-jaune">
                       {realisation.prix ? `${realisation.prix} €` : 'Sur demande'}
                     </span>
-                    <span className="inline-flex items-center gap-1.5 font-basecoat text-sm font-bold uppercase tracking-wide text-black bg-beige group-hover:bg-yellow-500 px-4 py-2 rounded-xl transition-all duration-200 group-hover:shadow-md">
+                    <span className="inline-flex items-center gap-1.5 font-basecoat text-sm font-bold uppercase tracking-wide text-black bg-beige group-hover:bg-benin-jaune px-4 py-2 rounded-xl transition-all duration-200 group-hover:shadow-md">
                       Voir
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -488,7 +488,7 @@ export default function Realisations() {
             <button
               onClick={() => { setCurrentPage((p) => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               disabled={currentPage === 1}
-              className="font-basecoat flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-yellow-400 hover:text-yellow-600 transition disabled:opacity-30 disabled:cursor-not-allowed bg-white"
+              className="font-basecoat flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-benin-jaune hover:text-benin-jaune transition disabled:opacity-30 disabled:cursor-not-allowed bg-white"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
               Précédent
@@ -501,8 +501,8 @@ export default function Realisations() {
                   onClick={() => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                   className={`w-10 h-10 rounded-xl font-basecoat text-sm font-bold transition ${
                     page === currentPage
-                      ? 'bg-yellow-400 text-black shadow-md'
-                      : 'bg-white border border-gray-200 text-gray-700 hover:border-yellow-400 hover:text-yellow-600'
+                      ? 'bg-benin-jaune text-black shadow-md'
+                      : 'bg-white border border-gray-200 text-gray-700 hover:border-benin-jaune hover:text-benin-jaune'
                   }`}
                 >
                   {page}
@@ -513,7 +513,7 @@ export default function Realisations() {
             <button
               onClick={() => { setCurrentPage((p) => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               disabled={currentPage === totalPages}
-              className="font-basecoat flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-yellow-400 hover:text-yellow-600 transition disabled:opacity-30 disabled:cursor-not-allowed bg-white"
+              className="font-basecoat flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-benin-jaune hover:text-benin-jaune transition disabled:opacity-30 disabled:cursor-not-allowed bg-white"
             >
               Suivant
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
@@ -529,7 +529,7 @@ export default function Realisations() {
             </p>
             <Link
               to="/"
-              className="font-basecoat text-yellow-600 hover:text-yellow-700 underline text-sm transition"
+              className="font-basecoat text-benin-jaune hover:text-benin-terre underline text-sm transition"
             >
               Retour à l'accueil
             </Link>
@@ -542,7 +542,7 @@ export default function Realisations() {
             </p>
             <button
               onClick={() => handleCategoryChange('Tout')}
-              className="font-basecoat text-yellow-600 hover:text-yellow-700 underline text-sm transition"
+              className="font-basecoat text-benin-jaune hover:text-benin-terre underline text-sm transition"
             >
               Voir toutes les créations
             </button>

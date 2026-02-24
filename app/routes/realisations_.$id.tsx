@@ -204,8 +204,8 @@ export default function RealisationDetail() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <p className="text-red-500 mb-4 font-basecoat">{error}</p>
-          <Link to="/realisations" className="text-yellow-600 hover:text-yellow-800 font-basecoat underline">
+          <p className="text-benin-rouge mb-4 font-basecoat">{error}</p>
+          <Link to="/realisations" className="text-benin-jaune hover:text-benin-terre font-basecoat underline">
             ← Retour aux réalisations
           </Link>
         </div>
@@ -293,9 +293,9 @@ export default function RealisationDetail() {
       >
         {/* Breadcrumb */}
         <nav className="anim-fade-up mb-4 text-xs sm:text-sm font-basecoat text-gray-500">
-          <Link to="/" className="hover:text-yellow-600 transition">Accueil</Link>
+          <Link to="/" className="hover:text-benin-jaune transition">Accueil</Link>
           <span className="mx-2">/</span>
-          <Link to="/realisations" className="hover:text-yellow-600 transition">Boutique</Link>
+          <Link to="/realisations" className="hover:text-benin-jaune transition">Boutique</Link>
           <span className="mx-2">/</span>
           <span className="text-gray-800 uppercase font-semibold">{realisation.title}</span>
         </nav>
@@ -331,7 +331,7 @@ export default function RealisationDetail() {
                   Aucune image disponible
                 </div>
               )}
-              <div className="absolute top-4 left-4 bg-yellow-400 text-black text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
+              <div className="absolute top-4 left-4 bg-benin-jaune text-black text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
                 ✂ Fait main
               </div>
             </div>
@@ -342,7 +342,7 @@ export default function RealisationDetail() {
                 <p className="text-xs font-basecoat font-semibold uppercase text-gray-400 tracking-widest mb-2">
                   Autres vues
                 </p>
-                <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-yellow-300 scrollbar-track-gray-100">
+                <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-benin-ocre scrollbar-track-gray-100">
                   {realisation.mainImages.map((img, idx) => (
                     <button
                       key={idx}
@@ -352,8 +352,8 @@ export default function RealisationDetail() {
                       }}
                       className={`relative rounded-xl overflow-hidden transition-all flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 ${
                         !selectedDeclinaisonId && mainImageIndex === idx
-                          ? 'ring-2 ring-yellow-400 shadow-md scale-105'
-                          : 'ring-1 ring-gray-200 hover:ring-yellow-300 opacity-60 hover:opacity-100 hover:scale-105'
+                          ? 'ring-2 ring-benin-jaune shadow-md scale-105'
+                          : 'ring-1 ring-gray-200 hover:ring-benin-ocre opacity-60 hover:opacity-100 hover:scale-105'
                       }`}
                       aria-label={`Vue ${idx + 1}`}
                     >
@@ -365,7 +365,7 @@ export default function RealisationDetail() {
                         className="w-full h-full object-contain bg-beige rounded-lg"
                       />
                       {!selectedDeclinaisonId && mainImageIndex === idx && (
-                        <div className="absolute inset-0 bg-yellow-400/10 rounded-xl pointer-events-none" />
+                        <div className="absolute inset-0 bg-benin-jaune/10 rounded-xl pointer-events-none" />
                       )}
                     </button>
                   ))}
@@ -381,15 +381,15 @@ export default function RealisationDetail() {
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-gray-900 leading-tight">
                 {realisation.title}
               </h1>
-              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-yellow-500 whitespace-nowrap flex-shrink-0">
+              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-benin-jaune whitespace-nowrap flex-shrink-0">
                 {realisation.prix ? `${realisation.prix} €` : 'Prix sur demande'}
               </p>
             </div>
-            <div className="w-16 h-1 bg-yellow-400 mt-3 mb-5"></div>
+            <div className="w-16 h-1 bg-benin-jaune mt-3 mb-5"></div>
 
             {/* Description */}
             {realisation.description?.trim() && (
-              <div className="mb-6 p-5 bg-amber-50 border-l-4 border-yellow-400 rounded-r-xl">
+              <div className="mb-6 p-5 bg-amber-50 border-l-4 border-benin-jaune rounded-r-xl">
                 <p className="text-gray-800 leading-relaxed text-base whitespace-pre-line">
                   {realisation.description}
                 </p>
@@ -404,7 +404,7 @@ export default function RealisationDetail() {
               <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-wax-orange/10 text-orange-800 border border-wax-orange/30 px-3 py-1.5 rounded-full">
                 ✂️ Fait main
               </span>
-              <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-green-50 text-green-800 border border-green-200 px-3 py-1.5 rounded-full">
+              <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-benin-vert/10 text-benin-vert border border-benin-vert/30 px-3 py-1.5 rounded-full">
                 🌿 Éco-responsable
               </span>
               <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-200 px-3 py-1.5 rounded-full">
@@ -432,8 +432,8 @@ export default function RealisationDetail() {
                           !inStock
                             ? 'opacity-40 cursor-not-allowed grayscale'
                             : isSelected
-                            ? 'ring-2 ring-yellow-400 ring-offset-2 scale-105 shadow-lg'
-                            : 'ring-1 ring-gray-200 hover:ring-yellow-300 hover:scale-105 hover:shadow-md'
+                            ? 'ring-2 ring-benin-jaune ring-offset-2 scale-105 shadow-lg'
+                            : 'ring-1 ring-gray-200 hover:ring-benin-ocre hover:scale-105 hover:shadow-md'
                         }`}
                         title={decl.Description || ''}
                       >
@@ -452,12 +452,12 @@ export default function RealisationDetail() {
                         )}
                         {!inStock && (
                           <div className="absolute inset-0 flex items-center justify-center bg-white/40">
-                            <span className="text-red-500 font-bold text-lg">✕</span>
+                            <span className="text-benin-rouge font-bold text-lg">✕</span>
                           </div>
                         )}
                         {isSelected && inStock && (
-                          <div className="absolute inset-0 flex items-center justify-center bg-yellow-400/20">
-                            <span className="text-yellow-600 font-bold text-lg drop-shadow">✓</span>
+                          <div className="absolute inset-0 flex items-center justify-center bg-benin-jaune/20">
+                            <span className="text-benin-jaune font-bold text-lg drop-shadow">✓</span>
                           </div>
                         )}
                       </button>
@@ -468,7 +468,7 @@ export default function RealisationDetail() {
                 {selectedDeclinaison?.Description && (
                   <p className="mt-3 text-sm font-semibold text-gray-700">
                     Motif sélectionné :{' '}
-                    <span className="text-yellow-600">{selectedDeclinaison.Description}</span>
+                    <span className="text-benin-jaune">{selectedDeclinaison.Description}</span>
                   </p>
                 )}
               </div>
@@ -478,13 +478,13 @@ export default function RealisationDetail() {
             {selectedDeclinaison && (
               <div className="mb-5">
                 {isInStock ? (
-                  <span className="inline-flex items-center gap-2 bg-green-100 text-green-800 px-4 py-1.5 rounded-full text-sm font-semibold">
-                    <span className="w-2 h-2 rounded-full bg-green-500 inline-block"></span>
+                  <span className="inline-flex items-center gap-2 bg-benin-vert/15 text-benin-vert px-4 py-1.5 rounded-full text-sm font-semibold">
+                    <span className="w-2 h-2 rounded-full bg-benin-vert/100 inline-block"></span>
                     {selectedDeclinaison.Stock} disponible{selectedDeclinaison.Stock > 1 ? 's' : ''}
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-2 bg-red-100 text-red-800 px-4 py-1.5 rounded-full text-sm font-semibold">
-                    <span className="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
+                  <span className="inline-flex items-center gap-2 bg-benin-rouge/15 text-benin-rouge px-4 py-1.5 rounded-full text-sm font-semibold">
+                    <span className="w-2 h-2 rounded-full bg-benin-rouge/100 inline-block"></span>
                     Rupture de stock
                   </span>
                 )}
@@ -495,8 +495,8 @@ export default function RealisationDetail() {
             {/* Pas de déclinaisons */}
             {!hasDeclinaisons && (
               <div className="mb-5">
-                <span className="inline-flex items-center gap-2 bg-red-100 text-red-800 px-4 py-1.5 rounded-full text-sm font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
+                <span className="inline-flex items-center gap-2 bg-benin-rouge/15 text-benin-rouge px-4 py-1.5 rounded-full text-sm font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-benin-rouge/100 inline-block"></span>
                   Épuisé
                 </span>
               </div>
@@ -536,7 +536,7 @@ export default function RealisationDetail() {
             <div className="mb-4">
               <Link
                 to="/guide-des-tailles"
-                className="font-basecoat text-xs text-yellow-600 hover:text-yellow-700 underline transition"
+                className="font-basecoat text-xs text-benin-jaune hover:text-benin-terre underline transition"
               >
                 Voir le guide des tailles & conseils d'entretien
               </Link>
@@ -550,7 +550,7 @@ export default function RealisationDetail() {
                   disabled={!selectedDeclinaison || !isInStock}
                   className={`w-full py-4 rounded-xl font-bold uppercase text-base tracking-wider transition-all duration-200 ${
                     selectedDeclinaison && isInStock
-                      ? 'border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black hover:scale-[1.02] hover:shadow-lg'
+                      ? 'border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black hover:scale-[1.02] hover:shadow-lg'
                       : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                   }`}
                 >
@@ -572,7 +572,7 @@ export default function RealisationDetail() {
             <h2 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl font-bold uppercase text-gray-900 mb-2">
               Vous aimerez aussi
             </h2>
-            <div className="anim-fade-up w-14 h-1 bg-yellow-400 mb-8" data-delay="0.1"></div>
+            <div className="anim-fade-up w-14 h-1 bg-benin-jaune mb-8" data-delay="0.1"></div>
             <div className="anim-stagger grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5" data-stagger="0.08">
               {relatedProducts.map((product) => (
                 <Link

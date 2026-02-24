@@ -11,7 +11,7 @@ export default function NotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center py-20 px-4 bg-beige">
       <div className="text-center max-w-md">
-        <p className="font-basecoat text-8xl font-bold text-yellow-400 mb-4">404</p>
+        <p className="font-basecoat text-8xl font-bold text-benin-jaune mb-4">404</p>
         <h1 className="font-basecoat text-2xl sm:text-3xl font-bold text-gray-900 uppercase mb-4">
           Page introuvable
         </h1>
@@ -21,7 +21,7 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             to="/"
-            className="font-basecoat inline-block border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black font-bold px-8 py-3 rounded-lg uppercase tracking-wider transition hover:scale-105"
+            className="font-basecoat inline-block border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black font-bold px-8 py-3 rounded-lg uppercase tracking-wider transition hover:scale-105"
           >
             Retour à l'accueil
           </Link>
