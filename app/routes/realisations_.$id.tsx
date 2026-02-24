@@ -396,6 +396,22 @@ export default function RealisationDetail() {
               </div>
             )}
 
+            {/* Badges matière & soin */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-wax-turquoise/10 text-teal-800 border border-wax-turquoise/30 px-3 py-1.5 rounded-full">
+                🧵 Wax 100% coton
+              </span>
+              <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-wax-orange/10 text-orange-800 border border-wax-orange/30 px-3 py-1.5 rounded-full">
+                ✂️ Fait main
+              </span>
+              <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-green-50 text-green-800 border border-green-200 px-3 py-1.5 rounded-full">
+                🌿 Éco-responsable
+              </span>
+              <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-200 px-3 py-1.5 rounded-full">
+                🧺 Lavable à 30°C
+              </span>
+            </div>
+
             {/* ── Sélection déclinaison ── */}
             {hasDeclinaisons && (
               <div className="mb-6">
@@ -515,6 +531,16 @@ export default function RealisationDetail() {
                 </div>
               </div>
             )}
+
+            {/* Lien guide des tailles */}
+            <div className="mb-4">
+              <Link
+                to="/guide-des-tailles"
+                className="font-basecoat text-xs text-yellow-600 hover:text-yellow-700 underline transition"
+              >
+                Voir le guide des tailles & conseils d'entretien
+              </Link>
+            </div>
 
             {/* Bouton panier */}
             {hasDeclinaisons && (

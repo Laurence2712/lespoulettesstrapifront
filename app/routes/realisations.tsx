@@ -286,6 +286,11 @@ export default function Realisations() {
               className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4"
               data-delay="0.15"
             ></div>
+            <p className="anim-fade-up font-basecoat text-xs text-gray-400 mt-3" data-delay="0.2">
+              <Link to="/guide-des-tailles" className="text-yellow-600 hover:text-yellow-700 hover:underline transition font-semibold">
+                Guide des tailles & entretien →
+              </Link>
+            </p>
           </div>
           <div className="anim-fade-up flex items-center gap-2" data-delay="0.2">
             <label
