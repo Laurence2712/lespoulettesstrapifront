@@ -169,10 +169,13 @@ export default function Index() {
         style={{ backgroundImage: `url(${homepageData?.image_url})` }}
       >
         <div className="banner-content text-center z-10 flex flex-col items-center justify-center pb-8 sm:pb-12 md:pb-16">
-          <h1 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-[44px] font-bold uppercase tracking-wide mb-8 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-tight lg:leading-snug">
+          <h1 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-[44px] font-bold uppercase tracking-wide mb-4 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-tight lg:leading-snug">
             Une marque d'accessoires made in Bénin, éco-trendy/éco-friendly qui surfe sur la vague du wax !
           </h1>
-          <div className="mt-4 sm:mt-6 anim-fade-up flex flex-col sm:flex-row gap-3 sm:gap-4" data-delay="0.3">
+          <p className="anim-fade-up font-basecoat text-sm sm:text-base md:text-lg italic text-yellow-300 mb-8 px-4 max-w-[85%] sm:max-w-[70%] text-center" data-delay="0.2">
+            Des accessoires faits main, pleins de peps et d'amour – made in Benin
+          </p>
+          <div className="mt-2 sm:mt-4 anim-fade-up flex flex-col sm:flex-row gap-3 sm:gap-4" data-delay="0.3">
             <Link
               to="/realisations"
               className="font-basecoat border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg uppercase tracking-wider font-bold transform transition hover:scale-105 inline-block"
