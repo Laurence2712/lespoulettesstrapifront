@@ -253,6 +253,10 @@ export default function Index() {
                 <Link key={realisation.id} to={`/realisations/${realisation.id}`} className="group">
                   <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                     <div className="relative overflow-hidden aspect-square">
+                      <div className="absolute top-2 left-2 z-10 flex flex-col gap-1">
+                        <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-wax-orange text-white px-2 py-0.5 rounded-full">Fait main</span>
+                        <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-wax-turquoise text-white px-2 py-0.5 rounded-full">Made in Bénin</span>
+                      </div>
                       {realisation.image_url ? (
                         <img
                           src={realisation.image_url}
