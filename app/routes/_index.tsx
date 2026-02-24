@@ -169,16 +169,20 @@ export default function Index() {
         style={{ backgroundImage: `url(${homepageData?.image_url})` }}
       >
         <div className="banner-content text-center z-10 flex flex-col items-center justify-center pb-8 sm:pb-12 md:pb-16">
-          <h1 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-[44px] font-bold uppercase tracking-wide mb-8 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-tight lg:leading-snug">
+          <h1 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-[44px] font-bold uppercase tracking-wide mb-4 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-tight lg:leading-snug">
             Une marque d'accessoires made in Bénin, éco-trendy/éco-friendly qui surfe sur la vague du wax !
           </h1>
-          <div className="mt-4 sm:mt-6 anim-fade-up flex flex-col sm:flex-row gap-3 sm:gap-4" data-delay="0.3">
+          <p className="anim-fade-up font-basecoat text-sm sm:text-base md:text-lg italic text-yellow-300 mb-8 px-4 max-w-[85%] sm:max-w-[70%] text-center" data-delay="0.2">
+            Des accessoires faits main, pleins de peps et d'amour – made in Benin
+          </p>
+          <div className="mt-2 sm:mt-4 anim-fade-up flex flex-col items-center gap-2 sm:gap-3" data-delay="0.3">
             <Link
               to="/realisations"
               className="font-basecoat border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg uppercase tracking-wider font-bold transform transition hover:scale-105 inline-block"
             >
               Je craque !
             </Link>
+            <span className="font-basecoat text-xs text-white/60 tracking-widest uppercase">Shop now →</span>
           </div>
         </div>
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
@@ -190,11 +194,13 @@ export default function Index() {
               <span key={copy} className="inline-flex items-center">
                 {[
                   { icon: '', label: '100% fait main' },
+                  { icon: '', label: 'Handmade with love' },
                   { icon: '', label: 'Éco-responsable' },
                   { icon: '', label: 'Livraison Belgique/Europe & Bénin' },
+                  { icon: '', label: 'Color up your day' },
                   { icon: '', label: 'Tissus wax authentiques' },
                   { icon: '', label: 'Artisanat solidaire' },
-                  { icon: '', label: 'Fabriqué au Bénin' },
+                  { icon: '', label: 'Made in Bénin with ♥' },
                 ].map((item) => (
                   <span key={`${copy}-${item.label}`} className="inline-flex items-center gap-2 font-basecoat font-bold text-white text-xs sm:text-sm md:text-base px-6 sm:px-10">
                     <span className="text-base sm:text-lg">{item.icon}</span>
@@ -208,6 +214,15 @@ export default function Index() {
         </div>
       </header>
 
+      {/* ── Bande wax ── */}
+      <div className="flex h-2 w-full" aria-hidden="true">
+        <div className="flex-1 bg-wax-turquoise" />
+        <div className="flex-1 bg-wax-yellow" />
+        <div className="flex-1 bg-wax-orange" />
+        <div className="flex-1 bg-wax-red" />
+        <div className="flex-1 bg-wax-green" />
+      </div>
+
       {/* ── Nouveaux arrivages ── */}
       <section id="nouveaux-arrivages" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-gray-50">
         <div className="mb-8 sm:mb-10 md:mb-12">
@@ -216,7 +231,7 @@ export default function Index() {
               <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
                 Nouvelles créations
               </h2>
-              <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
+              <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-turquoise mt-3 sm:mt-4" data-delay="0.1"></div>
             </div>
             <Link
               to="/realisations"
@@ -241,6 +256,10 @@ export default function Index() {
                 <Link key={realisation.id} to={`/realisations/${realisation.id}`} className="group">
                   <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                     <div className="relative overflow-hidden aspect-square">
+                      <div className="absolute top-2 left-2 z-10 flex flex-col gap-1">
+                        <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-wax-orange text-white px-2 py-0.5 rounded-full">Fait main</span>
+                        <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-wax-turquoise text-white px-2 py-0.5 rounded-full">Made in Bénin</span>
+                      </div>
                       {realisation.image_url ? (
                         <img
                           src={realisation.image_url}
@@ -301,7 +320,7 @@ export default function Index() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Qui sommes-nous
           </h2>
-          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.1"></div>
+          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-orange mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.1"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
             <div className="order-2 md:order-1 anim-fade-right" data-delay="0.2">
               <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
@@ -328,13 +347,41 @@ export default function Index() {
         </div>
       </section>
 
+      {/* ── Dans notre atelier ── */}
+      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-beige">
+        <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+          Dans notre atelier au Bénin
+        </h2>
+        <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-yellow mt-3 sm:mt-4 mb-6 sm:mb-8" data-delay="0.1"></div>
+        <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed max-w-3xl mb-10 sm:mb-12" data-delay="0.15">
+          Chaque création naît dans notre atelier de Cotonou, au rythme des mains habiles de nos artisanes. Des tissus wax soigneusement sélectionnés, une découpe précise, des finitions cousues avec amour — c'est ça, l'âme des Poulettes.
+        </p>
+        <div className="anim-stagger grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6" data-stagger="0.1">
+          <div className="bg-white rounded-2xl p-6 shadow-sm border-t-4 border-wax-turquoise">
+            <p className="font-basecoat text-3xl mb-3">✂️</p>
+            <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">Taillé à la main</h3>
+            <p className="font-basecoat text-sm text-gray-600 leading-relaxed">Chaque pièce est découpée et assemblée manuellement par nos artisanes béninoises.</p>
+          </div>
+          <div className="bg-white rounded-2xl p-6 shadow-sm border-t-4 border-wax-orange">
+            <p className="font-basecoat text-3xl mb-3">🌿</p>
+            <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">Matières responsables</h3>
+            <p className="font-basecoat text-sm text-gray-600 leading-relaxed">Nous privilégions des tissus wax de qualité, durables et issus de circuits courts locaux.</p>
+          </div>
+          <div className="bg-white rounded-2xl p-6 shadow-sm border-t-4 border-wax-green">
+            <p className="font-basecoat text-3xl mb-3">🤝</p>
+            <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">Artisanat solidaire</h3>
+            <p className="font-basecoat text-sm text-gray-600 leading-relaxed">Acheter Les Poulettes, c'est soutenir directement des artisanes et leur famille au Bénin.</p>
+          </div>
+        </div>
+      </section>
+
       {/* ── Actualités ── */}
       <section className="bg-gray-50">
         <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] pt-6 sm:pt-8 md:pt-[60px] pb-8 sm:pb-10 md:pb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Actualités
           </h2>
-          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
+          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-red mt-3 sm:mt-4" data-delay="0.1"></div>
         </div>
 
         {actualites.length > 0 ? (
@@ -384,13 +431,48 @@ export default function Index() {
         )}
       </section>
 
+      {/* ── Instagram ── */}
+      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]">
+        <div className="text-center mb-8 sm:mb-10">
+          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+            Suivez-nous sur Instagram
+          </h2>
+          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-red mx-auto mt-3 sm:mt-4 mb-4" data-delay="0.1"></div>
+          <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg" data-delay="0.15">
+            @lespoulettes.benin — coulisses, nouveautés & vie au Bénin
+          </p>
+        </div>
+
+        {/* Grille décorative wax */}
+        <div className="anim-stagger grid grid-cols-4 sm:grid-cols-6 gap-1.5 sm:gap-2 mb-8 sm:mb-10 rounded-2xl overflow-hidden" data-stagger="0.05">
+          {['bg-wax-turquoise','bg-wax-yellow','bg-wax-orange','bg-wax-red','bg-wax-green','bg-wax-turquoise',
+            'bg-wax-orange','bg-wax-green','bg-wax-yellow','bg-wax-red','bg-wax-turquoise','bg-wax-orange'].map((color, i) => (
+            <div key={i} className={`${color} aspect-square opacity-70 hover:opacity-100 transition-opacity duration-300`} />
+          ))}
+        </div>
+
+        <div className="text-center anim-fade-up" data-delay="0.3">
+          <a
+            href="https://www.instagram.com/lespoulettes.benin/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-basecoat inline-flex items-center gap-3 border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white px-10 sm:px-14 py-3 sm:py-4 rounded-xl text-sm sm:text-base uppercase tracking-wider font-bold transform transition hover:scale-105 hover:shadow-lg"
+          >
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+            Voir notre Instagram
+          </a>
+        </div>
+      </section>
+
       {/* ── Où nous trouver ── */}
       <section id="ou-nous-trouver" className="w-full">
         <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10 md:mb-12 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Où nous trouver
           </h2>
-          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.1"></div>
+          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-green mt-3 sm:mt-4" data-delay="0.1"></div>
           <p className="anim-fade-up mt-6 mb-6 font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed" data-delay="0.2">
             Un évènement à fêter ? Les Poulettes répondent à vos demandes spéciales : mariage, baby shower, naissance, baptême, communion, anniversaire, ...{'\n'}
             Des sachets de dragées aux cadeaux personnalisés pour vos invités, Les Poulettes sont prêtes à confectionner ce que vous souhaitez pour que la fête soit réussie !

@@ -20,6 +20,13 @@ export default {
       },
       colors: {
         beige: "#F5F1E8",
+        wax: {
+          turquoise: "#1DB4B4",
+          yellow:    "#F5C100",
+          orange:    "#E8671A",
+          red:       "#C8232C",
+          green:     "#3DA34A",
+        },
       },
       keyframes: {
         'slide-up': {

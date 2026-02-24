@@ -440,6 +440,11 @@ export default function Realisations() {
                     ) : null
                   )}
 
+                  {/* Badges Fait main / Made in Bénin */}
+                  <div className="absolute bottom-2 right-2 flex flex-col items-end gap-1">
+                    <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-wax-orange text-white px-2 py-0.5 rounded-full shadow">Fait main</span>
+                    <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-wax-turquoise text-white px-2 py-0.5 rounded-full shadow">Made in Bénin</span>
+                  </div>
 
                 </div>
 
