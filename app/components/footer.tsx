@@ -11,10 +11,10 @@ export default function Footer() {
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 lg:gap-12">
           <div className="flex-shrink-0">
             <h3 className="font-basecoat font-bold text-lg sm:text-xl text-white uppercase tracking-wider">
-              Restez informé·e
+              -10% sur votre première commande
             </h3>
             <p className="font-basecoat text-gray-400 text-sm mt-1 max-w-xs">
-              Nouveautés, collections, événements... Recevez nos actualités en avant-première.
+              Inscrivez-vous à la newsletter et profitez d'une réduction exclusive sur votre premier achat. Nouveautés & coulisses en avant-première.
             </p>
           </div>
           <div className="w-full lg:max-w-md">
@@ -35,7 +35,7 @@ export default function Footer() {
             />
           </Link>
           <p className="font-basecoat text-gray-400 text-sm sm:text-base mt-4 leading-relaxed">
-            Accessoires made in Bénin, éco-trendy et faits main.
+            Créations artisanales en tissu wax africain — confectionnées à la main au Bénin avec amour.
           </p>
         </div>
 
@@ -44,8 +44,23 @@ export default function Footer() {
           <h3 className="text-base sm:text-lg font-bold mb-4 sm:mb-5 uppercase font-basecoat tracking-wider">Navigation</h3>
           <ul className="space-y-3 text-gray-400 font-basecoat text-sm sm:text-base">
             <li>
+              <Link to="/qui-sommes-nous" className="hover:text-yellow-400 transition">
+                Qui sommes-nous
+              </Link>
+            </li>
+            <li>
               <Link to="/realisations" className="hover:text-yellow-400 transition">
                 Boutique
+              </Link>
+            </li>
+            <li>
+              <Link to="/commandes-personnalisees" className="hover:text-yellow-400 transition">
+                Commandes personnalisées
+              </Link>
+            </li>
+            <li>
+              <Link to="/guide-des-tailles" className="hover:text-yellow-400 transition">
+                Guide des tailles & Entretien
               </Link>
             </li>
             <li>

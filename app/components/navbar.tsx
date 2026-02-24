@@ -108,11 +108,13 @@ export default function NavBar() {
             >
                 <div className="flex flex-col space-y-1">
                   <Link
-                    to="/#qui-sommes-nous"
+                    to="/qui-sommes-nous"
                     onClick={handleLinkClick}
-                    className="font-basecoat uppercase font-medium text-black hover:text-yellow-400 px-4 py-3 rounded-lg transition text-base"
+                    className={`font-basecoat uppercase font-medium hover:text-yellow-400 px-4 py-3 rounded-lg transition text-base ${
+                      isActive('/qui-sommes-nous') ? 'text-yellow-600 bg-yellow-50' : 'text-black'
+                    }`}
                   >
-                    Qui sommes-nous
+                    Notre histoire
                   </Link>
                   <Link
                     to="/realisations"
@@ -122,6 +124,15 @@ export default function NavBar() {
                     }`}
                   >
                     Boutique
+                  </Link>
+                  <Link
+                    to="/commandes-personnalisees"
+                    onClick={handleLinkClick}
+                    className={`font-basecoat uppercase font-medium hover:text-yellow-400 px-4 py-3 rounded-lg transition text-base ${
+                      isActive('/commandes-personnalisees') ? 'text-yellow-600 bg-yellow-50' : 'text-black'
+                    }`}
+                  >
+                    Sur mesure
                   </Link>
                   <Link
                     to="/#ou-nous-trouver"

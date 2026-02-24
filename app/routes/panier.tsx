@@ -772,7 +772,8 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
               <span className="text-2xl">🚚</span>
               <div>
                 <p className="font-basecoat font-bold text-gray-900 text-sm">Livraison à domicile</p>
-                <p className="font-basecoat text-xs text-gray-500 mt-0.5">Belgique dès 4 €</p>
+                <p className="font-basecoat text-xs text-gray-500 mt-0.5">Belgique dès 4 € · 3–5 jours ouvrés</p>
+                <p className="font-basecoat text-xs text-gray-400">Europe dès 8 € · 5–10 jours</p>
               </div>
             </button>
 
@@ -873,8 +874,8 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                 onChange={(e) => handleCountryChange(e.target.value)}
                 className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition bg-white"
               >
-                <option value="belgique">🇧🇪 Belgique — 4 €</option>
-                <option value="europe">🌍 Autre pays Europe — 8 €</option>
+                <option value="belgique">🇧🇪 Belgique — 4 € (3–5 jours ouvrés)</option>
+                <option value="europe">🌍 Autre pays Europe — 8 € (5–10 jours ouvrés)</option>
               </select>
             </div>
 

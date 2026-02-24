@@ -10,7 +10,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const staticRoutes = [
     { url: BASE_URL, priority: '1.0', changefreq: 'weekly' },
     { url: `${BASE_URL}/realisations`, priority: '0.9', changefreq: 'weekly' },
+    { url: `${BASE_URL}/qui-sommes-nous`, priority: '0.8', changefreq: 'monthly' },
+    { url: `${BASE_URL}/commandes-personnalisees`, priority: '0.8', changefreq: 'monthly' },
     { url: `${BASE_URL}/actualites`, priority: '0.7', changefreq: 'weekly' },
+    { url: `${BASE_URL}/guide-des-tailles`, priority: '0.7', changefreq: 'monthly' },
     { url: `${BASE_URL}/contact`, priority: '0.6', changefreq: 'monthly' },
     { url: `${BASE_URL}/faq`, priority: '0.6', changefreq: 'monthly' },
   ];

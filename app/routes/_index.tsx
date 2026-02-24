@@ -14,13 +14,13 @@ export function meta() {
     { property: "og:title", content: "Les Poulettes — Accessoires wax fait main au Bénin" },
     {
       property: "og:description",
-      content: "Accessoires wax faits main au Bénin par Les Poulettes.",
+      content: "Trousses, sacs et housses en tissu wax africain, confectionnés à la main au Bénin. Éco-responsables, uniques et solidaires.",
     },
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://lespoulettes.be" },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: "Les Poulettes — Accessoires wax fait main au Bénin" },
-    { name: "twitter:description", content: "Accessoires wax faits main au Bénin par Les Poulettes." },
+    { name: "twitter:description", content: "Trousses, sacs et housses en tissu wax africain, confectionnés à la main au Bénin. Éco-responsables, uniques et solidaires." },
   ];
 }
 
@@ -180,9 +180,9 @@ export default function Index() {
               to="/realisations"
               className="font-basecoat border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg uppercase tracking-wider font-bold transform transition hover:scale-105 inline-block"
             >
-              Je craque !
+              Découvrir la collection
             </Link>
-            <span className="font-basecoat text-xs text-white/60 tracking-widest uppercase">Shop now →</span>
+            <span className="font-basecoat text-xs text-white/60 tracking-widest uppercase">Handmade with love →</span>
           </div>
         </div>
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
@@ -324,15 +324,25 @@ export default function Index() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
             <div className="order-2 md:order-1 anim-fade-right" data-delay="0.2">
               <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
-                Les Poulettes est une marque d'accessoires éco-responsables créée au Bénin.
-                Nous confectionnons à la main des trousses, sacs et housses d'ordinateur en tissu wax authentique.
-                Chaque pièce est unique et reflète l'artisanat béninois traditionnel tout en adoptant
-                un style moderne et tendance.
+                Les Poulettes est une marque d'accessoires éco-responsables née entre la Belgique et le Bénin.
+                Nous confectionnons à la main des trousses, sacs et housses d'ordinateur en tissu wax africain authentique.
+                Chaque pièce est unique, réalisée par nos artisanes béninoises avec soin et passion.
               </p>
               <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mt-4">
-                Notre mission : promouvoir le savoir-faire local et offrir des accessoires durables,
+                Notre mission : valoriser le savoir-faire local, soutenir les artisanes et offrir des accessoires durables,
                 élégants et respectueux de l'environnement.
               </p>
+              <div className="mt-6">
+                <Link
+                  to="/qui-sommes-nous"
+                  className="font-basecoat inline-flex items-center gap-2 text-yellow-600 hover:text-yellow-700 font-bold text-sm sm:text-base transition group"
+                >
+                  Découvrir notre histoire
+                  <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
             </div>
             <div className="order-1 md:order-2 flex justify-center items-center anim-scale" data-delay="0.3">
               <div className="relative w-full h-[300px] sm:h-[350px]">
@@ -365,12 +375,12 @@ export default function Index() {
           <div className="bg-white rounded-2xl p-6 shadow-sm border-t-4 border-wax-orange">
             <p className="font-basecoat text-3xl mb-3">🌿</p>
             <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">Matières responsables</h3>
-            <p className="font-basecoat text-sm text-gray-600 leading-relaxed">Nous privilégions des tissus wax de qualité, durables et issus de circuits courts locaux.</p>
+            <p className="font-basecoat text-sm text-gray-600 leading-relaxed">Wax africain 100% coton, sélectionné sur les marchés locaux de Cotonou. Emballages recyclables, zéro production industrielle.</p>
           </div>
           <div className="bg-white rounded-2xl p-6 shadow-sm border-t-4 border-wax-green">
             <p className="font-basecoat text-3xl mb-3">🤝</p>
             <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">Artisanat solidaire</h3>
-            <p className="font-basecoat text-sm text-gray-600 leading-relaxed">Acheter Les Poulettes, c'est soutenir directement des artisanes et leur famille au Bénin.</p>
+            <p className="font-basecoat text-sm text-gray-600 leading-relaxed">Chaque achat rémunère directement nos artisanes béninoises. Une mode qui crée de la valeur là où elle est fabriquée.</p>
           </div>
         </div>
       </section>
@@ -466,6 +476,119 @@ export default function Index() {
         </div>
       </section>
 
+      {/* ── Témoignages clients ── */}
+      <section className="bg-beige px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]">
+        <div className="text-center mb-8 sm:mb-10">
+          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+            Elles adorent Les Poulettes
+          </h2>
+          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-orange mx-auto mt-3 sm:mt-4 mb-4" data-delay="0.1"></div>
+          <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg" data-delay="0.15">
+            Ce que nos clientes disent de leurs créations
+          </p>
+        </div>
+        <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6" data-stagger="0.1">
+          <div className="bg-white rounded-2xl p-6 shadow-sm">
+            <div className="flex items-center gap-1 mb-3">
+              {[1,2,3,4,5].map(i => <span key={i} className="text-yellow-400 text-lg">★</span>)}
+            </div>
+            <p className="font-basecoat text-gray-700 text-sm sm:text-base leading-relaxed mb-4">
+              "J'ai reçu ma trousse wax pour Noël et je l'adore ! Les couleurs sont magnifiques et la qualité est vraiment au rendez-vous. Je l'utilise tous les jours."
+            </p>
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-wax-turquoise flex items-center justify-center text-white font-basecoat font-bold text-sm">S</div>
+              <div>
+                <p className="font-basecoat font-semibold text-gray-900 text-sm">Sophie M.</p>
+                <p className="font-basecoat text-gray-400 text-xs">Bruxelles, Belgique</p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-white rounded-2xl p-6 shadow-sm">
+            <div className="flex items-center gap-1 mb-3">
+              {[1,2,3,4,5].map(i => <span key={i} className="text-yellow-400 text-lg">★</span>)}
+            </div>
+            <p className="font-basecoat text-gray-700 text-sm sm:text-base leading-relaxed mb-4">
+              "J'ai commandé des sachets personnalisés pour mon mariage. Un grand merci pour la réactivité et le soin apporté à chaque détail. Mes invités ont adoré !"
+            </p>
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-wax-orange flex items-center justify-center text-white font-basecoat font-bold text-sm">A</div>
+              <div>
+                <p className="font-basecoat font-semibold text-gray-900 text-sm">Amina K.</p>
+                <p className="font-basecoat text-gray-400 text-xs">Liège, Belgique</p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-white rounded-2xl p-6 shadow-sm">
+            <div className="flex items-center gap-1 mb-3">
+              {[1,2,3,4,5].map(i => <span key={i} className="text-yellow-400 text-lg">★</span>)}
+            </div>
+            <p className="font-basecoat text-gray-700 text-sm sm:text-base leading-relaxed mb-4">
+              "La housse d'ordi est parfaite — solide, colorée et tellement originale. Plein de compliments au bureau ! Je recommande les yeux fermés."
+            </p>
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-wax-green flex items-center justify-center text-white font-basecoat font-bold text-sm">C</div>
+              <div>
+                <p className="font-basecoat font-semibold text-gray-900 text-sm">Chloé V.</p>
+                <p className="font-basecoat text-gray-400 text-xs">Gand, Belgique</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="anim-fade-up text-center mt-8" data-delay="0.3">
+          <a
+            href="https://www.instagram.com/lespoulettes.benin/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-basecoat text-sm font-semibold text-yellow-600 hover:text-yellow-700 transition inline-flex items-center gap-1.5"
+          >
+            Voir plus d'avis sur Instagram
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+          </a>
+        </div>
+      </section>
+
+      {/* ── Commandes personnalisées ── */}
+      <section className="bg-gray-900 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-white leading-tight">
+              Un événement à célébrer ?
+            </h2>
+            <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-6" data-delay="0.1"></div>
+            <p className="anim-fade-up font-basecoat text-gray-300 text-base sm:text-lg leading-relaxed mb-6" data-delay="0.15">
+              Mariage, baby shower, baptême, anniversaire... Les Poulettes créent des accessoires wax personnalisés pour que votre fête soit inoubliable.
+            </p>
+            <div className="anim-fade-up flex flex-wrap gap-2 mb-8" data-delay="0.2">
+              {['💍 Mariage', '🍼 Baby shower', '🎂 Anniversaire', '✝️ Baptême', '🎉 Naissance'].map(tag => (
+                <span key={tag} className="font-basecoat text-xs font-semibold bg-gray-800 text-gray-300 px-3 py-1.5 rounded-full">{tag}</span>
+              ))}
+            </div>
+            <div className="anim-fade-up flex flex-col sm:flex-row gap-4" data-delay="0.25">
+              <Link
+                to="/commandes-personnalisees"
+                className="font-basecoat border-2 border-yellow-400 text-white hover:bg-yellow-400 hover:text-black px-8 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] text-sm sm:text-base text-center"
+              >
+                Découvrir
+              </Link>
+              <a
+                href="https://wa.me/2290162007580"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-basecoat border-2 border-gray-600 text-gray-300 hover:border-green-400 hover:text-green-400 px-8 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] text-sm sm:text-base text-center"
+              >
+                WhatsApp
+              </a>
+            </div>
+          </div>
+          <div className="anim-stagger grid grid-cols-4 gap-1.5 rounded-2xl overflow-hidden" data-stagger="0.05">
+            {['bg-wax-turquoise','bg-wax-yellow','bg-wax-orange','bg-wax-red',
+              'bg-wax-green','bg-wax-orange','bg-wax-yellow','bg-wax-turquoise'].map((color, i) => (
+              <div key={i} className={`${color} aspect-square opacity-80 hover:opacity-100 transition-opacity duration-300`} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Où nous trouver ── */}
       <section id="ou-nous-trouver" className="w-full">
         <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10 md:mb-12 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
@@ -473,16 +596,15 @@ export default function Index() {
             Où nous trouver
           </h2>
           <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-green mt-3 sm:mt-4" data-delay="0.1"></div>
-          <p className="anim-fade-up mt-6 mb-6 font-basecoat text-gray-800 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed" data-delay="0.2">
-            Un évènement à fêter ? Les Poulettes répondent à vos demandes spéciales : mariage, baby shower, naissance, baptême, communion, anniversaire, ...{'\n'}
-            Des sachets de dragées aux cadeaux personnalisés pour vos invités, Les Poulettes sont prêtes à confectionner ce que vous souhaitez pour que la fête soit réussie !
+          <p className="anim-fade-up mt-6 mb-6 font-basecoat text-gray-700 text-base sm:text-lg md:text-xl leading-relaxed" data-delay="0.2">
+            Retrait gratuit en Belgique (Grimbergen & Watermael-Boisfort) ou directement à Cotonou au Bénin. Livraison à domicile disponible en Belgique et dans toute l'Europe.
           </p>
-          <p className="anim-fade-up mb-6 font-basecoat text-gray-800 text-base sm:text-lg md:text-xl leading-relaxed" data-delay="0.3">
+          <p className="anim-fade-up mb-6 font-basecoat text-gray-700 text-base sm:text-lg md:text-xl leading-relaxed" data-delay="0.3">
             <a
               href="https://wa.me/2290162007580"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:underline"
+              className="text-yellow-600 hover:text-yellow-700 hover:underline font-semibold transition"
             >
               WhatsApp : +229 01 62 00 75 80
             </a>
