@@ -1,6 +1,16 @@
+import { redirect } from '@remix-run/node';
+import type { LoaderFunctionArgs } from '@remix-run/node';
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from '@remix-run/react';
 import { useCartStore } from '../store/cartStore';
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  const url = new URL(request.url);
+  if (!url.searchParams.get('session_id')) {
+    return redirect('/');
+  }
+  return null;
+}
 
 export function meta() {
   return [
