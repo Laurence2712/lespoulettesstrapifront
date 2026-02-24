@@ -175,13 +175,14 @@ export default function Index() {
           <p className="anim-fade-up font-basecoat text-sm sm:text-base md:text-lg italic text-yellow-300 mb-8 px-4 max-w-[85%] sm:max-w-[70%] text-center" data-delay="0.2">
             Des accessoires faits main, pleins de peps et d'amour – made in Benin
           </p>
-          <div className="mt-2 sm:mt-4 anim-fade-up flex flex-col sm:flex-row gap-3 sm:gap-4" data-delay="0.3">
+          <div className="mt-2 sm:mt-4 anim-fade-up flex flex-col items-center gap-2 sm:gap-3" data-delay="0.3">
             <Link
               to="/realisations"
               className="font-basecoat border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg uppercase tracking-wider font-bold transform transition hover:scale-105 inline-block"
             >
               Je craque !
             </Link>
+            <span className="font-basecoat text-xs text-white/60 tracking-widest uppercase">Shop now →</span>
           </div>
         </div>
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
@@ -193,11 +194,13 @@ export default function Index() {
               <span key={copy} className="inline-flex items-center">
                 {[
                   { icon: '', label: '100% fait main' },
+                  { icon: '', label: 'Handmade with love' },
                   { icon: '', label: 'Éco-responsable' },
                   { icon: '', label: 'Livraison Belgique/Europe & Bénin' },
+                  { icon: '', label: 'Color up your day' },
                   { icon: '', label: 'Tissus wax authentiques' },
                   { icon: '', label: 'Artisanat solidaire' },
-                  { icon: '', label: 'Fabriqué au Bénin' },
+                  { icon: '', label: 'Made in Bénin with ♥' },
                 ].map((item) => (
                   <span key={`${copy}-${item.label}`} className="inline-flex items-center gap-2 font-basecoat font-bold text-white text-xs sm:text-sm md:text-base px-6 sm:px-10">
                     <span className="text-base sm:text-lg">{item.icon}</span>
