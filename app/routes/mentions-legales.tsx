@@ -27,7 +27,7 @@ export default function MentionsLegales() {
     >
       {/* Breadcrumb */}
       <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
-        <Link to="/" className="text-yellow-600 hover:text-yellow-700 font-medium transition">
+        <Link to="/" className="text-benin-jaune hover:text-benin-terre font-medium transition">
           Accueil
         </Link>
         <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
@@ -40,7 +40,7 @@ export default function MentionsLegales() {
       >
         Mentions légales & CGV
       </h1>
-      <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-10 sm:mb-12" data-delay="0.15"></div>
+      <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4 mb-10 sm:mb-12" data-delay="0.15"></div>
 
       <div className="max-w-3xl space-y-10 font-basecoat text-gray-700 text-sm sm:text-base leading-relaxed">
 
@@ -51,8 +51,8 @@ export default function MentionsLegales() {
             <strong>Les Poulettes</strong><br />
             Entreprise individuelle enregistrée au Bénin<br />
             Siège social : Cotonou, Bénin<br />
-            Email : <a href="mailto:lespoulettes.benin@gmail.com" className="text-yellow-600 hover:underline">lespoulettes.benin@gmail.com</a><br />
-            WhatsApp : <a href="https://wa.me/2290162007580" className="text-yellow-600 hover:underline">+229 01 62 00 75 80</a>
+            Email : <a href="mailto:lespoulettes.benin@gmail.com" className="text-benin-jaune hover:underline">lespoulettes.benin@gmail.com</a><br />
+            WhatsApp : <a href="https://wa.me/2290162007580" className="text-benin-jaune hover:underline">+229 01 62 00 75 80</a>
           </p>
         </section>
 
@@ -109,7 +109,7 @@ export default function MentionsLegales() {
             Les données collectées lors de la commande (nom, email, adresse, téléphone) sont utilisées uniquement pour le traitement de la commande et la communication associée. Elles ne sont jamais vendues ni transmises à des tiers, à l'exception des prestataires indispensables au traitement (Stripe pour le paiement, SendGrid pour les emails).
           </p>
           <p className="mb-4">
-            Conformément au Règlement général sur la protection des données (RGPD – Règlement UE 2016/679), vous disposez d'un droit d'accès, de rectification, d'effacement et de portabilité de vos données. Pour exercer ces droits, contactez-nous à : <a href="mailto:lespoulettes.benin@gmail.com" className="text-yellow-600 hover:underline">lespoulettes.benin@gmail.com</a>.
+            Conformément au Règlement général sur la protection des données (RGPD – Règlement UE 2016/679), vous disposez d'un droit d'accès, de rectification, d'effacement et de portabilité de vos données. Pour exercer ces droits, contactez-nous à : <a href="mailto:lespoulettes.benin@gmail.com" className="text-benin-jaune hover:underline">lespoulettes.benin@gmail.com</a>.
           </p>
           <p>
             Ce site utilise des services tiers susceptibles de déposer des cookies (Google Fonts, Google Maps, Stripe). Vous pouvez gérer vos préférences via le bandeau de consentement affiché lors de votre première visite.
@@ -128,10 +128,10 @@ export default function MentionsLegales() {
         <section className="anim-fade-up" data-delay="0.45">
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 uppercase mb-4">6. Litiges</h2>
           <p className="mb-4">
-            En cas de litige, nous vous invitons à nous contacter en priorité à l'adresse <a href="mailto:lespoulettes.benin@gmail.com" className="text-yellow-600 hover:underline">lespoulettes.benin@gmail.com</a> pour trouver une solution amiable.
+            En cas de litige, nous vous invitons à nous contacter en priorité à l'adresse <a href="mailto:lespoulettes.benin@gmail.com" className="text-benin-jaune hover:underline">lespoulettes.benin@gmail.com</a> pour trouver une solution amiable.
           </p>
           <p>
-            Pour les consommateurs européens, la Commission européenne met à disposition une plateforme de règlement en ligne des litiges accessible à l'adresse : <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:underline">https://ec.europa.eu/consumers/odr</a>.
+            Pour les consommateurs européens, la Commission européenne met à disposition une plateforme de règlement en ligne des litiges accessible à l'adresse : <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer" className="text-benin-jaune hover:underline">https://ec.europa.eu/consumers/odr</a>.
           </p>
         </section>
 

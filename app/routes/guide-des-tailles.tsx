@@ -102,7 +102,7 @@ export default function GuideTailles() {
       {/* ── Header ── */}
       <header className="bg-beige pt-28 sm:pt-32 md:pt-40 pb-14 sm:pb-18 md:pb-24 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
         <nav className="anim-fade-up font-basecoat mb-8 text-xs sm:text-sm">
-          <Link to="/" className="text-yellow-600 hover:text-yellow-700 font-medium transition">Accueil</Link>
+          <Link to="/" className="text-benin-jaune hover:text-benin-terre font-medium transition">Accueil</Link>
           <span className="mx-1.5 text-gray-400">/</span>
           <span className="text-gray-600">Guide des tailles & Entretien</span>
         </nav>
@@ -128,7 +128,7 @@ export default function GuideTailles() {
 
       {/* ── Note dimensions ── */}
       <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-6 sm:py-8">
-        <div className="bg-yellow-50 border-l-4 border-yellow-400 rounded-r-xl p-5 font-basecoat text-sm text-gray-700 max-w-3xl">
+        <div className="bg-benin-jaune/10 border-l-4 border-benin-jaune rounded-r-xl p-5 font-basecoat text-sm text-gray-700 max-w-3xl">
           <strong>Important :</strong> Les dimensions indiquées sont approximatives. Chaque pièce étant faite main, de légères variations de quelques centimètres sont normales — c'est la signature de l'artisanat !
         </div>
       </div>
@@ -226,7 +226,7 @@ export default function GuideTailles() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             to="/realisations"
-            className="font-basecoat border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
+            className="font-basecoat border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
           >
             Voir la boutique
           </Link>
@@ -234,7 +234,7 @@ export default function GuideTailles() {
             href="https://wa.me/2290162007580"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-basecoat border-2 border-gray-300 text-gray-700 hover:border-green-500 hover:text-green-700 px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02]"
+            className="font-basecoat border-2 border-gray-300 text-gray-700 hover:border-benin-vert hover:text-benin-vert px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02]"
           >
             Demander conseil sur WhatsApp
           </a>

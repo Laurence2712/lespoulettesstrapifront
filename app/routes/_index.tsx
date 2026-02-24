@@ -172,13 +172,13 @@ export default function Index() {
           <h1 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-[44px] font-bold uppercase tracking-wide mb-4 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-tight lg:leading-snug">
             Une marque d'accessoires made in Bénin, éco-trendy/éco-friendly qui surfe sur la vague du wax !
           </h1>
-          <p className="anim-fade-up font-basecoat text-sm sm:text-base md:text-lg italic text-yellow-300 mb-8 px-4 max-w-[85%] sm:max-w-[70%] text-center" data-delay="0.2">
+          <p className="anim-fade-up font-basecoat text-sm sm:text-base md:text-lg italic text-benin-ocre mb-8 px-4 max-w-[85%] sm:max-w-[70%] text-center" data-delay="0.2">
             Des accessoires faits main, pleins de peps et d'amour – made in Benin
           </p>
           <div className="mt-2 sm:mt-4 anim-fade-up flex flex-col items-center gap-2 sm:gap-3" data-delay="0.3">
             <Link
               to="/realisations"
-              className="font-basecoat border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg uppercase tracking-wider font-bold transform transition hover:scale-105 inline-block"
+              className="font-basecoat border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg uppercase tracking-wider font-bold transform transition hover:scale-105 inline-block"
             >
               Découvrir la collection
             </Link>
@@ -235,7 +235,7 @@ export default function Index() {
             </div>
             <Link
               to="/realisations"
-              className="anim-fade-up font-basecoat text-sm sm:text-base font-semibold text-yellow-600 hover:text-yellow-700 transition flex items-center gap-1.5 self-start sm:self-auto pb-1"
+              className="anim-fade-up font-basecoat text-sm sm:text-base font-semibold text-benin-jaune hover:text-benin-terre transition flex items-center gap-1.5 self-start sm:self-auto pb-1"
               data-delay="0.1"
             >
               Voir tout
@@ -282,13 +282,13 @@ export default function Index() {
                             {realisation.title}
                           </h3>
                           {realisation.prix && (
-                            <p className="font-basecoat text-xl font-bold text-yellow-500 whitespace-nowrap flex-shrink-0">
+                            <p className="font-basecoat text-xl font-bold text-benin-jaune whitespace-nowrap flex-shrink-0">
                               {Number(realisation.prix).toFixed(2)} €
                             </p>
                           )}
                         </div>
                       </div>
-                      <span className="font-basecoat text-sm font-semibold text-yellow-600 group-hover:text-yellow-700 flex items-center gap-1 transition">
+                      <span className="font-basecoat text-sm font-semibold text-benin-jaune group-hover:text-benin-terre flex items-center gap-1 transition">
                         Voir le produit
                         <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -303,7 +303,7 @@ export default function Index() {
             <div className="anim-fade-up text-center mt-10 sm:mt-12" data-delay="0.3">
               <Link
                 to="/realisations"
-                className="font-basecoat inline-block border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-10 sm:px-14 py-3 sm:py-4 rounded-xl text-sm sm:text-base uppercase tracking-wider font-bold transform transition hover:scale-105 hover:shadow-lg"
+                className="font-basecoat inline-block border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-10 sm:px-14 py-3 sm:py-4 rounded-xl text-sm sm:text-base uppercase tracking-wider font-bold transform transition hover:scale-105 hover:shadow-lg"
               >
                 Voir toute la boutique
               </Link>
@@ -335,7 +335,7 @@ export default function Index() {
               <div className="mt-6">
                 <Link
                   to="/qui-sommes-nous"
-                  className="font-basecoat inline-flex items-center gap-2 text-yellow-600 hover:text-yellow-700 font-bold text-sm sm:text-base transition group"
+                  className="font-basecoat inline-flex items-center gap-2 text-benin-jaune hover:text-benin-terre font-bold text-sm sm:text-base transition group"
                 >
                   Découvrir notre histoire
                   <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -347,7 +347,7 @@ export default function Index() {
             <div className="order-1 md:order-2 flex justify-center items-center anim-scale" data-delay="0.3">
               <div className="relative w-full h-[300px] sm:h-[350px]">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                  <div className="relative w-[160px] h-[160px] xl:h-[400px] xl:w-[400px] sm:w-[200px] sm:h-[200px] rounded-full overflow-hidden border-4 border-yellow-400 shadow-2xl transform hover:scale-110 transition duration-300">
+                  <div className="relative w-[160px] h-[160px] xl:h-[400px] xl:w-[400px] sm:w-[200px] sm:h-[200px] rounded-full overflow-hidden border-4 border-benin-jaune shadow-2xl transform hover:scale-110 transition duration-300">
                     <img src="/assets/equipe-1.jpg" alt="Fondatrice 1" loading="lazy" width={400} height={400} className="w-full h-full object-cover" />
                   </div>
                 </div>
@@ -413,7 +413,7 @@ export default function Index() {
                   )}
                   <div className={`anim-fade-left ${!actu.image_url ? 'lg:col-span-2' : ''}`} data-delay="0.3">
                     {actu.date && (
-                      <p className="font-basecoat text-sm text-yellow-600 font-semibold mb-3 tracking-wider uppercase">
+                      <p className="font-basecoat text-sm text-benin-jaune font-semibold mb-3 tracking-wider uppercase">
                         {new Date(actu.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
                       </p>
                     )}
@@ -425,7 +425,7 @@ export default function Index() {
                     </p>
                     <Link
                       to="/actualites"
-                      className="font-basecoat uppercase border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-8 sm:px-10 py-3 sm:py-4 rounded-lg text-sm sm:text-base transform transition hover:scale-105 font-bold inline-block hover:shadow-lg"
+                      className="font-basecoat uppercase border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-8 sm:px-10 py-3 sm:py-4 rounded-lg text-sm sm:text-base transform transition hover:scale-105 font-bold inline-block hover:shadow-lg"
                     >
                       Toutes les actualités
                     </Link>
@@ -490,7 +490,7 @@ export default function Index() {
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6" data-stagger="0.1">
           <div className="bg-white rounded-2xl p-6 shadow-sm">
             <div className="flex items-center gap-1 mb-3">
-              {[1,2,3,4,5].map(i => <span key={i} className="text-yellow-400 text-lg">★</span>)}
+              {[1,2,3,4,5].map(i => <span key={i} className="text-benin-jaune text-lg">★</span>)}
             </div>
             <p className="font-basecoat text-gray-700 text-sm sm:text-base leading-relaxed mb-4">
               "J'ai reçu ma trousse wax pour Noël et je l'adore ! Les couleurs sont magnifiques et la qualité est vraiment au rendez-vous. Je l'utilise tous les jours."
@@ -505,7 +505,7 @@ export default function Index() {
           </div>
           <div className="bg-white rounded-2xl p-6 shadow-sm">
             <div className="flex items-center gap-1 mb-3">
-              {[1,2,3,4,5].map(i => <span key={i} className="text-yellow-400 text-lg">★</span>)}
+              {[1,2,3,4,5].map(i => <span key={i} className="text-benin-jaune text-lg">★</span>)}
             </div>
             <p className="font-basecoat text-gray-700 text-sm sm:text-base leading-relaxed mb-4">
               "J'ai commandé des sachets personnalisés pour mon mariage. Un grand merci pour la réactivité et le soin apporté à chaque détail. Mes invités ont adoré !"
@@ -520,7 +520,7 @@ export default function Index() {
           </div>
           <div className="bg-white rounded-2xl p-6 shadow-sm">
             <div className="flex items-center gap-1 mb-3">
-              {[1,2,3,4,5].map(i => <span key={i} className="text-yellow-400 text-lg">★</span>)}
+              {[1,2,3,4,5].map(i => <span key={i} className="text-benin-jaune text-lg">★</span>)}
             </div>
             <p className="font-basecoat text-gray-700 text-sm sm:text-base leading-relaxed mb-4">
               "La housse d'ordi est parfaite — solide, colorée et tellement originale. Plein de compliments au bureau ! Je recommande les yeux fermés."
@@ -539,7 +539,7 @@ export default function Index() {
             href="https://www.instagram.com/lespoulettes.benin/"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-basecoat text-sm font-semibold text-yellow-600 hover:text-yellow-700 transition inline-flex items-center gap-1.5"
+            className="font-basecoat text-sm font-semibold text-benin-jaune hover:text-benin-terre transition inline-flex items-center gap-1.5"
           >
             Voir plus d'avis sur Instagram
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
@@ -554,7 +554,7 @@ export default function Index() {
             <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-white leading-tight">
               Un événement à célébrer ?
             </h2>
-            <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-6" data-delay="0.1"></div>
+            <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4 mb-6" data-delay="0.1"></div>
             <p className="anim-fade-up font-basecoat text-gray-300 text-base sm:text-lg leading-relaxed mb-6" data-delay="0.15">
               Mariage, baby shower, baptême, anniversaire... Les Poulettes créent des accessoires wax personnalisés pour que votre fête soit inoubliable.
             </p>
@@ -566,7 +566,7 @@ export default function Index() {
             <div className="anim-fade-up flex flex-col sm:flex-row gap-4" data-delay="0.25">
               <Link
                 to="/commandes-personnalisees"
-                className="font-basecoat border-2 border-yellow-400 text-white hover:bg-yellow-400 hover:text-black px-8 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] text-sm sm:text-base text-center"
+                className="font-basecoat border-2 border-benin-jaune text-white hover:bg-benin-jaune hover:text-black px-8 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] text-sm sm:text-base text-center"
               >
                 Découvrir
               </Link>
@@ -574,7 +574,7 @@ export default function Index() {
                 href="https://wa.me/2290162007580"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-basecoat border-2 border-gray-600 text-gray-300 hover:border-green-400 hover:text-green-400 px-8 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] text-sm sm:text-base text-center"
+                className="font-basecoat border-2 border-gray-600 text-gray-300 hover:border-benin-vert hover:text-benin-vert px-8 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] text-sm sm:text-base text-center"
               >
                 WhatsApp
               </a>
@@ -604,7 +604,7 @@ export default function Index() {
               href="https://wa.me/2290162007580"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-yellow-600 hover:text-yellow-700 hover:underline font-semibold transition"
+              className="text-benin-jaune hover:text-benin-terre hover:underline font-semibold transition"
             >
               WhatsApp : +229 01 62 00 75 80
             </a>

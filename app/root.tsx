@@ -126,7 +126,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body className="font-inter bg-beige text-gray-900 flex flex-col min-h-screen overflow-x-hidden">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-yellow-400 focus:text-black focus:font-bold focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-benin-jaune focus:text-black focus:font-bold focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg"
         >
           Aller au contenu principal
         </a>
@@ -247,7 +247,7 @@ export function ErrorBoundary() {
             )}
             <a
               href="/"
-              className="inline-block border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black font-basecoat font-bold px-8 py-3 rounded-lg uppercase tracking-wider transition hover:scale-105"
+              className="inline-block border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black font-basecoat font-bold px-8 py-3 rounded-lg uppercase tracking-wider transition hover:scale-105"
             >
               Retour à l'accueil
             </a>

@@ -46,12 +46,12 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             role="status"
             className={`pointer-events-auto flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl font-basecoat text-sm sm:text-base font-semibold max-w-xs sm:max-w-sm animate-slide-in-right
               ${toast.type === 'success' ? 'bg-gray-900 text-white' : ''}
-              ${toast.type === 'error' ? 'bg-red-600 text-white' : ''}
+              ${toast.type === 'error' ? 'bg-benin-rouge text-white' : ''}
               ${toast.type === 'info' ? 'bg-blue-600 text-white' : ''}
             `}
           >
             {toast.type === 'success' && (
-              <span className="w-6 h-6 rounded-full bg-yellow-400 flex items-center justify-center flex-shrink-0">
+              <span className="w-6 h-6 rounded-full bg-benin-jaune flex items-center justify-center flex-shrink-0">
                 <svg className="w-3.5 h-3.5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                 </svg>

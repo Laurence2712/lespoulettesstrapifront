@@ -82,7 +82,7 @@ export default function NavBar() {
               <svg
                 className={`w-6 h-6 transition-colors duration-300 ${
                   isTransparent ? 'text-white' : 'text-black'
-                } group-hover:text-yellow-500`}
+                } group-hover:text-benin-jaune`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -110,8 +110,8 @@ export default function NavBar() {
                   <Link
                     to="/qui-sommes-nous"
                     onClick={handleLinkClick}
-                    className={`font-basecoat uppercase font-medium hover:text-yellow-400 px-4 py-3 rounded-lg transition text-base ${
-                      isActive('/qui-sommes-nous') ? 'text-yellow-600 bg-yellow-50' : 'text-black'
+                    className={`font-basecoat uppercase font-medium hover:text-benin-jaune px-4 py-3 rounded-lg transition text-base ${
+                      isActive('/qui-sommes-nous') ? 'text-benin-jaune bg-benin-jaune/10' : 'text-black'
                     }`}
                   >
                     Notre histoire
@@ -119,8 +119,8 @@ export default function NavBar() {
                   <Link
                     to="/realisations"
                     onClick={handleLinkClick}
-                    className={`font-basecoat uppercase font-medium hover:text-yellow-400 px-4 py-3 rounded-lg transition text-base ${
-                      isActive('/realisations') ? 'text-yellow-600 bg-yellow-50' : 'text-black'
+                    className={`font-basecoat uppercase font-medium hover:text-benin-jaune px-4 py-3 rounded-lg transition text-base ${
+                      isActive('/realisations') ? 'text-benin-jaune bg-benin-jaune/10' : 'text-black'
                     }`}
                   >
                     Boutique
@@ -128,8 +128,8 @@ export default function NavBar() {
                   <Link
                     to="/commandes-personnalisees"
                     onClick={handleLinkClick}
-                    className={`font-basecoat uppercase font-medium hover:text-yellow-400 px-4 py-3 rounded-lg transition text-base ${
-                      isActive('/commandes-personnalisees') ? 'text-yellow-600 bg-yellow-50' : 'text-black'
+                    className={`font-basecoat uppercase font-medium hover:text-benin-jaune px-4 py-3 rounded-lg transition text-base ${
+                      isActive('/commandes-personnalisees') ? 'text-benin-jaune bg-benin-jaune/10' : 'text-black'
                     }`}
                   >
                     Sur mesure
@@ -137,15 +137,15 @@ export default function NavBar() {
                   <Link
                     to="/#ou-nous-trouver"
                     onClick={handleLinkClick}
-                    className="font-basecoat uppercase font-medium text-black hover:text-yellow-400 px-4 py-3 rounded-lg transition text-base"
+                    className="font-basecoat uppercase font-medium text-black hover:text-benin-jaune px-4 py-3 rounded-lg transition text-base"
                   >
                     Où nous trouver
                   </Link>
                   <Link
                     to="/contact"
                     onClick={handleLinkClick}
-                    className={`font-basecoat uppercase font-medium hover:text-yellow-400 px-4 py-3 rounded-lg transition text-base ${
-                      isActive('/contact') ? 'text-yellow-600 bg-yellow-50' : 'text-black'
+                    className={`font-basecoat uppercase font-medium hover:text-benin-jaune px-4 py-3 rounded-lg transition text-base ${
+                      isActive('/contact') ? 'text-benin-jaune bg-benin-jaune/10' : 'text-black'
                     }`}
                   >
                     Nous contacter
@@ -158,9 +158,9 @@ export default function NavBar() {
           <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
             <Link
               to="/realisations"
-              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-lg ${
+              className={`font-basecoat font-bold uppercase tracking-wide hover:text-benin-jaune transition-colors duration-300 text-sm lg:text-lg ${
                 isActive('/realisations')
-                  ? 'text-yellow-400'
+                  ? 'text-benin-jaune'
                   : isTransparent ? 'text-white' : 'text-black'
               }`}
             >
@@ -168,9 +168,9 @@ export default function NavBar() {
             </Link>
             <Link
               to="/actualites"
-              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-lg ${
+              className={`font-basecoat font-bold uppercase tracking-wide hover:text-benin-jaune transition-colors duration-300 text-sm lg:text-lg ${
                 isActive('/actualites')
-                  ? 'text-yellow-400'
+                  ? 'text-benin-jaune'
                   : isTransparent ? 'text-white' : 'text-black'
               }`}
             >
@@ -178,9 +178,9 @@ export default function NavBar() {
             </Link>
             <Link
               to="/contact"
-              className={`font-basecoat font-bold uppercase tracking-wide hover:text-yellow-400 transition-colors duration-300 text-sm lg:text-lg ${
+              className={`font-basecoat font-bold uppercase tracking-wide hover:text-benin-jaune transition-colors duration-300 text-sm lg:text-lg ${
                 isActive('/contact')
-                  ? 'text-yellow-400'
+                  ? 'text-benin-jaune'
                   : isTransparent ? 'text-white' : 'text-black'
               }`}
             >
@@ -188,11 +188,11 @@ export default function NavBar() {
             </Link>
             <Link
               to="/panier"
-              className="relative font-basecoat inline-flex items-center gap-2 border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-4 lg:px-5 py-2 lg:py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-base lg:text-lg"
+              className="relative font-basecoat inline-flex items-center gap-2 border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-4 lg:px-5 py-2 lg:py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-base lg:text-lg"
             >
               <ShoppingCartIcon className="w-5 h-5 lg:w-6 lg:h-6" />
               {totalItems > 0 && (
-                <span key={totalItems} className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center animate-pulse">
+                <span key={totalItems} className="absolute -top-2 -right-2 bg-benin-rouge text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center animate-pulse">
                   {totalItems}
                 </span>
               )}
@@ -202,11 +202,11 @@ export default function NavBar() {
           {/* Bouton Panier - Mobile uniquement */}
           <Link
             to="/panier"
-            className="relative md:hidden font-basecoat inline-flex items-center gap-2 border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-4 py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-base"
+            className="relative md:hidden font-basecoat inline-flex items-center gap-2 border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-4 py-2.5 rounded-lg font-semibold transition transform hover:scale-105 text-base"
           >
             <ShoppingCartIcon className="w-6 h-6" />
             {totalItems > 0 && (
-              <span key={totalItems} className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
+              <span key={totalItems} className="absolute -top-2 -right-2 bg-benin-rouge text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
                 {totalItems}
               </span>
             )}

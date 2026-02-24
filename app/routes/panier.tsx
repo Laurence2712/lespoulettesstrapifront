@@ -226,8 +226,8 @@ export default function Panier() {
     return (
       <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24 min-h-[60vh] flex items-center justify-center">
         <div className="text-center max-w-lg">
-          <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 ${isPaid ? 'bg-green-100' : 'bg-yellow-100'}`}>
-            <svg className={`w-10 h-10 ${isPaid ? 'text-green-500' : 'text-yellow-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+          <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 ${isPaid ? 'bg-benin-vert/15' : 'bg-benin-jaune/15'}`}>
+            <svg className={`w-10 h-10 ${isPaid ? 'text-benin-vert' : 'text-benin-jaune'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
             </svg>
           </div>
@@ -256,7 +256,7 @@ export default function Panier() {
           )}
           <Link
             to="/"
-            className="font-basecoat inline-block border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-8 sm:px-10 py-3 sm:py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg text-sm sm:text-base"
+            className="font-basecoat inline-block border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-8 sm:px-10 py-3 sm:py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg text-sm sm:text-base"
           >
             Retour à l'accueil
           </Link>
@@ -286,7 +286,7 @@ export default function Panier() {
           </p>
           <Link
             to="/realisations"
-            className="font-basecoat border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg text-sm sm:text-base inline-block"
+            className="font-basecoat border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg text-sm sm:text-base inline-block"
           >
             Voir toute la boutique
           </Link>
@@ -320,7 +320,7 @@ export default function Panier() {
                         </div>
                       )}
                       {product.prix && (
-                        <div className="absolute top-3 right-3 bg-yellow-400 text-black font-basecoat font-bold text-sm px-3 py-1 rounded-full shadow-sm">
+                        <div className="absolute top-3 right-3 bg-benin-jaune text-black font-basecoat font-bold text-sm px-3 py-1 rounded-full shadow-sm">
                           {Number(product.prix).toFixed(2)} €
                         </div>
                       )}
@@ -329,7 +329,7 @@ export default function Panier() {
                       <h3 className="font-basecoat font-semibold text-gray-900 text-base leading-snug mb-3">
                         {product.title}
                       </h3>
-                      <span className="font-basecoat text-sm font-semibold text-yellow-600 group-hover:text-yellow-700 flex items-center gap-1 transition">
+                      <span className="font-basecoat text-sm font-semibold text-benin-jaune group-hover:text-yellow-700 flex items-center gap-1 transition">
                         Voir le produit
                         <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -354,7 +354,7 @@ export default function Panier() {
     <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24">
       {/* Breadcrumb */}
       <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
-        <Link to="/" className="text-yellow-600 hover:text-yellow-700 font-medium transition">Accueil</Link>
+        <Link to="/" className="text-benin-jaune hover:text-benin-terre font-medium transition">Accueil</Link>
         <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
         <span className="text-gray-600">Panier</span>
       </nav>
@@ -362,7 +362,7 @@ export default function Panier() {
       <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900" data-delay="0.1">
         Votre panier
       </h1>
-      <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4" data-delay="0.15"></div>
+      <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4" data-delay="0.15"></div>
       <p className="anim-fade-up font-basecoat text-gray-500 text-sm sm:text-base mt-3 mb-8 sm:mb-10 md:mb-12" data-delay="0.2">
         {totalItems} article{totalItems > 1 ? 's' : ''}
       </p>
@@ -388,14 +388,14 @@ export default function Panier() {
                     <h3 className="font-basecoat text-base sm:text-lg font-bold text-gray-900 leading-tight">
                       {item.title}
                     </h3>
-                    <p className="font-basecoat text-yellow-500 font-bold text-lg sm:text-xl mt-1">
+                    <p className="font-basecoat text-benin-jaune font-bold text-lg sm:text-xl mt-1">
                       {item.prix} €
                     </p>
                   </div>
                   <button
                     onClick={() => removeFromCart(item.id)}
                     aria-label={`Supprimer ${item.title} du panier`}
-                    className="w-10 h-10 rounded-xl bg-red-50 hover:bg-red-100 flex items-center justify-center text-red-400 hover:text-red-600 transition flex-shrink-0"
+                    className="w-10 h-10 rounded-xl bg-benin-rouge/10 hover:bg-benin-rouge/20 flex items-center justify-center text-benin-rouge hover:text-benin-rouge transition flex-shrink-0"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
@@ -473,7 +473,7 @@ export default function Panier() {
 
             <button
               onClick={() => setShowCheckout(true)}
-              className="font-basecoat w-full border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg mb-3 text-sm sm:text-base"
+              className="font-basecoat w-full border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg mb-3 text-sm sm:text-base"
             >
               Passer commande
             </button>
@@ -638,7 +638,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
     <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24">
       <button
         onClick={onBack}
-        className="anim-fade-up font-basecoat text-yellow-600 hover:text-yellow-700 mb-6 sm:mb-8 flex items-center gap-2 text-sm sm:text-base font-medium transition"
+        className="anim-fade-up font-basecoat text-benin-jaune hover:text-benin-terre mb-6 sm:mb-8 flex items-center gap-2 text-sm sm:text-base font-medium transition"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -649,7 +649,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
       <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900" data-delay="0.1">
         Finaliser la commande
       </h1>
-      <div className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.15"></div>
+      <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.15"></div>
 
       {/* Récapitulatif dynamique */}
       <div className="anim-fade-up bg-white border border-gray-100 rounded-2xl p-5 sm:p-6 mb-8 sm:mb-10 shadow-sm" data-delay="0.15">
@@ -665,7 +665,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                 ? `Retrait gratuit — ${pickupLocation === 'grimbergen' ? 'Grimbergen' : pickupLocation === 'watermael' ? 'Watermael-Boisfort' : 'Bénin'}`
                 : `Livraison — ${SHIPPING_COSTS[country]?.label ?? country}`}
             </span>
-            <span className={`font-semibold ${shippingCost === 0 ? 'text-green-600' : 'text-gray-900'}`}>
+            <span className={`font-semibold ${shippingCost === 0 ? 'text-benin-vert' : 'text-gray-900'}`}>
               {shippingLabel}
             </span>
           </div>
@@ -679,9 +679,9 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
       <form onSubmit={handleCheckout} className="space-y-5 sm:space-y-6 max-w-2xl">
 
         {/* Paiement sécurisé */}
-        <div className="anim-fade-up bg-green-50 border border-green-100 rounded-2xl p-5 sm:p-6" data-delay="0.1">
+        <div className="anim-fade-up bg-benin-vert/10 border border-benin-vert/20 rounded-2xl p-5 sm:p-6" data-delay="0.1">
           <div className="flex items-center gap-3 mb-4">
-            <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+            <svg className="w-5 h-5 text-benin-vert flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
             </svg>
             <span className="font-basecoat font-bold text-gray-900 text-sm sm:text-base">Paiement 100% sécurisé par Stripe</span>
@@ -724,7 +724,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             required
             value={formData.nom}
             onChange={(e) => setFormData({...formData, nom: e.target.value})}
-            className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition bg-white"
+            className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white"
           />
         </div>
 
@@ -737,7 +737,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             required
             value={formData.email}
             onChange={(e) => setFormData({...formData, email: e.target.value})}
-            className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition bg-white"
+            className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white"
           />
         </div>
 
@@ -750,7 +750,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             required
             value={formData.telephone}
             onChange={(e) => setFormData({...formData, telephone: e.target.value})}
-            className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition bg-white"
+            className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white"
           />
         </div>
 
@@ -765,7 +765,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
               onClick={() => setDeliveryMode('livraison')}
               className={`flex items-center gap-3 p-4 rounded-xl border-2 transition text-left ${
                 deliveryMode === 'livraison'
-                  ? 'border-yellow-400 bg-yellow-50'
+                  ? 'border-benin-jaune bg-benin-jaune/10'
                   : 'border-gray-200 bg-white hover:border-gray-300'
               }`}
             >
@@ -783,14 +783,14 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
               onClick={() => setDeliveryMode('retrait')}
               className={`flex items-center gap-3 p-4 rounded-xl border-2 transition text-left ${
                 deliveryMode === 'retrait'
-                  ? 'border-green-500 bg-green-50'
+                  ? 'border-benin-vert bg-benin-vert/10'
                   : 'border-gray-200 bg-white hover:border-gray-300'
               }`}
             >
               <span className="text-2xl">🤝</span>
               <div>
                 <p className="font-basecoat font-bold text-gray-900 text-sm">Retrait gratuit</p>
-                <p className="font-basecoat text-xs text-green-600 font-semibold mt-0.5">0 € — Belgique ou Bénin</p>
+                <p className="font-basecoat text-xs text-benin-vert font-semibold mt-0.5">0 € — Belgique ou Bénin</p>
               </div>
             </button>
           </div>
@@ -803,7 +803,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             <div className="space-y-3">
 
               <label className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition ${
-                pickupLocation === 'grimbergen' ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-white'
+                pickupLocation === 'grimbergen' ? 'border-benin-vert bg-benin-vert/10' : 'border-gray-200 bg-white'
               }`}>
                 <input
                   type="radio"
@@ -811,7 +811,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                   value="grimbergen"
                   checked={pickupLocation === 'grimbergen'}
                   onChange={() => setPickupLocation('grimbergen')}
-                  className="accent-green-500 w-4 h-4"
+                  className="accent-benin-vert w-4 h-4"
                 />
                 <span className="text-xl">🇧🇪</span>
                 <div>
@@ -821,7 +821,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
               </label>
 
               <label className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition ${
-                pickupLocation === 'watermael' ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-white'
+                pickupLocation === 'watermael' ? 'border-benin-vert bg-benin-vert/10' : 'border-gray-200 bg-white'
               }`}>
                 <input
                   type="radio"
@@ -829,7 +829,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                   value="watermael"
                   checked={pickupLocation === 'watermael'}
                   onChange={() => setPickupLocation('watermael')}
-                  className="accent-green-500 w-4 h-4"
+                  className="accent-benin-vert w-4 h-4"
                 />
                 <span className="text-xl">🇧🇪</span>
                 <div>
@@ -839,7 +839,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
               </label>
 
               <label className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition ${
-                pickupLocation === 'benin' ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-white'
+                pickupLocation === 'benin' ? 'border-benin-vert bg-benin-vert/10' : 'border-gray-200 bg-white'
               }`}>
                 <input
                   type="radio"
@@ -847,7 +847,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                   value="benin"
                   checked={pickupLocation === 'benin'}
                   onChange={() => setPickupLocation('benin')}
-                  className="accent-green-500 w-4 h-4"
+                  className="accent-benin-vert w-4 h-4"
                 />
                 <span className="text-xl">🇧🇯</span>
                 <div>
@@ -872,7 +872,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                 id="checkout-country"
                 value={country}
                 onChange={(e) => handleCountryChange(e.target.value)}
-                className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition bg-white"
+                className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white"
               >
                 <option value="belgique">🇧🇪 Belgique — 4 € (3–5 jours ouvrés)</option>
                 <option value="europe">🌍 Autre pays Europe — 8 € (5–10 jours ouvrés)</option>
@@ -893,7 +893,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                   onChange={(e) => handlePostalCodeChange(e.target.value)}
                   placeholder={country === 'belgique' ? 'ex: 4000' : ''}
                   maxLength={10}
-                  className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition bg-white"
+                  className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white"
                 />
               </div>
               <div>
@@ -910,7 +910,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   placeholder="Ville"
-                  className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition bg-white"
+                  className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white"
                 />
               </div>
             </div>
@@ -927,7 +927,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                 value={street}
                 onChange={(e) => setStreet(e.target.value)}
                 placeholder="ex: Rue de la Paix 12"
-                className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition bg-white"
+                className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white"
               />
             </div>
 
@@ -942,13 +942,13 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             rows={3}
             value={formData.notes}
             onChange={(e) => setFormData({...formData, notes: e.target.value})}
-            className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition resize-none bg-white"
+            className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition resize-none bg-white"
             placeholder="Informations complémentaires, préférences de livraison..."
           />
         </div>
 
         {error && (
-          <div className="font-basecoat bg-red-50 border-l-4 border-red-400 text-red-700 px-5 py-4 rounded-r-xl text-sm sm:text-base">
+          <div className="font-basecoat bg-benin-rouge/10 border-l-4 border-benin-rouge text-benin-rouge px-5 py-4 rounded-r-xl text-sm sm:text-base">
             {error}
           </div>
         )}
@@ -956,7 +956,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
         <button
           type="submit"
           disabled={loading}
-          className="anim-fade-up font-basecoat w-full border-2 border-yellow-400 text-gray-900 hover:bg-yellow-400 hover:text-black py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm sm:text-base"
+          className="anim-fade-up font-basecoat w-full border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm sm:text-base"
           data-delay="0.4"
         >
           {loading ? (

@@ -77,7 +77,7 @@ export default function ActualitesPage() {
       <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
         {/* Breadcrumb */}
         <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
-          <Link to="/" className="text-yellow-600 hover:text-yellow-700 font-medium transition">
+          <Link to="/" className="text-benin-jaune hover:text-benin-terre font-medium transition">
             Accueil
           </Link>
           <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
@@ -94,7 +94,7 @@ export default function ActualitesPage() {
               Nos actualités
             </h1>
             <div
-              className="anim-fade-up w-16 sm:w-20 h-1 bg-yellow-400 mt-3 sm:mt-4"
+              className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4"
               data-delay="0.15"
             ></div>
             <p className="anim-fade-up font-basecoat text-gray-500 text-sm sm:text-base mt-3" data-delay="0.2">
@@ -112,7 +112,7 @@ export default function ActualitesPage() {
               id="sort-date"
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value as 'desc' | 'asc')}
-              className="font-basecoat text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+              className="font-basecoat text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune"
             >
               <option value="desc">Plus récent</option>
               <option value="asc">Plus ancien</option>
@@ -124,7 +124,7 @@ export default function ActualitesPage() {
       {/* Error */}
       {error && (
         <div className="flex items-center justify-center py-20">
-          <p className="font-basecoat text-red-500 text-center text-lg">{error}</p>
+          <p className="font-basecoat text-benin-rouge text-center text-lg">{error}</p>
         </div>
       )}
 
@@ -160,7 +160,7 @@ export default function ActualitesPage() {
                     className={`anim-fade-left ${index % 2 !== 0 ? 'md:order-1' : ''}`}
                     data-delay="0.3"
                   >
-                    <p className="font-basecoat text-sm text-yellow-600 font-semibold mb-3 tracking-wider uppercase">
+                    <p className="font-basecoat text-sm text-benin-jaune font-semibold mb-3 tracking-wider uppercase">
                       {actu.date
                         ? new Date(actu.date).toLocaleDateString("fr-FR", {
                             day: "2-digit",
@@ -191,7 +191,7 @@ export default function ActualitesPage() {
           </p>
           <Link
             to="/"
-            className="font-basecoat text-yellow-600 hover:text-yellow-700 underline text-sm transition"
+            className="font-basecoat text-benin-jaune hover:text-benin-terre underline text-sm transition"
           >
             Retour à l'accueil
           </Link>
@@ -220,7 +220,7 @@ export default function ActualitesPage() {
           </div>
           <Link
             to="/realisations"
-            className="font-basecoat inline-block border-2 border-yellow-400 text-white hover:bg-yellow-400 hover:text-black px-10 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] text-sm"
+            className="font-basecoat inline-block border-2 border-benin-jaune text-white hover:bg-benin-jaune hover:text-black px-10 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] text-sm"
           >
             Voir la boutique
           </Link>

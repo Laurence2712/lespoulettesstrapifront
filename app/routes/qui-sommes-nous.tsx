@@ -31,7 +31,7 @@ export default function QuiSommesNous() {
       {/* ── Hero ── */}
       <header className="bg-beige pt-28 sm:pt-32 md:pt-40 pb-14 sm:pb-18 md:pb-24 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
         <nav className="anim-fade-up font-basecoat mb-8 text-xs sm:text-sm">
-          <Link to="/" className="text-yellow-600 hover:text-yellow-700 font-medium transition">Accueil</Link>
+          <Link to="/" className="text-benin-jaune hover:text-benin-terre font-medium transition">Accueil</Link>
           <span className="mx-1.5 text-gray-400">/</span>
           <span className="text-gray-600">Qui sommes-nous</span>
         </nav>
@@ -75,7 +75,7 @@ export default function QuiSommesNous() {
           </div>
           <div className="anim-scale order-1 md:order-2 flex justify-center" data-delay="0.2">
             <div className="relative w-full max-w-sm">
-              <div className="w-full aspect-square rounded-2xl overflow-hidden shadow-2xl border-4 border-yellow-400">
+              <div className="w-full aspect-square rounded-2xl overflow-hidden shadow-2xl border-4 border-benin-jaune">
                 <img
                   src="/assets/equipe-1.jpg"
                   alt="Fondatrice Les Poulettes"
@@ -198,15 +198,15 @@ export default function QuiSommesNous() {
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto" data-stagger="0.12">
           <div className="text-center bg-gray-50 rounded-2xl p-8">
-            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-yellow-500 mb-2">100%</p>
+            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-benin-jaune mb-2">100%</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Fait main au Bénin</p>
           </div>
           <div className="text-center bg-gray-50 rounded-2xl p-8">
-            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-yellow-500 mb-2">0</p>
+            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-benin-jaune mb-2">0</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Production industrielle</p>
           </div>
           <div className="text-center bg-gray-50 rounded-2xl p-8">
-            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-yellow-500 mb-2">♥</p>
+            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-benin-jaune mb-2">♥</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Artisanes soutenues directement</p>
           </div>
         </div>
@@ -217,14 +217,14 @@ export default function QuiSommesNous() {
         <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-white mb-4">
           Prête à craquer pour une pièce unique ?
         </h2>
-        <div className="anim-fade-up w-16 h-1 bg-yellow-400 mx-auto mt-4 mb-8" data-delay="0.1"></div>
+        <div className="anim-fade-up w-16 h-1 bg-benin-jaune mx-auto mt-4 mb-8" data-delay="0.1"></div>
         <p className="anim-fade-up font-basecoat text-gray-400 text-base sm:text-lg mb-10 max-w-xl mx-auto" data-delay="0.15">
           Explorez notre boutique ou contactez-nous pour une commande sur mesure.
         </p>
         <div className="anim-fade-up flex flex-col sm:flex-row gap-4 justify-center" data-delay="0.2">
           <Link
             to="/realisations"
-            className="font-basecoat border-2 border-yellow-400 text-white hover:bg-yellow-400 hover:text-black px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
+            className="font-basecoat border-2 border-benin-jaune text-white hover:bg-benin-jaune hover:text-black px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
           >
             Voir la boutique
           </Link>

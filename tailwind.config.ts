@@ -20,6 +20,16 @@ export default {
       },
       colors: {
         beige: "#F5F1E8",
+        // Couleurs béninoises : drapeau + terres + teintures
+        benin: {
+          vert:   "#008751", // drapeau vert
+          jaune:  "#FCD116", // drapeau jaune
+          rouge:  "#E8112D", // drapeau rouge
+          terre:  "#C4622D", // latérite / terre cuite
+          ocre:   "#D4A853", // sable / ocre clair
+          indigo: "#2C3E8C", // indigo teinture traditionnelle
+        },
+        // Couleurs wax : accents festifs et vibrants
         wax: {
           turquoise: "#1DB4B4",
           yellow:    "#F5C100",
