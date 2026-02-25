@@ -87,11 +87,11 @@ export default function QuiSommesNous() {
 
       {/* ── Nos valeurs ── */}
       <section className="bg-gray-50 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
-        <div className="text-center mb-12">
+        <div className="mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Nos valeurs
           </h2>
-          <div className="anim-expand-line w-20 h-px bg-wax-red mx-auto mt-4" data-delay="0.1"></div>
+          <div className="anim-expand-line w-20 h-px bg-wax-red mt-4" data-delay="0.1"></div>
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-stagger="0.1">
           <div className="bg-white rounded-2xl p-7 shadow-sm border-t-4 border-wax-turquoise">
@@ -179,12 +179,12 @@ export default function QuiSommesNous() {
 
       {/* ── Impact social ── */}
       <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
-        <div className="text-center mb-12">
+        <div className="mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Notre impact
           </h2>
-          <div className="anim-expand-line w-20 h-px bg-wax-red mx-auto mt-4 mb-6" data-delay="0.1"></div>
-          <p className="anim-fade-up font-basecoat text-gray-600 text-base sm:text-lg max-w-2xl mx-auto" data-delay="0.15">
+          <div className="anim-expand-line w-20 h-px bg-wax-red mt-4 mb-6" data-delay="0.1"></div>
+          <p className="anim-fade-up font-basecoat text-gray-600 text-base sm:text-lg max-w-2xl" data-delay="0.15">
             Derrière chaque accessoire, il y a une artisane, une famille, une communauté. Acheter Les Poulettes, c'est choisir une mode qui a un vrai impact humain.
           </p>
         </div>

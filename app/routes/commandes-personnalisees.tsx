@@ -84,19 +84,18 @@ export default function CommandesPersonnalisees() {
 
       {/* ── Pour quels événements ? ── */}
       <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
-        <div className="text-center mb-12">
+        <div className="mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Pour quels événements ?
           </h2>
-          <div className="anim-expand-line w-20 h-px bg-wax-red mx-auto mt-4 mb-6" data-delay="0.1"></div>
-          <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg max-w-2xl mx-auto" data-delay="0.15">
+          <div className="anim-expand-line w-20 h-px bg-wax-red mt-4 mb-6" data-delay="0.1"></div>
+          <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg max-w-2xl" data-delay="0.15">
             Des sachets de dragées aux cadeaux d'invités en passant par les trousses personnalisées — nous sommes là pour rendre votre fête inoubliable.
           </p>
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" data-stagger="0.1">
           {EVENTS.map((event) => (
             <div key={event.label} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-              <div className="text-3xl mb-3">{event.icon}</div>
               <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">{event.label}</h3>
               <p className="font-basecoat text-sm text-gray-600 leading-relaxed">{event.desc}</p>
             </div>
@@ -106,12 +105,12 @@ export default function CommandesPersonnalisees() {
 
       {/* ── Comment ça marche ── */}
       <section className="bg-gray-50 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
-        <div className="text-center mb-12">
+        <div className="mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Comment ça marche ?
           </h2>
-          <div className="anim-expand-line w-20 h-px bg-wax-red mx-auto mt-4 mb-6" data-delay="0.1"></div>
-          <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg max-w-xl mx-auto" data-delay="0.15">
+          <div className="anim-expand-line w-20 h-px bg-wax-red mt-4 mb-6" data-delay="0.1"></div>
+          <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg max-w-xl" data-delay="0.15">
             Un processus simple, transparent et pensé pour vous faciliter la vie.
           </p>
         </div>

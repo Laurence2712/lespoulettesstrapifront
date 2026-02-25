@@ -190,12 +190,12 @@ export default function GuideTailles() {
 
       {/* ── Entretien ── */}
       <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18">
-        <div className="text-center mb-12">
+        <div className="mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Conseils d'entretien
           </h2>
-          <div className="anim-expand-line w-20 h-px bg-wax-red mx-auto mt-4 mb-6" data-delay="0.1"></div>
-          <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg max-w-xl mx-auto" data-delay="0.15">
+          <div className="anim-expand-line w-20 h-px bg-wax-red mt-4 mb-6" data-delay="0.1"></div>
+          <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg max-w-xl" data-delay="0.15">
             Bien entretenu, votre accessoire Les Poulettes vous accompagnera des années.
           </p>
         </div>
