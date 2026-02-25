@@ -31,7 +31,7 @@ export default function QuiSommesNous() {
       {/* ── Hero ── */}
       <header className="bg-beige pt-28 sm:pt-32 md:pt-40 pb-14 sm:pb-18 md:pb-24 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
         <nav className="anim-fade-up font-basecoat mb-8 text-xs sm:text-sm">
-          <Link to="/" className="text-wax-red hover:text-benin-terre font-medium transition">Accueil</Link>
+          <Link to="/" className="text-benin-jaune hover:text-benin-terre font-medium transition">Accueil</Link>
           <span className="mx-1.5 text-gray-400">/</span>
           <span className="text-gray-600">Qui sommes-nous</span>
         </nav>
@@ -39,7 +39,7 @@ export default function QuiSommesNous() {
           <h1 className="anim-fade-up font-basecoat text-3xl sm:text-4xl md:text-[56px] font-bold uppercase text-gray-900 leading-tight">
             L'âme des Poulettes
           </h1>
-          <div className="anim-expand-line w-24 h-px bg-wax-red mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-24 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl text-gray-700 leading-relaxed" data-delay="0.2">
             Une marque née de la passion du tissu wax, de l'artisanat solidaire et d'une envie profonde de mettre en lumière le savoir-faire béninois.
           </p>
@@ -54,7 +54,7 @@ export default function QuiSommesNous() {
             <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 mb-2">
               Notre histoire
             </h2>
-            <div className="anim-expand-line w-20 h-px bg-wax-red mb-6"></div>
+            <div className="anim-expand-line w-20 h-px bg-benin-jaune mb-6"></div>
             <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
               Les Poulettes sont nées d'une histoire d'amour entre la Belgique et le Bénin. Fondée par Laurence, la marque a vu le jour avec une conviction simple : les tissus wax africains méritent d'être portés au quotidien, avec style et conscience.
             </p>
@@ -67,7 +67,7 @@ export default function QuiSommesNous() {
           </div>
           <div className="anim-scale order-1 md:order-2 flex justify-center" data-delay="0.2">
             <div className="relative w-full max-w-sm">
-              <div className="w-full aspect-square rounded-2xl overflow-hidden shadow-2xl border-4 border-wax-red/30">
+              <div className="w-full aspect-square rounded-2xl overflow-hidden shadow-2xl border-4 border-benin-jaune/30">
                 <img
                   src="/assets/equipe-1.jpg"
                   alt="Fondatrice Les Poulettes"
@@ -77,7 +77,7 @@ export default function QuiSommesNous() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-4 -right-4 bg-wax-red text-white font-basecoat text-xs font-bold uppercase px-4 py-2 rounded-xl shadow-lg">
+              <div className="absolute -bottom-4 -right-4 bg-benin-jaune text-black font-basecoat text-xs font-bold uppercase px-4 py-2 rounded-xl shadow-lg">
                 Depuis 2019
               </div>
             </div>
@@ -91,10 +91,10 @@ export default function QuiSommesNous() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Nos valeurs
           </h2>
-          <div className="anim-expand-line w-20 h-px bg-wax-red mt-4" data-delay="0.1"></div>
+          <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-4" data-delay="0.1"></div>
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-stagger="0.1">
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-wax-red/30">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
             <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">✂️</span>
             </div>
@@ -103,7 +103,7 @@ export default function QuiSommesNous() {
               Chaque trousse, chaque sac, chaque housse est découpé et cousu à la main dans notre atelier de Cotonou. Pas de production industrielle — uniquement le travail patient et précis de nos artisanes.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-wax-red/30">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
             <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">🌿</span>
             </div>
@@ -112,7 +112,7 @@ export default function QuiSommesNous() {
               Nous travaillons avec des tissus wax de qualité issus de circuits courts locaux. Nos emballages sont minimalistes et recyclables. Chaque choix de production est pensé pour minimiser notre impact environnemental.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-wax-red/30">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
             <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">🤝</span>
             </div>
@@ -121,7 +121,7 @@ export default function QuiSommesNous() {
               Chaque achat soutient directement nos artisanes et leurs familles au Bénin. Nous croyons en une mode qui crée de la valeur là où elle est fabriquée — pas seulement là où elle est vendue.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-wax-red/30">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
             <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">🌍</span>
             </div>
@@ -130,7 +130,7 @@ export default function QuiSommesNous() {
               Nous sélectionnons nos tissus wax avec soin — pour leurs motifs, leur tenue et leur authenticité. Le wax africain est bien plus qu'un tissu : c'est un langage, une tradition, une identité.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-wax-red/30">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
             <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">🎨</span>
             </div>
@@ -139,7 +139,7 @@ export default function QuiSommesNous() {
               Chaque création est unique. Les tissus varient d'une collection à l'autre, les motifs évoluent avec les saisons. Votre accessoire Les Poulettes ne ressemble à aucun autre — et c'est tout son charme.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-wax-red/30">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
             <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">💛</span>
             </div>
@@ -158,7 +158,7 @@ export default function QuiSommesNous() {
             <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 mb-2">
               Dans notre atelier
             </h2>
-            <div className="anim-expand-line w-20 h-px bg-wax-red mb-6"></div>
+            <div className="anim-expand-line w-20 h-px bg-benin-jaune mb-6"></div>
             <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
               Notre atelier se trouve à Cotonou, au cœur du Bénin. C'est là que tout commence : la sélection des tissus sur les marchés locaux, le tracé des patrons, la découpe minutieuse, l'assemblage couture après couture.
             </p>
@@ -170,20 +170,20 @@ export default function QuiSommesNous() {
             </p>
           </div>
           <div className="anim-fade-left grid grid-cols-2 gap-3" data-delay="0.2">
-            <div className="bg-white rounded-2xl p-6 border-t-2 border-wax-red/30 flex flex-col justify-center">
-              <p className="font-basecoat text-4xl font-bold text-wax-red mb-1">2019</p>
+            <div className="bg-white rounded-2xl p-6 border-t-2 border-benin-jaune/30 flex flex-col justify-center">
+              <p className="font-basecoat text-4xl font-bold text-benin-jaune mb-1">2019</p>
               <p className="font-basecoat text-xs font-semibold uppercase text-gray-500 tracking-wide">Depuis</p>
             </div>
-            <div className="bg-white rounded-2xl p-6 border-t-2 border-wax-red/30 flex flex-col justify-center">
-              <p className="font-basecoat text-4xl font-bold text-wax-red mb-1">100%</p>
+            <div className="bg-white rounded-2xl p-6 border-t-2 border-benin-jaune/30 flex flex-col justify-center">
+              <p className="font-basecoat text-4xl font-bold text-benin-jaune mb-1">100%</p>
               <p className="font-basecoat text-xs font-semibold uppercase text-gray-500 tracking-wide">Fait main</p>
             </div>
-            <div className="bg-white rounded-2xl p-6 border-t-2 border-wax-red/30 flex flex-col justify-center">
-              <p className="font-basecoat text-4xl font-bold text-wax-red mb-1">0</p>
+            <div className="bg-white rounded-2xl p-6 border-t-2 border-benin-jaune/30 flex flex-col justify-center">
+              <p className="font-basecoat text-4xl font-bold text-benin-jaune mb-1">0</p>
               <p className="font-basecoat text-xs font-semibold uppercase text-gray-500 tracking-wide">Production industrielle</p>
             </div>
-            <div className="bg-white rounded-2xl p-6 border-t-2 border-wax-red/30 flex flex-col justify-center">
-              <p className="font-basecoat text-4xl font-bold text-wax-red mb-1">♥</p>
+            <div className="bg-white rounded-2xl p-6 border-t-2 border-benin-jaune/30 flex flex-col justify-center">
+              <p className="font-basecoat text-4xl font-bold text-benin-jaune mb-1">♥</p>
               <p className="font-basecoat text-xs font-semibold uppercase text-gray-500 tracking-wide">Artisanes soutenues</p>
             </div>
           </div>
@@ -196,40 +196,40 @@ export default function QuiSommesNous() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Notre impact
           </h2>
-          <div className="anim-expand-line w-20 h-px bg-wax-red mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-gray-600 text-base sm:text-lg max-w-2xl" data-delay="0.15">
             Derrière chaque accessoire, il y a une artisane, une famille, une communauté. Acheter Les Poulettes, c'est choisir une mode qui a un vrai impact humain.
           </p>
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto" data-stagger="0.12">
           <div className="text-center bg-gray-50 rounded-2xl p-8">
-            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-wax-red mb-2">100%</p>
+            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-benin-jaune mb-2">100%</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Fait main au Bénin</p>
           </div>
           <div className="text-center bg-gray-50 rounded-2xl p-8">
-            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-wax-red mb-2">0</p>
+            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-benin-jaune mb-2">0</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Production industrielle</p>
           </div>
           <div className="text-center bg-gray-50 rounded-2xl p-8">
-            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-wax-red mb-2">♥</p>
+            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-benin-jaune mb-2">♥</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Artisanes soutenues directement</p>
           </div>
         </div>
       </section>
 
       {/* ── CTAs ── */}
-      <section className="bg-gray-900 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24 text-center">
+      <section className="bg-black px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24 text-center">
         <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-white mb-4">
           Prête à craquer pour une pièce unique ?
         </h2>
-        <div className="anim-expand-line w-20 h-px bg-wax-red mx-auto mt-4 mb-8" data-delay="0.1"></div>
+        <div className="anim-expand-line w-20 h-px bg-benin-jaune mx-auto mt-4 mb-8" data-delay="0.1"></div>
         <p className="anim-fade-up font-basecoat text-gray-400 text-base sm:text-lg mb-10 max-w-xl mx-auto" data-delay="0.15">
           Explorez notre boutique ou contactez-nous pour une commande sur mesure.
         </p>
         <div className="anim-fade-up flex flex-col sm:flex-row gap-4 justify-center" data-delay="0.2">
           <Link
             to="/realisations"
-            className="font-basecoat bg-wax-red hover:bg-wax-red/90 text-white px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
+            className="font-basecoat bg-benin-jaune hover:bg-benin-jaune/90 text-black px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
           >
             Voir la boutique
           </Link>

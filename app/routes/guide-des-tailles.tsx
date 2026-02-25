@@ -110,7 +110,7 @@ export default function GuideTailles() {
           <h1 className="anim-fade-up font-basecoat text-3xl sm:text-4xl md:text-[56px] font-bold uppercase text-gray-900 leading-tight">
             Guide des tailles & Entretien
           </h1>
-          <div className="anim-expand-line w-24 h-px bg-wax-red mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-24 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-lg sm:text-xl text-gray-700 leading-relaxed" data-delay="0.2">
             Toutes les informations dont vous avez besoin pour choisir la bonne taille et entretenir vos accessoires Les Poulettes.
           </p>
@@ -132,7 +132,7 @@ export default function GuideTailles() {
             <span className="text-3xl">{cat.icon}</span>
             <h2 className="font-basecoat text-2xl sm:text-3xl font-bold uppercase text-gray-900">{cat.category}</h2>
           </div>
-          <div className="anim-expand-line w-20 h-px bg-wax-red mb-4"></div>
+          <div className="anim-expand-line w-20 h-px bg-benin-jaune mb-4"></div>
           <p className="font-basecoat text-gray-600 text-sm sm:text-base mb-6 max-w-xl">{cat.description}</p>
 
           <div className="overflow-x-auto rounded-2xl border border-gray-100 shadow-sm">
@@ -171,7 +171,7 @@ export default function GuideTailles() {
         <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl font-bold uppercase text-gray-900 mb-2">
           Nos matières
         </h2>
-        <div className="anim-expand-line w-20 h-px bg-wax-red mb-6" data-delay="0.1"></div>
+        <div className="anim-expand-line w-20 h-px bg-benin-jaune mb-6" data-delay="0.1"></div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-3 gap-5" data-stagger="0.1">
           <div className="bg-white rounded-2xl p-6 shadow-sm">
             <h3 className="font-basecoat font-bold uppercase text-gray-900 mb-3 text-base">Tissu extérieur</h3>
@@ -194,7 +194,7 @@ export default function GuideTailles() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Conseils d'entretien
           </h2>
-          <div className="anim-expand-line w-20 h-px bg-wax-red mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg max-w-xl" data-delay="0.15">
             Bien entretenu, votre accessoire Les Poulettes vous accompagnera des années.
           </p>

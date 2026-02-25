@@ -172,13 +172,13 @@ function FaqAccordion({ section }: { section: FaqSection }) {
               >
                 <span className="flex-1">{item.question}</span>
                 <span
-                  className={`flex-shrink-0 w-6 h-6 rounded-full bg-wax-red/10 flex items-center justify-center transition-transform duration-300 ${
+                  className={`flex-shrink-0 w-6 h-6 rounded-full bg-benin-jaune/10 flex items-center justify-center transition-transform duration-300 ${
                     isOpen ? 'rotate-180' : ''
                   }`}
                   aria-hidden="true"
                 >
                   <svg
-                    className="w-3.5 h-3.5 text-wax-red"
+                    className="w-3.5 h-3.5 text-benin-jaune"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -215,7 +215,7 @@ export default function FAQ() {
     >
       {/* Breadcrumb */}
       <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
-        <Link to="/" className="text-wax-red hover:text-wax-red/70 font-medium transition">
+        <Link to="/" className="text-benin-jaune hover:text-benin-jaune/70 font-medium transition">
           Accueil
         </Link>
         <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
@@ -229,7 +229,7 @@ export default function FAQ() {
       >
         Questions fréquentes
       </h1>
-      <div className="anim-expand-line w-20 sm:w-24 h-px bg-wax-red mt-3 sm:mt-4" data-delay="0.15"></div>
+      <div className="anim-expand-line w-20 sm:w-24 h-px bg-benin-jaune mt-3 sm:mt-4" data-delay="0.15"></div>
       <p
         className="anim-fade-up font-basecoat text-gray-500 text-sm sm:text-base mt-3 mb-10 sm:mb-12 md:mb-16 max-w-xl"
         data-delay="0.2"
@@ -267,7 +267,7 @@ export default function FAQ() {
           </a>
           <Link
             to="/contact"
-            className="font-basecoat inline-flex items-center gap-2 border-2 border-wax-red text-gray-900 hover:bg-wax-red hover:text-white font-bold px-5 py-2.5 rounded-xl transition hover:scale-105 text-sm"
+            className="font-basecoat inline-flex items-center gap-2 border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black font-bold px-5 py-2.5 rounded-xl transition hover:scale-105 text-sm"
           >
             Nous contacter
           </Link>
