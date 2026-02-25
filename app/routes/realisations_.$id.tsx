@@ -389,7 +389,7 @@ export default function RealisationDetail() {
                 {realisation.prix ? `${realisation.prix} €` : 'Prix sur demande'}
               </p>
             </div>
-            <div className="anim-expand-line w-20 h-px bg-wax-red mt-3 mb-5"></div>
+            <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-3 mb-5"></div>
 
             {/* Description */}
             {realisation.description?.trim() && (
@@ -591,7 +591,7 @@ export default function RealisationDetail() {
             <h2 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl font-bold uppercase text-gray-900 mb-2">
               Vous aimerez aussi
             </h2>
-            <div className="anim-expand-line w-20 h-px bg-wax-red mb-8" data-delay="0.1"></div>
+            <div className="anim-expand-line w-20 h-px bg-benin-jaune mb-8" data-delay="0.1"></div>
             <div className="anim-stagger grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5" data-stagger="0.08">
               {relatedProducts.map((product) => (
                 <Link

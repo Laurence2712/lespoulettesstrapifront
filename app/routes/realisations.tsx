@@ -290,7 +290,7 @@ export default function Realisations() {
               Notre boutique
             </h1>
             <div
-              className="anim-expand-line w-20 sm:w-24 h-px bg-wax-red mt-3 sm:mt-4"
+              className="anim-expand-line w-20 sm:w-24 h-px bg-benin-jaune mt-3 sm:mt-4"
               data-delay="0.15"
             ></div>
             <p className="anim-fade-up font-basecoat text-xs text-gray-400 mt-3" data-delay="0.2">
@@ -329,8 +329,8 @@ export default function Realisations() {
                 onClick={() => handleCategoryChange(cat)}
                 className={`font-basecoat text-sm sm:text-base font-semibold px-4 sm:px-5 py-2 rounded-full border-2 transition-all duration-200 ${
                   selectedCategory === cat
-                    ? 'bg-wax-red border-wax-red text-white shadow-md'
-                    : 'bg-white border-gray-200 text-gray-700 hover:border-wax-red hover:text-wax-red'
+                    ? 'bg-benin-jaune border-benin-jaune text-black shadow-md'
+                    : 'bg-white border-gray-200 text-gray-700 hover:border-benin-jaune hover:text-benin-jaune'
                 }`}
               >
                 {cat}
@@ -446,7 +446,7 @@ export default function Realisations() {
                         Épuisé
                       </div>
                     ) : realisation.totalStock <= 5 ? (
-                      <div className="absolute top-3 left-3 bg-wax-red/80 text-white text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
+                      <div className="absolute top-3 left-3 bg-benin-jaune/80 text-black text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
                         Plus que {realisation.totalStock}
                       </div>
                     ) : null
@@ -454,7 +454,7 @@ export default function Realisations() {
 
                   {/* Badges Fait main / Made in Bénin */}
                   <div className="absolute bottom-2 right-2 flex flex-col items-end gap-1">
-                    <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-wax-red text-white px-2 py-0.5 rounded-full shadow">Fait main</span>
+                    <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-benin-jaune text-black px-2 py-0.5 rounded-full shadow">Fait main</span>
                     <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-gray-800 text-white px-2 py-0.5 rounded-full shadow">Made in Bénin</span>
                   </div>
 

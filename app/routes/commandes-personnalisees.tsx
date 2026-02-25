@@ -74,7 +74,7 @@ export default function CommandesPersonnalisees() {
           <h1 className="anim-fade-up font-basecoat text-3xl sm:text-4xl md:text-[56px] font-bold uppercase text-gray-900 leading-tight">
             Commandes personnalisées
           </h1>
-          <div className="anim-expand-line w-24 h-px bg-wax-red mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-24 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl text-gray-700 leading-relaxed" data-delay="0.2">
             Un événement à fêter ? Les Poulettes créent pour vous des pièces uniques, aux couleurs de votre occasion — faites main au Bénin, avec amour.
           </p>
@@ -88,7 +88,7 @@ export default function CommandesPersonnalisees() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Pour quels événements ?
           </h2>
-          <div className="anim-expand-line w-20 h-px bg-wax-red mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg max-w-2xl" data-delay="0.15">
             Des sachets de dragées aux cadeaux d'invités en passant par les trousses personnalisées — nous sommes là pour rendre votre fête inoubliable.
           </p>
@@ -109,16 +109,16 @@ export default function CommandesPersonnalisees() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Comment ça marche ?
           </h2>
-          <div className="anim-expand-line w-20 h-px bg-wax-red mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg max-w-xl" data-delay="0.15">
             Un processus simple, transparent et pensé pour vous faciliter la vie.
           </p>
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" data-stagger="0.12">
           {STEPS.map((step) => (
-            <div key={step.num} className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-wax-red/20 hover:shadow-md transition-all duration-300">
+            <div key={step.num} className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-benin-jaune/20 hover:shadow-md transition-all duration-300">
               <div className="flex items-center gap-3 mb-5">
-                <span className="font-basecoat text-3xl font-bold text-wax-red/20 leading-none">{step.num}</span>
+                <span className="font-basecoat text-3xl font-bold text-benin-jaune/20 leading-none">{step.num}</span>
                 <div className="h-px flex-1 bg-gray-100"></div>
               </div>
               <h3 className="font-basecoat text-sm font-bold uppercase text-gray-900 mb-2 tracking-wide">{step.title}</h3>
@@ -135,7 +135,7 @@ export default function CommandesPersonnalisees() {
             <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 mb-2">
               Ce que nous créons
             </h2>
-            <div className="anim-expand-line w-20 h-px bg-wax-red mb-6"></div>
+            <div className="anim-expand-line w-20 h-px bg-benin-jaune mb-6"></div>
             <ul className="space-y-3 font-basecoat text-base sm:text-lg text-gray-700">
               {[
                 'Sachets et pochettes pour dragées',
@@ -147,7 +147,7 @@ export default function CommandesPersonnalisees() {
                 'Signets et carnets recouverts de wax',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <span className="text-wax-red/50 font-bold flex-shrink-0 mt-0.5">◆</span>
+                  <span className="text-benin-jaune/50 font-bold flex-shrink-0 mt-0.5">◆</span>
                   <span>{item}</span>
                 </li>
               ))}
@@ -161,19 +161,19 @@ export default function CommandesPersonnalisees() {
               <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-4">Informations utiles</h3>
               <ul className="space-y-4 font-basecoat text-sm text-gray-700">
                 <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-wax-red/50 flex-shrink-0 mt-1.5"></span>
+                  <span className="w-2 h-2 rounded-full bg-benin-jaune/50 flex-shrink-0 mt-1.5"></span>
                   <span><strong>Délai :</strong> comptez 2 à 4 semaines selon la quantité. Commandez tôt pour éviter les délais de dernière minute.</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-wax-red/50 flex-shrink-0 mt-1.5"></span>
+                  <span className="w-2 h-2 rounded-full bg-benin-jaune/50 flex-shrink-0 mt-1.5"></span>
                   <span><strong>Quantité minimum :</strong> pas de minimum imposé — nous traitons les petites comme les grandes commandes.</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-wax-red/50 flex-shrink-0 mt-1.5"></span>
+                  <span className="w-2 h-2 rounded-full bg-benin-jaune/50 flex-shrink-0 mt-1.5"></span>
                   <span><strong>Tissus :</strong> vous pouvez choisir parmi nos stocks disponibles ou suggérer une couleur/motif spécifique.</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-wax-red/50 flex-shrink-0 mt-1.5"></span>
+                  <span className="w-2 h-2 rounded-full bg-benin-jaune/50 flex-shrink-0 mt-1.5"></span>
                   <span><strong>Tarif :</strong> devis gratuit et sans engagement, adapté à votre budget.</span>
                 </li>
               </ul>
@@ -183,11 +183,11 @@ export default function CommandesPersonnalisees() {
       </section>
 
       {/* ── CTA Contact ── */}
-      <section className="bg-gray-900 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24 text-center">
+      <section className="bg-black px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24 text-center">
         <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-white mb-4">
           Parlons de votre projet !
         </h2>
-        <div className="anim-expand-line w-20 h-px bg-wax-red mx-auto mt-4 mb-8" data-delay="0.1"></div>
+        <div className="anim-expand-line w-20 h-px bg-benin-jaune mx-auto mt-4 mb-8" data-delay="0.1"></div>
         <p className="anim-fade-up font-basecoat text-gray-400 text-base sm:text-lg mb-10 max-w-xl mx-auto" data-delay="0.15">
           Décrivez-nous votre événement, la quantité souhaitée et votre date de besoin. Nous vous répondons dans les 48h avec un devis personnalisé.
         </p>
