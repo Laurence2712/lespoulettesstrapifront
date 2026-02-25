@@ -95,7 +95,8 @@ body {
   .anim-fade-left,
   .anim-fade-right,
   .anim-fade,
-  .anim-scale {
+  .anim-scale,
+  .anim-expand-line {
     opacity: 1 !important;
     transform: none !important;
   }

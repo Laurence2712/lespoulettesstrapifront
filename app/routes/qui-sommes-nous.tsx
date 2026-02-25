@@ -39,21 +39,13 @@ export default function QuiSommesNous() {
           <h1 className="anim-fade-up font-basecoat text-3xl sm:text-4xl md:text-[56px] font-bold uppercase text-gray-900 leading-tight">
             L'âme des Poulettes
           </h1>
-          <div className="anim-fade-up w-20 h-1.5 bg-wax-orange mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-24 h-px bg-wax-red mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl text-gray-700 leading-relaxed" data-delay="0.2">
             Une marque née de la passion du tissu wax, de l'artisanat solidaire et d'une envie profonde de mettre en lumière le savoir-faire béninois.
           </p>
         </div>
       </header>
 
-      {/* ── Bande wax ── */}
-      <div className="flex h-2 w-full" aria-hidden="true">
-        <div className="flex-1 bg-wax-turquoise" />
-        <div className="flex-1 bg-wax-yellow" />
-        <div className="flex-1 bg-wax-orange" />
-        <div className="flex-1 bg-wax-red" />
-        <div className="flex-1 bg-wax-green" />
-      </div>
 
       {/* ── Notre histoire ── */}
       <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
@@ -62,7 +54,7 @@ export default function QuiSommesNous() {
             <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 mb-2">
               Notre histoire
             </h2>
-            <div className="w-16 h-1 bg-wax-turquoise mb-6"></div>
+            <div className="anim-expand-line w-20 h-px bg-wax-red mb-6"></div>
             <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
               Les Poulettes sont nées d'une histoire d'amour entre la Belgique et le Bénin. Fondée par Laurence, la marque a vu le jour avec une conviction simple : les tissus wax africains méritent d'être portés au quotidien, avec style et conscience.
             </p>
@@ -99,7 +91,7 @@ export default function QuiSommesNous() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Nos valeurs
           </h2>
-          <div className="anim-fade-up w-16 h-1 bg-wax-yellow mx-auto mt-4" data-delay="0.1"></div>
+          <div className="anim-expand-line w-20 h-px bg-wax-red mx-auto mt-4" data-delay="0.1"></div>
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-stagger="0.1">
           <div className="bg-white rounded-2xl p-7 shadow-sm border-t-4 border-wax-turquoise">
@@ -166,7 +158,7 @@ export default function QuiSommesNous() {
             <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 mb-2">
               Dans notre atelier
             </h2>
-            <div className="w-16 h-1 bg-wax-orange mb-6"></div>
+            <div className="anim-expand-line w-20 h-px bg-wax-red mb-6"></div>
             <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
               Notre atelier se trouve à Cotonou, au cœur du Bénin. C'est là que tout commence : la sélection des tissus sur les marchés locaux, le tracé des patrons, la découpe minutieuse, l'assemblage couture après couture.
             </p>
@@ -191,7 +183,7 @@ export default function QuiSommesNous() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Notre impact
           </h2>
-          <div className="anim-fade-up w-16 h-1 bg-wax-green mx-auto mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-20 h-px bg-wax-red mx-auto mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-gray-600 text-base sm:text-lg max-w-2xl mx-auto" data-delay="0.15">
             Derrière chaque accessoire, il y a une artisane, une famille, une communauté. Acheter Les Poulettes, c'est choisir une mode qui a un vrai impact humain.
           </p>
@@ -217,7 +209,7 @@ export default function QuiSommesNous() {
         <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-white mb-4">
           Prête à craquer pour une pièce unique ?
         </h2>
-        <div className="anim-fade-up w-16 h-1 bg-benin-jaune mx-auto mt-4 mb-8" data-delay="0.1"></div>
+        <div className="anim-expand-line w-20 h-px bg-wax-red mx-auto mt-4 mb-8" data-delay="0.1"></div>
         <p className="anim-fade-up font-basecoat text-gray-400 text-base sm:text-lg mb-10 max-w-xl mx-auto" data-delay="0.15">
           Explorez notre boutique ou contactez-nous pour une commande sur mesure.
         </p>

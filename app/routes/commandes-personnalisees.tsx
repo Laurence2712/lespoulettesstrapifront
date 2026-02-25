@@ -74,21 +74,13 @@ export default function CommandesPersonnalisees() {
           <h1 className="anim-fade-up font-basecoat text-3xl sm:text-4xl md:text-[56px] font-bold uppercase text-gray-900 leading-tight">
             Commandes personnalisées
           </h1>
-          <div className="anim-fade-up w-20 h-1.5 bg-wax-orange mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-24 h-px bg-wax-red mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl text-gray-700 leading-relaxed" data-delay="0.2">
             Un événement à fêter ? Les Poulettes créent pour vous des pièces uniques, aux couleurs de votre occasion — faites main au Bénin, avec amour.
           </p>
         </div>
       </header>
 
-      {/* ── Bande wax ── */}
-      <div className="flex h-2 w-full" aria-hidden="true">
-        <div className="flex-1 bg-wax-turquoise" />
-        <div className="flex-1 bg-wax-yellow" />
-        <div className="flex-1 bg-wax-orange" />
-        <div className="flex-1 bg-wax-red" />
-        <div className="flex-1 bg-wax-green" />
-      </div>
 
       {/* ── Pour quels événements ? ── */}
       <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
@@ -96,7 +88,7 @@ export default function CommandesPersonnalisees() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Pour quels événements ?
           </h2>
-          <div className="anim-fade-up w-16 h-1 bg-wax-turquoise mx-auto mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-20 h-px bg-wax-red mx-auto mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg max-w-2xl mx-auto" data-delay="0.15">
             Des sachets de dragées aux cadeaux d'invités en passant par les trousses personnalisées — nous sommes là pour rendre votre fête inoubliable.
           </p>
@@ -118,7 +110,7 @@ export default function CommandesPersonnalisees() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Comment ça marche ?
           </h2>
-          <div className="anim-fade-up w-16 h-1 bg-wax-orange mx-auto mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-20 h-px bg-wax-red mx-auto mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg max-w-xl mx-auto" data-delay="0.15">
             Un processus simple, transparent et pensé pour vous faciliter la vie.
           </p>
@@ -143,7 +135,7 @@ export default function CommandesPersonnalisees() {
             <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 mb-2">
               Ce que nous créons
             </h2>
-            <div className="w-16 h-1 bg-wax-green mb-6"></div>
+            <div className="anim-expand-line w-20 h-px bg-wax-red mb-6"></div>
             <ul className="space-y-3 font-basecoat text-base sm:text-lg text-gray-700">
               {[
                 'Sachets et pochettes pour dragées',
@@ -195,7 +187,7 @@ export default function CommandesPersonnalisees() {
         <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-white mb-4">
           Parlons de votre projet !
         </h2>
-        <div className="anim-fade-up w-16 h-1 bg-benin-jaune mx-auto mt-4 mb-8" data-delay="0.1"></div>
+        <div className="anim-expand-line w-20 h-px bg-wax-red mx-auto mt-4 mb-8" data-delay="0.1"></div>
         <p className="anim-fade-up font-basecoat text-gray-400 text-base sm:text-lg mb-10 max-w-xl mx-auto" data-delay="0.15">
           Décrivez-nous votre événement, la quantité souhaitée et votre date de besoin. Nous vous répondons dans les 48h avec un devis personnalisé.
         </p>
