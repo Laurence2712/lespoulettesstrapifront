@@ -94,7 +94,7 @@ export default function ActualitesPage() {
               Nos actualités
             </h1>
             <div
-              className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4"
+              className="anim-expand-line w-20 sm:w-24 h-px bg-wax-red mt-3 sm:mt-4"
               data-delay="0.15"
             ></div>
             <p className="anim-fade-up font-basecoat text-gray-500 text-sm sm:text-base mt-3" data-delay="0.2">

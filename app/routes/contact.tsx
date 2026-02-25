@@ -79,7 +79,7 @@ export default function Contact() {
       >
         Contactez-nous
       </h1>
-      <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4" data-delay="0.15"></div>
+      <div className="anim-expand-line w-20 sm:w-24 h-px bg-wax-red mt-3 sm:mt-4" data-delay="0.15"></div>
       <p className="anim-fade-up font-basecoat text-gray-500 text-sm sm:text-base mt-3 mb-8 sm:mb-10 md:mb-12" data-delay="0.2">
         Une question, un projet ou simplement envie de dire bonjour ?
       </p>

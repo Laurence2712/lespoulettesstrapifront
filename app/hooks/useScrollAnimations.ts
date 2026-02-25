@@ -17,7 +17,7 @@ import { useEffect, useRef } from "react";
 
 function showAllAnimated(container: HTMLElement) {
   const allAnimated = container.querySelectorAll(
-    '.anim-fade-up, .anim-fade-down, .anim-fade-left, .anim-fade-right, .anim-fade, .anim-scale'
+    '.anim-fade-up, .anim-fade-down, .anim-fade-left, .anim-fade-right, .anim-fade, .anim-scale, .anim-expand-line'
   );
   allAnimated.forEach((el) => {
     const htmlEl = el as HTMLElement;
@@ -54,13 +54,33 @@ export function useScrollAnimations(deps: any[] = []) {
       timeout = setTimeout(() => {
         ctx = gsap.context(() => {
           const animElements = container.querySelectorAll(
-            ".anim-fade-up, .anim-fade-down, .anim-fade-left, .anim-fade-right, .anim-fade, .anim-scale"
+            ".anim-fade-up, .anim-fade-down, .anim-fade-left, .anim-fade-right, .anim-fade, .anim-scale, .anim-expand-line"
           );
 
           animElements.forEach((el) => {
             const htmlEl = el as HTMLElement;
             const delay = parseFloat(htmlEl.dataset.delay || "0");
             const duration = parseFloat(htmlEl.dataset.duration || "0.6");
+
+            if (el.classList.contains("anim-expand-line")) {
+              gsap.fromTo(
+                el,
+                { scaleX: 0, transformOrigin: "left center" },
+                {
+                  scaleX: 1,
+                  transformOrigin: "left center",
+                  duration: 0.5,
+                  delay,
+                  ease: "power2.out",
+                  scrollTrigger: {
+                    trigger: el,
+                    start: "top 95%",
+                    toggleActions: "play none none none",
+                  },
+                }
+              );
+              return;
+            }
 
             let fromVars: any = { opacity: 0 };
 

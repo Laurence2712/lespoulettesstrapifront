@@ -214,14 +214,6 @@ export default function Index() {
         </div>
       </header>
 
-      {/* ── Bande wax ── */}
-      <div className="flex h-2 w-full opacity-30" aria-hidden="true">
-        <div className="flex-1 bg-wax-turquoise" />
-        <div className="flex-1 bg-wax-yellow" />
-        <div className="flex-1 bg-wax-orange" />
-        <div className="flex-1 bg-wax-red" />
-        <div className="flex-1 bg-wax-green" />
-      </div>
 
       {/* ── Nouveaux arrivages ── */}
       <section id="nouveaux-arrivages" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-gray-50">
@@ -231,7 +223,7 @@ export default function Index() {
               <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
                 Nouvelles créations
               </h2>
-              <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-turquoise mt-3 sm:mt-4" data-delay="0.1"></div>
+              <div className="anim-expand-line w-20 sm:w-24 h-px bg-wax-red mt-3 sm:mt-4" data-delay="0.1"></div>
             </div>
             <Link
               to="/realisations"
@@ -320,7 +312,7 @@ export default function Index() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Qui sommes-nous
           </h2>
-          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-orange mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.1"></div>
+          <div className="anim-expand-line w-20 sm:w-24 h-px bg-wax-red mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.1"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
             <div className="order-2 md:order-1 anim-fade-right" data-delay="0.2">
               <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
@@ -362,7 +354,7 @@ export default function Index() {
         <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
           Dans notre atelier au Bénin
         </h2>
-        <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-yellow mt-3 sm:mt-4 mb-6 sm:mb-8" data-delay="0.1"></div>
+        <div className="anim-expand-line w-20 sm:w-24 h-px bg-wax-red mt-3 sm:mt-4 mb-6 sm:mb-8" data-delay="0.1"></div>
         <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed max-w-3xl mb-10 sm:mb-12" data-delay="0.15">
           Chaque création naît dans notre atelier de Cotonou, au rythme des mains habiles de nos artisanes. Des tissus wax soigneusement sélectionnés, une découpe précise, des finitions cousues avec amour — c'est ça, l'âme des Poulettes.
         </p>
@@ -400,7 +392,7 @@ export default function Index() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Actualités
           </h2>
-          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-red mt-3 sm:mt-4" data-delay="0.1"></div>
+          <div className="anim-expand-line w-20 sm:w-24 h-px bg-wax-red mt-3 sm:mt-4" data-delay="0.1"></div>
         </div>
 
         {actualites.length > 0 ? (
@@ -456,7 +448,7 @@ export default function Index() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Suivez-nous sur Instagram
           </h2>
-          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-red mx-auto mt-3 sm:mt-4 mb-4" data-delay="0.1"></div>
+          <div className="anim-expand-line w-20 sm:w-24 h-px bg-wax-red mx-auto mt-3 sm:mt-4 mb-4" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg" data-delay="0.15">
             @lespoulettes.benin — coulisses, nouveautés & vie au Bénin
           </p>
@@ -517,7 +509,7 @@ export default function Index() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 leading-tight">
             Un événement à célébrer ?
           </h2>
-          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-20 sm:w-24 h-px bg-wax-red mt-3 sm:mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-gray-700 text-base sm:text-lg leading-relaxed mb-8" data-delay="0.15">
             Mariage, baby shower, baptême, anniversaire... Les Poulettes créent des accessoires wax personnalisés pour que votre fête soit inoubliable.
           </p>
@@ -562,7 +554,7 @@ export default function Index() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Où nous trouver
           </h2>
-          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-green mt-3 sm:mt-4" data-delay="0.1"></div>
+          <div className="anim-expand-line w-20 sm:w-24 h-px bg-wax-red mt-3 sm:mt-4" data-delay="0.1"></div>
           <p className="anim-fade-up mt-6 mb-6 font-basecoat text-gray-700 text-base sm:text-lg md:text-xl leading-relaxed" data-delay="0.2">
             Retrait gratuit en Belgique (Grimbergen & Watermael-Boisfort) ou directement à Cotonou au Bénin. Livraison à domicile disponible en Belgique et dans toute l'Europe.
           </p>
