@@ -33,11 +33,49 @@ export function useScrollAnimations(deps: any[] = []) {
     const container = containerRef.current;
     if (!container || typeof window === "undefined") return;
 
-    // Sur mobile : pas d'animation GSAP, affichage direct
-    const isMobile = window.innerWidth <= 768;
-    if (isMobile || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Reduced motion : affichage immédiat, pas d'animation
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       showAllAnimated(container);
       return;
+    }
+
+    // Sur mobile : les animations GSAP sont désactivées, mais on anime quand
+    // même les tirets (anim-expand-line) via IntersectionObserver
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+      const nonExpand = container.querySelectorAll(
+        '.anim-fade-up, .anim-fade-down, .anim-fade-left, .anim-fade-right, .anim-fade, .anim-scale'
+      );
+      nonExpand.forEach((el) => {
+        (el as HTMLElement).style.opacity = '1';
+        (el as HTMLElement).style.transform = 'none';
+      });
+
+      const expandLines = container.querySelectorAll('.anim-expand-line') as NodeListOf<HTMLElement>;
+      expandLines.forEach((el) => {
+        el.style.transformOrigin = 'left center';
+        el.style.transform = 'scaleX(0)';
+      });
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const el = entry.target as HTMLElement;
+              const delay = parseFloat(el.dataset.delay || '0');
+              setTimeout(() => {
+                el.style.transition = 'transform 0.5s ease-out';
+                el.style.transform = 'scaleX(1)';
+              }, delay * 1000);
+              observer.unobserve(el);
+            }
+          });
+        },
+        { threshold: 0, rootMargin: '0px 0px -10px 0px' }
+      );
+      expandLines.forEach((el) => observer.observe(el));
+
+      return () => observer.disconnect();
     }
 
     let ctx: any;
