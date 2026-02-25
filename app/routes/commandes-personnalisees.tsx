@@ -114,14 +114,15 @@ export default function CommandesPersonnalisees() {
             Un processus simple, transparent et pensé pour vous faciliter la vie.
           </p>
         </div>
-        <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" data-stagger="0.12">
+        <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" data-stagger="0.12">
           {STEPS.map((step) => (
-            <div key={step.num} className="bg-white rounded-2xl p-6 shadow-sm text-center">
-              <div className={`${step.color} text-white font-basecoat font-black text-xl w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4`}>
-                {step.num}
+            <div key={step.num} className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-wax-red/20 hover:shadow-md transition-all duration-300">
+              <div className="flex items-center gap-3 mb-5">
+                <span className="font-basecoat text-3xl font-bold text-wax-red/20 leading-none">{step.num}</span>
+                <div className="h-px flex-1 bg-gray-100"></div>
               </div>
-              <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-3">{step.title}</h3>
-              <p className="font-basecoat text-sm text-gray-600 leading-relaxed">{step.desc}</p>
+              <h3 className="font-basecoat text-sm font-bold uppercase text-gray-900 mb-2 tracking-wide">{step.title}</h3>
+              <p className="font-basecoat text-sm text-gray-500 leading-relaxed">{step.desc}</p>
             </div>
           ))}
         </div>
@@ -146,7 +147,7 @@ export default function CommandesPersonnalisees() {
                 'Signets et carnets recouverts de wax',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <span className="text-benin-jaune font-bold flex-shrink-0 mt-0.5">◆</span>
+                  <span className="text-wax-red/50 font-bold flex-shrink-0 mt-0.5">◆</span>
                   <span>{item}</span>
                 </li>
               ))}
@@ -160,19 +161,19 @@ export default function CommandesPersonnalisees() {
               <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-4">Informations utiles</h3>
               <ul className="space-y-4 font-basecoat text-sm text-gray-700">
                 <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-wax-turquoise flex-shrink-0 mt-1.5"></span>
+                  <span className="w-2 h-2 rounded-full bg-wax-red/50 flex-shrink-0 mt-1.5"></span>
                   <span><strong>Délai :</strong> comptez 2 à 4 semaines selon la quantité. Commandez tôt pour éviter les délais de dernière minute.</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-wax-orange flex-shrink-0 mt-1.5"></span>
+                  <span className="w-2 h-2 rounded-full bg-wax-red/50 flex-shrink-0 mt-1.5"></span>
                   <span><strong>Quantité minimum :</strong> pas de minimum imposé — nous traitons les petites comme les grandes commandes.</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-wax-green flex-shrink-0 mt-1.5"></span>
+                  <span className="w-2 h-2 rounded-full bg-wax-red/50 flex-shrink-0 mt-1.5"></span>
                   <span><strong>Tissus :</strong> vous pouvez choisir parmi nos stocks disponibles ou suggérer une couleur/motif spécifique.</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-wax-yellow flex-shrink-0 mt-1.5"></span>
+                  <span className="w-2 h-2 rounded-full bg-wax-red/50 flex-shrink-0 mt-1.5"></span>
                   <span><strong>Tarif :</strong> devis gratuit et sans engagement, adapté à votre budget.</span>
                 </li>
               </ul>

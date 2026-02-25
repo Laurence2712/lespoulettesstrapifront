@@ -31,7 +31,7 @@ export default function QuiSommesNous() {
       {/* ── Hero ── */}
       <header className="bg-beige pt-28 sm:pt-32 md:pt-40 pb-14 sm:pb-18 md:pb-24 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
         <nav className="anim-fade-up font-basecoat mb-8 text-xs sm:text-sm">
-          <Link to="/" className="text-benin-jaune hover:text-benin-terre font-medium transition">Accueil</Link>
+          <Link to="/" className="text-wax-red hover:text-benin-terre font-medium transition">Accueil</Link>
           <span className="mx-1.5 text-gray-400">/</span>
           <span className="text-gray-600">Qui sommes-nous</span>
         </nav>
@@ -67,7 +67,7 @@ export default function QuiSommesNous() {
           </div>
           <div className="anim-scale order-1 md:order-2 flex justify-center" data-delay="0.2">
             <div className="relative w-full max-w-sm">
-              <div className="w-full aspect-square rounded-2xl overflow-hidden shadow-2xl border-4 border-benin-jaune">
+              <div className="w-full aspect-square rounded-2xl overflow-hidden shadow-2xl border-4 border-wax-red/30">
                 <img
                   src="/assets/equipe-1.jpg"
                   alt="Fondatrice Les Poulettes"
@@ -77,7 +77,7 @@ export default function QuiSommesNous() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-4 -right-4 bg-wax-orange text-white font-basecoat text-xs font-bold uppercase px-4 py-2 rounded-xl shadow-lg">
+              <div className="absolute -bottom-4 -right-4 bg-wax-red text-white font-basecoat text-xs font-bold uppercase px-4 py-2 rounded-xl shadow-lg">
                 Depuis 2019
               </div>
             </div>
@@ -94,8 +94,8 @@ export default function QuiSommesNous() {
           <div className="anim-expand-line w-20 h-px bg-wax-red mt-4" data-delay="0.1"></div>
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-stagger="0.1">
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-4 border-wax-turquoise">
-            <div className="w-12 h-12 bg-wax-turquoise/10 rounded-xl flex items-center justify-center mb-4">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-wax-red/30">
+            <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">✂️</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">100% fait main</h3>
@@ -103,8 +103,8 @@ export default function QuiSommesNous() {
               Chaque trousse, chaque sac, chaque housse est découpé et cousu à la main dans notre atelier de Cotonou. Pas de production industrielle — uniquement le travail patient et précis de nos artisanes.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-4 border-wax-green">
-            <div className="w-12 h-12 bg-wax-green/10 rounded-xl flex items-center justify-center mb-4">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-wax-red/30">
+            <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">🌿</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">Éco-responsable</h3>
@@ -112,8 +112,8 @@ export default function QuiSommesNous() {
               Nous travaillons avec des tissus wax de qualité issus de circuits courts locaux. Nos emballages sont minimalistes et recyclables. Chaque choix de production est pensé pour minimiser notre impact environnemental.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-4 border-wax-orange">
-            <div className="w-12 h-12 bg-wax-orange/10 rounded-xl flex items-center justify-center mb-4">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-wax-red/30">
+            <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">🤝</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">Artisanat solidaire</h3>
@@ -121,8 +121,8 @@ export default function QuiSommesNous() {
               Chaque achat soutient directement nos artisanes et leurs familles au Bénin. Nous croyons en une mode qui crée de la valeur là où elle est fabriquée — pas seulement là où elle est vendue.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-4 border-wax-red">
-            <div className="w-12 h-12 bg-wax-red/10 rounded-xl flex items-center justify-center mb-4">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-wax-red/30">
+            <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">🌍</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">Wax authentique</h3>
@@ -130,8 +130,8 @@ export default function QuiSommesNous() {
               Nous sélectionnons nos tissus wax avec soin — pour leurs motifs, leur tenue et leur authenticité. Le wax africain est bien plus qu'un tissu : c'est un langage, une tradition, une identité.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-4 border-wax-yellow">
-            <div className="w-12 h-12 bg-wax-yellow/10 rounded-xl flex items-center justify-center mb-4">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-wax-red/30">
+            <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">🎨</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">Pièces uniques</h3>
@@ -139,8 +139,8 @@ export default function QuiSommesNous() {
               Chaque création est unique. Les tissus varient d'une collection à l'autre, les motifs évoluent avec les saisons. Votre accessoire Les Poulettes ne ressemble à aucun autre — et c'est tout son charme.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-4 border-gray-800">
-            <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-wax-red/30">
+            <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">💛</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">Sur mesure & sur demande</h3>
@@ -170,9 +170,22 @@ export default function QuiSommesNous() {
             </p>
           </div>
           <div className="anim-fade-left grid grid-cols-2 gap-3" data-delay="0.2">
-            {['bg-wax-turquoise', 'bg-wax-yellow', 'bg-wax-orange', 'bg-wax-green'].map((color, i) => (
-              <div key={i} className={`${color} aspect-square rounded-2xl opacity-80`} />
-            ))}
+            <div className="bg-white rounded-2xl p-6 border-t-2 border-wax-red/30 flex flex-col justify-center">
+              <p className="font-basecoat text-4xl font-bold text-wax-red mb-1">2019</p>
+              <p className="font-basecoat text-xs font-semibold uppercase text-gray-500 tracking-wide">Depuis</p>
+            </div>
+            <div className="bg-white rounded-2xl p-6 border-t-2 border-wax-red/30 flex flex-col justify-center">
+              <p className="font-basecoat text-4xl font-bold text-wax-red mb-1">100%</p>
+              <p className="font-basecoat text-xs font-semibold uppercase text-gray-500 tracking-wide">Fait main</p>
+            </div>
+            <div className="bg-white rounded-2xl p-6 border-t-2 border-wax-red/30 flex flex-col justify-center">
+              <p className="font-basecoat text-4xl font-bold text-wax-red mb-1">0</p>
+              <p className="font-basecoat text-xs font-semibold uppercase text-gray-500 tracking-wide">Production industrielle</p>
+            </div>
+            <div className="bg-white rounded-2xl p-6 border-t-2 border-wax-red/30 flex flex-col justify-center">
+              <p className="font-basecoat text-4xl font-bold text-wax-red mb-1">♥</p>
+              <p className="font-basecoat text-xs font-semibold uppercase text-gray-500 tracking-wide">Artisanes soutenues</p>
+            </div>
           </div>
         </div>
       </section>
@@ -190,15 +203,15 @@ export default function QuiSommesNous() {
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto" data-stagger="0.12">
           <div className="text-center bg-gray-50 rounded-2xl p-8">
-            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-benin-jaune mb-2">100%</p>
+            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-wax-red mb-2">100%</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Fait main au Bénin</p>
           </div>
           <div className="text-center bg-gray-50 rounded-2xl p-8">
-            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-benin-jaune mb-2">0</p>
+            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-wax-red mb-2">0</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Production industrielle</p>
           </div>
           <div className="text-center bg-gray-50 rounded-2xl p-8">
-            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-benin-jaune mb-2">♥</p>
+            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-wax-red mb-2">♥</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Artisanes soutenues directement</p>
           </div>
         </div>
@@ -216,7 +229,7 @@ export default function QuiSommesNous() {
         <div className="anim-fade-up flex flex-col sm:flex-row gap-4 justify-center" data-delay="0.2">
           <Link
             to="/realisations"
-            className="font-basecoat border-2 border-benin-jaune text-white hover:bg-benin-jaune hover:text-black px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
+            className="font-basecoat bg-wax-red hover:bg-wax-red/90 text-white px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
           >
             Voir la boutique
           </Link>
