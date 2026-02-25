@@ -446,7 +446,7 @@ export default function Realisations() {
                         Épuisé
                       </div>
                     ) : realisation.totalStock <= 5 ? (
-                      <div className="absolute top-3 left-3 bg-orange-500 text-white text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
+                      <div className="absolute top-3 left-3 bg-wax-red/80 text-white text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
                         Plus que {realisation.totalStock}
                       </div>
                     ) : null
@@ -454,8 +454,8 @@ export default function Realisations() {
 
                   {/* Badges Fait main / Made in Bénin */}
                   <div className="absolute bottom-2 right-2 flex flex-col items-end gap-1">
-                    <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-wax-orange text-white px-2 py-0.5 rounded-full shadow">Fait main</span>
-                    <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-wax-turquoise text-white px-2 py-0.5 rounded-full shadow">Made in Bénin</span>
+                    <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-wax-red text-white px-2 py-0.5 rounded-full shadow">Fait main</span>
+                    <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-gray-800 text-white px-2 py-0.5 rounded-full shadow">Made in Bénin</span>
                   </div>
 
                 </div>
