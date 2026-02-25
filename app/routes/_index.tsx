@@ -182,7 +182,7 @@ export default function Index() {
             >
               Découvrir la collection
             </Link>
-            <span className="font-basecoat text-xs text-white/60 tracking-widest uppercase">Handmade with love →</span>
+            <span className="font-basecoat text-xs text-white/60 tracking-widest uppercase">Handmade with love</span>
           </div>
         </div>
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
@@ -215,7 +215,7 @@ export default function Index() {
       </header>
 
       {/* ── Bande wax ── */}
-      <div className="flex h-2 w-full" aria-hidden="true">
+      <div className="flex h-2 w-full opacity-30" aria-hidden="true">
         <div className="flex-1 bg-wax-turquoise" />
         <div className="flex-1 bg-wax-yellow" />
         <div className="flex-1 bg-wax-orange" />
@@ -224,7 +224,13 @@ export default function Index() {
       </div>
 
       {/* ── Nouveaux arrivages ── */}
-      <section id="nouveaux-arrivages" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-gray-50">
+      <section
+        id="nouveaux-arrivages"
+        className="relative px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]"
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1600&q=80&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}
+      >
+        <div className="absolute inset-0 bg-white/85" />
+        <div className="relative z-10">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-3 sm:mb-4">
             <div>
@@ -312,10 +318,17 @@ export default function Index() {
         ) : (
           <p className="text-center text-gray-400 font-basecoat">Aucun produit disponible pour l'instant.</p>
         )}
+        </div>
       </section>
 
       {/* ── Qui sommes-nous ── */}
-      <section id="qui-sommes-nous" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-6 sm:py-8 md:py-[60px]">
+      <section
+        id="qui-sommes-nous"
+        className="relative px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-6 sm:py-8 md:py-[60px]"
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1605027990121-cbae9e0642df?w=1600&q=80&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}
+      >
+        <div className="absolute inset-0 bg-white/88" />
+        <div className="relative z-10">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Qui sommes-nous
@@ -355,10 +368,16 @@ export default function Index() {
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ── Dans notre atelier ── */}
-      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-beige">
+      <section
+        className="relative px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]"
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1600&q=80&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}
+      >
+        <div className="absolute inset-0 bg-white/80" />
+        <div className="relative z-10">
         <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
           Dans notre atelier au Bénin
         </h2>
@@ -366,7 +385,7 @@ export default function Index() {
         <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed max-w-3xl mb-10 sm:mb-12" data-delay="0.15">
           Chaque création naît dans notre atelier de Cotonou, au rythme des mains habiles de nos artisanes. Des tissus wax soigneusement sélectionnés, une découpe précise, des finitions cousues avec amour — c'est ça, l'âme des Poulettes.
         </p>
-        <div className="anim-stagger grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6" data-stagger="0.1">
+        <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 max-w-2xl" data-stagger="0.1">
           <div className="bg-white rounded-2xl p-6 shadow-sm border-t-4 border-wax-turquoise">
             <p className="font-basecoat text-3xl mb-3">✂️</p>
             <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">Taillé à la main</h3>
@@ -377,16 +396,17 @@ export default function Index() {
             <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">Matières responsables</h3>
             <p className="font-basecoat text-sm text-gray-600 leading-relaxed">Wax africain 100% coton, sélectionné sur les marchés locaux de Cotonou. Emballages recyclables, zéro production industrielle.</p>
           </div>
-          <div className="bg-white rounded-2xl p-6 shadow-sm border-t-4 border-wax-green">
-            <p className="font-basecoat text-3xl mb-3">🤝</p>
-            <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">Artisanat solidaire</h3>
-            <p className="font-basecoat text-sm text-gray-600 leading-relaxed">Chaque achat rémunère directement nos artisanes béninoises. Une mode qui crée de la valeur là où elle est fabriquée.</p>
-          </div>
+        </div>
         </div>
       </section>
 
       {/* ── Actualités ── */}
-      <section className="bg-gray-50">
+      <section
+        className="relative"
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1509813005391-3d21e36ccb65?w=1600&q=80&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}
+      >
+        <div className="absolute inset-0 bg-white/88" />
+        <div className="relative z-10">
         <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] pt-6 sm:pt-8 md:pt-[60px] pb-8 sm:pb-10 md:pb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Actualités
@@ -439,10 +459,16 @@ export default function Index() {
             <p className="text-center text-gray-500 text-base sm:text-lg font-basecoat">Aucune actualité disponible.</p>
           </div>
         )}
+        </div>
       </section>
 
       {/* ── Instagram ── */}
-      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]">
+      <section
+        className="relative px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]"
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1600&q=80&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}
+      >
+        <div className="absolute inset-0 bg-white/88" />
+        <div className="relative z-10">
         <div className="text-center mb-8 sm:mb-10">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Suivez-nous sur Instagram
@@ -453,11 +479,37 @@ export default function Index() {
           </p>
         </div>
 
-        {/* Grille décorative wax */}
-        <div className="anim-stagger grid grid-cols-4 sm:grid-cols-6 gap-1.5 sm:gap-2 mb-8 sm:mb-10 rounded-2xl overflow-hidden" data-stagger="0.05">
-          {['bg-wax-turquoise','bg-wax-yellow','bg-wax-orange','bg-wax-red','bg-wax-green','bg-wax-turquoise',
-            'bg-wax-orange','bg-wax-green','bg-wax-yellow','bg-wax-red','bg-wax-turquoise','bg-wax-orange'].map((color, i) => (
-            <div key={i} className={`${color} aspect-square opacity-70 hover:opacity-100 transition-opacity duration-300`} />
+        {/* Grille photos Instagram */}
+        <div className="anim-stagger grid grid-cols-3 gap-2 mb-8 sm:mb-10 rounded-2xl overflow-hidden" data-stagger="0.05">
+          {[
+            { url: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&h=400&fit=crop&q=80', alt: 'Accessoires wax Les Poulettes' },
+            { url: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=400&fit=crop&q=80', alt: 'Sacs et trousses wax colorés' },
+            { url: 'https://images.unsplash.com/photo-1509813005391-3d21e36ccb65?w=400&h=400&fit=crop&q=80', alt: 'Tissu wax africain authentique' },
+            { url: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=400&h=400&fit=crop&q=80', alt: 'Créations wax colorées' },
+            { url: 'https://images.unsplash.com/photo-1605027990121-cbae9e0642df?w=400&h=400&fit=crop&q=80', alt: 'Atelier couture Cotonou' },
+            { url: 'https://images.unsplash.com/photo-1524293581917-878a6d017c71?w=400&h=400&fit=crop&q=80', alt: 'Artisanes béninoises au travail' },
+          ].map((post, i) => (
+            <a
+              key={i}
+              href="https://www.instagram.com/lespoulettes.benin/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative aspect-square overflow-hidden"
+            >
+              <img
+                src={post.url}
+                alt={post.alt}
+                loading="lazy"
+                width={400}
+                height={400}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-all duration-300 flex items-center justify-center">
+                <svg className="w-9 h-9 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </div>
+            </a>
           ))}
         </div>
 
@@ -474,118 +526,57 @@ export default function Index() {
             Voir notre Instagram
           </a>
         </div>
-      </section>
-
-      {/* ── Témoignages clients ── */}
-      <section className="bg-beige px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]">
-        <div className="text-center mb-8 sm:mb-10">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
-            Elles adorent Les Poulettes
-          </h2>
-          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-wax-orange mx-auto mt-3 sm:mt-4 mb-4" data-delay="0.1"></div>
-          <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg" data-delay="0.15">
-            Ce que nos clientes disent de leurs créations
-          </p>
-        </div>
-        <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6" data-stagger="0.1">
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
-            <div className="flex items-center gap-1 mb-3">
-              {[1,2,3,4,5].map(i => <span key={i} className="text-benin-jaune text-lg">★</span>)}
-            </div>
-            <p className="font-basecoat text-gray-700 text-sm sm:text-base leading-relaxed mb-4">
-              "J'ai reçu ma trousse wax pour Noël et je l'adore ! Les couleurs sont magnifiques et la qualité est vraiment au rendez-vous. Je l'utilise tous les jours."
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-wax-turquoise flex items-center justify-center text-white font-basecoat font-bold text-sm">S</div>
-              <div>
-                <p className="font-basecoat font-semibold text-gray-900 text-sm">Sophie M.</p>
-                <p className="font-basecoat text-gray-400 text-xs">Bruxelles, Belgique</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
-            <div className="flex items-center gap-1 mb-3">
-              {[1,2,3,4,5].map(i => <span key={i} className="text-benin-jaune text-lg">★</span>)}
-            </div>
-            <p className="font-basecoat text-gray-700 text-sm sm:text-base leading-relaxed mb-4">
-              "J'ai commandé des sachets personnalisés pour mon mariage. Un grand merci pour la réactivité et le soin apporté à chaque détail. Mes invités ont adoré !"
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-wax-orange flex items-center justify-center text-white font-basecoat font-bold text-sm">A</div>
-              <div>
-                <p className="font-basecoat font-semibold text-gray-900 text-sm">Amina K.</p>
-                <p className="font-basecoat text-gray-400 text-xs">Liège, Belgique</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
-            <div className="flex items-center gap-1 mb-3">
-              {[1,2,3,4,5].map(i => <span key={i} className="text-benin-jaune text-lg">★</span>)}
-            </div>
-            <p className="font-basecoat text-gray-700 text-sm sm:text-base leading-relaxed mb-4">
-              "La housse d'ordi est parfaite — solide, colorée et tellement originale. Plein de compliments au bureau ! Je recommande les yeux fermés."
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-wax-green flex items-center justify-center text-white font-basecoat font-bold text-sm">C</div>
-              <div>
-                <p className="font-basecoat font-semibold text-gray-900 text-sm">Chloé V.</p>
-                <p className="font-basecoat text-gray-400 text-xs">Gand, Belgique</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="anim-fade-up text-center mt-8" data-delay="0.3">
-          <a
-            href="https://www.instagram.com/lespoulettes.benin/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-basecoat text-sm font-semibold text-benin-jaune hover:text-benin-terre transition inline-flex items-center gap-1.5"
-          >
-            Voir plus d'avis sur Instagram
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-          </a>
         </div>
       </section>
 
       {/* ── Commandes personnalisées ── */}
-      <section className="bg-gray-900 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div>
-            <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-white leading-tight">
-              Un événement à célébrer ?
-            </h2>
-            <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4 mb-6" data-delay="0.1"></div>
-            <p className="anim-fade-up font-basecoat text-gray-300 text-base sm:text-lg leading-relaxed mb-6" data-delay="0.15">
-              Mariage, baby shower, baptême, anniversaire... Les Poulettes créent des accessoires wax personnalisés pour que votre fête soit inoubliable.
-            </p>
-            <div className="anim-fade-up flex flex-wrap gap-2 mb-8" data-delay="0.2">
-              {['💍 Mariage', '🍼 Baby shower', '🎂 Anniversaire', '✝️ Baptême', '🎉 Naissance'].map(tag => (
-                <span key={tag} className="font-basecoat text-xs font-semibold bg-gray-800 text-gray-300 px-3 py-1.5 rounded-full">{tag}</span>
-              ))}
-            </div>
-            <div className="anim-fade-up flex flex-col sm:flex-row gap-4" data-delay="0.25">
-              <Link
-                to="/commandes-personnalisees"
-                className="font-basecoat border-2 border-benin-jaune text-white hover:bg-benin-jaune hover:text-black px-8 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] text-sm sm:text-base text-center"
+      <section
+        className="relative px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]"
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1600&q=80&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}
+      >
+        <div className="absolute inset-0 bg-white/88" />
+        <div className="relative z-10">
+        <div>
+          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 leading-tight">
+            Un événement à célébrer ?
+          </h2>
+          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4 mb-6" data-delay="0.1"></div>
+          <p className="anim-fade-up font-basecoat text-gray-700 text-base sm:text-lg leading-relaxed mb-8" data-delay="0.15">
+            Mariage, baby shower, baptême, anniversaire... Les Poulettes créent des accessoires wax personnalisés pour que votre fête soit inoubliable.
+          </p>
+          <div className="anim-fade-up flex flex-wrap gap-3 mb-10" data-delay="0.2">
+            {[
+              { label: 'Mariage',      cls: 'animate-float',   borderColor: 'border-wax-turquoise' },
+              { label: 'Baby shower',  cls: 'animate-float-2', borderColor: 'border-wax-yellow'    },
+              { label: 'Anniversaire', cls: 'animate-float-3', borderColor: 'border-wax-orange'    },
+              { label: 'Baptême',      cls: 'animate-float-4', borderColor: 'border-wax-red'       },
+              { label: 'Naissance',    cls: 'animate-float-5', borderColor: 'border-wax-green'     },
+            ].map(tag => (
+              <span
+                key={tag.label}
+                className={`${tag.cls} font-basecoat text-sm font-semibold bg-white text-gray-800 border-2 ${tag.borderColor} px-6 py-3 rounded-full shadow-sm`}
               >
-                Découvrir
-              </Link>
-              <a
-                href="https://wa.me/2290162007580"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-basecoat border-2 border-gray-600 text-gray-300 hover:border-benin-vert hover:text-benin-vert px-8 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] text-sm sm:text-base text-center"
-              >
-                WhatsApp
-              </a>
-            </div>
-          </div>
-          <div className="anim-stagger grid grid-cols-4 gap-1.5 rounded-2xl overflow-hidden" data-stagger="0.05">
-            {['bg-wax-turquoise','bg-wax-yellow','bg-wax-orange','bg-wax-red',
-              'bg-wax-green','bg-wax-orange','bg-wax-yellow','bg-wax-turquoise'].map((color, i) => (
-              <div key={i} className={`${color} aspect-square opacity-80 hover:opacity-100 transition-opacity duration-300`} />
+                {tag.label}
+              </span>
             ))}
           </div>
+          <div className="anim-fade-up flex flex-col sm:flex-row gap-4" data-delay="0.25">
+            <Link
+              to="/commandes-personnalisees"
+              className="font-basecoat border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-8 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] text-sm sm:text-base text-center"
+            >
+              Découvrir
+            </Link>
+            <a
+              href="https://wa.me/2290162007580"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-basecoat border-2 border-benin-vert text-benin-vert hover:bg-benin-vert hover:text-white px-8 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] text-sm sm:text-base text-center"
+            >
+              WhatsApp
+            </a>
+          </div>
+        </div>
         </div>
       </section>
 
