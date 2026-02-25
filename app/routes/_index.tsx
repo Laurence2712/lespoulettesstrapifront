@@ -224,13 +224,7 @@ export default function Index() {
       </div>
 
       {/* ── Nouveaux arrivages ── */}
-      <section
-        id="nouveaux-arrivages"
-        className="relative px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1600&q=80&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}
-      >
-        <div className="absolute inset-0 bg-white/85" />
-        <div className="relative z-10">
+      <section id="nouveaux-arrivages" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-gray-50">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-3 sm:mb-4">
             <div>
@@ -318,17 +312,10 @@ export default function Index() {
         ) : (
           <p className="text-center text-gray-400 font-basecoat">Aucun produit disponible pour l'instant.</p>
         )}
-        </div>
       </section>
 
       {/* ── Qui sommes-nous ── */}
-      <section
-        id="qui-sommes-nous"
-        className="relative px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-6 sm:py-8 md:py-[60px]"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1605027990121-cbae9e0642df?w=1600&q=80&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}
-      >
-        <div className="absolute inset-0 bg-white/88" />
-        <div className="relative z-10">
+      <section id="qui-sommes-nous" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-6 sm:py-8 md:py-[60px]">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Qui sommes-nous
@@ -368,16 +355,10 @@ export default function Index() {
             </div>
           </div>
         </div>
-        </div>
       </section>
 
       {/* ── Dans notre atelier ── */}
-      <section
-        className="relative px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1600&q=80&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}
-      >
-        <div className="absolute inset-0 bg-white/80" />
-        <div className="relative z-10">
+      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-beige">
         <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
           Dans notre atelier au Bénin
         </h2>
@@ -386,27 +367,35 @@ export default function Index() {
           Chaque création naît dans notre atelier de Cotonou, au rythme des mains habiles de nos artisanes. Des tissus wax soigneusement sélectionnés, une découpe précise, des finitions cousues avec amour — c'est ça, l'âme des Poulettes.
         </p>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 max-w-2xl" data-stagger="0.1">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border-t-4 border-wax-turquoise">
-            <p className="font-basecoat text-3xl mb-3">✂️</p>
-            <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">Taillé à la main</h3>
-            <p className="font-basecoat text-sm text-gray-600 leading-relaxed">Chaque pièce est découpée et assemblée manuellement par nos artisanes béninoises.</p>
+          {/* Carte 1 — Taillé à la main */}
+          <div
+            className="relative rounded-2xl overflow-hidden shadow-sm border-t-4 border-wax-turquoise min-h-[180px]"
+            style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1605027990121-cbae9e0642df?w=800&q=80&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}
+          >
+            <div className="absolute inset-0 bg-white/82" />
+            <div className="relative z-10 p-6">
+              <p className="font-basecoat text-3xl mb-3">✂️</p>
+              <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">Taillé à la main</h3>
+              <p className="font-basecoat text-sm text-gray-700 leading-relaxed">Chaque pièce est découpée et assemblée manuellement par nos artisanes béninoises.</p>
+            </div>
           </div>
-          <div className="bg-white rounded-2xl p-6 shadow-sm border-t-4 border-wax-orange">
-            <p className="font-basecoat text-3xl mb-3">🌿</p>
-            <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">Matières responsables</h3>
-            <p className="font-basecoat text-sm text-gray-600 leading-relaxed">Wax africain 100% coton, sélectionné sur les marchés locaux de Cotonou. Emballages recyclables, zéro production industrielle.</p>
+          {/* Carte 2 — Matières responsables */}
+          <div
+            className="relative rounded-2xl overflow-hidden shadow-sm border-t-4 border-wax-orange min-h-[180px]"
+            style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800&q=80&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}
+          >
+            <div className="absolute inset-0 bg-white/82" />
+            <div className="relative z-10 p-6">
+              <p className="font-basecoat text-3xl mb-3">🌿</p>
+              <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">Matières responsables</h3>
+              <p className="font-basecoat text-sm text-gray-700 leading-relaxed">Wax africain 100% coton, sélectionné sur les marchés locaux de Cotonou. Emballages recyclables, zéro production industrielle.</p>
+            </div>
           </div>
-        </div>
         </div>
       </section>
 
       {/* ── Actualités ── */}
-      <section
-        className="relative"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1509813005391-3d21e36ccb65?w=1600&q=80&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}
-      >
-        <div className="absolute inset-0 bg-white/88" />
-        <div className="relative z-10">
+      <section className="bg-gray-50">
         <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] pt-6 sm:pt-8 md:pt-[60px] pb-8 sm:pb-10 md:pb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Actualités
@@ -459,16 +448,10 @@ export default function Index() {
             <p className="text-center text-gray-500 text-base sm:text-lg font-basecoat">Aucune actualité disponible.</p>
           </div>
         )}
-        </div>
       </section>
 
       {/* ── Instagram ── */}
-      <section
-        className="relative px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1600&q=80&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}
-      >
-        <div className="absolute inset-0 bg-white/88" />
-        <div className="relative z-10">
+      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]">
         <div className="text-center mb-8 sm:mb-10">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
             Suivez-nous sur Instagram
@@ -526,16 +509,10 @@ export default function Index() {
             Voir notre Instagram
           </a>
         </div>
-        </div>
       </section>
 
       {/* ── Commandes personnalisées ── */}
-      <section
-        className="relative px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1600&q=80&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}
-      >
-        <div className="absolute inset-0 bg-white/88" />
-        <div className="relative z-10">
+      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-white">
         <div>
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 leading-tight">
             Un événement à célébrer ?
@@ -576,7 +553,6 @@ export default function Index() {
               WhatsApp
             </a>
           </div>
-        </div>
         </div>
       </section>
 
