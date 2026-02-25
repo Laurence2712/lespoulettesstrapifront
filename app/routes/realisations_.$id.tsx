@@ -417,10 +417,10 @@ export default function RealisationDetail() {
                   📦 {realisation.categorie}
                 </span>
               )}
-              <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-wax-turquoise/10 text-teal-800 border border-wax-turquoise/30 px-3 py-1.5 rounded-full">
+              <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-gray-100 text-gray-700 border border-gray-200 px-3 py-1.5 rounded-full">
                 🧵 Wax 100% coton
               </span>
-              <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-wax-orange/10 text-orange-800 border border-wax-orange/30 px-3 py-1.5 rounded-full">
+              <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-gray-100 text-gray-700 border border-gray-200 px-3 py-1.5 rounded-full">
                 ✂️ Fait main
               </span>
               <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-benin-vert/10 text-benin-vert border border-benin-vert/30 px-3 py-1.5 rounded-full">

@@ -329,8 +329,8 @@ export default function Realisations() {
                 onClick={() => handleCategoryChange(cat)}
                 className={`font-basecoat text-sm sm:text-base font-semibold px-4 sm:px-5 py-2 rounded-full border-2 transition-all duration-200 ${
                   selectedCategory === cat
-                    ? 'bg-benin-jaune border-benin-jaune text-black shadow-md'
-                    : 'bg-white border-gray-200 text-gray-700 hover:border-benin-jaune hover:text-benin-jaune'
+                    ? 'bg-wax-red border-wax-red text-white shadow-md'
+                    : 'bg-white border-gray-200 text-gray-700 hover:border-wax-red hover:text-wax-red'
                 }`}
               >
                 {cat}
