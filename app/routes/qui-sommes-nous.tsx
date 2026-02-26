@@ -7,7 +7,7 @@ export function meta() {
     {
       name: "description",
       content:
-        "Découvrez l'histoire des Poulettes : une marque d'accessoires éco-responsables créée au Bénin, confectionnée à la main par des artisanes béninoises passionnées.",
+        "Découvrez l'histoire des Poulettes : une marque d'accessoires en wax créée en 2017, confectionnée à la main avec passion et savoir-faire.",
     },
     { property: "og:title", content: "Qui sommes-nous — Les Poulettes" },
     {
@@ -41,7 +41,7 @@ export default function QuiSommesNous() {
           </h1>
           <div className="anim-expand-line w-24 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl text-gray-700 leading-relaxed" data-delay="0.2">
-            Une marque née de la passion du tissu wax, de l'artisanat solidaire et d'une envie profonde de mettre en lumière le savoir-faire béninois.
+            Une marque née de la passion du tissu wax et d'un héritage familial, portée par deux femmes unies par l'amour du travail bien fait.
           </p>
         </div>
       </header>
@@ -108,7 +108,7 @@ export default function QuiSommesNous() {
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">100% fait main</h3>
             <p className="font-basecoat text-sm text-gray-600 leading-relaxed">
-              Chaque trousse, chaque sac, chaque housse est découpé et cousu à la main dans notre atelier de Cotonou. Pas de production industrielle — uniquement le travail patient et précis de nos artisanes.
+              Chaque trousse, chaque sac, chaque housse est découpé et cousu à la main. Pas de production industrielle — uniquement le travail patient et précis de deux mains habiles et passionnées.
             </p>
           </div>
           <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
@@ -126,7 +126,7 @@ export default function QuiSommesNous() {
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">Artisanat solidaire</h3>
             <p className="font-basecoat text-sm text-gray-600 leading-relaxed">
-              Chaque achat soutient directement nos artisanes et leurs familles au Bénin. Nous croyons en une mode qui crée de la valeur là où elle est fabriquée — pas seulement là où elle est vendue.
+              Chaque achat soutient directement notre couturière béninoise et permet à cette aventure de grandir. Nous croyons en une mode qui crée de la valeur là où elle est fabriquée — pas seulement là où elle est vendue.
             </p>
           </div>
           <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
@@ -171,7 +171,7 @@ export default function QuiSommesNous() {
               Notre atelier se trouve à Cotonou, au cœur du Bénin. C'est là que tout commence : la sélection des tissus sur les marchés locaux, le tracé des patrons, la découpe minutieuse, l'assemblage couture après couture.
             </p>
             <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
-              Nos artisanes travaillent à leur rythme, avec leur savoir-faire transmis de génération en génération. Aucune machine industrielle — seulement des mains habiles, une machine à coudre et beaucoup d'amour du travail bien fait.
+              Notre couturière béninoise travaille avec soin et précision, apportant son talent et son énergie à chaque pièce. Aucune machine industrielle — seulement des mains habiles, une machine à coudre et beaucoup d'amour du travail bien fait.
             </p>
             <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed">
               Le résultat ? Des pièces solides, durables, avec un soin du détail qui se voit et se sent dès la première utilisation.
@@ -192,7 +192,7 @@ export default function QuiSommesNous() {
             </div>
             <div className="bg-white rounded-2xl p-6 border-t-2 border-benin-jaune/30 flex flex-col justify-center">
               <p className="font-basecoat text-4xl font-bold text-benin-jaune mb-1">♥</p>
-              <p className="font-basecoat text-xs font-semibold uppercase text-gray-500 tracking-wide">Artisanes soutenues</p>
+              <p className="font-basecoat text-xs font-semibold uppercase text-gray-500 tracking-wide">Duo créatif</p>
             </div>
           </div>
         </div>
@@ -206,7 +206,7 @@ export default function QuiSommesNous() {
           </h2>
           <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-gray-600 text-base sm:text-lg max-w-2xl" data-delay="0.15">
-            Derrière chaque accessoire, il y a une artisane, une famille, une communauté. Acheter Les Poulettes, c'est choisir une mode qui a un vrai impact humain.
+            Derrière chaque accessoire, il y a deux femmes passionnées et une vraie histoire. Acheter Les Poulettes, c'est choisir une mode qui a un vrai impact humain.
           </p>
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto" data-stagger="0.12">
@@ -220,7 +220,7 @@ export default function QuiSommesNous() {
           </div>
           <div className="text-center bg-gray-50 rounded-2xl p-8">
             <p className="font-basecoat text-4xl sm:text-5xl font-bold text-benin-jaune mb-2">♥</p>
-            <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Artisanes soutenues directement</p>
+            <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Couturière soutenue directement</p>
           </div>
         </div>
       </section>
