@@ -112,3 +112,55 @@ body {
     display: none;
   }
 }
+
+/* ── Shimmer border on image hover ── */
+@keyframes shimmer-border-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.shimmer-border-wrapper {
+  position: relative;
+  padding: 4px;
+  border-radius: 1rem;
+  background: rgba(252, 209, 22, 0.25);
+  overflow: hidden;
+  display: block;
+}
+
+.shimmer-border-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 130deg,
+    rgba(252, 209, 22, 0) 150deg,
+    #FCD116 165deg,
+    #FFFBE6 180deg,
+    #FCD116 195deg,
+    rgba(252, 209, 22, 0) 210deg,
+    transparent 230deg,
+    transparent 360deg
+  );
+  transform: translate(-50%, -50%) rotate(0deg);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.shimmer-border-wrapper:hover::before {
+  opacity: 1;
+  animation: shimmer-border-spin 2s linear infinite;
+}
+
+.shimmer-inner {
+  position: relative;
+  z-index: 1;
+  border-radius: calc(1rem - 4px);
+  overflow: hidden;
+}

@@ -67,15 +67,17 @@ export default function QuiSommesNous() {
           </div>
           <div className="anim-scale order-1 md:order-2 flex justify-center" data-delay="0.2">
             <div className="relative w-full max-w-sm">
-              <div className="w-full aspect-square rounded-2xl overflow-hidden shadow-2xl border-4 border-benin-jaune/30">
-                <img
-                  src="/assets/equipe-1.jpg"
-                  alt="Fondatrice Les Poulettes"
-                  loading="lazy"
-                  width={600}
-                  height={600}
-                  className="w-full h-full object-cover"
-                />
+              <div className="shimmer-border-wrapper shadow-2xl">
+                <div className="shimmer-inner aspect-square">
+                  <img
+                    src="/assets/equipe-1.jpg"
+                    alt="Fondatrice Les Poulettes"
+                    loading="lazy"
+                    width={600}
+                    height={600}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
               <div className="absolute -bottom-4 -right-4 bg-benin-jaune text-black font-basecoat text-xs font-bold uppercase px-4 py-2 rounded-xl shadow-lg">
                 Depuis 2019
