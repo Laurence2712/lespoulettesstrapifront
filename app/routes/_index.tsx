@@ -464,50 +464,62 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-          {/* Colonne gauche : Tags animés en disposition organique */}
-          <div className="anim-fade-right order-2 md:order-1" data-delay="0.2">
-            <div className="relative min-h-[320px] flex items-center justify-center">
-              {[
-                { label: 'Mariage', size: 'large' as const, position: 'top-0 left-0', rotation: '-2' },
-                { label: 'Baby shower', size: 'medium' as const, position: 'top-12 right-4', rotation: '3' },
-                { label: 'Anniversaire', size: 'large' as const, position: 'top-24 left-12', rotation: '1' },
-                { label: 'Baptême', size: 'small' as const, position: 'top-20 right-20', rotation: '-3' },
-                { label: 'Naissance', size: 'medium' as const, position: 'bottom-12 left-4', rotation: '2' },
-                { label: 'Corporate', size: 'small' as const, position: 'bottom-0 right-8', rotation: '-1' },
-              ].map((event, index) => {
-                const sizeClasses = {
-                  small: 'px-4 py-2 text-xs',
-                  medium: 'px-5 py-3 text-sm',
-                  large: 'px-6 py-3.5 text-base'
-                };
-                return (
-                  <div
-                    key={event.label}
-                    className={`absolute group font-basecoat font-bold bg-gradient-to-br from-red-50 to-red-100 border-2 border-red-800/30 text-red-900 rounded-xl shadow-md hover:shadow-2xl hover:scale-110 hover:border-red-800/60 hover:z-10 transition-all duration-300 cursor-default ${sizeClasses[event.size]} ${event.position}`}
-                    style={{
-                      animationDelay: `${index * 0.08}s`,
-                      transform: `rotate(${event.rotation}deg)`,
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.transform = `rotate(0deg) scale(1.1)`}
-                    onMouseLeave={(e) => e.currentTarget.style.transform = `rotate(${event.rotation}deg) scale(1)`}
-                  >
-                    {event.label}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
 
-          {/* Colonne droite : Texte */}
-          <div className="anim-fade-left order-1 md:order-2" data-delay="0.3">
-            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-6">
-              Mariage, baby shower, baptême, anniversaire... Les Poulettes créent des accessoires wax personnalisés pour que votre fête soit inoubliable.
-            </p>
-          
+  {/* Colonne gauche : Tags premium */}
+  <div className="anim-fade-right order-2 md:order-1" data-delay="0.2">
+    <div className="flex flex-wrap justify-center gap-4 max-w-md mx-auto">
+
+      {[
+        { label: 'Mariage', size: 'large' as const, rotate: '-rotate-2' },
+        { label: 'Baby shower', size: 'medium' as const, rotate: 'rotate-2' },
+        { label: 'Anniversaire', size: 'large' as const, rotate: 'rotate-1' },
+        { label: 'Baptême', size: 'small' as const, rotate: '-rotate-3' },
+        { label: 'Naissance', size: 'medium' as const, rotate: 'rotate-3' },
+        { label: 'Corporate', size: 'small' as const, rotate: '-rotate-1' },
+      ].map((event) => {
+        const sizeClasses = {
+          small: 'px-4 py-2 text-xs',
+          medium: 'px-5 py-2.5 text-sm',
+          large: 'px-6 py-3 text-base'
+        };
+
+        return (
+          <div
+            key={event.label}
+            className={`
+              ${sizeClasses[event.size]}
+              ${event.rotate}
+              font-basecoat font-semibold
+              bg-white
+              border border-red-900/20
+              text-red-900
+              rounded-2xl
+              shadow-sm
+              hover:shadow-xl
+              hover:-translate-y-1
+              hover:rotate-0
+              hover:scale-105
+              transition-all duration-300 ease-out
+              cursor-default
+            `}
+          >
+            {event.label}
           </div>
-        </div>
+        );
+      })}
+
+    </div>
+  </div>
+
+  {/* Colonne droite : Texte */}
+  <div className="anim-fade-left order-1 md:order-2 text-center md:text-left" data-delay="0.3">
+    <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl mx-auto md:mx-0">
+      Mariage, baby shower, baptême, anniversaire... Les Poulettes créent des accessoires wax personnalisés pour que votre fête soit inoubliable.
+    </p>
+  </div>
+
+</div>
 
 <p className="mt-8 sm:mt-10 md:mt-12 font-basecoat max-w-[90%] sm:max-w-[80%] md:max-w-[70%] font-bold lg:max-w-[50%] mx-auto text-center text-base sm:text-lg text-benin-jaune uppercase leading-relaxed">              Chaque événement mérite des créations uniques qui racontent votre histoire et célèbrent vos moments précieux.
             </p>
