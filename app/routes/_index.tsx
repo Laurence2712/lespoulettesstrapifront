@@ -337,9 +337,9 @@ export default function Index() {
               </div>
             </div>
             <div className="order-1 md:order-2 flex justify-center items-center anim-scale" data-delay="0.3">
-              <div className="relative w-full h-[300px] sm:h-[350px]">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                  <div className="relative w-[160px] h-[160px] xl:h-[400px] xl:w-[400px] sm:w-[200px] sm:h-[200px] rounded-full overflow-hidden border-4 border-benin-jaune shadow-2xl transform hover:scale-110 transition duration-300">
+              <div className="relative w-full max-w-sm mx-auto">
+                <div className="shimmer-border-wrapper shadow-2xl">
+                  <div className="shimmer-inner aspect-square">
                     <img src="/assets/equipe-1.jpg" alt="Fondatrice 1" loading="lazy" width={400} height={400} className="w-full h-full object-cover" />
                   </div>
                 </div>
@@ -444,7 +444,7 @@ export default function Index() {
             {['Mariage', 'Baby shower', 'Anniversaire', 'Baptême', 'Naissance'].map((label) => (
               <span
                 key={label}
-                className="font-basecoat text-sm font-semibold bg-beige text-gray-700 border border-gray-300 px-5 py-2.5 rounded-full"
+                className="font-basecoat text-sm font-semibold bg-beige text-gray-700 border border-benin-jaune/40 px-5 py-2.5 rounded-full"
               >
                 {label}
               </span>
