@@ -38,7 +38,7 @@ const STEPS = [
   {
     num: '03',
     title: 'Confection à la main',
-    desc: 'Nos artisanes béninoises confectionnent vos pièces avec soin, en sélectionnant les meilleurs tissus wax.',
+    desc: 'Nous confectionnons vos pièces avec soin, en sélectionnant les meilleurs tissus wax.',
     color: 'bg-wax-orange',
   },
   {
@@ -110,7 +110,7 @@ export default function CommandesPersonnalisees() {
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" data-stagger="0.12">
           {STEPS.map((step) => (
-            <div key={step.num} className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-benin-jaune/20 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300">
+            <div key={step.num} className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-[#b22a44]/20 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300">
               <div className="flex items-center gap-3 mb-5">
                 <span className="font-basecoat text-3xl font-bold text-[#b22a44]/20 leading-none">{step.num}</span>
                 <div className="h-px flex-1 bg-gray-100"></div>
@@ -152,7 +152,7 @@ export default function CommandesPersonnalisees() {
           </div>
           <div className="anim-fade-left" data-delay="0.2">
             <div className="bg-beige rounded-2xl p-8">
-              <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-6">Informations utiles</h3>
+              <h3 className="font-basecoat text-lg font-bold uppercase text-[#b22a44] mb-6">Informations utiles</h3>
               <div className="space-y-3">
                 {INFOS.map((info, index) => (
                   <div

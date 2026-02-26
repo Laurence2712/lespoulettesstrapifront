@@ -515,7 +515,7 @@ export default function Index() {
   {/* Colonne droite : Texte */}
   <div className="anim-fade-left order-1 md:order-2 text-center md:text-left" data-delay="0.3">
     <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl mx-auto md:mx-0">
-      Mariage, baby shower, baptême, anniversaire... Les Poulettes créent des accessoires wax personnalisés pour que votre fête soit inoubliable.
+      Les Poulettes créent des accessoires wax personnalisés pour que votre fête soit inoubliable.
     </p>
   </div>
 

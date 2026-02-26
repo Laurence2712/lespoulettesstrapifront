@@ -36,7 +36,7 @@ export default function QuiSommesNous() {
           <span className="text-gray-600">Qui sommes-nous</span>
         </nav>
         <div className="max-w-3xl">
-          <h1 className="anim-fade-up font-basecoat text-3xl sm:text-4xl md:text-[56px] font-bold uppercase text-gray-900 leading-tight">
+          <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 mb-2">
             L'âme des Poulettes
           </h1>
           <div className="anim-expand-line w-24 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
@@ -102,7 +102,7 @@ export default function QuiSommesNous() {
           <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-4" data-delay="0.1"></div>
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-stagger="0.1">
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-[#b22a44]/30">
             <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">✂️</span>
             </div>
@@ -111,7 +111,7 @@ export default function QuiSommesNous() {
               Chaque trousse, chaque sac, chaque housse est découpé et cousu à la main. Pas de production industrielle — uniquement le travail patient et précis de deux mains habiles et passionnées.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-[#b22a44]/30">
             <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">🌿</span>
             </div>
@@ -120,7 +120,7 @@ export default function QuiSommesNous() {
               Nous travaillons avec des tissus wax de qualité issus de circuits courts locaux. Nos emballages sont minimalistes et recyclables. Chaque choix de production est pensé pour minimiser notre impact environnemental.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-[#b22a44]/30">
             <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">🤝</span>
             </div>
@@ -129,7 +129,7 @@ export default function QuiSommesNous() {
               Chaque achat soutient directement notre couturière béninoise et permet à cette aventure de grandir. Nous croyons en une mode qui crée de la valeur là où elle est fabriquée — pas seulement là où elle est vendue.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-[#b22a44]/30">
             <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">🌍</span>
             </div>
@@ -138,7 +138,7 @@ export default function QuiSommesNous() {
               Nous sélectionnons nos tissus wax avec soin — pour leurs motifs, leur tenue et leur authenticité. Le wax africain est bien plus qu'un tissu : c'est un langage, une tradition, une identité.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-[#b22a44]/30">
             <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">🎨</span>
             </div>
@@ -147,7 +147,7 @@ export default function QuiSommesNous() {
               Chaque création est unique. Les tissus varient d'une collection à l'autre, les motifs évoluent avec les saisons. Votre accessoire Les Poulettes ne ressemble à aucun autre — et c'est tout son charme.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
+          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-[#b22a44]/30">
             <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">💛</span>
             </div>
@@ -178,22 +178,7 @@ export default function QuiSommesNous() {
             </p>
           </div>
           <div className="anim-fade-left grid grid-cols-2 gap-3" data-delay="0.2">
-            <div className="bg-white rounded-2xl p-6 border-t-2 border-benin-jaune/30 flex flex-col justify-center">
-              <p className="font-basecoat text-4xl font-bold text-benin-jaune mb-1">2017</p>
-              <p className="font-basecoat text-xs font-semibold uppercase text-gray-500 tracking-wide">Depuis</p>
-            </div>
-            <div className="bg-white rounded-2xl p-6 border-t-2 border-benin-jaune/30 flex flex-col justify-center">
-              <p className="font-basecoat text-4xl font-bold text-benin-jaune mb-1">100%</p>
-              <p className="font-basecoat text-xs font-semibold uppercase text-gray-500 tracking-wide">Fait main</p>
-            </div>
-            <div className="bg-white rounded-2xl p-6 border-t-2 border-benin-jaune/30 flex flex-col justify-center">
-              <p className="font-basecoat text-4xl font-bold text-benin-jaune mb-1">0</p>
-              <p className="font-basecoat text-xs font-semibold uppercase text-gray-500 tracking-wide">Production industrielle</p>
-            </div>
-            <div className="bg-white rounded-2xl p-6 border-t-2 border-benin-jaune/30 flex flex-col justify-center">
-              <p className="font-basecoat text-4xl font-bold text-benin-jaune mb-1">♥</p>
-              <p className="font-basecoat text-xs font-semibold uppercase text-gray-500 tracking-wide">Duo créatif</p>
-            </div>
+        
           </div>
         </div>
       </section>
@@ -205,21 +190,21 @@ export default function QuiSommesNous() {
             Notre impact
           </h2>
           <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
-          <p className="anim-fade-up font-basecoat text-gray-600 text-base sm:text-lg max-w-2xl" data-delay="0.15">
+          <p className="anim-fade-up font-basecoat text-gray-700 text-base sm:text-lg max-w-2xl md:text-xl leading-relaxed mb-4" data-delay="0.15">
             Derrière chaque accessoire, il y a deux femmes passionnées et une vraie histoire. Acheter Les Poulettes, c'est choisir une mode qui a un vrai impact humain.
           </p>
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto" data-stagger="0.12">
           <div className="text-center bg-white rounded-2xl p-8">
-            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-benin-jaune mb-2">100%</p>
+            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-[#b22a44] mb-2">100%</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Fait main au Bénin</p>
           </div>
           <div className="text-center bg-white rounded-2xl p-8">
-            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-benin-jaune mb-2">0</p>
+            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-[#b22a44] mb-2">0</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Production industrielle</p>
           </div>
           <div className="text-center bg-white rounded-2xl p-8">
-            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-benin-jaune mb-2">♥</p>
+            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-[#b22a44] mb-2">♥</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Couturière soutenue directement</p>
           </div>
         </div>
