@@ -56,13 +56,19 @@ export default function QuiSommesNous() {
             </h2>
             <div className="anim-expand-line w-20 h-px bg-benin-jaune mb-6"></div>
             <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
-              Les Poulettes sont nées d'une histoire d'amour entre la Belgique et le Bénin. Fondée par Laurence, la marque a vu le jour avec une conviction simple : les tissus wax africains méritent d'être portés au quotidien, avec style et conscience.
+              Les Poulettes, c'est une marque d'accessoires en wax, mais c'est avant tout une histoire de passion et de transmission.
             </p>
             <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
-              Ce qui a commencé comme une création artisanale dans un atelier de Cotonou est devenu une marque à part entière — reconnue pour ses pièces uniques, ses coloris vibrants et son engagement social.
+              En 2017, la marque naît au Bénin avec l'envie de créer des pièces à partir du wax, ce tissu vibrant, coloré et plein de significations.
+            </p>
+            <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
+              À ses débuts, Les Poulettes, c'est une aventure en solo, guidée par l'envie de créer et inspirée par un héritage précieux : celui d'une maman couturière qui a transmis le goût du fil, des étoffes et du travail bien fait. C'est cette maman qui appelait (et appelle encore !) ses filles "mes poulettes" — le nom s'est imposé naturellement.
+            </p>
+            <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
+              Après une pause, l'aventure reprend en 2025 avec un nouveau souffle. Les Poulettes renaissent et grandissent avec l'arrivée d'une jeune couturière béninoise, motivée et pleine de potentiel. Ensemble, nous allions créativité, énergie et exigence pour proposer des accessoires en wax soignés, lumineux et pensés pour le quotidien.
             </p>
             <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed">
-              Chaque collection est une invitation à voyager, à célébrer la créativité béninoise et à choisir une mode qui a du sens.
+              Les Poulettes, c'est une petite aventure qui grandit. C'est l'envie de créer des accessoires en wax colorés, pratiques, faits avec soin et surtout avec cœur. Des pièces qui mettent un peu de peps dans le quotidien, tout simplement.
             </p>
           </div>
           <div className="anim-scale order-1 md:order-2 flex justify-center" data-delay="0.2">
@@ -80,7 +86,7 @@ export default function QuiSommesNous() {
                 </div>
               </div>
               <div className="absolute -bottom-4 -right-4 z-10 bg-benin-jaune text-black font-basecoat text-xs font-bold uppercase px-4 py-2 rounded-xl shadow-lg">
-                Depuis 2019
+                Depuis 2017
               </div>
             </div>
           </div>
@@ -173,7 +179,7 @@ export default function QuiSommesNous() {
           </div>
           <div className="anim-fade-left grid grid-cols-2 gap-3" data-delay="0.2">
             <div className="bg-white rounded-2xl p-6 border-t-2 border-benin-jaune/30 flex flex-col justify-center">
-              <p className="font-basecoat text-4xl font-bold text-benin-jaune mb-1">2019</p>
+              <p className="font-basecoat text-4xl font-bold text-benin-jaune mb-1">2017</p>
               <p className="font-basecoat text-xs font-semibold uppercase text-gray-500 tracking-wide">Depuis</p>
             </div>
             <div className="bg-white rounded-2xl p-6 border-t-2 border-benin-jaune/30 flex flex-col justify-center">
