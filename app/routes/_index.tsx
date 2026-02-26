@@ -505,11 +505,12 @@ export default function Index() {
             <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-6">
               Mariage, baby shower, baptême, anniversaire... Les Poulettes créent des accessoires wax personnalisés pour que votre fête soit inoubliable.
             </p>
-            <p className="font-basecoat text-base sm:text-lg text-gray-600 leading-relaxed">
-              Chaque événement mérite des créations uniques qui racontent votre histoire et célèbrent vos moments précieux.
-            </p>
+          
           </div>
         </div>
+
+<p className="mt-8 sm:mt-10 md:mt-12 font-basecoat max-w-[90%] sm:max-w-[80%] md:max-w-[70%] font-bold lg:max-w-[50%] mx-auto text-center text-base sm:text-lg text-benin-jaune uppercase leading-relaxed">              Chaque événement mérite des créations uniques qui racontent votre histoire et célèbrent vos moments précieux.
+            </p>
       </section>
 
       {/* ── Où nous trouver ── */}
