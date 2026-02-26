@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from '@remix-run/react';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 
@@ -20,15 +21,6 @@ export function meta() {
     { name: "twitter:title", content: "Commandes personnalisées — Les Poulettes" },
   ];
 }
-
-const EVENTS = [
-  { icon: '💍', label: 'Mariage', desc: 'Sachets dragées, cadeaux invités, trousses mariées & demoiselles d\'honneur' },
-  { icon: '🍼', label: 'Baby shower', desc: 'Petits cadeaux wax pour accueillir le nouveau bébé avec style' },
-  { icon: '✝️', label: 'Baptême & communion', desc: 'Souvenirs personnalisés pour vos cérémonies religieuses' },
-  { icon: '🎂', label: 'Anniversaire', desc: 'Cadeaux invités coordonnés aux couleurs de votre fête' },
-  { icon: '🎉', label: 'Naissance', desc: 'Trousses, pochettes et accessoires pour célébrer l\'arrivée d\'un enfant' },
-  { icon: '🏢', label: 'Événement corporate', desc: 'Cadeaux d\'entreprise originaux et éco-responsables pour vos équipes' },
-];
 
 const STEPS = [
   {
@@ -57,8 +49,32 @@ const STEPS = [
   },
 ];
 
+const INFOS = [
+  {
+    title: 'Délai',
+    content: 'Comptez 2 à 4 semaines selon la quantité. Commandez tôt pour éviter les délais de dernière minute.'
+  },
+  {
+    title: 'Quantité minimum',
+    content: 'Pas de minimum imposé — nous traitons les petites comme les grandes commandes.'
+  },
+  {
+    title: 'Tissus',
+    content: 'Vous pouvez choisir parmi nos stocks disponibles ou suggérer une couleur/motif spécifique.'
+  },
+  {
+    title: 'Tarif',
+    content: 'Devis gratuit et sans engagement, adapté à votre budget.'
+  }
+];
+
 export default function CommandesPersonnalisees() {
   const scrollRef = useScrollAnimations([]);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggleAccordion = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   return (
     <div ref={scrollRef} className="overflow-x-hidden">
@@ -71,54 +87,32 @@ export default function CommandesPersonnalisees() {
           <span className="text-gray-600">Commandes personnalisées</span>
         </nav>
         <div className="max-w-3xl">
-          <h1 className="anim-fade-up font-basecoat text-3xl sm:text-4xl md:text-[56px] font-bold uppercase text-gray-900 leading-tight">
+          <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Commandes personnalisées
           </h1>
-          <div className="anim-expand-line w-24 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl text-gray-700 leading-relaxed" data-delay="0.2">
-            Un événement à fêter ? Les Poulettes créent pour vous des pièces uniques, aux couleurs de votre occasion — faites main au Bénin, avec amour.
+            Des sachets de dragées aux cadeaux d'invités en passant par les trousses personnalisées — nous sommes là pour rendre votre fête inoubliable.
           </p>
         </div>
       </header>
 
-
-      {/* ── Pour quels événements ? ── */}
-      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
-        <div className="mb-12">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
-            Pour quels événements ?
-          </h2>
-          <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
-          <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg max-w-2xl" data-delay="0.15">
-            Des sachets de dragées aux cadeaux d'invités en passant par les trousses personnalisées — nous sommes là pour rendre votre fête inoubliable.
-          </p>
-        </div>
-        <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" data-stagger="0.1">
-          {EVENTS.map((event) => (
-            <div key={event.label} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-              <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">{event.label}</h3>
-              <p className="font-basecoat text-sm text-gray-600 leading-relaxed">{event.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* ── Comment ça marche ── */}
-      <section className="bg-gray-50 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
+      <section className="bg-white px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
         <div className="mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Comment ça marche ?
           </h2>
           <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
-          <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg max-w-xl" data-delay="0.15">
+          <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl" data-delay="0.15">
             Un processus simple, transparent et pensé pour vous faciliter la vie.
           </p>
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" data-stagger="0.12">
           {STEPS.map((step) => (
-            <div key={step.num} className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-benin-jaune/20 hover:shadow-md transition-all duration-300">
+            <div key={step.num} className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-benin-jaune/20 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300">
               <div className="flex items-center gap-3 mb-5">
-                <span className="font-basecoat text-3xl font-bold text-benin-jaune/20 leading-none">{step.num}</span>
+                <span className="font-basecoat text-3xl font-bold text-[#b22a44]/20 leading-none">{step.num}</span>
                 <div className="h-px flex-1 bg-gray-100"></div>
               </div>
               <h3 className="font-basecoat text-sm font-bold uppercase text-gray-900 mb-2 tracking-wide">{step.title}</h3>
@@ -132,11 +126,11 @@ export default function CommandesPersonnalisees() {
       <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           <div className="anim-fade-right" data-delay="0.1">
-            <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 mb-2">
+            <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
               Ce que nous créons
             </h2>
-            <div className="anim-expand-line w-20 h-px bg-benin-jaune mb-6"></div>
-            <ul className="space-y-3 font-basecoat text-base sm:text-lg text-gray-700">
+            <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
+            <ul className="space-y-3 font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
               {[
                 'Sachets et pochettes pour dragées',
                 'Trousses de toilette et trousses de maquillage',
@@ -158,25 +152,41 @@ export default function CommandesPersonnalisees() {
           </div>
           <div className="anim-fade-left" data-delay="0.2">
             <div className="bg-beige rounded-2xl p-8">
-              <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-4">Informations utiles</h3>
-              <ul className="space-y-4 font-basecoat text-sm text-gray-700">
-                <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-benin-jaune/50 flex-shrink-0 mt-1.5"></span>
-                  <span><strong>Délai :</strong> comptez 2 à 4 semaines selon la quantité. Commandez tôt pour éviter les délais de dernière minute.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-benin-jaune/50 flex-shrink-0 mt-1.5"></span>
-                  <span><strong>Quantité minimum :</strong> pas de minimum imposé — nous traitons les petites comme les grandes commandes.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-benin-jaune/50 flex-shrink-0 mt-1.5"></span>
-                  <span><strong>Tissus :</strong> vous pouvez choisir parmi nos stocks disponibles ou suggérer une couleur/motif spécifique.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-benin-jaune/50 flex-shrink-0 mt-1.5"></span>
-                  <span><strong>Tarif :</strong> devis gratuit et sans engagement, adapté à votre budget.</span>
-                </li>
-              </ul>
+              <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-6">Informations utiles</h3>
+              <div className="space-y-3">
+                {INFOS.map((info, index) => (
+                  <div
+                    key={info.title}
+                    className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md"
+                  >
+                    <button
+                      onClick={() => toggleAccordion(index)}
+                      className="w-full flex items-center justify-between p-4 text-left font-basecoat transition-colors duration-200 hover:bg-white"
+                    >
+                      <span className="font-bold text-sm uppercase text-gray-900">{info.title}</span>
+                      <svg
+                        className={`w-5 h-5 text-benin-jaune transition-transform duration-300 ${
+                          openIndex === index ? 'rotate-180' : ''
+                        }`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    <div
+                      className={`overflow-hidden transition-all duration-300 ${
+                        openIndex === index ? 'max-h-40' : 'max-h-0'
+                      }`}
+                    >
+                      <div className="px-4 pb-4 pt-0 font-basecoat text-sm text-gray-700 leading-relaxed">
+                        {info.content}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -188,7 +198,7 @@ export default function CommandesPersonnalisees() {
           Parlons de votre projet !
         </h2>
         <div className="anim-expand-line w-20 h-px bg-benin-jaune mx-auto mt-4 mb-8" data-delay="0.1"></div>
-        <p className="anim-fade-up font-basecoat text-gray-400 text-base sm:text-lg mb-10 max-w-xl mx-auto" data-delay="0.15">
+        <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-400 leading-relaxed mb-10 max-w-xl mx-auto" data-delay="0.15">
           Décrivez-nous votre événement, la quantité souhaitée et votre date de besoin. Nous vous répondons dans les 48h avec un devis personnalisé.
         </p>
         <div className="anim-fade-up flex flex-col sm:flex-row gap-4 justify-center" data-delay="0.2">
@@ -205,9 +215,12 @@ export default function CommandesPersonnalisees() {
           </a>
           <Link
             to="/contact"
-            className="font-basecoat border-2 border-gray-600 text-gray-300 hover:border-white hover:text-white px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02]"
+            className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
           >
             Formulaire de contact
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </Link>
         </div>
       </section>

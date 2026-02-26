@@ -168,7 +168,7 @@ function FaqAccordion({ section }: { section: FaqSection }) {
                 type="button"
                 onClick={() => setOpenIndex(isOpen ? null : idx)}
                 aria-expanded={isOpen}
-                className="w-full flex items-center justify-between gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left font-basecoat font-semibold text-gray-900 text-sm sm:text-base hover:bg-gray-50 transition-colors"
+                className="w-full flex items-center justify-between gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left font-basecoat font-semibold text-gray-900 text-sm sm:text-base hover:bg-white transition-colors"
               >
                 <span className="flex-1">{item.question}</span>
                 <span
@@ -246,7 +246,7 @@ export default function FAQ() {
       </div>
 
       {/* CTA Contact */}
-      <div className="anim-fade-up mt-10 sm:mt-12 p-6 sm:p-8 bg-gray-50 border border-gray-200 rounded-2xl max-w-xl" data-delay="0.3">
+      <div className="anim-fade-up mt-10 sm:mt-12 p-6 sm:p-8 bg-white border border-gray-200 rounded-2xl max-w-xl" data-delay="0.3">
         <h2 className="font-basecoat font-bold text-gray-900 text-lg sm:text-xl uppercase mb-2">
           Vous n'avez pas trouvé votre réponse ?
         </h2>

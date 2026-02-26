@@ -55,33 +55,33 @@ export default function QuiSommesNous() {
               Notre histoire
             </h2>
             <div className="anim-expand-line w-20 h-px bg-benin-jaune mb-6"></div>
-            <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
+            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-4">
               Les Poulettes, c'est une marque d'accessoires en wax, mais c'est avant tout une histoire de passion et de transmission.
             </p>
-            <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
+            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-4">
               En 2017, la marque naît au Bénin avec l'envie de créer des pièces à partir du wax, ce tissu vibrant, coloré et plein de significations.
             </p>
-            <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
+            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-4">
               À ses débuts, Les Poulettes, c'est une aventure en solo, guidée par l'envie de créer et inspirée par un héritage précieux : celui d'une maman couturière qui a transmis le goût du fil, des étoffes et du travail bien fait. C'est cette maman qui appelait (et appelle encore !) ses filles "mes poulettes" — le nom s'est imposé naturellement.
             </p>
-            <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
+            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-4">
               Après une pause, l'aventure reprend en 2025 avec un nouveau souffle. Les Poulettes renaissent et grandissent avec l'arrivée d'une jeune couturière béninoise, motivée et pleine de potentiel. Ensemble, nous allions créativité, énergie et exigence pour proposer des accessoires en wax soignés, lumineux et pensés pour le quotidien.
             </p>
-            <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed">
+            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
               Les Poulettes, c'est une petite aventure qui grandit. C'est l'envie de créer des accessoires en wax colorés, pratiques, faits avec soin et surtout avec cœur. Des pièces qui mettent un peu de peps dans le quotidien, tout simplement.
             </p>
           </div>
           <div className="anim-scale order-1 md:order-2 flex justify-center" data-delay="0.2">
             <div className="relative w-full max-w-sm">
               <div className="shimmer-border-wrapper shadow-2xl">
-                <div className="shimmer-inner aspect-square">
+                <div className="shimmer-inner aspect-square overflow-hidden">
                   <img
                     src="/assets/equipe-1.jpg"
                     alt="Fondatrice Les Poulettes"
                     loading="lazy"
                     width={600}
                     height={600}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110"
                   />
                 </div>
               </div>
@@ -94,7 +94,7 @@ export default function QuiSommesNous() {
       </section>
 
       {/* ── Nos valeurs ── */}
-      <section className="bg-gray-50 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
+      <section className="bg-white px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
         <div className="mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Nos valeurs
@@ -103,7 +103,7 @@ export default function QuiSommesNous() {
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-stagger="0.1">
           <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
-            <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
+            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">✂️</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">100% fait main</h3>
@@ -112,7 +112,7 @@ export default function QuiSommesNous() {
             </p>
           </div>
           <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
-            <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
+            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">🌿</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">Éco-responsable</h3>
@@ -121,7 +121,7 @@ export default function QuiSommesNous() {
             </p>
           </div>
           <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
-            <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
+            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">🤝</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">Artisanat solidaire</h3>
@@ -130,7 +130,7 @@ export default function QuiSommesNous() {
             </p>
           </div>
           <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
-            <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
+            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">🌍</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">Wax authentique</h3>
@@ -139,7 +139,7 @@ export default function QuiSommesNous() {
             </p>
           </div>
           <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
-            <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
+            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">🎨</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">Pièces uniques</h3>
@@ -148,7 +148,7 @@ export default function QuiSommesNous() {
             </p>
           </div>
           <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-benin-jaune/30">
-            <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
+            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
               <span className="text-2xl">💛</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">Sur mesure & sur demande</h3>
@@ -167,13 +167,13 @@ export default function QuiSommesNous() {
               Dans notre atelier
             </h2>
             <div className="anim-expand-line w-20 h-px bg-benin-jaune mb-6"></div>
-            <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
+            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-4">
               Notre atelier se trouve à Cotonou, au cœur du Bénin. C'est là que tout commence : la sélection des tissus sur les marchés locaux, le tracé des patrons, la découpe minutieuse, l'assemblage couture après couture.
             </p>
-            <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
+            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-4">
               Notre couturière béninoise travaille avec soin et précision, apportant son talent et son énergie à chaque pièce. Aucune machine industrielle — seulement des mains habiles, une machine à coudre et beaucoup d'amour du travail bien fait.
             </p>
-            <p className="font-basecoat text-base sm:text-lg text-gray-700 leading-relaxed">
+            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
               Le résultat ? Des pièces solides, durables, avec un soin du détail qui se voit et se sent dès la première utilisation.
             </p>
           </div>
@@ -210,15 +210,15 @@ export default function QuiSommesNous() {
           </p>
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto" data-stagger="0.12">
-          <div className="text-center bg-gray-50 rounded-2xl p-8">
+          <div className="text-center bg-white rounded-2xl p-8">
             <p className="font-basecoat text-4xl sm:text-5xl font-bold text-benin-jaune mb-2">100%</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Fait main au Bénin</p>
           </div>
-          <div className="text-center bg-gray-50 rounded-2xl p-8">
+          <div className="text-center bg-white rounded-2xl p-8">
             <p className="font-basecoat text-4xl sm:text-5xl font-bold text-benin-jaune mb-2">0</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Production industrielle</p>
           </div>
-          <div className="text-center bg-gray-50 rounded-2xl p-8">
+          <div className="text-center bg-white rounded-2xl p-8">
             <p className="font-basecoat text-4xl sm:text-5xl font-bold text-benin-jaune mb-2">♥</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Couturière soutenue directement</p>
           </div>
@@ -237,15 +237,21 @@ export default function QuiSommesNous() {
         <div className="anim-fade-up flex flex-col sm:flex-row gap-4 justify-center" data-delay="0.2">
           <Link
             to="/realisations"
-            className="font-basecoat bg-benin-jaune hover:bg-benin-jaune/90 text-black px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
+            className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
           >
             Voir la boutique
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </Link>
           <Link
             to="/commandes-personnalisees"
-            className="font-basecoat border-2 border-gray-600 text-gray-300 hover:border-white hover:text-white px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02]"
+            className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
           >
             Commande personnalisée
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </Link>
         </div>
       </section>

@@ -138,7 +138,7 @@ export default function GuideTailles() {
           <div className="overflow-x-auto rounded-2xl border border-gray-100 shadow-sm">
             <table className="w-full font-basecoat text-sm sm:text-base">
               <thead>
-                <tr className="bg-gray-50 border-b border-gray-100">
+                <tr className="bg-white border-b border-gray-100">
                   <th className={`text-left py-4 px-5 font-bold uppercase text-gray-900 text-xs sm:text-sm tracking-wider border-l-4 ${cat.color}`}>Modèle</th>
                   <th className="text-left py-4 px-5 font-bold uppercase text-gray-900 text-xs sm:text-sm tracking-wider">Dimensions (L × H)</th>
                   <th className="text-left py-4 px-5 font-bold uppercase text-gray-900 text-xs sm:text-sm tracking-wider hidden sm:table-cell">Idéal pour</th>
@@ -146,7 +146,7 @@ export default function GuideTailles() {
               </thead>
               <tbody className="divide-y divide-gray-50">
                 {cat.items.map((item, i) => (
-                  <tr key={i} className="bg-white hover:bg-gray-50 transition-colors">
+                  <tr key={i} className="bg-white hover:bg-white transition-colors">
                     <td className={`py-4 px-5 font-semibold text-gray-900 border-l-4 ${cat.color}`}>{item.name}</td>
                     <td className="py-4 px-5 text-gray-600">{item.dims}</td>
                     <td className="py-4 px-5 text-gray-500 hidden sm:table-cell">{item.ideal}</td>
@@ -211,7 +211,7 @@ export default function GuideTailles() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="bg-gray-50 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-12 sm:py-14 text-center">
+      <section className="bg-white px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-12 sm:py-14 text-center">
         <p className="font-basecoat text-gray-600 text-base sm:text-lg mb-6">
           Une question sur la taille ou le modèle qui vous convient ?
         </p>
