@@ -79,7 +79,7 @@ export default function QuiSommesNous() {
                   />
                 </div>
               </div>
-              <div className="absolute -bottom-4 -right-4 bg-benin-jaune text-black font-basecoat text-xs font-bold uppercase px-4 py-2 rounded-xl shadow-lg">
+              <div className="absolute -bottom-4 -right-4 z-10 bg-benin-jaune text-black font-basecoat text-xs font-bold uppercase px-4 py-2 rounded-xl shadow-lg">
                 Depuis 2019
               </div>
             </div>

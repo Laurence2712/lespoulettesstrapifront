@@ -138,24 +138,24 @@ body {
   background: conic-gradient(
     from 0deg,
     transparent 0deg,
-    transparent 130deg,
-    rgba(252, 209, 22, 0) 150deg,
-    #FCD116 165deg,
-    #FFFBE6 180deg,
-    #FCD116 195deg,
-    rgba(252, 209, 22, 0) 210deg,
-    transparent 230deg,
+    transparent 140deg,
+    rgba(252, 209, 22, 0) 155deg,
+    rgba(252, 209, 22, 0.7) 170deg,
+    rgba(255, 251, 230, 0.9) 180deg,
+    rgba(252, 209, 22, 0.7) 190deg,
+    rgba(252, 209, 22, 0) 205deg,
+    transparent 220deg,
     transparent 360deg
   );
   transform: translate(-50%, -50%) rotate(0deg);
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.8s ease;
   pointer-events: none;
 }
 
 .shimmer-border-wrapper:hover::before {
   opacity: 1;
-  animation: shimmer-border-spin 2s linear infinite;
+  animation: shimmer-border-spin 7s linear infinite;
 }
 
 .shimmer-inner {
