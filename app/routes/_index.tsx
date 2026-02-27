@@ -178,7 +178,7 @@ export default function Index() {
           <div className="mt-2 sm:mt-4 anim-fade-up flex flex-col items-center gap-2 sm:gap-3" data-delay="0.3">
             <Link
               to="/realisations"
-              className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+              className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md whitespace-nowrap text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
             >
               Découvrir la collection
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -223,14 +223,14 @@ export default function Index() {
         <div className="mb-8 sm:mb-10 md:mb-12">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-3 sm:mb-4">
             <div>
-              <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+              <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 leading-snug md:leading-tight">
                 Nouvelles créations
               </h2>
               <div className="anim-expand-line w-20 sm:w-24 h-px bg-benin-jaune mt-3 sm:mt-4" data-delay="0.1"></div>
             </div>
             <Link
               to="/realisations"
-              className="anim-fade-up font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 hidden sm:inline-flex items-center gap-2"
+              className="anim-fade-up font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md whitespace-nowrap text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 hidden sm:inline-flex items-center gap-2"
               data-delay="0.1"
             >
               Voir tout
@@ -299,7 +299,7 @@ export default function Index() {
             <div className="mt-8 flex justify-center sm:hidden">
               <Link
                 to="/realisations"
-                className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+                className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md whitespace-nowrap text-sm font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
               >
                 Voir tout
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -312,7 +312,7 @@ export default function Index() {
             <div className="anim-fade-up text-center mt-10 hidden sm:block" data-delay="0.3">
               <Link
                 to="/realisations"
-                className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+                className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md whitespace-nowrap text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
               >
                 Voir toute la boutique
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -329,7 +329,7 @@ export default function Index() {
       {/* ── Qui sommes-nous ── */}
       <section id="qui-sommes-nous" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-6 sm:py-8 md:py-[60px] bg-beige">
         <div className="mb-8 sm:mb-10 md:mb-12">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 leading-snug md:leading-tight">
             Qui sommes-nous
           </h2>
           <div className="anim-expand-line w-20 sm:w-24 h-px bg-benin-jaune mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.1"></div>
@@ -347,7 +347,7 @@ export default function Index() {
               <div className="mt-6">
                 <Link
                   to="/qui-sommes-nous"
-                  className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+                  className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md whitespace-nowrap text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
                 >
                   Découvrir notre histoire
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -372,7 +372,7 @@ export default function Index() {
       {/* ── Dans notre atelier ── */}
       <section id="notre-atelier" className="bg-white px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]">
         <div className="max-w-5xl mx-auto bg-beige rounded-3xl shadow-lg p-8 sm:p-10 md:p-14">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 leading-snug md:leading-tight">
             Dans notre atelier au Bénin
           </h2>
           <div className="anim-expand-line w-20 sm:w-24 h-px bg-benin-jaune mt-3 sm:mt-4 mb-6 sm:mb-8" data-delay="0.1"></div>
@@ -399,7 +399,7 @@ export default function Index() {
       {/* ── Actualités ── */}
       <section className="bg-beige">
         <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] pt-6 sm:pt-8 md:pt-[60px] pb-8 sm:pb-10 md:pb-12">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 leading-snug md:leading-tight">
             Actualités
           </h2>
           <div className="anim-expand-line w-20 sm:w-24 h-px bg-benin-jaune mt-3 sm:mt-4" data-delay="0.1"></div>
@@ -436,7 +436,7 @@ export default function Index() {
                     </p>
                     <Link
                       to="/actualites"
-                      className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+                      className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md whitespace-nowrap text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
                     >
                       Toutes les actualités
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -467,7 +467,7 @@ export default function Index() {
             </div>
             <Link
               to="/commandes-personnalisees"
-              className="anim-fade-up font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 hidden sm:inline-flex items-center gap-2"
+              className="anim-fade-up font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md whitespace-nowrap text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 hidden sm:inline-flex items-center gap-2"
               data-delay="0.1"
             >
               En savoir plus
@@ -541,7 +541,7 @@ export default function Index() {
         <div className="mt-8 flex justify-center sm:hidden">
           <Link
             to="/commandes-personnalisees"
-            className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+            className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md whitespace-nowrap text-sm font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
           >
             En savoir plus
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -554,7 +554,7 @@ export default function Index() {
       {/* ── Où nous trouver ── */}
       <section id="ou-nous-trouver" className="w-full bg-beige">
         <div className="relative z-10 mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10 md:mb-12 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 leading-snug md:leading-tight">
             Où nous trouver
           </h2>
           <div className="anim-expand-line w-20 sm:w-24 h-px bg-benin-jaune mt-3 sm:mt-4" data-delay="0.1"></div>
