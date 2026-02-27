@@ -230,7 +230,7 @@ export default function Index() {
             </div>
             <Link
               to="/realisations"
-              className="anim-fade-up font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+              className="anim-fade-up font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 hidden sm:inline-flex items-center gap-2"
               data-delay="0.1"
             >
               Voir tout
@@ -295,7 +295,21 @@ export default function Index() {
               ))}
             </div>
 
-            <div className="anim-fade-up text-center mt-10 sm:mt-12" data-delay="0.3">
+            {/* Bouton mobile-only : positionné en bas des cartes */}
+            <div className="mt-8 flex justify-center sm:hidden">
+              <Link
+                to="/realisations"
+                className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+              >
+                Voir tout
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+
+            {/* Bouton desktop/tablet : centré en bas de section */}
+            <div className="anim-fade-up text-center mt-10 hidden sm:block" data-delay="0.3">
               <Link
                 to="/realisations"
                 className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
@@ -446,14 +460,14 @@ export default function Index() {
         <div className="mb-8 sm:mb-10 md:mb-12">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-3 sm:mb-4">
             <div>
-              <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 leading-tight">
+              <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 leading-snug md:leading-tight">
                 Un événement à célébrer ?
               </h2>
               <div className="anim-expand-line w-20 sm:w-24 h-px bg-benin-jaune mt-3 sm:mt-4" data-delay="0.1"></div>
             </div>
             <Link
               to="/commandes-personnalisees"
-              className="anim-fade-up font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+              className="anim-fade-up font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 hidden sm:inline-flex items-center gap-2"
               data-delay="0.1"
             >
               En savoir plus
@@ -521,9 +535,20 @@ export default function Index() {
 
 </div>
 
-<p className="mt-16 sm:mt-10 md:mt-12 font-basecoat max-w-[90%] sm:max-w-[80%] md:max-w-[70%] font-bold lg:max-w-[50%] mx-auto text-center text-base sm:text-lg text-benin-jaune uppercase leading-relaxed">             
+<p className="mt-16 sm:mt-10 md:mt-12 font-basecoat max-w-[90%] sm:max-w-[80%] md:max-w-[70%] font-bold lg:max-w-[50%] mx-auto text-center text-base sm:text-lg text-benin-jaune uppercase leading-relaxed">
    Chaque événement mérite des créations uniques qui racontent votre histoire et célèbrent vos moments précieux.
             </p>
+        <div className="mt-8 flex justify-center sm:hidden">
+          <Link
+            to="/commandes-personnalisees"
+            className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+          >
+            En savoir plus
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </div>
       </section>
 
       {/* ── Où nous trouver ── */}
