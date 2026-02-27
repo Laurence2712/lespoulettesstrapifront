@@ -363,18 +363,18 @@ export default function Index() {
           </h2>
           <div className="anim-expand-line w-20 sm:w-24 h-px bg-benin-jaune mt-3 sm:mt-4 mb-6 sm:mb-8" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-10 sm:mb-12" data-delay="0.15">
-            Chaque création naît dans notre atelier de Cotonou, au rythme des mains habiles de nos artisanes. Des tissus wax soigneusement sélectionnés, une découpe précise, des finitions cousues avec amour — c'est ça, l'âme des Poulettes.
+            Chaque création naît dans notre atelier de Cotonou. Des tissus wax soigneusement sélectionnés, une découpe précise, des finitions cousues avec amour — c'est ça, l'âme des Poulettes.
           </p>
           <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6" data-stagger="0.1">
             {/* Carte 1 — Taillé à la main */}
-            <div className="bg-white rounded-2xl shadow-sm border-t-4 border-benin-jaune min-h-[180px] p-6">
-              <p className="font-basecoat text-3xl mb-3">✂️</p>
+            <div className="atelier-card bg-white rounded-2xl min-h-[180px] p-6 group">
+              <p className="font-basecoat text-3xl mb-3 transition-transform duration-300 group-hover:scale-110 inline-block">✂️</p>
               <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">Taillé à la main</h3>
               <p className="font-basecoat text-sm text-gray-700 leading-relaxed">Chaque pièce est découpée et assemblée manuellement.</p>
             </div>
             {/* Carte 2 — Matières responsables */}
-            <div className="bg-white rounded-2xl shadow-sm border-t-4 border-benin-jaune min-h-[180px] p-6">
-              <p className="font-basecoat text-3xl mb-3">🌿</p>
+            <div className="atelier-card bg-white rounded-2xl min-h-[180px] p-6 group">
+              <p className="font-basecoat text-3xl mb-3 transition-transform duration-300 group-hover:scale-110 inline-block">🌿</p>
               <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">Matières responsables</h3>
               <p className="font-basecoat text-sm text-gray-700 leading-relaxed">Wax africain 100% coton, sélectionné sur les marchés locaux de Cotonou.</p>
             </div>
@@ -468,7 +468,7 @@ export default function Index() {
 
   {/* Colonne gauche : Tags premium */}
   <div className="anim-fade-right order-2 md:order-1" data-delay="0.2">
-    <div className="flex flex-wrap justify-center gap-4 max-w-md mx-auto">
+    <div className="flex flex-wrap justify-center items-center gap-4 max-w-md mx-auto">
 
       {[
         { label: 'Mariage', size: 'large' as const, rotate: '-rotate-2' },
@@ -479,8 +479,8 @@ export default function Index() {
         { label: 'Corporate', size: 'small' as const, rotate: '-rotate-1' },
       ].map((event) => {
         const sizeClasses = {
-          small: 'px-4 py-2 text-xs',
-          medium: 'px-5 py-2.5 text-sm',
+          small: 'px-4 py-3 text-xs',
+          medium: 'px-5 py-3 text-sm',
           large: 'px-6 py-3 text-base'
         };
 
@@ -515,13 +515,14 @@ export default function Index() {
   {/* Colonne droite : Texte */}
   <div className="anim-fade-left order-1 md:order-2 text-center md:text-left" data-delay="0.3">
     <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl mx-auto md:mx-0">
-      Les Poulettes créent des accessoires wax personnalisés pour que votre fête soit inoubliable.
+      Les Poulettes créent des accessoires wax personnalisés pour que votre fête soit unique et inoubliable.
     </p>
   </div>
 
 </div>
 
-<p className="mt-8 sm:mt-10 md:mt-12 font-basecoat max-w-[90%] sm:max-w-[80%] md:max-w-[70%] font-bold lg:max-w-[50%] mx-auto text-center text-base sm:text-lg text-benin-jaune uppercase leading-relaxed">              Chaque événement mérite des créations uniques qui racontent votre histoire et célèbrent vos moments précieux.
+<p className="mt-16 sm:mt-10 md:mt-12 font-basecoat max-w-[90%] sm:max-w-[80%] md:max-w-[70%] font-bold lg:max-w-[50%] mx-auto text-center text-base sm:text-lg text-benin-jaune uppercase leading-relaxed">             
+   Chaque événement mérite des créations uniques qui racontent votre histoire et célèbrent vos moments précieux.
             </p>
       </section>
 
@@ -533,7 +534,7 @@ export default function Index() {
           </h2>
           <div className="anim-expand-line w-20 sm:w-24 h-px bg-benin-jaune mt-3 sm:mt-4" data-delay="0.1"></div>
           <p className="anim-fade-up mt-6 mb-6 font-basecoat text-gray-700 text-base sm:text-lg md:text-xl leading-relaxed" data-delay="0.2">
-            Retrait gratuit en Belgique (Grimbergen & Watermael-Boisfort) ou directement à Cotonou au Bénin. Livraison à domicile disponible en Belgique et dans toute l'Europe.
+            Retrait gratuit en Belgique (Grimbergen & Watermael-Boisfort) ou directement à Cotonou au Bénin. <br></br>Livraison à domicile disponible en Belgique et dans toute l'Europe.
           </p>
           <p className="anim-fade-up mb-6 font-basecoat text-gray-700 text-base sm:text-lg md:text-xl leading-relaxed" data-delay="0.3">
             <a

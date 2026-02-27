@@ -164,3 +164,46 @@ body {
   border-radius: calc(1rem - 4px);
   overflow: hidden;
 }
+
+/* ── Atelier cards — border chase on hover ── */
+/* Même nombre de shadows dans les deux états → CSS interpole sans saut */
+.atelier-card {
+  box-shadow:
+    inset 0 4px 0 0 #FCD116,
+    inset -4px 0 0 0 transparent,
+    inset 0 -4px 0 0 transparent,
+    0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition:
+    box-shadow 0.55s ease,
+    transform 0.35s ease;
+}
+
+.atelier-card:hover {
+  box-shadow:
+    inset 0 4px 0 0 transparent,
+    inset -4px 0 0 0 #FCD116,
+    inset 0 -4px 0 0 #FCD116,
+    0 16px 40px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+}
+
+/* ── Variante bordeaux pour les cards "Nos valeurs" ── */
+.valeurs-card {
+  box-shadow:
+    inset 0 4px 0 0 #b22a44,
+    inset -4px 0 0 0 transparent,
+    inset 0 -4px 0 0 transparent,
+    0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition:
+    box-shadow 0.55s ease,
+    transform 0.35s ease;
+}
+
+.valeurs-card:hover {
+  box-shadow:
+    inset 0 4px 0 0 transparent,
+    inset -4px 0 0 0 #b22a44,
+    inset 0 -4px 0 0 #b22a44,
+    0 16px 40px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+}

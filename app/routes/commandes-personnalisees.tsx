@@ -110,10 +110,10 @@ export default function CommandesPersonnalisees() {
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" data-stagger="0.12">
           {STEPS.map((step) => (
-            <div key={step.num} className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-[#b22a44]/20 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300">
+            <div key={step.num} className="group bg-white rounded-2xl p-6 border border-gray-100 hover:border-[#b22a44]/40 shadow-md hover:shadow-2xl hover:-translate-y-2 hover:-rotate-1 transition-all duration-300 ease-out cursor-default">
               <div className="flex items-center gap-3 mb-5">
-                <span className="font-basecoat text-3xl font-bold text-[#b22a44]/20 leading-none">{step.num}</span>
-                <div className="h-px flex-1 bg-gray-100"></div>
+                <span className="font-basecoat text-3xl font-bold text-[#b22a44]/50 leading-none transition-colors duration-300 group-hover:text-[#b22a44]">{step.num}</span>
+                <div className="h-px flex-1 bg-gray-100 transition-colors duration-300 group-hover:bg-[#b22a44]/30"></div>
               </div>
               <h3 className="font-basecoat text-sm font-bold uppercase text-gray-900 mb-2 tracking-wide">{step.title}</h3>
               <p className="font-basecoat text-sm text-gray-500 leading-relaxed">{step.desc}</p>
@@ -124,7 +124,7 @@ export default function CommandesPersonnalisees() {
 
       {/* ── Ce qu'on peut créer ── */}
       <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
           <div className="anim-fade-right" data-delay="0.1">
             <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
               Ce que nous créons
@@ -157,16 +157,25 @@ export default function CommandesPersonnalisees() {
                 {INFOS.map((info, index) => (
                   <div
                     key={info.title}
-                    className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md"
+                    className={`group bg-white rounded-xl overflow-hidden shadow-sm border transition-all duration-300 hover:shadow-lg ${
+                      openIndex === index
+                        ? 'border-[#b22a44]/40 shadow-md'
+                        : 'border-gray-100 hover:border-[#b22a44]/25'
+                    }`}
                   >
                     <button
                       onClick={() => toggleAccordion(index)}
-                      className="w-full flex items-center justify-between p-4 text-left font-basecoat transition-colors duration-200 hover:bg-white"
+                      className={`w-full flex items-center justify-between p-4 text-left font-basecoat transition-colors duration-200 ${
+                        openIndex === index ? 'bg-[#b22a44]/5' : 'hover:bg-[#b22a44]/5'
+                      }`}
                     >
-                      <span className="font-bold text-sm uppercase text-gray-900">{info.title}</span>
+                      <span
+                        className="font-bold text-sm uppercase transition-colors duration-300"
+                        style={{ color: openIndex === index ? '#b22a44' : '' }}
+                      >{info.title}</span>
                       <svg
-                        className={`w-5 h-5 text-benin-jaune transition-transform duration-300 ${
-                          openIndex === index ? 'rotate-180' : ''
+                        className={`w-5 h-5 flex-shrink-0 transition-all duration-300 ${
+                          openIndex === index ? 'rotate-180 text-[#b22a44]' : 'text-gray-300 group-hover:text-[#b22a44]'
                         }`}
                         fill="none"
                         stroke="currentColor"
@@ -176,11 +185,11 @@ export default function CommandesPersonnalisees() {
                       </svg>
                     </button>
                     <div
-                      className={`overflow-hidden transition-all duration-300 ${
-                        openIndex === index ? 'max-h-40' : 'max-h-0'
+                      className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                        openIndex === index ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'
                       }`}
                     >
-                      <div className="px-4 pb-4 pt-0 font-basecoat text-sm text-gray-700 leading-relaxed">
+                      <div className="px-4 pb-4 pt-1 font-basecoat text-base text-black leading-relaxed border-t border-[#b22a44]/10">
                         {info.content}
                       </div>
                     </div>

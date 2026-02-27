@@ -102,54 +102,54 @@ export default function QuiSommesNous() {
           <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-4" data-delay="0.1"></div>
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-stagger="0.1">
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-[#b22a44]/30">
+          <div className="valeurs-card bg-white rounded-2xl p-7 group">
             <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
-              <span className="text-2xl">✂️</span>
+              <span className="text-2xl inline-block transition-transform duration-300 group-hover:scale-110">✂️</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">100% fait main</h3>
             <p className="font-basecoat text-sm text-gray-600 leading-relaxed">
               Chaque trousse, chaque sac, chaque housse est découpé et cousu à la main. Pas de production industrielle — uniquement le travail patient et précis de deux mains habiles et passionnées.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-[#b22a44]/30">
+          <div className="valeurs-card bg-white rounded-2xl p-7 group">
             <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
-              <span className="text-2xl">🌿</span>
+              <span className="text-2xl inline-block transition-transform duration-300 group-hover:scale-110">🌿</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">Éco-responsable</h3>
             <p className="font-basecoat text-sm text-gray-600 leading-relaxed">
               Nous travaillons avec des tissus wax de qualité issus de circuits courts locaux. Nos emballages sont minimalistes et recyclables. Chaque choix de production est pensé pour minimiser notre impact environnemental.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-[#b22a44]/30">
+          <div className="valeurs-card bg-white rounded-2xl p-7 group">
             <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
-              <span className="text-2xl">🤝</span>
+              <span className="text-2xl inline-block transition-transform duration-300 group-hover:scale-110">🤝</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">Artisanat solidaire</h3>
             <p className="font-basecoat text-sm text-gray-600 leading-relaxed">
               Chaque achat soutient directement notre couturière béninoise et permet à cette aventure de grandir. Nous croyons en une mode qui crée de la valeur là où elle est fabriquée — pas seulement là où elle est vendue.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-[#b22a44]/30">
+          <div className="valeurs-card bg-white rounded-2xl p-7 group">
             <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
-              <span className="text-2xl">🌍</span>
+              <span className="text-2xl inline-block transition-transform duration-300 group-hover:scale-110">🌍</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">Wax authentique</h3>
             <p className="font-basecoat text-sm text-gray-600 leading-relaxed">
               Nous sélectionnons nos tissus wax avec soin — pour leurs motifs, leur tenue et leur authenticité. Le wax africain est bien plus qu'un tissu : c'est un langage, une tradition, une identité.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-[#b22a44]/30">
+          <div className="valeurs-card bg-white rounded-2xl p-7 group">
             <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
-              <span className="text-2xl">🎨</span>
+              <span className="text-2xl inline-block transition-transform duration-300 group-hover:scale-110">🎨</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">Pièces uniques</h3>
             <p className="font-basecoat text-sm text-gray-600 leading-relaxed">
               Chaque création est unique. Les tissus varient d'une collection à l'autre, les motifs évoluent avec les saisons. Votre accessoire Les Poulettes ne ressemble à aucun autre — et c'est tout son charme.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-7 shadow-sm border-t-2 border-[#b22a44]/30">
+          <div className="valeurs-card bg-white rounded-2xl p-7 group">
             <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4">
-              <span className="text-2xl">💛</span>
+              <span className="text-2xl inline-block transition-transform duration-300 group-hover:scale-110">💛</span>
             </div>
             <h3 className="font-basecoat text-lg font-bold uppercase text-gray-900 mb-3">Sur mesure & sur demande</h3>
             <p className="font-basecoat text-sm text-gray-600 leading-relaxed">
@@ -195,16 +195,16 @@ export default function QuiSommesNous() {
           </p>
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto" data-stagger="0.12">
-          <div className="text-center bg-white rounded-2xl p-8">
-            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-[#b22a44] mb-2">100%</p>
+          <div className="text-center bg-white rounded-2xl p-8 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:rotate-1 transition-all duration-300 ease-out group cursor-default">
+            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-[#b22a44] mb-2 inline-block transition-transform duration-300 group-hover:scale-110">100%</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Fait main au Bénin</p>
           </div>
-          <div className="text-center bg-white rounded-2xl p-8">
-            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-[#b22a44] mb-2">0</p>
+          <div className="text-center bg-white rounded-2xl p-8 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:-rotate-1 transition-all duration-300 ease-out group cursor-default">
+            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-[#b22a44] mb-2 inline-block transition-transform duration-300 group-hover:scale-110">0</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Production industrielle</p>
           </div>
-          <div className="text-center bg-white rounded-2xl p-8">
-            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-[#b22a44] mb-2">♥</p>
+          <div className="text-center bg-white rounded-2xl p-8 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:rotate-2 transition-all duration-300 ease-out group cursor-default">
+            <p className="font-basecoat text-4xl sm:text-5xl font-bold text-[#b22a44] mb-2 inline-block transition-transform duration-300 group-hover:scale-125">♥</p>
             <p className="font-basecoat text-sm font-semibold uppercase text-gray-700">Couturière soutenue directement</p>
           </div>
         </div>
