@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link, useLoaderData, useNavigate } from '@remix-run/react';
 import { json } from '@remix-run/node';
-import { getApiUrl, getImageUrl } from '../config/api';
+import type { LoaderFunctionArgs } from '@remix-run/node';
+import { apiEndpoints, getImageUrl } from '../config/api';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
+import { useTranslation } from 'react-i18next';
+import { useLocalePath } from '../hooks/useLocalePath';
 
 export function meta() {
   return [
@@ -51,11 +54,13 @@ interface LoaderData {
   error: string | null;
 }
 
-export async function loader() {
-  const API_URL = getApiUrl();
+export async function loader({ params }: LoaderFunctionArgs) {
+  const locale = params.locale ?? 'fr';
+  const endpoints = apiEndpoints(locale);
+  const baseUrl = endpoints.realisations.split('?')[0];
 
   try {
-    const url = `${API_URL}/api/realisations?populate[0]=ImagePrincipale&populate[1]=Images&populate[2]=Declinaison&populate[3]=Declinaison.Image`;
+    const url = `${baseUrl}?populate[0]=ImagePrincipale&populate[1]=Images&populate[2]=Declinaison&populate[3]=Declinaison.Image&locale=${locale}`;
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -169,6 +174,8 @@ function matchesCategory(realisation: Realisation, category: string): boolean {
 
 export default function Realisations() {
   const { realisations, coupsDeCoeur, error } = useLoaderData<LoaderData>();
+  const { t } = useTranslation();
+  const lp = useLocalePath();
   const [showPopup, setShowPopup] = useState(false);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [currentPage, setCurrentPage] = useState(1);
@@ -203,7 +210,7 @@ export default function Realisations() {
   };
   const handleBeninClick = () => {
     saveRegion('benin');
-    navigate('/#ou-nous-trouver');
+    navigate(lp('/#ou-nous-trouver'));
   };
 
   const filteredRealisations = realisations.filter((r) => matchesCategory(r, selectedCategory));
@@ -273,11 +280,11 @@ export default function Realisations() {
       >
         {/* Breadcrumb */}
         <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
-          <Link to="/" className="text-benin-jaune hover:text-benin-terre font-medium transition">
-            Accueil
+          <Link to={lp('/')} className="text-benin-jaune hover:text-benin-terre font-medium transition">
+            {t('common.home')}
           </Link>
           <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
-          <span className="text-gray-600">Boutique</span>
+          <span className="text-gray-600">{t('products.breadcrumb_shop')}</span>
         </nav>
 
         {/* Titre + Tri */}
@@ -287,15 +294,15 @@ export default function Realisations() {
               className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900"
               data-delay="0.1"
             >
-              Notre boutique
+              {t('products.title')}
             </h1>
             <div
-              className="anim-expand-line w-20 sm:w-24 h-px bg-benin-jaune mt-3 sm:mt-4"
+              className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4"
               data-delay="0.15"
             ></div>
             <p className="anim-fade-up font-basecoat text-xs text-gray-400 mt-3" data-delay="0.2">
-              <Link to="/guide-des-tailles" className="text-benin-jaune hover:text-benin-terre hover:underline transition font-semibold">
-                Guide des tailles & entretien →
+              <Link to={lp('/guide-des-tailles')} className="text-benin-jaune hover:text-benin-terre hover:underline transition font-semibold">
+                {t('sizes.title')} →
               </Link>
             </p>
           </div>
@@ -356,7 +363,7 @@ export default function Realisations() {
               {coupsDeCoeur.map((item) => (
                 <Link
                   key={`${item.productId}-${item.id}`}
-                  to={`/realisations/${item.productId}`}
+                  to={lp(`/realisations/${item.productId}`)}
                   className="group flex-shrink-0 w-44 sm:w-52 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white border border-gray-100"
                 >
                   <div className="relative h-44 sm:h-52 overflow-hidden bg-amber-50">
@@ -412,7 +419,7 @@ export default function Realisations() {
             {paginatedRealisations.map((realisation) => (
               <Link
                 key={realisation.id}
-                to={`/realisations/${realisation.id}`}
+                to={lp(`/realisations/${realisation.id}`)}
                 className="group flex flex-col rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-1.5 bg-white border border-gray-100"
               >
                 {/* Image */}
@@ -535,10 +542,10 @@ export default function Realisations() {
               Nos créatrices sont à l'œuvre... revenez très vite ! 🧵
             </p>
             <Link
-              to="/"
+              to={lp('/')}
               className="font-basecoat text-benin-jaune hover:text-benin-terre underline text-sm transition"
             >
-              Retour à l'accueil
+              {t('common.home')}
             </Link>
           </div>
         )}

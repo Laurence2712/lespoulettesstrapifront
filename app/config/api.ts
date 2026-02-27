@@ -1,4 +1,4 @@
-const API_URL = 
+const API_URL =
   (typeof process !== 'undefined' && process.env?.API_URL) ||
   (typeof process !== 'undefined' && process.env?.VITE_API_URL) ||
   import.meta.env?.VITE_API_URL ||
@@ -12,14 +12,14 @@ export const getImageUrl = (path: string) => {
   return `${API_URL}${path}`;
 };
 
-export const apiEndpoints = {
-  homepages: `${API_URL}/api/homepages?populate=*`,
-  realisations: `${API_URL}/api/realisations?populate=*`,
-  actualites: `${API_URL}/api/actualites?populate=*`,
-  latestActualite: `${API_URL}/api/actualites?populate=*&sort[0]=publishedAt:desc&pagination[limit]=1`,
+export const apiEndpoints = (locale = 'fr') => ({
+  homepages: `${API_URL}/api/homepages?populate=*&locale=${locale}`,
+  realisations: `${API_URL}/api/realisations?populate=*&locale=${locale}`,
+  actualites: `${API_URL}/api/actualites?populate=*&locale=${locale}`,
+  latestActualite: `${API_URL}/api/actualites?populate=*&sort[0]=publishedAt:desc&pagination[limit]=1&locale=${locale}`,
   commandes: `${API_URL}/api/commandes`,
   createCheckoutSession: `${API_URL}/api/commandes/create-checkout-session`,
   createBankTransferOrder: `${API_URL}/api/commandes/create-bank-transfer-order`,
-  realisationById: (id: string) => `${API_URL}/api/realisations/${id}?populate=*`,
-  actualiteById: (id: number) => `${API_URL}/api/actualites/${id}?populate=*`,
-};
+  realisationById: (id: string) => `${API_URL}/api/realisations/${id}?populate=*&locale=${locale}`,
+  actualiteById: (id: number) => `${API_URL}/api/actualites/${id}?populate=*&locale=${locale}`,
+});

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from '@remix-run/react';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
+import { useLocalePath } from '../hooks/useLocalePath';
 
 export function meta() {
   return [
@@ -70,6 +71,7 @@ const INFOS = [
 
 export default function CommandesPersonnalisees() {
   const scrollRef = useScrollAnimations([]);
+  const lp = useLocalePath();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleAccordion = (index: number) => {
@@ -82,7 +84,7 @@ export default function CommandesPersonnalisees() {
       {/* ── Hero ── */}
       <header className="bg-beige pt-28 sm:pt-32 md:pt-40 pb-14 sm:pb-18 md:pb-24 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
         <nav className="anim-fade-up font-basecoat mb-8 text-xs sm:text-sm">
-          <Link to="/" className="text-benin-jaune hover:text-benin-terre font-medium transition">Accueil</Link>
+          <Link to={lp("/")} className="text-benin-jaune hover:text-benin-terre font-medium transition">Accueil</Link>
           <span className="mx-1.5 text-gray-400">/</span>
           <span className="text-gray-600">Commandes personnalisées</span>
         </nav>
@@ -90,7 +92,7 @@ export default function CommandesPersonnalisees() {
           <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Commandes personnalisées
           </h1>
-          <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl text-gray-700 leading-relaxed" data-delay="0.2">
             Des sachets de dragées aux cadeaux d'invités en passant par les trousses personnalisées — nous sommes là pour rendre votre fête inoubliable.
           </p>
@@ -103,7 +105,7 @@ export default function CommandesPersonnalisees() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Comment ça marche ?
           </h2>
-          <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl" data-delay="0.15">
             Un processus simple, transparent et pensé pour vous faciliter la vie.
           </p>
@@ -129,7 +131,7 @@ export default function CommandesPersonnalisees() {
             <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
               Ce que nous créons
             </h2>
-            <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
+            <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-4 mb-6" data-delay="0.1"></div>
             <ul className="space-y-3 font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
               {[
                 'Sachets et pochettes pour dragées',
@@ -206,7 +208,7 @@ export default function CommandesPersonnalisees() {
         <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-white mb-4">
           Parlons de votre projet !
         </h2>
-        <div className="anim-expand-line w-20 h-px bg-benin-jaune mx-auto mt-4 mb-8" data-delay="0.1"></div>
+        <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mx-auto mt-4 mb-8" data-delay="0.1"></div>
         <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-400 leading-relaxed mb-10 max-w-xl mx-auto" data-delay="0.15">
           Décrivez-nous votre événement, la quantité souhaitée et votre date de besoin. Nous vous répondons dans les 48h avec un devis personnalisé.
         </p>
@@ -223,7 +225,7 @@ export default function CommandesPersonnalisees() {
             WhatsApp
           </a>
           <Link
-            to="/contact"
+            to={lp("/contact")}
             className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
           >
             Formulaire de contact

@@ -4,6 +4,8 @@ import { json } from "@remix-run/node";
 import type { ActionFunctionArgs } from "@remix-run/node";
 import { useScrollAnimations } from "../hooks/useScrollAnimations";
 import { getApiUrl } from "../config/api";
+import { useTranslation } from "react-i18next";
+import { useLocalePath } from "../hooks/useLocalePath";
 
 export function meta() {
   return [
@@ -53,6 +55,8 @@ export default function Contact() {
   const scrollRef = useScrollAnimations();
   const actionData = useActionData<typeof action>();
   const navigation = useNavigation();
+  const { t } = useTranslation();
+  const lp = useLocalePath();
   const isSubmitting = navigation.state === "submitting";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -65,11 +69,11 @@ export default function Contact() {
     >
       {/* Breadcrumb */}
       <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
-        <Link to="/" className="text-benin-jaune hover:text-benin-jaune/70 font-medium transition">
-          Accueil
+        <Link to={lp('/')} className="text-benin-jaune hover:text-benin-jaune/70 font-medium transition">
+          {t('common.home')}
         </Link>
         <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
-        <span className="text-gray-600">Contact</span>
+        <span className="text-gray-600">{t('contact.breadcrumb')}</span>
       </nav>
 
       {/* Titre */}
@@ -77,9 +81,9 @@ export default function Contact() {
         className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900"
         data-delay="0.1"
       >
-        Contactez-nous
+        {t('contact.title')}
       </h1>
-      <div className="anim-expand-line w-20 sm:w-24 h-px bg-benin-jaune mt-3 sm:mt-4" data-delay="0.15"></div>
+      <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.15"></div>
       <p className="anim-fade-up font-basecoat sm:text-lg md:text-xl text-gray-700 mt-3 mb-8 sm:mb-10 md:mb-12" data-delay="0.2">
         
       </p>
@@ -100,7 +104,7 @@ export default function Contact() {
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Votre nom"
                 required
-                className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base outline-none transition bg-white"
+                className="form-field font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base bg-white"
               />
             </div>
 
@@ -115,7 +119,7 @@ export default function Contact() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="votre@email.com"
                 required
-                className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base outline-none transition bg-white"
+                className="form-field font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base bg-white"
               />
             </div>
 
@@ -130,7 +134,7 @@ export default function Contact() {
                 placeholder="Votre message..."
                 rows={5}
                 required
-                className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base outline-none transition resize-none bg-white"
+                className="form-field font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base resize-none bg-white"
               ></textarea>
             </div>
 
@@ -139,7 +143,7 @@ export default function Contact() {
               disabled={isSubmitting}
               className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
             >
-              {isSubmitting ? "Envoi en cours..." : "Envoyer"}
+              {isSubmitting ? t('contact.sending') : t('contact.send')}
             </button>
 
             {actionData?.success && (

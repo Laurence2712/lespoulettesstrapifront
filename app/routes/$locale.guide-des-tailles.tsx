@@ -1,5 +1,6 @@
 import { Link } from '@remix-run/react';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
+import { useLocalePath } from '../hooks/useLocalePath';
 
 export function meta() {
   return [
@@ -95,6 +96,7 @@ const CARE = [
 
 export default function GuideTailles() {
   const scrollRef = useScrollAnimations([]);
+  const lp = useLocalePath();
 
   return (
     <div ref={scrollRef} className="overflow-x-hidden">
@@ -102,7 +104,7 @@ export default function GuideTailles() {
       {/* ── Header ── */}
       <header className="bg-beige pt-28 sm:pt-32 md:pt-40 pb-14 sm:pb-18 md:pb-24 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
         <nav className="anim-fade-up font-basecoat mb-8 text-xs sm:text-sm">
-          <Link to="/" className="text-benin-jaune hover:text-benin-terre font-medium transition">Accueil</Link>
+          <Link to={lp("/")} className="text-benin-jaune hover:text-benin-terre font-medium transition">Accueil</Link>
           <span className="mx-1.5 text-gray-400">/</span>
           <span className="text-gray-600">Guide des tailles & Entretien</span>
         </nav>
@@ -110,7 +112,7 @@ export default function GuideTailles() {
           <h1 className="anim-fade-up font-basecoat text-3xl sm:text-4xl md:text-[56px] font-bold uppercase text-gray-900 leading-tight">
             Guide des tailles & Entretien
           </h1>
-          <div className="anim-expand-line w-24 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-lg sm:text-xl text-gray-700 leading-relaxed" data-delay="0.2">
             Toutes les informations dont vous avez besoin pour choisir la bonne taille et entretenir vos accessoires Les Poulettes.
           </p>
@@ -132,7 +134,7 @@ export default function GuideTailles() {
             <span className="text-3xl">{cat.icon}</span>
             <h2 className="font-basecoat text-2xl sm:text-3xl font-bold uppercase text-gray-900">{cat.category}</h2>
           </div>
-          <div className="anim-expand-line w-20 h-px bg-benin-jaune mb-4"></div>
+          <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mb-4"></div>
           <p className="font-basecoat text-gray-600 text-sm sm:text-base mb-6 max-w-xl">{cat.description}</p>
 
           <div className="overflow-x-auto rounded-2xl border border-gray-100 shadow-sm">
@@ -171,7 +173,7 @@ export default function GuideTailles() {
         <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl font-bold uppercase text-gray-900 mb-2">
           Nos matières
         </h2>
-        <div className="anim-expand-line w-20 h-px bg-benin-jaune mb-6" data-delay="0.1"></div>
+        <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mb-6" data-delay="0.1"></div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-3 gap-5" data-stagger="0.1">
           <div className="bg-white rounded-2xl p-6 shadow-sm">
             <h3 className="font-basecoat font-bold uppercase text-gray-900 mb-3 text-base">Tissu extérieur</h3>
@@ -194,7 +196,7 @@ export default function GuideTailles() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
             Conseils d'entretien
           </h2>
-          <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-4 mb-6" data-delay="0.1"></div>
+          <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg max-w-xl" data-delay="0.15">
             Bien entretenu, votre accessoire Les Poulettes vous accompagnera des années.
           </p>
@@ -217,7 +219,7 @@ export default function GuideTailles() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
-            to="/realisations"
+            to={lp("/realisations")}
             className="font-basecoat border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
           >
             Voir la boutique

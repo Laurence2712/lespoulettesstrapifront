@@ -3,11 +3,12 @@ import { Link, useNavigate, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
-import { getApiUrl, getImageUrl } from '../config/api';
+import { apiEndpoints, getImageUrl } from '../config/api';
 import { useCartStore } from '../store/cartStore';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 import { useToast } from '../components/ToastProvider';
 import CartDrawer from '../components/CartDrawer';
+import { useLocalePath } from '../hooks/useLocalePath';
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   const title = data?.realisation?.title;
@@ -91,11 +92,13 @@ interface LoaderData {
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { id } = params;
-  const API_URL = getApiUrl();
+  const locale = params.locale ?? 'fr';
+  const endpoints = apiEndpoints(locale);
+  const baseUrl = endpoints.realisations.split('?')[0];
 
   try {
-    const productUrl = `${API_URL}/api/realisations/${id}?populate[0]=Images&populate[1]=Declinaison&populate[2]=Declinaison.Image`;
-    const relatedUrl = `${API_URL}/api/realisations?populate[0]=ImagePrincipale&populate[1]=Images&pagination[limit]=5`;
+    const productUrl = `${baseUrl}/${id}?populate[0]=Images&populate[1]=Declinaison&populate[2]=Declinaison.Image&locale=${locale}`;
+    const relatedUrl = `${baseUrl}?populate[0]=ImagePrincipale&populate[1]=Images&pagination[limit]=5&locale=${locale}`;
 
     const [response, relatedRes] = await Promise.all([
       fetch(productUrl),
@@ -196,6 +199,7 @@ export default function RealisationDetail() {
   const addToCart = useCartStore((state) => state.addToCart);
   const { realisation, relatedProducts, error } = useLoaderData<LoaderData>();
   const { showToast } = useToast();
+  const lp = useLocalePath();
 
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [selectedDeclinaisonId, setSelectedDeclinaisonId] = useState<number | null>(null);
@@ -209,7 +213,7 @@ export default function RealisationDetail() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <p className="text-benin-rouge mb-4 font-basecoat">{error}</p>
-          <Link to="/realisations" className="text-benin-jaune hover:text-benin-terre font-basecoat underline">
+          <Link to={lp("/realisations")} className="text-benin-jaune hover:text-benin-terre font-basecoat underline">
             ← Retour aux réalisations
           </Link>
         </div>
@@ -297,9 +301,9 @@ export default function RealisationDetail() {
       >
         {/* Breadcrumb */}
         <nav className="anim-fade-up mb-4 text-xs sm:text-sm font-basecoat text-gray-500">
-          <Link to="/" className="hover:text-benin-jaune transition">Accueil</Link>
+          <Link to={lp("/")} className="hover:text-benin-jaune transition">Accueil</Link>
           <span className="mx-2">/</span>
-          <Link to="/realisations" className="hover:text-benin-jaune transition">Boutique</Link>
+          <Link to={lp("/realisations")} className="hover:text-benin-jaune transition">Boutique</Link>
           <span className="mx-2">/</span>
           <span className="text-gray-800 uppercase font-semibold">{realisation.title}</span>
         </nav>
@@ -389,7 +393,7 @@ export default function RealisationDetail() {
                 {realisation.prix ? `${realisation.prix} €` : 'Prix sur demande'}
               </p>
             </div>
-            <div className="anim-expand-line w-20 h-px bg-benin-jaune mt-3 mb-5"></div>
+            <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 mb-5"></div>
 
             {/* Description */}
             {realisation.description?.trim() && (
@@ -554,7 +558,7 @@ export default function RealisationDetail() {
             {/* Lien guide des tailles */}
             <div className="mb-4">
               <Link
-                to="/guide-des-tailles"
+                to={lp("/guide-des-tailles")}
                 className="font-basecoat text-xs text-benin-jaune hover:text-benin-terre underline transition"
               >
                 Voir le guide des tailles & conseils d'entretien
@@ -591,12 +595,12 @@ export default function RealisationDetail() {
             <h2 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl font-bold uppercase text-gray-900 mb-2">
               Vous aimerez aussi
             </h2>
-            <div className="anim-expand-line w-20 h-px bg-benin-jaune mb-8" data-delay="0.1"></div>
+            <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mb-8" data-delay="0.1"></div>
             <div className="anim-stagger grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5" data-stagger="0.08">
               {relatedProducts.map((product) => (
                 <Link
                   key={product.id}
-                  to={`/realisations/${product.id}`}
+                  to={lp(`/realisations/${product.id}`)}
                   className="group relative rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 hover:-translate-y-1 block"
                 >
                   <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">

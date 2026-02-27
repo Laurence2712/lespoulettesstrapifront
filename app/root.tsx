@@ -9,64 +9,28 @@ import {
   useLoaderData,
   useNavigation,
 } from "@remix-run/react";
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { useChangeLanguage } from "remix-i18next/react";
 import NavBar from "./components/navbar";
 import Footer from "./components/footer";
 import CookieBanner from "./components/CookieBanner";
 import BackToTop from "./components/BackToTop";
 import { ToastProvider } from "./components/ToastProvider";
 import { useCartStore } from "./store/cartStore";
+import i18next from "./i18n.server";
 import "./tailwind.css";
 
-export async function loader() {
+export async function loader({ request }: LoaderFunctionArgs) {
+  const locale = await i18next.getLocale(request);
   return json({
+    locale,
     gaId: process.env.GA_MEASUREMENT_ID || "",
     recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY || "",
   });
 }
-
-export const meta: MetaFunction = () => [
-  { title: "Les Poulettes — Accessoires wax fait main au Bénin" },
-  {
-    name: "description",
-    content:
-      "Les Poulettes, marque d'accessoires éco-responsables faits main au Bénin. Trousses, sacs et housses en tissu wax authentique.",
-  },
-  {
-    name: "keywords",
-    content:
-      "Les Poulettes, accessoires wax, tissu wax, fait main, Bénin, Afrique, éco-responsable, trousse, sac, housse, artisanat",
-  },
-  { name: "robots", content: "index, follow" },
-  { name: "theme-color", content: "#F5F1E8" },
-  { property: "og:site_name", content: "Les Poulettes" },
-  { property: "og:type", content: "website" },
-  { property: "og:locale", content: "fr_FR" },
-  {
-    property: "og:title",
-    content: "Les Poulettes — Accessoires wax fait main au Bénin",
-  },
-  {
-    property: "og:description",
-    content:
-      "Accessoires éco-responsables faits main au Bénin. Trousses, sacs et housses en tissu wax authentique.",
-  },
-  { property: "og:image", content: "/assets/logo_t_poulettes.png" },
-  { name: "twitter:card", content: "summary_large_image" },
-  { name: "twitter:site", content: "@lespoulettes" },
-  {
-    name: "twitter:title",
-    content: "Les Poulettes — Accessoires wax fait main au Bénin",
-  },
-  {
-    name: "twitter:description",
-    content:
-      "Accessoires éco-responsables faits main au Bénin. Trousses, sacs et housses en tissu wax authentique.",
-  },
-  { name: "twitter:image", content: "/assets/logo_t_poulettes.png" },
-];
 
 export const links: LinksFunction = () => [
   { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
@@ -111,8 +75,11 @@ const orgJsonLd = {
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const data = useLoaderData<typeof loader>();
+  const locale = data?.locale ?? "fr";
+
   return (
-    <html lang="fr" className="overflow-x-hidden">
+    <html lang={locale} className="overflow-x-hidden">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -128,7 +95,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-benin-jaune focus:text-black focus:font-bold focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg"
         >
-          Aller au contenu principal
+          {locale === "en" ? "Skip to main content" : "Aller au contenu principal"}
         </a>
         <NavBar />
         <main id="main-content" className="flex-grow">{children}</main>
@@ -143,10 +110,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const { gaId, recaptchaSiteKey } = useLoaderData<typeof loader>();
+  const { gaId, recaptchaSiteKey, locale } = useLoaderData<typeof loader>();
   const checkExpiration = useCartStore((state) => state.checkExpiration);
   const navigation = useNavigation();
   const isNavigating = navigation.state === "loading";
+  const { t } = useTranslation();
+
+  useChangeLanguage(locale);
 
   useEffect(() => {
     checkExpiration();
@@ -156,7 +126,6 @@ export default function App() {
     return () => clearInterval(interval);
   }, [checkExpiration]);
 
-  // reCAPTCHA v3 — injecté dynamiquement côté client
   useEffect(() => {
     if (!recaptchaSiteKey || typeof window === "undefined") return;
     const script = document.createElement("script");
@@ -165,7 +134,6 @@ export default function App() {
     document.head.appendChild(script);
   }, [recaptchaSiteKey]);
 
-  // Google Analytics 4 — injecté dynamiquement côté client
   useEffect(() => {
     if (!gaId || typeof window === "undefined") return;
 
@@ -186,21 +154,23 @@ export default function App() {
   return (
     <ToastProvider>
       {isNavigating && (
-        <div className="fixed top-0 left-0 right-0 z-[9999] h-10 bg-white/90 backdrop-blur-sm flex items-center justify-center gap-3 shadow-md">
-          <span className="text-black font-basecoat font-bold text-sm uppercase tracking-widest">Chargement</span>
-          <div className="flex gap-1">
-            <span className="w-2 h-2 rounded-full bg-black/70" style={{ animation: 'dot 1.2s ease-in-out infinite' }} />
-            <span className="w-2 h-2 rounded-full bg-black/70" style={{ animation: 'dot 1.2s ease-in-out 0.2s infinite' }} />
-            <span className="w-2 h-2 rounded-full bg-black/70" style={{ animation: 'dot 1.2s ease-in-out 0.4s infinite' }} />
+          <div className="fixed top-0 left-0 right-0 z-[9999] h-10 bg-white/90 backdrop-blur-sm flex items-center justify-center gap-3 shadow-md">
+            <span className="text-black font-basecoat font-bold text-sm uppercase tracking-widest">
+              {t("errors.go_loading")}
+            </span>
+            <div className="flex gap-1">
+              <span className="w-2 h-2 rounded-full bg-black/70" style={{ animation: 'dot 1.2s ease-in-out infinite' }} />
+              <span className="w-2 h-2 rounded-full bg-black/70" style={{ animation: 'dot 1.2s ease-in-out 0.2s infinite' }} />
+              <span className="w-2 h-2 rounded-full bg-black/70" style={{ animation: 'dot 1.2s ease-in-out 0.4s infinite' }} />
+            </div>
           </div>
-        </div>
-      )}
-      <style>{`
-        @keyframes dot {
-          0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-          40% { transform: scale(1); opacity: 1; }
-        }
-      `}</style>
+        )}
+        <style>{`
+          @keyframes dot {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+            40% { transform: scale(1); opacity: 1; }
+          }
+        `}</style>
       <Outlet />
     </ToastProvider>
   );
@@ -249,7 +219,7 @@ export function ErrorBoundary() {
               href="/"
               className="inline-block border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black font-basecoat font-bold px-8 py-3 rounded-lg uppercase tracking-wider transition hover:scale-105"
             >
-              Retour à l'accueil
+              Retour à l&apos;accueil
             </a>
           </div>
         </main>

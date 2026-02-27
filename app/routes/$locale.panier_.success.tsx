@@ -3,11 +3,13 @@ import type { LoaderFunctionArgs } from '@remix-run/node';
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from '@remix-run/react';
 import { useCartStore } from '../store/cartStore';
+import { useLocalePath } from '../hooks/useLocalePath';
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export async function loader({ request, params }: LoaderFunctionArgs) {
+  const locale = params.locale ?? 'fr';
   const url = new URL(request.url);
   if (!url.searchParams.get('session_id')) {
-    return redirect('/');
+    return redirect(`/${locale}/`);
   }
   return null;
 }
@@ -23,6 +25,7 @@ export default function PaymentSuccess() {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get('session_id');
   const clearCart = useCartStore((state) => state.clearCart);
+  const lp = useLocalePath();
   const [cleared, setCleared] = useState(false);
 
   useEffect(() => {
@@ -51,7 +54,7 @@ export default function PaymentSuccess() {
           </p>
         )}
         <Link
-          to="/"
+          to={lp("/")}
           className="font-basecoat inline-block border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition transform hover:scale-105 text-sm sm:text-base"
         >
           Retour à l'accueil

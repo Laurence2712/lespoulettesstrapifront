@@ -9,6 +9,9 @@ declare module "@remix-run/node" {
 }
 
 export default defineConfig({
+  ssr: {
+    external: ["i18next-fs-backend"],
+  },
   plugins: [
     remix({
       future: {

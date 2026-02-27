@@ -5,6 +5,7 @@ import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useCartStore } from '../store/cartStore';
 import { getApiUrl, getImageUrl } from '../config/api';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
+import { useLocalePath } from '../hooks/useLocalePath';
 
 export function meta() {
   return [
@@ -203,6 +204,7 @@ export default function Panier() {
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [mounted, setMounted] = useState(false);
 
+  const lp = useLocalePath();
   const scrollRef = useScrollAnimations([mounted, items.length]);
 
   useEffect(() => {
@@ -255,7 +257,7 @@ export default function Panier() {
             </p>
           )}
           <Link
-            to="/"
+            to={lp("/")}
             className="font-basecoat inline-block border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-8 sm:px-10 py-3 sm:py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg text-sm sm:text-base"
           >
             Retour à l'accueil
@@ -285,7 +287,7 @@ export default function Panier() {
             Commencez par choisir une de nos créations faites main !
           </p>
           <Link
-            to="/realisations"
+            to={lp("/realisations")}
             className="font-basecoat border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg text-sm sm:text-base inline-block"
           >
             Voir toute la boutique
@@ -354,7 +356,7 @@ export default function Panier() {
     <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24">
       {/* Breadcrumb */}
       <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
-        <Link to="/" className="text-benin-jaune hover:text-benin-terre font-medium transition">Accueil</Link>
+        <Link to={lp("/")} className="text-benin-jaune hover:text-benin-terre font-medium transition">Accueil</Link>
         <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
         <span className="text-gray-600">Panier</span>
       </nav>
@@ -479,7 +481,7 @@ export default function Panier() {
             </button>
 
             <Link
-              to="/realisations"
+              to={lp("/realisations")}
               className="font-basecoat block w-full text-center py-3 rounded-xl font-semibold text-gray-500 hover:text-gray-900 border border-gray-200 hover:border-gray-300 transition text-sm sm:text-base"
             >
               Continuer mes achats

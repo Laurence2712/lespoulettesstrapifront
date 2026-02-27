@@ -207,3 +207,21 @@ body {
     0 16px 40px rgba(0, 0, 0, 0.12);
   transform: translateY(-4px);
 }
+
+/* ── Form fields — focus animé ── */
+.form-field {
+  outline: none;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.form-field:focus {
+  outline: none;
+  border-color: rgba(252, 209, 22, 0.55);
+  box-shadow:
+    0 0 0 3px rgba(252, 209, 22, 0.1),
+    0 2px 8px rgba(252, 209, 22, 0.08);
+  background-color: #fefdf8;
+}

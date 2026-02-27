@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { Link, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { apiEndpoints, getImageUrl } from "../config/api";
 import { useScrollAnimations } from "../hooks/useScrollAnimations";
+import { useTranslation } from "react-i18next";
+import { useLocalePath } from "../hooks/useLocalePath";
 
 export function meta() {
   return [
@@ -33,9 +36,10 @@ interface LoaderData {
   error: string | null;
 }
 
-export async function loader() {
+export async function loader({ params }: LoaderFunctionArgs) {
+  const locale = params.locale ?? 'fr';
   try {
-    const response = await fetch(apiEndpoints.actualites);
+    const response = await fetch(apiEndpoints(locale).actualites);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
 
@@ -61,6 +65,8 @@ export async function loader() {
 
 export default function ActualitesPage() {
   const { actualites, error } = useLoaderData<LoaderData>();
+  const { t } = useTranslation();
+  const lp = useLocalePath();
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc');
 
   const scrollRef = useScrollAnimations([sortOrder]);
@@ -77,11 +83,11 @@ export default function ActualitesPage() {
       <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
         {/* Breadcrumb */}
         <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
-          <Link to="/" className="text-benin-jaune hover:text-benin-terre font-medium transition">
-            Accueil
+          <Link to={lp('/')} className="text-benin-jaune hover:text-benin-terre font-medium transition">
+            {t('common.home')}
           </Link>
           <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
-          <span className="text-gray-600">Actualités</span>
+          <span className="text-gray-600">{t('news.breadcrumb')}</span>
         </nav>
 
         {/* Titre + Tri */}
@@ -91,10 +97,10 @@ export default function ActualitesPage() {
               className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900"
               data-delay="0.1"
             >
-              Nos actualités
+              {t('news.title')}
             </h1>
             <div
-              className="anim-expand-line w-20 sm:w-24 h-px bg-benin-jaune mt-3 sm:mt-4"
+              className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4"
               data-delay="0.15"
             ></div>
             <p className="anim-fade-up font-basecoat text-gray-500 text-sm sm:text-base mt-3" data-delay="0.2">
@@ -190,10 +196,10 @@ export default function ActualitesPage() {
             Aucune actualité disponible pour le moment.
           </p>
           <Link
-            to="/"
+            to={lp('/')}
             className="font-basecoat text-benin-jaune hover:text-benin-terre underline text-sm transition"
           >
-            Retour à l'accueil
+            {t('common.home')}
           </Link>
         </div>
       )}
@@ -219,10 +225,10 @@ export default function ActualitesPage() {
             </a>
           </div>
           <Link
-            to="/realisations"
+            to={lp('/realisations')}
             className="font-basecoat inline-block border-2 border-benin-jaune text-white hover:bg-benin-jaune hover:text-black px-10 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] text-sm"
           >
-            Voir la boutique
+            {t('products.see_all')}
           </Link>
         </div>
       )}
