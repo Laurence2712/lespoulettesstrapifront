@@ -9,6 +9,7 @@ import { useScrollAnimations } from '../hooks/useScrollAnimations';
 import { useToast } from '../components/ToastProvider';
 import CartDrawer from '../components/CartDrawer';
 import { useLocalePath } from '../hooks/useLocalePath';
+import { useTranslation } from 'react-i18next';
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   const title = data?.realisation?.title;
@@ -200,6 +201,7 @@ export default function RealisationDetail() {
   const { realisation, relatedProducts, error } = useLoaderData<LoaderData>();
   const { showToast } = useToast();
   const lp = useLocalePath();
+  const { t } = useTranslation();
 
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [selectedDeclinaisonId, setSelectedDeclinaisonId] = useState<number | null>(null);
@@ -214,7 +216,7 @@ export default function RealisationDetail() {
         <div className="text-center">
           <p className="text-benin-rouge mb-4 font-basecoat">{error}</p>
           <Link to={lp("/realisations")} className="text-benin-jaune hover:text-benin-terre font-basecoat underline">
-            ← Retour aux réalisations
+            ← {t('products.back_to_shop')}
           </Link>
         </div>
       </div>
@@ -301,9 +303,9 @@ export default function RealisationDetail() {
       >
         {/* Breadcrumb */}
         <nav className="anim-fade-up mb-4 text-xs sm:text-sm font-basecoat text-gray-500">
-          <Link to={lp("/")} className="hover:text-benin-jaune transition">Accueil</Link>
+          <Link to={lp("/")} className="hover:text-benin-jaune transition">{t('common.home')}</Link>
           <span className="mx-2">/</span>
-          <Link to={lp("/realisations")} className="hover:text-benin-jaune transition">Boutique</Link>
+          <Link to={lp("/realisations")} className="hover:text-benin-jaune transition">{t('products.breadcrumb_shop')}</Link>
           <span className="mx-2">/</span>
           <span className="text-gray-800 uppercase font-semibold">{realisation.title}</span>
         </nav>
@@ -316,7 +318,7 @@ export default function RealisationDetail() {
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
-          Retour
+          {t('products.back_to_shop')}
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
@@ -336,11 +338,11 @@ export default function RealisationDetail() {
                 />
               ) : (
                 <div className="w-full h-[300px] flex items-center justify-center text-gray-400 font-basecoat">
-                  Aucune image disponible
+                  {t('home.no_image')}
                 </div>
               )}
               <div className="absolute top-4 left-4 bg-benin-jaune text-black text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
-                ✂ Fait main
+                ✂ {t('home.badge_handmade')}
               </div>
             </div>
 
@@ -348,7 +350,7 @@ export default function RealisationDetail() {
             {realisation.mainImages.length >= 1 && (
               <div className="mt-4">
                 <p className="text-xs font-basecoat font-semibold uppercase text-gray-400 tracking-widest mb-2">
-                  Autres vues
+                  {t('products.other_views')}
                 </p>
                 <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-benin-ocre scrollbar-track-gray-100">
                   {realisation.mainImages.map((img, idx) => (
@@ -390,7 +392,7 @@ export default function RealisationDetail() {
                 {realisation.title}
               </h1>
               <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-benin-jaune whitespace-nowrap flex-shrink-0">
-                {realisation.prix ? `${realisation.prix} €` : 'Prix sur demande'}
+                {realisation.prix ? `${realisation.prix} €` : t('products.on_request')}
               </p>
             </div>
             <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 mb-5"></div>
@@ -410,7 +412,7 @@ export default function RealisationDetail() {
                 <svg className="w-4 h-4 text-benin-jaune flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
                 </svg>
-                <span>Dimensions : <strong>{realisation.dimensions}</strong></span>
+                <span>{t('products.dimensions')} : <strong>{realisation.dimensions}</strong></span>
               </div>
             )}
 
@@ -439,7 +441,7 @@ export default function RealisationDetail() {
             {hasDeclinaisons && (
               <div className="mb-6">
                 <h2 className="font-bold uppercase text-sm text-gray-500 mb-3 tracking-wider">
-                  Choisir un motif / coloris
+                  {t('products.choose_variant')}
                 </h2>
                 <div className="flex flex-wrap gap-3">
                   {realisation.declinaisons.map((decl) => {
@@ -490,7 +492,7 @@ export default function RealisationDetail() {
 
                 {selectedDeclinaison?.Description && (
                   <p className="mt-3 text-sm font-semibold text-gray-700">
-                    Motif sélectionné :{' '}
+                    {t('products.variant_label')} :{' '}
                     <span className="text-benin-jaune">{selectedDeclinaison.Description}</span>
                   </p>
                 )}
@@ -508,7 +510,7 @@ export default function RealisationDetail() {
                 ) : (
                   <span className="inline-flex items-center gap-2 bg-benin-rouge/15 text-benin-rouge px-4 py-1.5 rounded-full text-sm font-semibold">
                     <span className="w-2 h-2 rounded-full bg-benin-rouge/100 inline-block"></span>
-                    Rupture de stock
+                    {t('products.out_of_stock')}
                   </span>
                 )}
               </div>
@@ -520,7 +522,7 @@ export default function RealisationDetail() {
               <div className="mb-5">
                 <span className="inline-flex items-center gap-2 bg-benin-rouge/15 text-benin-rouge px-4 py-1.5 rounded-full text-sm font-semibold">
                   <span className="w-2 h-2 rounded-full bg-benin-rouge/100 inline-block"></span>
-                  Épuisé
+                  {t('products.sold_out')}
                 </span>
               </div>
             )}
@@ -529,7 +531,7 @@ export default function RealisationDetail() {
             {selectedDeclinaison && isInStock && (
               <div className="mb-5">
                 <label className="block mb-2 text-sm font-bold uppercase text-gray-500 tracking-wider">
-                  Quantité
+                  {t('products.quantity')}
                 </label>
                 <div className="inline-flex items-center border border-gray-200 rounded-xl overflow-hidden">
                   <button
@@ -561,7 +563,7 @@ export default function RealisationDetail() {
                 to={lp("/guide-des-tailles")}
                 className="font-basecoat text-xs text-benin-jaune hover:text-benin-terre underline transition"
               >
-                Voir le guide des tailles & conseils d'entretien
+                {t('sizes.title')} →
               </Link>
             </div>
 
@@ -578,10 +580,10 @@ export default function RealisationDetail() {
                   }`}
                 >
                   {!selectedDeclinaison
-                    ? 'Choisir un motif'
+                    ? t('products.choose_variant')
                     : !isInStock
-                    ? 'Rupture de stock'
-                    : <span className="inline-flex items-center gap-2"><ShoppingCartIcon className="w-5 h-5" />Ajouter au panier</span>}
+                    ? t('products.out_of_stock')
+                    : <span className="inline-flex items-center gap-2"><ShoppingCartIcon className="w-5 h-5" />{t('products.add_to_cart')}</span>}
                 </button>
               </div>
             )}
@@ -593,7 +595,7 @@ export default function RealisationDetail() {
         {relatedProducts.length > 0 && (
           <div className="mt-16 sm:mt-20">
             <h2 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl font-bold uppercase text-gray-900 mb-2">
-              Vous aimerez aussi
+              {t('products.related')}
             </h2>
             <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mb-8" data-delay="0.1"></div>
             <div className="anim-stagger grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5" data-stagger="0.08">
@@ -615,7 +617,7 @@ export default function RealisationDetail() {
                       />
                     ) : (
                       <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                        <span className="font-basecoat text-gray-400 text-xs">Aucune image</span>
+                        <span className="font-basecoat text-gray-400 text-xs">{t('home.no_image')}</span>
                       </div>
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />

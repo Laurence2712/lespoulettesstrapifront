@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from '@remix-run/react';
 import { useCartStore } from '../store/cartStore';
 import { useLocalePath } from '../hooks/useLocalePath';
+import { useTranslation } from 'react-i18next';
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const locale = params.locale ?? 'fr';
@@ -26,6 +27,7 @@ export default function PaymentSuccess() {
   const sessionId = searchParams.get('session_id');
   const clearCart = useCartStore((state) => state.clearCart);
   const lp = useLocalePath();
+  const { t } = useTranslation();
   const [cleared, setCleared] = useState(false);
 
   useEffect(() => {
@@ -40,24 +42,24 @@ export default function PaymentSuccess() {
       <div className="bg-benin-vert/10 border-2 border-benin-vert rounded-lg p-6 sm:p-8">
         <div className="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4">✓</div>
         <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-benin-vert mb-3 sm:mb-4 uppercase">
-          Paiement réussi !
+          {t('cart.paid_title')}
         </h1>
         <p className="font-basecoat text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
-          Votre paiement a été effectué avec succès. Vous allez recevoir un email de confirmation.
+          {t('cart.paid_desc')}
         </p>
         <p className="font-basecoat text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
-          Votre commande sera préparée et expédiée dans les plus brefs délais.
+          {t('cart.dispatch_soon')}
         </p>
         {sessionId && (
           <p className="font-basecoat text-xs text-gray-500 mb-6 break-all px-2">
-            Référence : {sessionId}
+            {t('cart.reference')} {sessionId}
           </p>
         )}
         <Link
           to={lp("/")}
           className="font-basecoat inline-block border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition transform hover:scale-105 text-sm sm:text-base"
         >
-          Retour à l'accueil
+          {t('cart.back_to_home')}
         </Link>
       </div>
     </div>

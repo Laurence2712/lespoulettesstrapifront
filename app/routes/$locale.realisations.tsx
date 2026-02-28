@@ -155,6 +155,13 @@ function saveRegion(region: 'belgique' | 'benin') {
 const ITEMS_PER_PAGE = 9;
 
 const CATEGORIES = ['Tout', 'Trousses', 'Sacs', 'Housses', 'Accessoires'];
+const CAT_KEY: Record<string, string> = {
+  'Tout': 'products.cat_all',
+  'Trousses': 'products.cat_pouches',
+  'Sacs': 'products.cat_bags',
+  'Housses': 'products.cat_sleeves',
+  'Accessoires': 'products.cat_accessories',
+};
 
 function matchesCategory(realisation: Realisation, category: string): boolean {
   if (category === 'Tout') return true;
@@ -244,26 +251,26 @@ export default function Realisations() {
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t-4 border-benin-jaune shadow-2xl p-4 sm:p-5">
           <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center gap-3 sm:gap-6">
             <p className="font-basecoat font-bold text-gray-900 text-center sm:text-left text-sm sm:text-base whitespace-nowrap">
-              Vous commandez depuis...
+              {t('products.region_question')}
             </p>
             <div className="flex gap-3 flex-shrink-0">
               <button
                 onClick={handleBelgiqueClick}
                 className="font-basecoat border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wide transition-all hover:scale-105"
               >
-                Belgique / Europe
+                {t('products.region_belgium')}
               </button>
               <button
                 onClick={handleBeninClick}
                 className="font-basecoat bg-gray-900 hover:bg-black text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wide transition-all hover:scale-105 shadow"
               >
-                Bénin
+                {t('products.region_benin')}
               </button>
             </div>
             <button
               onClick={handleBelgiqueClick}
               className="text-gray-400 hover:text-gray-600 transition sm:ml-auto flex-shrink-0"
-              aria-label="Fermer"
+              aria-label={t('nav.aria_close')}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -311,7 +318,7 @@ export default function Realisations() {
               htmlFor="sort-price"
               className="font-basecoat text-sm text-gray-600 whitespace-nowrap"
             >
-              Trier par :
+              {t('products.sort_by')}
             </label>
             <select
               id="sort-price"
@@ -319,8 +326,8 @@ export default function Realisations() {
               onChange={(e) => handleSortChange(e.target.value as 'asc' | 'desc')}
               className="font-basecoat text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune"
             >
-              <option value="asc">Prix croissant</option>
-              <option value="desc">Prix décroissant</option>
+              <option value="asc">{t('products.sort_price_asc')}</option>
+              <option value="desc">{t('products.sort_price_desc')}</option>
             </select>
           </div>
         </div>
@@ -340,7 +347,7 @@ export default function Realisations() {
                     : 'bg-white border-gray-200 text-gray-700 hover:border-benin-jaune hover:text-benin-jaune'
                 }`}
               >
-                {cat}
+                {t(CAT_KEY[cat])}
                 {cat !== 'Tout' && (
                   <span className="ml-1.5 text-xs opacity-60">
                     ({realisations.filter((r) => matchesCategory(r, cat)).length})
@@ -357,7 +364,7 @@ export default function Realisations() {
           <div className="mb-12 sm:mb-14">
             <div className="mb-6 flex items-center gap-3">
               <span className="text-benin-jaune text-2xl">♥</span>
-              <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900">Nos coups de cœur</h2>
+              <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900">{t('products.favorites_title')}</h2>
             </div>
             <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-benin-ocre scrollbar-track-gray-100">
               {coupsDeCoeur.map((item) => (
@@ -378,7 +385,7 @@ export default function Realisations() {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <span className="font-basecoat text-gray-400 text-xs">Aucune image</span>
+                        <span className="font-basecoat text-gray-400 text-xs">{t('home.no_image')}</span>
                       </div>
                     )}
                     <div className="absolute top-2 left-2 px-2.5 py-1 rounded-full">
@@ -393,7 +400,7 @@ export default function Realisations() {
                       <p className="font-basecoat text-gray-500 text-xs mt-0.5">{item.motif}</p>
                     )}
                     <p className="font-basecoat text-benin-jaune font-bold text-base mt-1">
-                      {item.prix ? `${item.prix} €` : 'Sur demande'}
+                      {item.prix ? `${item.prix} €` : t('products.on_request')}
                     </p>
                   </div>
                 </Link>
@@ -435,14 +442,14 @@ export default function Realisations() {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <span className="font-basecoat text-gray-400 text-sm">Aucune image</span>
+                      <span className="font-basecoat text-gray-400 text-sm">{t('home.no_image')}</span>
                     </div>
                   )}
 
                   {/* Badge Nouveau */}
                   {realisation.isNew && (
                     <div className="absolute top-3 left-3 bg-benin-jaune text-black text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
-                      Nouveau
+                      {t('products.new_badge')}
                     </div>
                   )}
 
@@ -450,19 +457,19 @@ export default function Realisations() {
                   {!realisation.isNew && realisation.totalStock !== null && realisation.totalStock !== undefined && (
                     realisation.totalStock === 0 ? (
                       <div className="absolute top-3 left-3 bg-benin-rouge/100 text-white text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
-                        Épuisé
+                        {t('products.sold_out')}
                       </div>
                     ) : realisation.totalStock <= 5 ? (
                       <div className="absolute top-3 left-3 bg-benin-jaune/80 text-black text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
-                        Plus que {realisation.totalStock}
+                        {t('products.low_stock', { count: realisation.totalStock })}
                       </div>
                     ) : null
                   )}
 
                   {/* Badges Fait main / Made in Bénin */}
                   <div className="absolute bottom-2 right-2 flex flex-col items-end gap-1">
-                    <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-benin-jaune text-black px-2 py-0.5 rounded-full shadow">Fait main</span>
-                    <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-gray-800 text-white px-2 py-0.5 rounded-full shadow">Made in Bénin</span>
+                    <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-benin-jaune text-black px-2 py-0.5 rounded-full shadow">{t('home.badge_handmade')}</span>
+                    <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-gray-800 text-white px-2 py-0.5 rounded-full shadow">{t('home.badge_benin')}</span>
                   </div>
 
                 </div>
@@ -481,10 +488,10 @@ export default function Realisations() {
 
                   <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
                     <span className="font-basecoat text-2xl font-bold text-benin-jaune">
-                      {realisation.prix ? `${realisation.prix} €` : 'Sur demande'}
+                      {realisation.prix ? `${realisation.prix} €` : t('products.on_request')}
                     </span>
                     <span className="inline-flex items-center gap-1.5 font-basecoat text-sm font-bold uppercase tracking-wide text-black bg-beige group-hover:bg-benin-jaune px-4 py-2 rounded-xl transition-all duration-200 group-hover:shadow-md">
-                      Voir
+                      {t('products.view')}
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
@@ -505,7 +512,7 @@ export default function Realisations() {
               className="font-basecoat flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-benin-jaune hover:text-benin-jaune transition disabled:opacity-30 disabled:cursor-not-allowed bg-white"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-              Précédent
+              {t('products.pagination_prev')}
             </button>
 
             <div className="flex items-center gap-1">
@@ -529,7 +536,7 @@ export default function Realisations() {
               disabled={currentPage === totalPages}
               className="font-basecoat flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-benin-jaune hover:text-benin-jaune transition disabled:opacity-30 disabled:cursor-not-allowed bg-white"
             >
-              Suivant
+              {t('products.pagination_next')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
             </button>
           </div>
@@ -539,7 +546,7 @@ export default function Realisations() {
         {!error && realisations.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 gap-4">
             <p className="font-basecoat text-gray-500 text-center text-lg">
-              Nos créatrices sont à l'œuvre... revenez très vite ! 🧵
+              {t('products.coming_soon')}
             </p>
             <Link
               to={lp('/')}
@@ -552,13 +559,13 @@ export default function Realisations() {
         {!error && realisations.length > 0 && filteredRealisations.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 gap-4">
             <p className="font-basecoat text-gray-500 text-center text-lg">
-              Aucune création dans cette catégorie pour l'instant.
+              {t('products.no_results_cat')}
             </p>
             <button
               onClick={() => handleCategoryChange('Tout')}
               className="font-basecoat text-benin-jaune hover:text-benin-terre underline text-sm transition"
             >
-              Voir toutes les créations
+              {t('products.see_all_creations')}
             </button>
           </div>
         )}

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from '@remix-run/react';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 import { useLocalePath } from '../hooks/useLocalePath';
+import { useTranslation } from 'react-i18next';
 
 export function meta() {
   return [
@@ -209,6 +210,7 @@ function FaqAccordion({ section }: { section: FaqSection }) {
 export default function FAQ() {
   const scrollRef = useScrollAnimations();
   const lp = useLocalePath();
+  const { t } = useTranslation();
 
   return (
     <div
@@ -218,10 +220,10 @@ export default function FAQ() {
       {/* Breadcrumb */}
       <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
         <Link to={lp("/")} className="text-benin-jaune hover:text-benin-jaune/70 font-medium transition">
-          Accueil
+          {t('common.home')}
         </Link>
         <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
-        <span className="text-gray-600">FAQ</span>
+        <span className="text-gray-600">{t('faq.breadcrumb')}</span>
       </nav>
 
       {/* Titre */}
@@ -229,15 +231,14 @@ export default function FAQ() {
         className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900"
         data-delay="0.1"
       >
-        Questions fréquentes
+        {t('faq.title')}
       </h1>
       <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.15"></div>
       <p
         className="anim-fade-up font-basecoat text-gray-500 text-sm sm:text-base mt-3 mb-10 sm:mb-12 md:mb-16 max-w-xl"
         data-delay="0.2"
       >
-        Vous avez une question ? Retrouvez ici les réponses aux questions les plus fréquentes.
-        Si vous ne trouvez pas ce que vous cherchez, n'hésitez pas à nous contacter.
+        {t('faq.intro_text')}
       </p>
 
       {/* Sections FAQ */}
@@ -250,10 +251,10 @@ export default function FAQ() {
       {/* CTA Contact */}
       <div className="anim-fade-up mt-10 sm:mt-12 p-6 sm:p-8 bg-white border border-gray-200 rounded-2xl max-w-xl" data-delay="0.3">
         <h2 className="font-basecoat font-bold text-gray-900 text-lg sm:text-xl uppercase mb-2">
-          Vous n'avez pas trouvé votre réponse ?
+          {t('faq.cta_title')}
         </h2>
         <p className="font-basecoat text-gray-600 text-sm sm:text-base mb-5">
-          Notre équipe est disponible par WhatsApp et email pour répondre à toutes vos questions.
+          {t('faq.cta_desc')}
         </p>
         <div className="flex flex-wrap gap-3">
           <a
@@ -271,7 +272,7 @@ export default function FAQ() {
             to={lp("/contact")}
             className="font-basecoat inline-flex items-center gap-2 border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black font-bold px-5 py-2.5 rounded-xl transition hover:scale-105 text-sm"
           >
-            Nous contacter
+            {t('faq.contact_us')}
           </Link>
         </div>
       </div>

@@ -102,7 +102,7 @@ export default function Contact() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Votre nom"
+                placeholder={t('contact.name_placeholder')}
                 required
                 className="form-field font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base bg-white"
               />
@@ -117,7 +117,7 @@ export default function Contact() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="votre@email.com"
+                placeholder={t('contact.email_placeholder')}
                 required
                 className="form-field font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base bg-white"
               />
@@ -131,7 +131,7 @@ export default function Contact() {
                 id="message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="Votre message..."
+                placeholder={t('contact.message_placeholder')}
                 rows={5}
                 required
                 className="form-field font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base resize-none bg-white"
@@ -153,7 +153,7 @@ export default function Contact() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                   </svg>
                   <p className="font-basecoat text-benin-jaune font-semibold text-sm">
-                    Message envoyé ! Nous vous répondrons dans les plus brefs délais.
+                    {t('contact.success')}
                   </p>
                 </div>
               </div>

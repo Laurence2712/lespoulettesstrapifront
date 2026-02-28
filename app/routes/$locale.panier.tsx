@@ -6,6 +6,7 @@ import { useCartStore } from '../store/cartStore';
 import { getApiUrl, getImageUrl } from '../config/api';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 import { useLocalePath } from '../hooks/useLocalePath';
+import { useTranslation } from 'react-i18next';
 
 export function meta() {
   return [
@@ -205,6 +206,7 @@ export default function Panier() {
   const [mounted, setMounted] = useState(false);
 
   const lp = useLocalePath();
+  const { t } = useTranslation();
   const scrollRef = useScrollAnimations([mounted, items.length]);
 
   useEffect(() => {
@@ -234,33 +236,31 @@ export default function Panier() {
             </svg>
           </div>
           <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 uppercase">
-            {isPaid ? 'Paiement réussi !' : 'Commande envoyée !'}
+            {isPaid ? t('cart.paid_title') : t('cart.order_sent_title')}
           </h1>
           <p className="font-basecoat text-gray-600 mb-3 text-base sm:text-lg leading-relaxed">
-            {isPaid
-              ? 'Votre paiement a été effectué avec succès. Vous allez recevoir un email de confirmation.'
-              : 'Nous avons bien reçu votre commande. Vous recevrez un email de confirmation.'}
+            {isPaid ? t('cart.paid_desc') : t('cart.order_sent_desc')}
           </p>
           {isPaid && (
             <p className="font-basecoat text-gray-600 mb-3 text-sm sm:text-base">
-              Votre commande sera préparée et expédiée dans les plus brefs délais.
+              {t('cart.dispatch_soon')}
             </p>
           )}
           {!isPaid && (
             <p className="font-basecoat text-gray-500 mb-3 text-sm sm:text-base">
-              Attention : La commande ne sera préparée et expédiée qu'à la réception du paiement.
+              {t('cart.pending_payment')}
             </p>
           )}
           {sessionId && (
             <p className="font-basecoat text-xs text-gray-400 mb-6 break-all px-2">
-              Référence : {sessionId}
+              {t('cart.reference')} {sessionId}
             </p>
           )}
           <Link
             to={lp("/")}
             className="font-basecoat inline-block border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-8 sm:px-10 py-3 sm:py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg text-sm sm:text-base"
           >
-            Retour à l'accueil
+            {t('cart.back_to_home')}
           </Link>
         </div>
       </div>
@@ -270,7 +270,7 @@ export default function Panier() {
   if (!mounted) {
     return (
       <div className="min-h-screen flex items-center justify-center mt-16">
-        <p className="text-xl font-basecoat text-gray-400">Chargement...</p>
+        <p className="text-xl font-basecoat text-gray-400">{t('common.loading')}...</p>
       </div>
     );
   }
@@ -281,26 +281,26 @@ export default function Panier() {
         <div className="text-center py-12 sm:py-16">
           <ShoppingCartIcon className="w-20 h-20 text-gray-200 mx-auto mb-6" strokeWidth={1} />
           <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-gray-900 mb-3">
-            Votre panier est vide
+            {t('cart.empty_title')}
           </h1>
           <p className="font-basecoat text-gray-500 text-base mb-8">
-            Commencez par choisir une de nos créations faites main !
+            {t('cart.empty_subtitle')}
           </p>
           <Link
             to={lp("/realisations")}
             className="font-basecoat border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg text-sm sm:text-base inline-block"
           >
-            Voir toute la boutique
+            {t('cart.see_all_shop')}
           </Link>
         </div>
 
         {featuredProducts.length > 0 && (
           <div className="mt-10 sm:mt-14">
             <h2 className="font-basecoat text-lg sm:text-xl font-bold uppercase text-gray-900 mb-2 text-center">
-              Nos créations
+              {t('cart.featured_title')}
             </h2>
             <p className="font-basecoat text-gray-500 text-sm text-center mb-6 sm:mb-8">
-              Des pièces uniques, faites main au Bénin en tissu wax authentique.
+              {t('cart.featured_subtitle')}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
               {featuredProducts.map((product) => (
@@ -318,7 +318,7 @@ export default function Panier() {
                         />
                       ) : (
                         <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                          <span className="font-basecoat text-gray-400 text-sm">Aucune image</span>
+                          <span className="font-basecoat text-gray-400 text-sm">{t('cart.no_image')}</span>
                         </div>
                       )}
                       {product.prix && (
@@ -332,7 +332,7 @@ export default function Panier() {
                         {product.title}
                       </h3>
                       <span className="font-basecoat text-sm font-semibold text-benin-jaune group-hover:text-yellow-700 flex items-center gap-1 transition">
-                        Voir le produit
+                        {t('cart.view_product')}
                         <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
@@ -356,17 +356,17 @@ export default function Panier() {
     <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24">
       {/* Breadcrumb */}
       <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
-        <Link to={lp("/")} className="text-benin-jaune hover:text-benin-terre font-medium transition">Accueil</Link>
+        <Link to={lp("/")} className="text-benin-jaune hover:text-benin-terre font-medium transition">{t('common.home')}</Link>
         <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
-        <span className="text-gray-600">Panier</span>
+        <span className="text-gray-600">{t('cart.breadcrumb')}</span>
       </nav>
 
       <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900" data-delay="0.1">
-        Votre panier
+        {t('cart.your_cart')}
       </h1>
       <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4" data-delay="0.15"></div>
       <p className="anim-fade-up font-basecoat text-gray-500 text-sm sm:text-base mt-3 mb-8 sm:mb-10 md:mb-12" data-delay="0.2">
-        {totalItems} article{totalItems > 1 ? 's' : ''}
+        {t('cart.items_count', {count: totalItems})}
       </p>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12">
@@ -430,7 +430,7 @@ export default function Panier() {
 
                   {item.stock !== undefined && item.quantity >= item.stock && (
                     <span className="font-basecoat text-orange-500 text-xs sm:text-sm font-semibold">
-                      Stock max : {item.stock}
+                      {t('cart.stock_max', {count: item.stock})}
                     </span>
                   )}
                 </div>
@@ -449,25 +449,25 @@ export default function Panier() {
         <div className="lg:col-span-1 order-1 lg:order-2 anim-fade-left" data-delay="0.3">
           <div className="bg-white border border-gray-100 rounded-2xl p-6 sm:p-7 shadow-sm lg:sticky lg:top-[100px]">
             <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900 mb-5">
-              Résumé
+              {t('cart.summary')}
             </h2>
 
             <div className="space-y-3 mb-5">
               <div className="font-basecoat flex justify-between text-base text-gray-600">
-                <span>Sous-total ({totalItems} article{totalItems > 1 ? 's' : ''})</span>
+                <span>{t('cart.subtotal')} ({t('cart.items_count', {count: totalItems})})</span>
                 <span className="font-semibold text-gray-900">{total.toFixed(2)} €</span>
               </div>
               <div className="font-basecoat flex justify-between text-sm text-gray-400">
-                <span>Livraison</span>
-                <span>À définir à l'étape suivante</span>
+                <span>{t('cart.shipping')}</span>
+                <span>{t('cart.shipping_next_step')}</span>
               </div>
             </div>
 
             <div className="border-t border-gray-100 pt-5 mb-6">
               <div className="font-basecoat flex justify-between items-center">
                 <div>
-                  <span className="font-bold text-gray-900 text-base">Total estimé</span>
-                  <p className="text-xs text-gray-400 mt-0.5">Hors frais de livraison</p>
+                  <span className="font-bold text-gray-900 text-base">{t('cart.estimated_total')}</span>
+                  <p className="text-xs text-gray-400 mt-0.5">{t('cart.excl_shipping')}</p>
                 </div>
                 <span className="text-2xl sm:text-3xl font-bold text-gray-900">{total.toFixed(2)} €</span>
               </div>
@@ -477,14 +477,14 @@ export default function Panier() {
               onClick={() => setShowCheckout(true)}
               className="font-basecoat w-full border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg mb-3 text-sm sm:text-base"
             >
-              Passer commande
+              {t('cart.place_order')}
             </button>
 
             <Link
               to={lp("/realisations")}
               className="font-basecoat block w-full text-center py-3 rounded-xl font-semibold text-gray-500 hover:text-gray-900 border border-gray-200 hover:border-gray-300 transition text-sm sm:text-base"
             >
-              Continuer mes achats
+              {t('cart.continue_shopping')}
             </Link>
           </div>
         </div>
@@ -520,6 +520,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
   const [loadingMessage, setLoadingMessage] = useState('');
   const [error, setError] = useState('');
   const isSubmittingRef = useRef(false);
+  const { t } = useTranslation();
 
   const scrollRef = useScrollAnimations([deliveryMode]);
 
@@ -563,15 +564,15 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
     isSubmittingRef.current = true;
     setLoading(true);
-    setLoadingMessage('Redirection vers le paiement...');
+    setLoadingMessage(t('cart.redirecting'));
     setError('');
 
     const slowTimer = setTimeout(() => {
-      setLoadingMessage('Le serveur démarre, patientez quelques secondes...');
+      setLoadingMessage(t('cart.server_starting'));
     }, 5000);
 
     const verySlowTimer = setTimeout(() => {
-      setLoadingMessage('Le serveur est en cours de réveil, encore un instant...');
+      setLoadingMessage(t('cart.server_waking'));
     }, 15000);
 
     const controller = new AbortController();
@@ -620,9 +621,9 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
       window.location.href = checkoutUrl;
     } catch (err: any) {
       if (err.name === 'AbortError') {
-        setError('Le serveur met trop de temps à répondre. Veuillez réessayer.');
+        setError(t('cart.error_timeout'));
       } else if (err.message === 'Failed to fetch' || err.name === 'TypeError') {
-        setError('Impossible de contacter le serveur. Vérifiez votre connexion ou réessayez dans quelques secondes.');
+        setError(t('cart.error_network'));
       } else {
         setError(err.message || 'Erreur inconnue');
       }
@@ -645,34 +646,34 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
-        Retour au panier
+        {t('cart.back_to_cart')}
       </button>
 
       <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900" data-delay="0.1">
-        Finaliser la commande
+        {t('cart.finalize')}
       </h1>
       <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.15"></div>
 
       {/* Récapitulatif dynamique */}
       <div className="anim-fade-up bg-white border border-gray-100 rounded-2xl p-5 sm:p-6 mb-8 sm:mb-10 shadow-sm" data-delay="0.15">
-        <h2 className="font-basecoat font-bold text-gray-900 text-base sm:text-lg mb-4">Récapitulatif</h2>
+        <h2 className="font-basecoat font-bold text-gray-900 text-base sm:text-lg mb-4">{t('cart.recap')}</h2>
         <div className="space-y-2">
           <div className="font-basecoat flex justify-between text-sm text-gray-600">
-            <span>Sous-total ({cart.reduce((s, i) => s + i.quantity, 0)} article(s))</span>
+            <span>{t('cart.subtotal')} ({t('cart.items_count', {count: cart.reduce((s, i) => s + i.quantity, 0)})})</span>
             <span className="font-semibold text-gray-900">{total.toFixed(2)} €</span>
           </div>
           <div className="font-basecoat flex justify-between text-sm text-gray-600">
             <span>
               {deliveryMode === 'retrait'
-                ? `Retrait gratuit — ${pickupLocation === 'grimbergen' ? 'Grimbergen' : pickupLocation === 'watermael' ? 'Watermael-Boisfort' : 'Bénin'}`
-                : `Livraison — ${SHIPPING_COSTS[country]?.label ?? country}`}
+                ? `${t('cart.pickup_label')} — ${pickupLocation === 'grimbergen' ? 'Grimbergen' : pickupLocation === 'watermael' ? 'Watermael-Boisfort' : 'Bénin'}`
+                : `${t('cart.home_delivery')} — ${SHIPPING_COSTS[country]?.label ?? country}`}
             </span>
             <span className={`font-semibold ${shippingCost === 0 ? 'text-benin-vert' : 'text-gray-900'}`}>
               {shippingLabel}
             </span>
           </div>
           <div className="border-t border-gray-100 pt-3 mt-3 font-basecoat flex justify-between items-center">
-            <span className="font-bold text-gray-900 text-base">Total</span>
+            <span className="font-bold text-gray-900 text-base">{t('cart.total')}</span>
             <span className="font-bold text-2xl text-gray-900">{grandTotal.toFixed(2)} €</span>
           </div>
         </div>
@@ -686,7 +687,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             <svg className="w-5 h-5 text-benin-vert flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
             </svg>
-            <span className="font-basecoat font-bold text-gray-900 text-sm sm:text-base">Paiement 100% sécurisé par Stripe</span>
+            <span className="font-basecoat font-bold text-gray-900 text-sm sm:text-base">{t('cart.secure_payment')}</span>
           </div>
           <div className="flex gap-2 flex-wrap items-center">
             <svg viewBox="0 0 48 30" className="h-8 rounded-md shadow-sm border border-gray-200 bg-white">
@@ -719,7 +720,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
         {/* Nom */}
         <div className="anim-fade-up" data-delay="0.15">
-          <label htmlFor="checkout-nom" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">Nom complet *</label>
+          <label htmlFor="checkout-nom" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">{t('cart.full_name')} *</label>
           <input
             id="checkout-nom"
             type="text"
@@ -732,7 +733,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
         {/* Email */}
         <div className="anim-fade-up" data-delay="0.2">
-          <label htmlFor="checkout-email" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">Email *</label>
+          <label htmlFor="checkout-email" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">{t('cart.email')} *</label>
           <input
             id="checkout-email"
             type="email"
@@ -745,7 +746,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
         {/* Téléphone */}
         <div className="anim-fade-up" data-delay="0.25">
-          <label htmlFor="checkout-tel" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">Téléphone *</label>
+          <label htmlFor="checkout-tel" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">{t('cart.phone')} *</label>
           <input
             id="checkout-tel"
             type="tel"
@@ -758,7 +759,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
         {/* ===== MODE DE LIVRAISON ===== */}
         <div className="anim-fade-up" data-delay="0.3">
-          <p className="font-basecoat block text-sm font-semibold text-gray-700 mb-3">Mode de livraison *</p>
+          <p className="font-basecoat block text-sm font-semibold text-gray-700 mb-3">{t('cart.delivery_mode')} *</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
             {/* Livraison à domicile */}
@@ -773,9 +774,9 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             >
               <span className="text-2xl">🚚</span>
               <div>
-                <p className="font-basecoat font-bold text-gray-900 text-sm">Livraison à domicile</p>
-                <p className="font-basecoat text-xs text-gray-500 mt-0.5">Belgique dès 4 € · 3–5 jours ouvrés</p>
-                <p className="font-basecoat text-xs text-gray-400">Europe dès 8 € · 5–10 jours</p>
+                <p className="font-basecoat font-bold text-gray-900 text-sm">{t('cart.home_delivery')}</p>
+                <p className="font-basecoat text-xs text-gray-500 mt-0.5">{t('cart.delivery_be_desc')}</p>
+                <p className="font-basecoat text-xs text-gray-400">{t('cart.delivery_eu_desc')}</p>
               </div>
             </button>
 
@@ -791,8 +792,8 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             >
               <span className="text-2xl">🤝</span>
               <div>
-                <p className="font-basecoat font-bold text-gray-900 text-sm">Retrait gratuit</p>
-                <p className="font-basecoat text-xs text-benin-vert font-semibold mt-0.5">0 € — Belgique ou Bénin</p>
+                <p className="font-basecoat font-bold text-gray-900 text-sm">{t('cart.pickup_label')}</p>
+                <p className="font-basecoat text-xs text-benin-vert font-semibold mt-0.5">{t('cart.pickup_free_desc')}</p>
               </div>
             </button>
           </div>
@@ -801,7 +802,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
         {/* ===== RETRAIT ===== */}
         {deliveryMode === 'retrait' && (
           <div className="anim-fade-up">
-            <p className="font-basecoat block text-sm font-semibold text-gray-700 mb-3">Lieu de retrait *</p>
+            <p className="font-basecoat block text-sm font-semibold text-gray-700 mb-3">{t('cart.pickup_location_label')} *</p>
             <div className="space-y-3">
 
               <label className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition ${
@@ -818,7 +819,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                 <span className="text-xl">🇧🇪</span>
                 <div>
                   <p className="font-basecoat font-bold text-gray-900 text-sm">Grimbergen</p>
-                  <p className="font-basecoat text-xs text-gray-500 mt-0.5">Le lieu exact vous sera communiqué par email après commande</p>
+                  <p className="font-basecoat text-xs text-gray-500 mt-0.5">{t('cart.pickup_exact')}</p>
                 </div>
               </label>
 
@@ -836,7 +837,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                 <span className="text-xl">🇧🇪</span>
                 <div>
                   <p className="font-basecoat font-bold text-gray-900 text-sm">Watermael-Boisfort</p>
-                  <p className="font-basecoat text-xs text-gray-500 mt-0.5">Le lieu exact vous sera communiqué par email après commande</p>
+                  <p className="font-basecoat text-xs text-gray-500 mt-0.5">{t('cart.pickup_exact')}</p>
                 </div>
               </label>
 
@@ -854,7 +855,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                 <span className="text-xl">🇧🇯</span>
                 <div>
                   <p className="font-basecoat font-bold text-gray-900 text-sm">Bénin — Cotonou</p>
-                  <p className="font-basecoat text-xs text-gray-500 mt-0.5">L'adresse exacte vous sera communiquée par email</p>
+                  <p className="font-basecoat text-xs text-gray-500 mt-0.5">{t('cart.pickup_exact_benin')}</p>
                 </div>
               </label>
             </div>
@@ -868,7 +869,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             {/* Pays */}
             <div>
               <label htmlFor="checkout-country" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">
-                Pays de livraison *
+                {t('cart.delivery_country')} *
               </label>
               <select
                 id="checkout-country"
@@ -876,8 +877,8 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                 onChange={(e) => handleCountryChange(e.target.value)}
                 className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white"
               >
-                <option value="belgique">🇧🇪 Belgique — 4 € (3–5 jours ouvrés)</option>
-                <option value="europe">🌍 Autre pays Europe — 8 € (5–10 jours ouvrés)</option>
+                <option value="belgique">{t('cart.country_be_option')}</option>
+                <option value="europe">{t('cart.country_eu_option')}</option>
               </select>
             </div>
 
@@ -885,7 +886,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label htmlFor="checkout-postal" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">
-                  Code postal *
+                  {t('cart.postal_code')} *
                 </label>
                 <input
                   id="checkout-postal"
@@ -900,7 +901,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
               </div>
               <div>
                 <label htmlFor="checkout-city" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">
-                  Ville *
+                  {t('cart.city')} *
                   {country === 'belgique' && (
                     <span className="text-gray-400 font-normal ml-1">(auto)</span>
                   )}
@@ -911,7 +912,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                   required
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  placeholder="Ville"
+                  placeholder={t('cart.city')}
                   className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white"
                 />
               </div>
@@ -920,7 +921,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             {/* Rue et numéro */}
             <div>
               <label htmlFor="checkout-street" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">
-                Rue et numéro *
+                {t('cart.street')} *
               </label>
               <input
                 id="checkout-street"
@@ -928,7 +929,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                 required
                 value={street}
                 onChange={(e) => setStreet(e.target.value)}
-                placeholder="ex: Rue de la Paix 12"
+                placeholder={t('cart.street_placeholder')}
                 className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white"
               />
             </div>
@@ -938,14 +939,14 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
         {/* Notes */}
         <div className="anim-fade-up" data-delay="0.35">
-          <label htmlFor="checkout-notes" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">Notes (optionnel)</label>
+          <label htmlFor="checkout-notes" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">{t('cart.notes_optional')}</label>
           <textarea
             id="checkout-notes"
             rows={3}
             value={formData.notes}
             onChange={(e) => setFormData({...formData, notes: e.target.value})}
             className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition resize-none bg-white"
-            placeholder="Informations complémentaires, préférences de livraison..."
+            placeholder={t('cart.notes_optional_placeholder')}
           />
         </div>
 
@@ -969,7 +970,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
               </svg>
               {loadingMessage}
             </span>
-          ) : `Payer ${grandTotal.toFixed(2)} € en ligne`}
+          ) : t('cart.pay_online', {amount: `${grandTotal.toFixed(2)} €`})}
         </button>
 
         {loading && (
@@ -979,11 +980,11 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
               setLoading(false);
               setLoadingMessage('');
               isSubmittingRef.current = false;
-              setError('Opération annulée. Vous pouvez réessayer.');
+              setError(t('cart.cancelled'));
             }}
             className="font-basecoat w-full text-center py-3 text-gray-500 hover:text-gray-700 text-sm font-medium transition"
           >
-            Annuler
+            {t('cart.cancel')}
           </button>
         )}
       </form>

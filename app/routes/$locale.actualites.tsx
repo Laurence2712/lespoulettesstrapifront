@@ -104,7 +104,7 @@ export default function ActualitesPage() {
               data-delay="0.15"
             ></div>
             <p className="anim-fade-up font-basecoat text-gray-500 text-sm sm:text-base mt-3" data-delay="0.2">
-              Nouvelles collections, coulisses de l'atelier et inspirations wax — {actualites.length} publication{actualites.length > 1 ? 's' : ''}
+              {t('news.subtitle_base')} — {actualites.length} publication{actualites.length > 1 ? 's' : ''}
             </p>
           </div>
           <div className="anim-fade-up flex items-center gap-2" data-delay="0.2">
@@ -112,7 +112,7 @@ export default function ActualitesPage() {
               htmlFor="sort-date"
               className="font-basecoat text-sm text-gray-600 whitespace-nowrap"
             >
-              Trier par :
+              {t('news.sort_by')}
             </label>
             <select
               id="sort-date"
@@ -120,8 +120,8 @@ export default function ActualitesPage() {
               onChange={(e) => setSortOrder(e.target.value as 'desc' | 'asc')}
               className="font-basecoat text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune"
             >
-              <option value="desc">Plus récent</option>
-              <option value="asc">Plus ancien</option>
+              <option value="desc">{t('news.sort_recent_short')}</option>
+              <option value="asc">{t('news.sort_oldest_short')}</option>
             </select>
           </div>
         </div>
@@ -173,7 +173,7 @@ export default function ActualitesPage() {
                             month: "long",
                             year: "numeric",
                           })
-                        : "Date inconnue"}
+                        : t('news.date_unknown')}
                     </p>
                     <h2 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
                       {actu.title}
@@ -193,7 +193,7 @@ export default function ActualitesPage() {
       {!error && actualites.length === 0 && (
         <div className="flex flex-col items-center justify-center py-20 gap-4">
           <p className="font-basecoat text-gray-500 text-center text-lg">
-            Aucune actualité disponible pour le moment.
+            {t('news.no_articles')}
           </p>
           <Link
             to={lp('/')}
@@ -208,10 +208,10 @@ export default function ActualitesPage() {
       {!error && (
         <div className="bg-gray-900 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-16 text-center">
           <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-white mb-2">
-            Ne ratez aucune nouveauté
+            {t('news.newsletter_cta_title')}
           </h2>
           <p className="font-basecoat text-gray-400 text-sm sm:text-base mb-6 max-w-md mx-auto">
-            Inscrivez-vous à la newsletter et soyez la première informée des nouvelles collections, avec -10% sur votre première commande.
+            {t('news.newsletter_cta_desc')}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto mb-6">
             <a
@@ -221,7 +221,7 @@ export default function ActualitesPage() {
               className="font-basecoat inline-flex items-center justify-center gap-2 border-2 border-gray-600 text-gray-300 hover:border-white hover:text-white px-8 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] text-sm"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-              Suivre sur Instagram
+              {t('news.follow_instagram')}
             </a>
           </div>
           <Link

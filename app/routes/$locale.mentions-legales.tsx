@@ -1,6 +1,7 @@
 import { Link } from "@remix-run/react";
 import { useScrollAnimations } from "../hooks/useScrollAnimations";
 import { useLocalePath } from "../hooks/useLocalePath";
+import { useTranslation } from "react-i18next";
 
 export function meta() {
   return [
@@ -21,6 +22,7 @@ export function meta() {
 export default function MentionsLegales() {
   const scrollRef = useScrollAnimations();
   const lp = useLocalePath();
+  const { t } = useTranslation();
 
   return (
     <div
@@ -30,17 +32,17 @@ export default function MentionsLegales() {
       {/* Breadcrumb */}
       <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
         <Link to={lp("/")} className="text-benin-jaune hover:text-benin-terre font-medium transition">
-          Accueil
+          {t('common.home')}
         </Link>
         <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
-        <span className="text-gray-600">Mentions légales & CGV</span>
+        <span className="text-gray-600">{t('legal.breadcrumb_text')}</span>
       </nav>
 
       <h1
         className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900"
         data-delay="0.1"
       >
-        Mentions légales & CGV
+        {t('legal.title')}
       </h1>
       <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4 mb-10 sm:mb-12" data-delay="0.15"></div>
 

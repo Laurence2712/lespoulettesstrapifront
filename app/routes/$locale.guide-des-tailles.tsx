@@ -1,6 +1,7 @@
 import { Link } from '@remix-run/react';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 import { useLocalePath } from '../hooks/useLocalePath';
+import { useTranslation } from 'react-i18next';
 
 export function meta() {
   return [
@@ -97,6 +98,7 @@ const CARE = [
 export default function GuideTailles() {
   const scrollRef = useScrollAnimations([]);
   const lp = useLocalePath();
+  const { t } = useTranslation();
 
   return (
     <div ref={scrollRef} className="overflow-x-hidden">
@@ -104,17 +106,17 @@ export default function GuideTailles() {
       {/* ── Header ── */}
       <header className="bg-beige pt-28 sm:pt-32 md:pt-40 pb-14 sm:pb-18 md:pb-24 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
         <nav className="anim-fade-up font-basecoat mb-8 text-xs sm:text-sm">
-          <Link to={lp("/")} className="text-benin-jaune hover:text-benin-terre font-medium transition">Accueil</Link>
+          <Link to={lp("/")} className="text-benin-jaune hover:text-benin-terre font-medium transition">{t('common.home')}</Link>
           <span className="mx-1.5 text-gray-400">/</span>
-          <span className="text-gray-600">Guide des tailles & Entretien</span>
+          <span className="text-gray-600">{t('sizes.breadcrumb')}</span>
         </nav>
         <div className="max-w-3xl">
           <h1 className="anim-fade-up font-basecoat text-3xl sm:text-4xl md:text-[56px] font-bold uppercase text-gray-900 leading-tight">
-            Guide des tailles & Entretien
+            {t('sizes.title')}
           </h1>
           <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-lg sm:text-xl text-gray-700 leading-relaxed" data-delay="0.2">
-            Toutes les informations dont vous avez besoin pour choisir la bonne taille et entretenir vos accessoires Les Poulettes.
+            {t('sizes.subtitle_full')}
           </p>
         </div>
       </header>
@@ -123,7 +125,7 @@ export default function GuideTailles() {
       {/* ── Note dimensions ── */}
       <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-6 sm:py-8">
         <div className="bg-benin-jaune/10 border-l-4 border-benin-jaune rounded-r-xl p-5 font-basecoat text-sm text-gray-700 max-w-3xl">
-          <strong>Important :</strong> Les dimensions indiquées sont approximatives. Chaque pièce étant faite main, de légères variations de quelques centimètres sont normales — c'est la signature de l'artisanat !
+          <strong>{t('sizes.note_important')} :</strong> {t('sizes.note_text')}
         </div>
       </div>
 
@@ -141,9 +143,9 @@ export default function GuideTailles() {
             <table className="w-full font-basecoat text-sm sm:text-base">
               <thead>
                 <tr className="bg-white border-b border-gray-100">
-                  <th className={`text-left py-4 px-5 font-bold uppercase text-gray-900 text-xs sm:text-sm tracking-wider border-l-4 ${cat.color}`}>Modèle</th>
-                  <th className="text-left py-4 px-5 font-bold uppercase text-gray-900 text-xs sm:text-sm tracking-wider">Dimensions (L × H)</th>
-                  <th className="text-left py-4 px-5 font-bold uppercase text-gray-900 text-xs sm:text-sm tracking-wider hidden sm:table-cell">Idéal pour</th>
+                  <th className={`text-left py-4 px-5 font-bold uppercase text-gray-900 text-xs sm:text-sm tracking-wider border-l-4 ${cat.color}`}>{t('sizes.model_col')}</th>
+                  <th className="text-left py-4 px-5 font-bold uppercase text-gray-900 text-xs sm:text-sm tracking-wider">{t('sizes.dims_col')}</th>
+                  <th className="text-left py-4 px-5 font-bold uppercase text-gray-900 text-xs sm:text-sm tracking-wider hidden sm:table-cell">{t('sizes.ideal_col')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
@@ -171,7 +173,7 @@ export default function GuideTailles() {
       {/* ── Matières ── */}
       <section className="bg-beige px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18">
         <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl font-bold uppercase text-gray-900 mb-2">
-          Nos matières
+          {t('sizes.materials_title')}
         </h2>
         <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mb-6" data-delay="0.1"></div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-3 gap-5" data-stagger="0.1">
@@ -194,11 +196,11 @@ export default function GuideTailles() {
       <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18">
         <div className="mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900">
-            Conseils d'entretien
+            {t('sizes.care_title')}
           </h2>
           <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-4 mb-6" data-delay="0.1"></div>
           <p className="anim-fade-up font-basecoat text-gray-500 text-base sm:text-lg max-w-xl" data-delay="0.15">
-            Bien entretenu, votre accessoire Les Poulettes vous accompagnera des années.
+            {t('sizes.care_subtitle')}
           </p>
         </div>
         <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" data-stagger="0.1">
@@ -215,14 +217,14 @@ export default function GuideTailles() {
       {/* ── CTA ── */}
       <section className="bg-white px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-12 sm:py-14 text-center">
         <p className="font-basecoat text-gray-600 text-base sm:text-lg mb-6">
-          Une question sur la taille ou le modèle qui vous convient ?
+          {t('sizes.cta_question')}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             to={lp("/realisations")}
             className="font-basecoat border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
           >
-            Voir la boutique
+            {t('sizes.cta_shop')}
           </Link>
           <a
             href="https://wa.me/2290162007580"
@@ -230,7 +232,7 @@ export default function GuideTailles() {
             rel="noopener noreferrer"
             className="font-basecoat border-2 border-gray-300 text-gray-700 hover:border-benin-vert hover:text-benin-vert px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02]"
           >
-            Demander conseil sur WhatsApp
+            {t('sizes.cta_whatsapp')}
           </a>
         </div>
       </section>
