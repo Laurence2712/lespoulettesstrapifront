@@ -175,11 +175,11 @@ export default function Index() {
       {/* ── Hero Banner ── */}
       <header
         ref={heroRef}
-        className="banner relative bg-cover bg-center h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[100vh] flex flex-col justify-center items-center text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24"
+        className="banner relative bg-cover bg-center h-[75vh] sm:h-[75vh] md:h-[80vh] lg:h-[100vh] flex flex-col justify-center items-center text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24 pb-14 sm:pb-12"
         style={{ backgroundImage: `url(${homepageData?.image_url || '/images/banner-default.jpg'})` }}
       >
         <div className="banner-content text-center z-20 flex flex-col items-center justify-center pb-8 sm:pb-12 md:pb-16">
-          <h1 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-[44px] font-bold uppercase tracking-wide mb-4 mt-8 sm:mt-12 md:mt-16 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-tight lg:leading-snug">
+          <h1 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-[44px] font-bold uppercase tracking-wide mb-6 sm:mb-8 mt-10 sm:mt-14 md:mt-16 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-tight lg:leading-snug">
             {t('home.hero_title')}
           </h1>
           <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl italic text-benin-ocre mb-8 px-4 max-w-[85%] sm:max-w-[70%] text-center leading-relaxed" data-delay="0.2">
@@ -437,23 +437,11 @@ export default function Index() {
       {/* ── Commandes personnalisées ── */}
       <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-white">
         <div className="mb-8 sm:mb-10 md:mb-12">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-3 sm:mb-4">
-            <div>
-              <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 leading-tight">
-                {t('home.event_title')}
-              </h2>
-              <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
-            </div>
-            <Link
-              to={lp('/commandes-personnalisees')}
-              className="anim-fade-up font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
-              data-delay="0.1"
-            >
-              {t('common.learn_more')}
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
+          <div className="mb-3 sm:mb-4">
+            <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 leading-tight">
+              {t('home.event_title')}
+            </h2>
+            <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
           </div>
         </div>
 
@@ -461,47 +449,38 @@ export default function Index() {
 
   {/* Colonne gauche : Tags premium */}
   <div className="anim-fade-right order-2 md:order-1" data-delay="0.2">
-    <div className="flex flex-wrap justify-center gap-4 max-w-md mx-auto">
-
+    <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-sm mx-auto">
       {[
-        { label: t('home.event_tag_mariage'), size: 'large' as const, rotate: '-rotate-2' },
-        { label: t('home.event_tag_baby_shower'), size: 'medium' as const, rotate: 'rotate-2' },
-        { label: t('home.event_tag_anniv'), size: 'large' as const, rotate: 'rotate-1' },
-        { label: t('home.event_tag_bapt'), size: 'small' as const, rotate: '-rotate-3' },
-        { label: t('home.event_tag_birth'), size: 'medium' as const, rotate: 'rotate-3' },
-        { label: t('home.event_tag_corporate'), size: 'small' as const, rotate: '-rotate-1' },
-      ].map((event) => {
-        const sizeClasses = {
-          small: 'px-4 py-2 text-xs',
-          medium: 'px-5 py-2.5 text-sm',
-          large: 'px-6 py-3 text-base'
-        };
-
-        return (
-          <div
-            key={event.label}
-            className={`
-              ${sizeClasses[event.size]}
-              ${event.rotate}
-              font-basecoat font-semibold
-              bg-white
-              border border-red-900/20
-              text-red-900
-              rounded-2xl
-              shadow-sm
-              hover:shadow-xl
-              hover:-translate-y-1
-              hover:rotate-0
-              hover:scale-105
-              transition-all duration-300 ease-out
-              cursor-default
-            `}
-          >
-            {event.label}
-          </div>
-        );
-      })}
-
+        { label: t('home.event_tag_mariage'), rotate: '-rotate-1' },
+        { label: t('home.event_tag_baby_shower'), rotate: 'rotate-1' },
+        { label: t('home.event_tag_anniv'), rotate: 'rotate-1' },
+        { label: t('home.event_tag_bapt'), rotate: '-rotate-1' },
+        { label: t('home.event_tag_birth'), rotate: 'rotate-1' },
+        { label: t('home.event_tag_corporate'), rotate: '-rotate-1' },
+      ].map((event) => (
+        <div
+          key={event.label}
+          className={`
+            ${event.rotate}
+            px-4 py-3 text-sm
+            text-center
+            font-basecoat font-semibold
+            bg-white
+            border border-red-900/20
+            text-red-900
+            rounded-2xl
+            shadow-sm
+            hover:shadow-xl
+            hover:-translate-y-1
+            hover:rotate-0
+            hover:scale-105
+            transition-all duration-300 ease-out
+            cursor-default
+          `}
+        >
+          {event.label}
+        </div>
+      ))}
     </div>
   </div>
 
@@ -517,6 +496,17 @@ export default function Index() {
 <p className="mt-16 sm:mt-10 md:mt-12 font-basecoat max-w-[90%] sm:max-w-[80%] md:max-w-[70%] font-bold lg:max-w-[50%] mx-auto text-center text-base sm:text-lg text-benin-jaune uppercase leading-relaxed">
   {t('home.event_quote')}
 </p>
+<div className="anim-fade-up text-center mt-8 sm:mt-10" data-delay="0.3">
+  <Link
+    to={lp('/commandes-personnalisees')}
+    className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+  >
+    {t('common.learn_more')}
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+    </svg>
+  </Link>
+</div>
       </section>
 
     {/* ── Où nous trouver ── */}
