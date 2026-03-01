@@ -12,7 +12,8 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   if (!LOCALES.includes(locale as any)) {
     const url = new URL(request.url);
     const path = url.pathname.replace(`/${locale}`, "");
-    throw redirect(`/${DEFAULT_LOCALE}${path || "/"}`);
+    const search = url.search;
+    throw redirect(`/${DEFAULT_LOCALE}${path || "/"}${search}`);
   }
 
   const t = await i18next.getFixedT(locale, "common");
