@@ -21,10 +21,10 @@ module.exports = {
       // Générer le HTML des articles
       const articlesHTML = articles.map(item => `
         <tr style="border-bottom: 1px solid #e5e7eb;">
-          <td style="padding: 12px; text-align: left;">${item.title}</td>
-          <td style="padding: 12px; text-align: center;">${item.quantity}</td>
-          <td style="padding: 12px; text-align: right;">${item.prix} €</td>
-          <td style="padding: 12px; text-align: right; font-weight: bold;">${(item.prix * item.quantity).toFixed(2)} €</td>
+          <td style="padding: 10px 12px; text-align: left; word-break: break-word; max-width: 0; width: 50%;">${item.title}</td>
+          <td style="padding: 10px 12px; text-align: center; width: 12%; white-space: nowrap;">${item.quantity}</td>
+          <td style="padding: 10px 12px; text-align: right; width: 19%; white-space: nowrap;">${Number(item.prix).toFixed(2)} €</td>
+          <td style="padding: 10px 12px; text-align: right; font-weight: bold; width: 19%; white-space: nowrap;">${(item.prix * item.quantity).toFixed(2)} €</td>
         </tr>
       `).join('');
 
@@ -44,15 +44,19 @@ module.exports = {
     .header { background: #fbbf24; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
     .content { background: #ffffff; padding: 30px; border: 1px solid #e5e7eb; }
     .footer { background: #f9fafb; padding: 20px; text-align: center; border-radius: 0 0 8px 8px; font-size: 12px; color: #6b7280; }
-    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-    th { background: #f3f4f6; padding: 12px; text-align: left; font-weight: bold; }
-    .total { font-size: 20px; font-weight: bold; color: #fbbf24; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; table-layout: fixed; }
+    th { background: #f3f4f6; padding: 10px 12px; text-align: left; font-weight: bold; font-size: 13px; }
+    th:nth-child(1) { width: 50%; }
+    th:nth-child(2) { width: 12%; text-align: center; }
+    th:nth-child(3) { width: 19%; text-align: right; }
+    th:nth-child(4) { width: 19%; text-align: right; }
+    .total { font-size: 18px; font-weight: bold; color: #fbbf24; }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1 style="margin: 0; color: #000;">✓ Commande confirmée</h1>
+      <h1 style="margin: 0; color: #000; font-size: 22px; white-space: nowrap;">✓ Commande confirmée !</h1>
     </div>
 
     <div class="content">
