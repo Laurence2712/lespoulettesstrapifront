@@ -55,7 +55,7 @@ export default function CartDrawer() {
         role="dialog"
         aria-modal="true"
         aria-label="Panier"
-        className="fixed top-0 right-0 h-full w-[90vw] sm:w-[480px] md:w-[520px] bg-white shadow-2xl z-[1000] flex flex-col"
+        className="fixed top-0 right-0 h-full w-full sm:w-[480px] md:w-[520px] bg-white shadow-2xl z-[1000] flex flex-col"
       >
 
         {/* Header */}
@@ -104,17 +104,15 @@ export default function CartDrawer() {
                   />
 
                   {/* Info */}
-                  <div className="flex-1 flex flex-col justify-between min-w-0">
-                    <div>
-                      <h3 className="font-basecoat font-bold text-gray-900 text-sm sm:text-base leading-tight truncate">
-                        {item.title}
-                      </h3>
-                      <p className="font-basecoat text-benin-jaune font-bold text-base sm:text-lg mt-1">
-                        {item.prix} €
-                      </p>
-                    </div>
+                  <div className="flex-1 flex flex-col min-w-0">
+                    <h3 className="font-basecoat font-bold text-gray-900 text-sm sm:text-base leading-tight break-words">
+                      {item.title}
+                    </h3>
+                    <p className="font-basecoat text-benin-jaune font-bold text-base sm:text-lg mt-1">
+                      {item.prix} €
+                    </p>
 
-                    <div className="flex items-center justify-between mt-2">
+                    <div className="flex items-center justify-between mt-3">
                       {/* Quantity */}
                       <div className="inline-flex items-center border border-gray-200 rounded-xl overflow-hidden">
                         <button

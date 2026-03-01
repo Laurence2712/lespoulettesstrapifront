@@ -175,7 +175,7 @@ export default function CommandesPersonnalisees() {
 
       {/* ── CTA Contact ── */}
       <section className="bg-black px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24 text-center">
-        <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-white mb-4">
+        <h2 className="anim-fade-up font-basecoat text-xl sm:text-3xl md:text-[40px] font-bold uppercase text-white mb-4 whitespace-nowrap">
           {t('custom.cta_title')}
         </h2>
         <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mx-auto mt-4 mb-8" data-delay="0.1"></div>

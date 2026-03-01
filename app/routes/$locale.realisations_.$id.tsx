@@ -416,26 +416,14 @@ export default function RealisationDetail() {
               </div>
             )}
 
-            {/* Badges matière & soin */}
-            <div className="flex flex-wrap gap-2 mb-6">
-              {realisation.categorie && (
+            {/* Badge catégorie */}
+            {realisation.categorie && (
+              <div className="flex flex-wrap gap-2 mb-6">
                 <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-beige text-gray-700 border border-benin-jaune/30 px-3 py-1.5 rounded-full">
                   📦 {realisation.categorie}
                 </span>
-              )}
-              <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-beige text-gray-700 border border-benin-jaune/30 px-3 py-1.5 rounded-full">
-                🧵 Wax 100% coton
-              </span>
-              <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-beige text-gray-700 border border-benin-jaune/30 px-3 py-1.5 rounded-full">
-                ✂️ Fait main
-              </span>
-              <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-benin-vert/10 text-benin-vert border border-benin-vert/30 px-3 py-1.5 rounded-full">
-                🌿 Éco-responsable
-              </span>
-              <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-200 px-3 py-1.5 rounded-full">
-                🧺 Lavable à 30°C
-              </span>
-            </div>
+              </div>
+            )}
 
             {/* ── Sélection déclinaison ── */}
             {hasDeclinaisons && (
