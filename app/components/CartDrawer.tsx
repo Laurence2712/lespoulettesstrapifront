@@ -2,12 +2,14 @@ import { useCartStore } from '../store/cartStore';
 import { useState, useEffect, useRef } from 'react';
 import { Link } from '@remix-run/react';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
+import { useLocalePath } from '../hooks/useLocalePath';
 
 
 export default function CartDrawer() {
   const cart = useCartStore((state) => state.items);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const lp = useLocalePath();
 
   const [isOpen, setIsOpen] = useState(false);
   const prevCartLength = useRef(cart.length);
@@ -165,7 +167,7 @@ export default function CartDrawer() {
               <span className="font-basecoat font-bold text-2xl text-gray-900">{total.toFixed(2)} €</span>
             </div>
             <Link
-              to="/panier"
+              to={lp('/panier')}
               onClick={() => setIsOpen(false)}
               className="block w-full border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black text-center py-4 rounded-xl font-basecoat font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg text-sm sm:text-base"
             >
