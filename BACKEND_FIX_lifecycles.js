@@ -21,10 +21,10 @@ module.exports = {
       // Générer le HTML des articles
       const articlesHTML = articles.map(item => `
         <tr style="border-bottom: 1px solid #e5e7eb;">
-          <td style="padding: 10px 12px; text-align: left; word-break: break-word; max-width: 0; width: 50%;">${item.title}</td>
-          <td style="padding: 10px 12px; text-align: center; width: 12%; white-space: nowrap;">${item.quantity}</td>
-          <td style="padding: 10px 12px; text-align: right; width: 19%; white-space: nowrap;">${Number(item.prix).toFixed(2)} €</td>
-          <td style="padding: 10px 12px; text-align: right; font-weight: bold; width: 19%; white-space: nowrap;">${(item.prix * item.quantity).toFixed(2)} €</td>
+          <td style="padding: 8px 10px; text-align: left; word-break: break-word; font-size: 13px; width: 40%;">${item.title}</td>
+          <td style="padding: 8px 10px; text-align: center; width: 8%; white-space: nowrap; font-size: 13px;">${item.quantity}</td>
+          <td style="padding: 8px 10px; text-align: right; width: 26%; white-space: nowrap; font-size: 13px;">${Number(item.prix).toFixed(2)}&nbsp;€</td>
+          <td style="padding: 8px 10px; text-align: right; font-weight: bold; width: 26%; white-space: nowrap; font-size: 13px;">${(item.prix * item.quantity).toFixed(2)}&nbsp;€</td>
         </tr>
       `).join('');
 
@@ -45,11 +45,11 @@ module.exports = {
     .content { background: #ffffff; padding: 30px; border: 1px solid #e5e7eb; }
     .footer { background: #f9fafb; padding: 20px; text-align: center; border-radius: 0 0 8px 8px; font-size: 12px; color: #6b7280; }
     table { width: 100%; border-collapse: collapse; margin: 20px 0; table-layout: fixed; }
-    th { background: #f3f4f6; padding: 10px 12px; text-align: left; font-weight: bold; font-size: 13px; }
-    th:nth-child(1) { width: 50%; }
-    th:nth-child(2) { width: 12%; text-align: center; }
-    th:nth-child(3) { width: 19%; text-align: right; }
-    th:nth-child(4) { width: 19%; text-align: right; }
+    th { background: #f3f4f6; padding: 8px 10px; text-align: left; font-weight: bold; font-size: 12px; white-space: nowrap; }
+    th:nth-child(1) { width: 40%; white-space: normal; }
+    th:nth-child(2) { width: 8%; text-align: center; }
+    th:nth-child(3) { width: 26%; text-align: right; }
+    th:nth-child(4) { width: 26%; text-align: right; }
     .total { font-size: 18px; font-weight: bold; color: #fbbf24; }
   </style>
 </head>
@@ -64,14 +64,14 @@ module.exports = {
 
       <p>Nous avons bien reçu votre paiement pour la commande <strong>#${result.id}</strong>. Merci pour votre confiance !</p>
 
-      <h2 style="color: #fbbf24; border-bottom: 2px solid #fbbf24; padding-bottom: 10px;">📦 Détails de votre commande</h2>
+      <h2 style="color: #fbbf24; border-bottom: 2px solid #fbbf24; padding-bottom: 10px; white-space: nowrap;">Détails de votre commande :</h2>
 
       <table>
         <thead>
           <tr>
             <th>Article</th>
-            <th style="text-align: center;">Quantité</th>
-            <th style="text-align: right;">Prix unitaire</th>
+            <th style="text-align: center;">Qté</th>
+            <th style="text-align: right;">Prix unit.</th>
             <th style="text-align: right;">Total</th>
           </tr>
         </thead>
@@ -80,7 +80,7 @@ module.exports = {
         </tbody>
       </table>
 
-      <p class="total">Total payé : ${result.total.toFixed(2)} €</p>
+      <p class="total">Total payé&nbsp;: ${result.total.toFixed(2)}&nbsp;€</p>
 
       <p style="margin-top: 30px;">Nous préparons votre commande et vous contacterons prochainement pour les détails de livraison.</p>
 
