@@ -51,8 +51,8 @@ export default function PaymentSuccess() {
           {t('cart.dispatch_soon')}
         </p>
         {sessionId && (
-          <p className="font-basecoat text-xs text-gray-500 mb-6 break-all px-2">
-            {t('cart.reference')} {sessionId}
+          <p className="font-basecoat text-xs text-gray-500 mb-6 px-2">
+            {t('cart.reference')} LP-{sessionId.slice(-8).toUpperCase()}
           </p>
         )}
         <Link
