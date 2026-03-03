@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { Link, useNavigate, useLoaderData } from '@remix-run/react';
+import { useState, useRef, useEffect } from 'react';
+import { Link, useNavigate, useLoaderData, useSearchParams } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
@@ -203,9 +203,19 @@ export default function RealisationDetail() {
   const lp = useLocalePath();
   const { t } = useTranslation();
 
+  const [searchParams] = useSearchParams();
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [selectedDeclinaisonId, setSelectedDeclinaisonId] = useState<number | null>(null);
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    const declinaisonParam = searchParams.get('declinaison');
+    if (declinaisonParam && realisation) {
+      const id = parseInt(declinaisonParam, 10);
+      const exists = realisation.declinaisons.find((d) => d.id === id);
+      if (exists) setSelectedDeclinaisonId(id);
+    }
+  }, [searchParams, realisation]);
 
   const imageRef = useRef<HTMLDivElement>(null);
   const scrollRef = useScrollAnimations([]);
