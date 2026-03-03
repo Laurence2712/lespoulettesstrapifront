@@ -207,6 +207,14 @@ export default function RealisationDetail() {
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [selectedDeclinaisonId, setSelectedDeclinaisonId] = useState<number | null>(null);
   const [quantity, setQuantity] = useState(1);
+  const [zoomOpen, setZoomOpen] = useState(false);
+
+  useEffect(() => {
+    if (!zoomOpen) return;
+    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setZoomOpen(false); };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [zoomOpen]);
 
   useEffect(() => {
     const declinaisonParam = searchParams.get('declinaison');
@@ -337,7 +345,10 @@ export default function RealisationDetail() {
           <div className="anim-fade-right" ref={imageRef}>
 
             {/* Image principale */}
-            <div className="relative rounded-2xl shadow-xl mb-4 bg-beige group p-3">
+            <div
+              className="relative rounded-2xl shadow-xl mb-4 bg-beige group p-3 cursor-zoom-in"
+              onClick={() => currentImage?.url && setZoomOpen(true)}
+            >
               {currentImage?.url ? (
                 <img
                   src={currentImage.formats?.large?.url || currentImage.url}
@@ -354,7 +365,38 @@ export default function RealisationDetail() {
               <div className="absolute top-4 left-4 bg-benin-jaune text-black text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
                 ✂ {t('home.badge_handmade')}
               </div>
+              {currentImage?.url && (
+                <div className="absolute bottom-4 right-4 bg-white/80 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow">
+                  <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16zm3-8H8m3-3v6" />
+                  </svg>
+                </div>
+              )}
             </div>
+
+            {/* Lightbox zoom */}
+            {zoomOpen && currentImage?.url && (
+              <div
+                className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+                onClick={() => setZoomOpen(false)}
+              >
+                <button
+                  onClick={() => setZoomOpen(false)}
+                  className="absolute top-4 right-4 bg-white/20 hover:bg-white/40 text-white rounded-full p-2 transition"
+                  aria-label="Fermer"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+                <img
+                  src={currentImage.formats?.large?.url || currentImage.url}
+                  alt={realisation.title}
+                  className="max-w-[92vw] max-h-[90vh] object-contain rounded-xl shadow-2xl"
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </div>
+            )}
 
             {/* Galerie de vignettes — angles de l'image principale */}
             {realisation.mainImages.length >= 1 && (
