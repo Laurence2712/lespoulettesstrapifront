@@ -370,7 +370,7 @@ export default function Realisations() {
               {coupsDeCoeur.map((item) => (
                 <Link
                   key={`${item.productId}-${item.id}`}
-                  to={lp(`/realisations/${item.productId}`)}
+                  to={lp(`/realisations/${item.productId}?declinaison=${item.id}`)}
                   className="group flex-shrink-0 w-44 sm:w-52 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white border border-gray-100"
                 >
                   <div className="relative h-44 sm:h-52 overflow-hidden bg-amber-50">
