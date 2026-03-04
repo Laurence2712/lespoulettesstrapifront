@@ -19,6 +19,8 @@ import Footer from "./components/footer";
 import CookieBanner from "./components/CookieBanner";
 import BackToTop from "./components/BackToTop";
 import { ToastProvider } from "./components/ToastProvider";
+import CustomCursor from "./components/CustomCursor";
+import CommandPalette from "./components/CommandPalette";
 import { useCartStore } from "./store/cartStore";
 import i18next from "./i18n.server";
 import "./tailwind.css";
@@ -52,7 +54,6 @@ export const links: LinksFunction = () => [
   },
 ];
 
-// JSON-LD Organisation — référence le site sur toutes les pages
 const orgJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -90,7 +91,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
       </head>
-      <body className="font-inter bg-beige text-gray-900 flex flex-col min-h-screen overflow-x-hidden">
+      <body className="noise-texture font-inter bg-beige dark:bg-gray-950 text-gray-900 dark:text-gray-100 flex flex-col min-h-screen overflow-x-hidden transition-colors duration-300">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-benin-jaune focus:text-black focus:font-bold focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg"
@@ -153,25 +154,33 @@ export default function App() {
 
   return (
     <ToastProvider>
+      {/* Page transition indicator */}
       {isNavigating && (
-          <div className="fixed top-0 left-0 right-0 z-[9999] h-10 bg-white/90 backdrop-blur-sm flex items-center justify-center gap-3 shadow-md">
-            <span className="text-black font-basecoat font-bold text-sm uppercase tracking-widest">
-              {t("errors.go_loading")}
-            </span>
-            <div className="flex gap-1">
-              <span className="w-2 h-2 rounded-full bg-black/70" style={{ animation: 'dot 1.2s ease-in-out infinite' }} />
-              <span className="w-2 h-2 rounded-full bg-black/70" style={{ animation: 'dot 1.2s ease-in-out 0.2s infinite' }} />
-              <span className="w-2 h-2 rounded-full bg-black/70" style={{ animation: 'dot 1.2s ease-in-out 0.4s infinite' }} />
-            </div>
-          </div>
-        )}
-        <style>{`
-          @keyframes dot {
-            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-            40% { transform: scale(1); opacity: 1; }
-          }
-        `}</style>
+        <div className="fixed top-0 left-0 right-0 z-[9999] h-[3px] overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-benin-jaune via-wax-orange to-benin-terre"
+            style={{ animation: 'progress-bar 1.5s ease-in-out infinite' }}
+          />
+        </div>
+      )}
+
+      <style>{`
+        @keyframes dot {
+          0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+          40% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes progress-bar {
+          0%   { transform: translateX(-100%); }
+          50%  { transform: translateX(0%); }
+          100% { transform: translateX(100%); }
+        }
+      `}</style>
+
       <Outlet />
+
+      {/* Global UI layers */}
+      <CustomCursor />
+      <CommandPalette />
     </ToastProvider>
   );
 }

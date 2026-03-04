@@ -7,6 +7,7 @@ import { getApiUrl, getImageUrl } from '../config/api';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 import { useLocalePath } from '../hooks/useLocalePath';
 import { useTranslation } from 'react-i18next';
+import CheckoutStepper from '../components/CheckoutStepper';
 
 export function meta() {
   return [
@@ -354,6 +355,11 @@ export default function Panier() {
 
   return (
     <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24">
+      {/* Checkout progress stepper */}
+      <div className="max-w-md mx-auto mb-6 sm:mb-8">
+        <CheckoutStepper currentStep={1} />
+      </div>
+
       {/* Breadcrumb */}
       <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
         <Link to={lp("/")} className="text-benin-jaune hover:text-benin-terre font-medium transition">{t('common.home')}</Link>

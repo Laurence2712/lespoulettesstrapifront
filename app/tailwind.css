@@ -2,6 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── View Transitions API — transitions de page fluides ── */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: page-exit 0.2s ease-out forwards;
+}
+
+::view-transition-new(root) {
+  animation: page-enter 0.25s ease-out forwards;
+}
+
+@keyframes page-exit {
+  to { opacity: 0; transform: scale(0.99); }
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: scale(1.01); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Fluid typography — CSS custom properties ── */
+:root {
+  --text-xs:   clamp(0.65rem,  1.2vw, 0.75rem);
+  --text-sm:   clamp(0.8rem,   1.5vw, 0.875rem);
+  --text-base: clamp(0.875rem, 1.8vw, 1rem);
+  --text-lg:   clamp(1rem,     2vw,   1.125rem);
+  --text-xl:   clamp(1.1rem,   2.5vw, 1.25rem);
+  --text-2xl:  clamp(1.25rem,  3vw,   1.5rem);
+  --text-3xl:  clamp(1.5rem,   4vw,   1.875rem);
+  --text-4xl:  clamp(1.875rem, 5vw,   2.25rem);
+  --text-5xl:  clamp(2.25rem,  6vw,   3rem);
+  --text-hero: clamp(2.5rem,   7vw,   5rem);
+
+  /* Spacing fluid */
+  --space-section: clamp(3rem, 8vw, 7rem);
+
+  /* Dark mode vars */
+  --bg-primary:   #F5F1E8;
+  --bg-secondary: #FFFFFF;
+  --text-primary: #111827;
+  --text-muted:   #6b7280;
+  --border:       #e5e7eb;
+}
+
+.dark {
+  --bg-primary:   #16130E;
+  --bg-secondary: #1E1A14;
+  --text-primary: #F5F1E8;
+  --text-muted:   #9ca3af;
+  --border:       #2d2922;
+}
+
+/* ── Noise texture sur fond beige — rendu tissu/papier ── */
+.noise-texture::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+}
+
+.dark .noise-texture::after {
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+}
+
 @keyframes ticker {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -88,6 +161,131 @@ body {
   outline: none;
 }
 
+/* ── Custom cursor — desktop only ── */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 2px solid #FCD116;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(0, 0);
+  will-change: transform;
+  transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  margin-left: -18px;
+  margin-top: -18px;
+}
+
+.custom-cursor.cursor-hover {
+  width: 52px;
+  height: 52px;
+  border-color: #FCD116;
+  background-color: rgba(252, 209, 22, 0.12);
+  margin-left: -26px;
+  margin-top: -26px;
+}
+
+.custom-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: #FCD116;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  will-change: transform;
+  margin-left: -3px;
+  margin-top: -3px;
+}
+
+@media (pointer: coarse) {
+  .custom-cursor,
+  .custom-cursor-dot {
+    display: none !important;
+  }
+}
+
+/* ── Skeleton loader shimmer ── */
+.skeleton {
+  background: linear-gradient(90deg, #e8e2d8 25%, #f0ece4 50%, #e8e2d8 75%);
+  background-size: 600px 100%;
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+  border-radius: 0.5rem;
+}
+
+.dark .skeleton {
+  background: linear-gradient(90deg, #2a2520 25%, #332e28 50%, #2a2520 75%);
+  background-size: 600px 100%;
+}
+
+@keyframes skeleton-shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+
+/* ── 3D tilt card — appliqué via JS (data-tilt) ── */
+.tilt-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: box-shadow 0.3s ease;
+}
+
+.tilt-card:hover {
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+}
+
+.tilt-card-inner {
+  transform: translateZ(12px);
+}
+
+/* ── Checkout stepper ── */
+.stepper-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Basecoat-Light', sans-serif;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.stepper-step-circle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.stepper-connector {
+  flex: 1;
+  height: 2px;
+  transition: background-color 0.3s ease;
+}
+
+/* ── Toast progress bar ── */
+.toast-progress-bar {
+  transform-origin: left center;
+  animation: toast-progress 3.5s linear forwards;
+}
+
+/* ── Dark mode overrides ── */
+.dark body {
+  background-color: #16130E;
+  color: #F5F1E8;
+}
+
 /* ── Reduced motion : désactive les animations CSS pour les utilisateurs sensibles ── */
 @media (prefers-reduced-motion: reduce) {
   .anim-fade-up,
@@ -99,6 +297,16 @@ body {
   .anim-expand-line {
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+
+  .custom-cursor,
+  .custom-cursor-dot {
+    display: none !important;
   }
 }
 
