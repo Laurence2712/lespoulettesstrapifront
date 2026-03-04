@@ -435,7 +435,10 @@ export default function Panier() {
                   </div>
 
                   {item.stock !== undefined && item.quantity >= item.stock && (
-                    <span className="font-basecoat text-orange-500 text-xs sm:text-sm font-semibold">
+                    <span className="inline-flex items-center gap-1 font-basecoat text-xs font-semibold text-gray-500 whitespace-nowrap">
+                      <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
                       {t('cart.stock_max', {count: item.stock})}
                     </span>
                   )}
