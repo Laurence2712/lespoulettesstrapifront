@@ -248,15 +248,15 @@ export default function Realisations() {
     <>
       {/* ── Bannière région (bottom) ── */}
       {showPopup && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t-4 border-benin-jaune shadow-2xl p-4 sm:p-5">
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-t-4 border-benin-jaune shadow-2xl p-4 sm:p-5">
           <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center gap-3 sm:gap-6">
-            <p className="font-basecoat font-bold text-gray-900 text-center sm:text-left text-sm sm:text-base whitespace-nowrap">
+            <p className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-center sm:text-left text-sm sm:text-base whitespace-nowrap">
               {t('products.region_question')}
             </p>
             <div className="flex gap-3 flex-shrink-0">
               <button
                 onClick={handleBelgiqueClick}
-                className="font-basecoat border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wide transition-all hover:scale-105"
+                className="font-basecoat border-2 border-benin-jaune text-gray-900 dark:text-gray-100 hover:bg-benin-jaune hover:text-black dark:text-gray-100 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wide transition-all hover:scale-105"
               >
                 {t('products.region_belgium')}
               </button>
@@ -269,7 +269,7 @@ export default function Realisations() {
             </div>
             <button
               onClick={handleBelgiqueClick}
-              className="text-gray-400 hover:text-gray-600 transition sm:ml-auto flex-shrink-0"
+              className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:text-gray-500 transition sm:ml-auto flex-shrink-0"
               aria-label={t('nav.aria_close')}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -290,15 +290,15 @@ export default function Realisations() {
           <Link to={lp('/')} className="text-benin-jaune hover:text-benin-terre font-medium transition">
             {t('common.home')}
           </Link>
-          <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
-          <span className="text-gray-600">{t('products.breadcrumb_shop')}</span>
+          <span className="mx-1.5 sm:mx-2 text-gray-400 dark:text-gray-500">/</span>
+          <span className="text-gray-600 dark:text-gray-400 dark:text-gray-500">{t('products.breadcrumb_shop')}</span>
         </nav>
 
         {/* Titre + Tri */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10 md:mb-12">
           <div>
             <h1
-              className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900"
+              className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100"
               data-delay="0.1"
             >
               {t('products.title')}
@@ -307,7 +307,7 @@ export default function Realisations() {
               className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4"
               data-delay="0.15"
             ></div>
-            <p className="anim-fade-up font-basecoat text-xs text-gray-400 mt-3" data-delay="0.2">
+            <p className="anim-fade-up font-basecoat text-xs text-gray-400 dark:text-gray-500 mt-3" data-delay="0.2">
               <Link to={lp('/guide-des-tailles')} className="text-benin-jaune hover:text-benin-terre hover:underline transition font-semibold">
                 {t('sizes.title')} →
               </Link>
@@ -316,7 +316,7 @@ export default function Realisations() {
           <div className="anim-fade-up flex items-center gap-2" data-delay="0.2">
             <label
               htmlFor="sort-price"
-              className="font-basecoat text-sm text-gray-600 whitespace-nowrap"
+              className="font-basecoat text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500 whitespace-nowrap"
             >
               {t('products.sort_by')}
             </label>
@@ -324,7 +324,7 @@ export default function Realisations() {
               id="sort-price"
               value={sortOrder}
               onChange={(e) => handleSortChange(e.target.value as 'asc' | 'desc')}
-              className="font-basecoat text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune"
+              className="font-basecoat text-sm border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune"
             >
               <option value="asc">{t('products.sort_price_asc')}</option>
               <option value="desc">{t('products.sort_price_desc')}</option>
@@ -343,8 +343,8 @@ export default function Realisations() {
                 onClick={() => handleCategoryChange(cat)}
                 className={`font-basecoat text-sm sm:text-base font-semibold px-4 sm:px-5 py-2 rounded-full border-2 transition-all duration-200 ${
                   selectedCategory === cat
-                    ? 'bg-benin-jaune border-benin-jaune text-black shadow-md'
-                    : 'bg-white border-gray-200 text-gray-700 hover:border-benin-jaune hover:text-benin-jaune'
+                    ? 'bg-benin-jaune border-benin-jaune text-black dark:text-gray-100 shadow-md'
+                    : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
                 }`}
               >
                 {t(CAT_KEY[cat])}
@@ -364,14 +364,14 @@ export default function Realisations() {
           <div className="mb-12 sm:mb-14">
             <div className="mb-6 flex items-center gap-3">
               <span className="text-benin-jaune text-2xl">♥</span>
-              <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900">{t('products.favorites_title')}</h2>
+              <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">{t('products.favorites_title')}</h2>
             </div>
-            <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-benin-ocre scrollbar-track-gray-100">
+            <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-benin-ocre scrollbar-track-gray-100 dark:scrollbar-track-gray-800">
               {coupsDeCoeur.map((item) => (
                 <Link
                   key={`${item.productId}-${item.id}`}
                   to={lp(`/realisations/${item.productId}?declinaison=${item.id}`)}
-                  className="group flex-shrink-0 w-44 sm:w-52 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white border border-gray-100"
+                  className="group flex-shrink-0 w-44 sm:w-52 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700"
                 >
                   <div className="relative h-44 sm:h-52 overflow-hidden bg-amber-50">
                     {item.image_url ? (
@@ -385,7 +385,7 @@ export default function Realisations() {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <span className="font-basecoat text-gray-400 text-xs">{t('home.no_image')}</span>
+                        <span className="font-basecoat text-gray-400 dark:text-gray-500 text-xs">{t('home.no_image')}</span>
                       </div>
                     )}
                     <div className="absolute top-2 left-2 px-2.5 py-1 rounded-full">
@@ -393,11 +393,11 @@ export default function Realisations() {
                     </div>
                   </div>
                   <div className="p-3">
-                    <h3 className="font-basecoat text-gray-900 text-sm font-bold uppercase leading-tight group-hover:text-benin-jaune transition-colors">
+                    <h3 className="font-basecoat text-gray-900 dark:text-gray-100 text-sm font-bold uppercase leading-tight group-hover:text-benin-jaune transition-colors">
                       {item.productTitle}
                     </h3>
                     {item.motif && (
-                      <p className="font-basecoat text-gray-500 text-xs mt-0.5">{item.motif}</p>
+                      <p className="font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-xs mt-0.5">{item.motif}</p>
                     )}
                     <p className="font-basecoat text-benin-jaune font-bold text-base mt-1">
                       {item.prix ? `${item.prix} €` : t('products.on_request')}
@@ -427,7 +427,7 @@ export default function Realisations() {
               <Link
                 key={realisation.id}
                 to={lp(`/realisations/${realisation.id}`)}
-                className="group flex flex-col rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-1.5 bg-white border border-gray-100"
+                className="group flex flex-col rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-1.5 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700"
               >
                 {/* Image */}
                 <div className="relative h-60 sm:h-68 md:h-72 overflow-hidden bg-amber-50 flex-shrink-0">
@@ -442,13 +442,13 @@ export default function Realisations() {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <span className="font-basecoat text-gray-400 text-sm">{t('home.no_image')}</span>
+                      <span className="font-basecoat text-gray-400 dark:text-gray-500 text-sm">{t('home.no_image')}</span>
                     </div>
                   )}
 
                   {/* Badge Nouveau */}
                   {realisation.isNew && (
-                    <div className="absolute top-3 left-3 bg-benin-jaune text-black text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
+                    <div className="absolute top-3 left-3 bg-benin-jaune text-black dark:text-gray-100 text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
                       {t('products.new_badge')}
                     </div>
                   )}
@@ -460,7 +460,7 @@ export default function Realisations() {
                         {t('products.sold_out')}
                       </div>
                     ) : realisation.totalStock <= 5 ? (
-                      <div className="absolute top-3 left-3 bg-benin-jaune/80 text-black text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
+                      <div className="absolute top-3 left-3 bg-benin-jaune/80 text-black dark:text-gray-100 text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
                         {t('products.low_stock', { count: realisation.totalStock })}
                       </div>
                     ) : null
@@ -468,7 +468,7 @@ export default function Realisations() {
 
                   {/* Badges Fait main / Made in Bénin */}
                   <div className="absolute bottom-2 right-2 flex flex-col items-end gap-1">
-                    <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-benin-jaune text-black px-2 py-0.5 rounded-full shadow">{t('home.badge_handmade')}</span>
+                    <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-benin-jaune text-black dark:text-gray-100 px-2 py-0.5 rounded-full shadow">{t('home.badge_handmade')}</span>
                     <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-gray-800 text-white px-2 py-0.5 rounded-full shadow">{t('home.badge_benin')}</span>
                   </div>
 
@@ -476,21 +476,21 @@ export default function Realisations() {
 
                 {/* Info section */}
                 <div className="flex flex-col flex-1 p-5">
-                  <h3 className="font-basecoat text-gray-900 text-lg sm:text-xl font-bold uppercase leading-tight mb-2 group-hover:text-benin-jaune transition-colors duration-300">
+                  <h3 className="font-basecoat text-gray-900 dark:text-gray-100 text-lg sm:text-xl font-bold uppercase leading-tight mb-2 group-hover:text-benin-jaune transition-colors duration-300">
                     {realisation.title}
                   </h3>
 
                   {realisation.description && (
-                    <p className="font-basecoat text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4 flex-1">
+                    <p className="font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4 flex-1">
                       {realisation.description}
                     </p>
                   )}
 
-                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
                     <span className="font-basecoat text-2xl font-bold text-benin-jaune">
                       {realisation.prix ? `${realisation.prix} €` : t('products.on_request')}
                     </span>
-                    <span className="inline-flex items-center gap-1.5 font-basecoat text-sm font-bold uppercase tracking-wide text-black bg-beige group-hover:bg-benin-jaune px-4 py-2 rounded-xl transition-all duration-200 group-hover:shadow-md">
+                    <span className="inline-flex items-center gap-1.5 font-basecoat text-sm font-bold uppercase tracking-wide text-black dark:text-gray-100 bg-beige dark:bg-gray-900 group-hover:bg-benin-jaune px-4 py-2 rounded-xl transition-all duration-200 group-hover:shadow-md">
                       {t('products.view')}
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -509,7 +509,7 @@ export default function Realisations() {
             <button
               onClick={() => { setCurrentPage((p) => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               disabled={currentPage === 1}
-              className="font-basecoat flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-benin-jaune hover:text-benin-jaune transition disabled:opacity-30 disabled:cursor-not-allowed bg-white"
+              className="font-basecoat flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune transition disabled:opacity-30 disabled:cursor-not-allowed bg-white dark:bg-gray-900"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
               {t('products.pagination_prev')}
@@ -522,8 +522,8 @@ export default function Realisations() {
                   onClick={() => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                   className={`w-10 h-10 rounded-xl font-basecoat text-sm font-bold transition ${
                     page === currentPage
-                      ? 'bg-benin-jaune text-black shadow-md'
-                      : 'bg-white border border-gray-200 text-gray-700 hover:border-benin-jaune hover:text-benin-jaune'
+                      ? 'bg-benin-jaune text-black dark:text-gray-100 shadow-md'
+                      : 'bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
                   }`}
                 >
                   {page}
@@ -534,7 +534,7 @@ export default function Realisations() {
             <button
               onClick={() => { setCurrentPage((p) => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               disabled={currentPage === totalPages}
-              className="font-basecoat flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-benin-jaune hover:text-benin-jaune transition disabled:opacity-30 disabled:cursor-not-allowed bg-white"
+              className="font-basecoat flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune transition disabled:opacity-30 disabled:cursor-not-allowed bg-white dark:bg-gray-900"
             >
               {t('products.pagination_next')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
@@ -545,7 +545,7 @@ export default function Realisations() {
         {/* Empty state */}
         {!error && realisations.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <p className="font-basecoat text-gray-500 text-center text-lg">
+            <p className="font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-center text-lg">
               {t('products.coming_soon')}
             </p>
             <Link
@@ -558,7 +558,7 @@ export default function Realisations() {
         )}
         {!error && realisations.length > 0 && filteredRealisations.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <p className="font-basecoat text-gray-500 text-center text-lg">
+            <p className="font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-center text-lg">
               {t('products.no_results_cat')}
             </p>
             <button

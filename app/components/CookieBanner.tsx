@@ -55,7 +55,7 @@ export default function CookieBanner() {
                 <h2 className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-base uppercase tracking-wide">
                   Cookies & confidentialité
                 </h2>
-                <p className="font-basecoat text-sm text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">
+                <p className="font-basecoat text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1 leading-relaxed">
                   Ce site utilise des cookies tiers (Google Analytics, Stripe) pour améliorer votre expérience et analyser le trafic.
                 </p>
               </div>
@@ -66,7 +66,7 @@ export default function CookieBanner() {
               {['Analytics', 'Paiement sécurisé', 'Performance'].map(tag => (
                 <span
                   key={tag}
-                  className="font-basecoat text-xs px-2.5 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700"
+                  className="font-basecoat text-xs px-2.5 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 dark:text-gray-500 border border-gray-200 dark:border-gray-700"
                 >
                   {tag}
                 </span>
@@ -83,13 +83,13 @@ export default function CookieBanner() {
             <div className="flex gap-3">
               <button
                 onClick={() => dismiss('refused')}
-                className="flex-1 font-basecoat text-sm px-4 py-2.5 rounded-xl border-2 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-900 dark:hover:text-gray-200 transition font-semibold"
+                className="flex-1 font-basecoat text-sm px-4 py-2.5 rounded-xl border-2 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 dark:text-gray-500 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-900 dark:text-gray-100 dark:hover:text-gray-200 transition font-semibold"
               >
                 Refuser
               </button>
               <button
                 onClick={() => dismiss('accepted')}
-                className="flex-1 font-basecoat text-sm px-4 py-2.5 rounded-xl bg-benin-jaune hover:bg-benin-ocre text-black font-bold transition hover:scale-[1.02] shadow-sm"
+                className="flex-1 font-basecoat text-sm px-4 py-2.5 rounded-xl bg-benin-jaune hover:bg-benin-ocre text-black dark:text-gray-100 font-bold transition hover:scale-[1.02] shadow-sm"
               >
                 Accepter
               </button>

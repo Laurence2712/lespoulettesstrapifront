@@ -44,20 +44,20 @@ export default function PaymentSuccess() {
         <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-benin-vert mb-3 sm:mb-4 uppercase">
           {t('cart.paid_title')}
         </h1>
-        <p className="font-basecoat text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
+        <p className="font-basecoat text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">
           {t('cart.paid_desc')}
         </p>
-        <p className="font-basecoat text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
+        <p className="font-basecoat text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">
           {t('cart.dispatch_soon')}
         </p>
         {sessionId && (
-          <p className="font-basecoat text-xs text-gray-500 mb-6 px-2">
+          <p className="font-basecoat text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-6 px-2">
             {t('cart.reference')} LP-{sessionId.slice(-8).toUpperCase()}
           </p>
         )}
         <Link
           to={lp("/")}
-          className="font-basecoat inline-block border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition transform hover:scale-105 text-sm sm:text-base"
+          className="font-basecoat inline-block border-2 border-benin-jaune text-gray-900 dark:text-gray-100 hover:bg-benin-jaune hover:text-black dark:text-gray-100 px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition transform hover:scale-105 text-sm sm:text-base"
         >
           {t('cart.back_to_home')}
         </Link>

@@ -91,7 +91,7 @@ export default function CommandPalette() {
 
         {/* Search input */}
         <div className="flex items-center gap-3 px-4 py-4 border-b border-gray-100 dark:border-gray-700">
-          <svg className="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+          <svg className="w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
           </svg>
           <input
@@ -101,13 +101,13 @@ export default function CommandPalette() {
             onChange={e => { setQuery(e.target.value); setSelected(0); }}
             onKeyDown={onKeyDown}
             placeholder=""
-            className="flex-1 bg-transparent font-basecoat text-gray-900 dark:text-gray-100 placeholder-gray-400 text-base outline-none"
+            className="flex-1 bg-transparent font-basecoat text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 text-base outline-none"
             autoComplete="off"
           />
           {loading && (
             <div className="w-4 h-4 border-2 border-benin-jaune border-t-transparent rounded-full animate-spin flex-shrink-0" />
           )}
-          <kbd className="hidden sm:flex items-center gap-1 px-2 py-1 text-xs font-mono text-gray-400 bg-gray-100 dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-600">
+          <kbd className="hidden sm:flex items-center gap-1 px-2 py-1 text-xs font-mono text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-600">
             ESC
           </kbd>
         </div>
@@ -115,13 +115,13 @@ export default function CommandPalette() {
         {/* Results */}
         <div className="max-h-[50vh] overflow-y-auto">
           {query && !loading && results.length === 0 && (
-            <div className="px-4 py-8 text-center font-basecoat text-gray-400 text-sm">
+            <div className="px-4 py-8 text-center font-basecoat text-gray-400 dark:text-gray-500 text-sm">
               Aucun résultat pour &ldquo;{query}&rdquo;
             </div>
           )}
 
           {!query && (
-            <div className="px-4 py-6 text-center font-basecoat text-gray-400 text-sm">
+            <div className="px-4 py-6 text-center font-basecoat text-gray-400 dark:text-gray-500 text-sm">
               <span className="block mb-1 text-2xl">🔍</span>
               Tapez pour rechercher parmi nos créations
             </div>
@@ -135,7 +135,7 @@ export default function CommandPalette() {
                     to={lp(`/realisations/${r.id}`)}
                     onClick={() => setOpen(false)}
                     className={`flex items-center gap-4 px-4 py-3 transition-colors
-                      ${i === selected ? 'bg-benin-jaune/10 dark:bg-benin-jaune/5' : 'hover:bg-gray-50 dark:hover:bg-gray-800'}
+                      ${i === selected ? 'bg-benin-jaune/10 dark:bg-benin-jaune/5' : 'hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-800'}
                     `}
                     onMouseEnter={() => setSelected(i)}
                   >
@@ -143,7 +143,7 @@ export default function CommandPalette() {
                       <img
                         src={r.image_url}
                         alt={r.title}
-                        className="w-12 h-12 rounded-xl object-cover flex-shrink-0 bg-beige"
+                        className="w-12 h-12 rounded-xl object-cover flex-shrink-0 bg-beige dark:bg-gray-900"
                       />
                     ) : (
                       <div className="w-12 h-12 rounded-xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center flex-shrink-0">
@@ -172,11 +172,11 @@ export default function CommandPalette() {
 
         {/* Footer hint */}
         <div className="flex items-center gap-4 px-4 py-3 border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
-          <span className="font-basecoat text-xs text-gray-400 flex items-center gap-1.5">
+          <span className="font-basecoat text-xs text-gray-400 dark:text-gray-500 flex items-center gap-1.5">
             <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-xs">↑↓</kbd>
             naviguer
           </span>
-          <span className="font-basecoat text-xs text-gray-400 flex items-center gap-1.5">
+          <span className="font-basecoat text-xs text-gray-400 dark:text-gray-500 flex items-center gap-1.5">
             <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-xs">↵</kbd>
             ouvrir
           </span>

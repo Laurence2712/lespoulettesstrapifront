@@ -337,18 +337,18 @@ export default function RealisationDetail() {
         className="py-6 sm:py-8 md:py-[60px] mt-16 sm:mt-20 md:mt-24 px-4 sm:px-6 md:px-[60px] lg:px-[120px]"
       >
         {/* Breadcrumb */}
-        <nav className="anim-fade-up mb-4 text-xs sm:text-sm font-basecoat text-gray-500">
+        <nav className="anim-fade-up mb-4 text-xs sm:text-sm font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500">
           <Link to={lp("/")} className="hover:text-benin-jaune transition">{t('common.home')}</Link>
           <span className="mx-2">/</span>
           <Link to={lp("/realisations")} className="hover:text-benin-jaune transition">{t('products.breadcrumb_shop')}</Link>
           <span className="mx-2">/</span>
-          <span className="text-gray-800 uppercase font-semibold">{realisation.title}</span>
+          <span className="text-gray-800 dark:text-gray-200 uppercase font-semibold">{realisation.title}</span>
         </nav>
 
         {/* Bouton retour */}
         <button
           onClick={() => navigate(-1)}
-          className="anim-fade-up font-basecoat inline-flex items-center gap-2 text-gray-500 hover:text-gray-900 mb-6 sm:mb-8 transition text-sm"
+          className="anim-fade-up font-basecoat inline-flex items-center gap-2 text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:text-gray-100 mb-6 sm:mb-8 transition text-sm"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -363,7 +363,7 @@ export default function RealisationDetail() {
 
             {/* Image principale */}
             <div
-              className="relative rounded-2xl shadow-xl mb-4 bg-beige group p-3 cursor-zoom-in"
+              className="relative rounded-2xl shadow-xl mb-4 bg-beige dark:bg-gray-900 group p-3 cursor-zoom-in"
               onClick={() => currentImage?.url && setZoomOpen(true)}
             >
               {currentImage?.url ? (
@@ -375,16 +375,16 @@ export default function RealisationDetail() {
                   className="w-full h-[300px] sm:h-[380px] md:h-[440px] lg:h-[480px] object-contain rounded-xl transition-transform duration-500 group-hover:scale-[1.02]"
                 />
               ) : (
-                <div className="w-full h-[300px] flex items-center justify-center text-gray-400 font-basecoat">
+                <div className="w-full h-[300px] flex items-center justify-center text-gray-400 dark:text-gray-500 font-basecoat">
                   {t('home.no_image')}
                 </div>
               )}
-              <div className="absolute top-4 left-4 bg-benin-jaune text-black text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
+              <div className="absolute top-4 left-4 bg-benin-jaune text-black dark:text-gray-100 text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
                 ✂ {t('home.badge_handmade')}
               </div>
               {currentImage?.url && (
-                <div className="absolute bottom-4 right-4 bg-white/80 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow">
-                  <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="absolute bottom-4 right-4 bg-white dark:bg-gray-900/80 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow">
+                  <svg className="w-4 h-4 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16zm3-8H8m3-3v6" />
                   </svg>
                 </div>
@@ -399,7 +399,7 @@ export default function RealisationDetail() {
               >
                 <button
                   onClick={() => setZoomOpen(false)}
-                  className="absolute top-4 right-4 bg-white/20 hover:bg-white/40 text-white rounded-full p-2 transition"
+                  className="absolute top-4 right-4 bg-white dark:bg-gray-900/20 hover:bg-white dark:bg-gray-900/40 text-white rounded-full p-2 transition"
                   aria-label="Fermer"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -418,10 +418,10 @@ export default function RealisationDetail() {
             {/* Galerie de vignettes — angles de l'image principale */}
             {realisation.mainImages.length >= 1 && (
               <div className="mt-4">
-                <p className="text-xs font-basecoat font-semibold uppercase text-gray-400 tracking-widest mb-2">
+                <p className="text-xs font-basecoat font-semibold uppercase text-gray-400 dark:text-gray-500 tracking-widest mb-2">
                   {t('products.other_views')}
                 </p>
-                <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-benin-ocre scrollbar-track-gray-100">
+                <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-benin-ocre scrollbar-track-gray-100 dark:scrollbar-track-gray-800">
                   {realisation.mainImages.map((img, idx) => (
                     <button
                       key={idx}
@@ -432,7 +432,7 @@ export default function RealisationDetail() {
                       className={`relative rounded-xl overflow-hidden transition-all flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 ${
                         !selectedDeclinaisonId && mainImageIndex === idx
                           ? 'ring-2 ring-benin-jaune shadow-md scale-105'
-                          : 'ring-1 ring-gray-200 hover:ring-benin-ocre opacity-60 hover:opacity-100 hover:scale-105'
+                          : 'ring-1 ring-gray-200 dark:ring-gray-700 hover:ring-benin-ocre opacity-60 hover:opacity-100 hover:scale-105'
                       }`}
                       aria-label={`Vue ${idx + 1}`}
                     >
@@ -441,7 +441,7 @@ export default function RealisationDetail() {
                         alt={`Vue ${idx + 1}`}
                         width={96}
                         height={96}
-                        className="w-full h-full object-contain bg-beige rounded-lg"
+                        className="w-full h-full object-contain bg-beige dark:bg-gray-900 rounded-lg"
                       />
                       {!selectedDeclinaisonId && mainImageIndex === idx && (
                         <div className="absolute inset-0 bg-benin-jaune/10 rounded-xl pointer-events-none" />
@@ -457,7 +457,7 @@ export default function RealisationDetail() {
           <div className="anim-fade-left flex flex-col font-basecoat">
 
             <div className="flex items-start justify-between gap-4">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-gray-900 leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
                 {realisation.title}
               </h1>
               <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-benin-jaune whitespace-nowrap flex-shrink-0">
@@ -469,7 +469,7 @@ export default function RealisationDetail() {
             {/* Description */}
             {realisation.description?.trim() && (
               <div className="mb-6 p-5 bg-amber-50 border-l-4 border-benin-jaune rounded-r-xl">
-                <p className="text-gray-800 leading-relaxed text-base whitespace-pre-line">
+                <p className="text-gray-800 dark:text-gray-200 leading-relaxed text-base whitespace-pre-line">
                   {realisation.description}
                 </p>
               </div>
@@ -477,7 +477,7 @@ export default function RealisationDetail() {
 
             {/* Dimensions */}
             {realisation.dimensions && (
-              <div className="mb-5 flex items-center gap-2 font-basecoat text-sm text-gray-700">
+              <div className="mb-5 flex items-center gap-2 font-basecoat text-sm text-gray-700 dark:text-gray-300">
                 <svg className="w-4 h-4 text-benin-jaune flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
                 </svg>
@@ -488,7 +488,7 @@ export default function RealisationDetail() {
             {/* Badge catégorie */}
             {realisation.categorie && (
               <div className="flex flex-wrap gap-2 mb-6">
-                <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-beige text-gray-700 border border-benin-jaune/30 px-3 py-1.5 rounded-full">
+                <span className="inline-flex items-center gap-1.5 font-basecoat text-xs font-semibold bg-beige dark:bg-gray-900 text-gray-700 dark:text-gray-300 border border-benin-jaune/30 px-3 py-1.5 rounded-full">
                   📦 {realisation.categorie}
                 </span>
               </div>
@@ -497,7 +497,7 @@ export default function RealisationDetail() {
             {/* ── Sélection déclinaison ── */}
             {hasDeclinaisons && (
               <div className="mb-6">
-                <h2 className="font-bold uppercase text-sm text-gray-500 mb-3 tracking-wider">
+                <h2 className="font-bold uppercase text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-3 tracking-wider">
                   {t('products.choose_variant')}
                 </h2>
                 <div className="flex flex-wrap gap-3">
@@ -515,7 +515,7 @@ export default function RealisationDetail() {
                             ? 'opacity-40 cursor-not-allowed grayscale'
                             : isSelected
                             ? 'ring-2 ring-benin-jaune ring-offset-2 scale-105 shadow-lg'
-                            : 'ring-1 ring-gray-200 hover:ring-benin-ocre hover:scale-105 hover:shadow-md'
+                            : 'ring-1 ring-gray-200 dark:ring-gray-700 hover:ring-benin-ocre hover:scale-105 hover:shadow-md'
                         }`}
                         title={decl.Description || ''}
                       >
@@ -525,15 +525,15 @@ export default function RealisationDetail() {
                             alt={decl.Description || 'Déclinaison'}
                             width={80}
                             height={80}
-                            className="w-full h-full object-contain bg-beige rounded-lg"
+                            className="w-full h-full object-contain bg-beige dark:bg-gray-900 rounded-lg"
                           />
                         ) : (
-                          <div className="w-full h-full bg-gray-200 flex items-center justify-center text-xs text-gray-400">
+                          <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-xs text-gray-400 dark:text-gray-500">
                             ?
                           </div>
                         )}
                         {!inStock && (
-                          <div className="absolute inset-0 flex items-center justify-center bg-white/40">
+                          <div className="absolute inset-0 flex items-center justify-center bg-white dark:bg-gray-900/40">
                             <span className="text-benin-rouge font-bold text-lg">✕</span>
                           </div>
                         )}
@@ -548,7 +548,7 @@ export default function RealisationDetail() {
                 </div>
 
                 {selectedDeclinaison?.Description && (
-                  <p className="mt-3 text-sm font-semibold text-gray-700">
+                  <p className="mt-3 text-sm font-semibold text-gray-700 dark:text-gray-300">
                     {t('products.variant_label')} :{' '}
                     <span className="text-benin-jaune">{selectedDeclinaison.Description}</span>
                   </p>
@@ -587,18 +587,18 @@ export default function RealisationDetail() {
             {/* Quantité */}
             {selectedDeclinaison && isInStock && (
               <div className="mb-5">
-                <label className="block mb-2 text-sm font-bold uppercase text-gray-500 tracking-wider">
+                <label className="block mb-2 text-sm font-bold uppercase text-gray-500 dark:text-gray-400 dark:text-gray-500 tracking-wider">
                   {t('products.quantity')}
                 </label>
-                <div className="inline-flex items-center border border-gray-200 rounded-xl overflow-hidden">
+                <div className="inline-flex items-center border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
                   <button
                     onClick={() => quantity > 1 && setQuantity(quantity - 1)}
                     aria-label="Diminuer la quantité"
-                    className="w-11 h-11 flex items-center justify-center text-xl font-bold text-gray-600 hover:bg-gray-100 transition"
+                    className="w-11 h-11 flex items-center justify-center text-xl font-bold text-gray-600 dark:text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:bg-gray-800 transition"
                   >
                     −
                   </button>
-                  <span className="w-12 h-11 flex items-center justify-center font-bold text-gray-900 border-x border-gray-200">
+                  <span className="w-12 h-11 flex items-center justify-center font-bold text-gray-900 dark:text-gray-100 border-x border-gray-200 dark:border-gray-700">
                     {quantity}
                   </span>
                   <button
@@ -606,7 +606,7 @@ export default function RealisationDetail() {
                       selectedDeclinaison && quantity < selectedDeclinaison.Stock && setQuantity(quantity + 1)
                     }
                     aria-label="Augmenter la quantité"
-                    className="w-11 h-11 flex items-center justify-center text-xl font-bold text-gray-600 hover:bg-gray-100 transition"
+                    className="w-11 h-11 flex items-center justify-center text-xl font-bold text-gray-600 dark:text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:bg-gray-800 transition"
                   >
                     +
                   </button>
@@ -632,8 +632,8 @@ export default function RealisationDetail() {
                   disabled={!selectedDeclinaison || !isInStock}
                   className={`w-full py-4 rounded-xl font-bold uppercase text-base tracking-wider transition-all duration-200 font-basecoat ${
                     selectedDeclinaison && isInStock
-                      ? 'border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black hover:scale-[1.02] hover:shadow-lg'
-                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                      ? 'border-2 border-benin-jaune text-gray-900 dark:text-gray-100 hover:bg-benin-jaune hover:text-black dark:text-gray-100 hover:scale-[1.02] hover:shadow-lg'
+                      : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
                   }`}
                 >
                   {!selectedDeclinaison
@@ -651,7 +651,7 @@ export default function RealisationDetail() {
         {/* ── Produits similaires ── */}
         {relatedProducts.length > 0 && (
           <div className="mt-16 sm:mt-20">
-            <h2 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl font-bold uppercase text-gray-900 mb-2">
+            <h2 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">
               {t('products.related')}
             </h2>
             <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mb-8" data-delay="0.1"></div>
@@ -673,13 +673,13 @@ export default function RealisationDetail() {
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                        <span className="font-basecoat text-gray-400 text-xs">{t('home.no_image')}</span>
+                      <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                        <span className="font-basecoat text-gray-400 dark:text-gray-500 text-xs">{t('home.no_image')}</span>
                       </div>
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
                     {product.prix && (
-                      <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm text-gray-900 font-basecoat font-bold text-sm px-2.5 py-1 rounded-full shadow">
+                      <div className="absolute top-2 right-2 bg-white dark:bg-gray-900/90 backdrop-blur-sm text-gray-900 dark:text-gray-100 font-basecoat font-bold text-sm px-2.5 py-1 rounded-full shadow">
                         {product.prix} €
                       </div>
                     )}
@@ -711,8 +711,8 @@ export default function RealisationDetail() {
               disabled={!selectedDeclinaison || !isInStock}
               className={`flex-shrink-0 inline-flex items-center gap-2 px-5 py-3 rounded-xl font-basecoat font-bold uppercase tracking-wide text-sm transition-all duration-200 ${
                 selectedDeclinaison && isInStock
-                  ? 'bg-benin-jaune text-black hover:bg-benin-ocre hover:scale-105 shadow-md'
-                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  ? 'bg-benin-jaune text-black dark:text-gray-100 hover:bg-benin-ocre hover:scale-105 shadow-md'
+                  : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
               }`}
             >
               <ShoppingCartIcon className="w-4 h-4" />

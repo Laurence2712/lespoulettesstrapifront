@@ -236,30 +236,30 @@ export default function Panier() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
             </svg>
           </div>
-          <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 uppercase">
+          <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 uppercase">
             {isPaid ? t('cart.paid_title') : t('cart.order_sent_title')}
           </h1>
-          <p className="font-basecoat text-gray-600 mb-3 text-base sm:text-lg leading-relaxed">
+          <p className="font-basecoat text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-3 text-base sm:text-lg leading-relaxed">
             {isPaid ? t('cart.paid_desc') : t('cart.order_sent_desc')}
           </p>
           {isPaid && (
-            <p className="font-basecoat text-gray-600 mb-3 text-sm sm:text-base">
+            <p className="font-basecoat text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-3 text-sm sm:text-base">
               {t('cart.dispatch_soon')}
             </p>
           )}
           {!isPaid && (
-            <p className="font-basecoat text-gray-500 mb-3 text-sm sm:text-base">
+            <p className="font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-3 text-sm sm:text-base">
               {t('cart.pending_payment')}
             </p>
           )}
           {sessionId && (
-            <p className="font-basecoat text-xs text-gray-400 mb-6 break-all px-2">
+            <p className="font-basecoat text-xs text-gray-400 dark:text-gray-500 mb-6 break-all px-2">
               {t('cart.reference')} {sessionId}
             </p>
           )}
           <Link
             to={lp("/")}
-            className="font-basecoat inline-block border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-8 sm:px-10 py-3 sm:py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg text-sm sm:text-base"
+            className="font-basecoat inline-block border-2 border-benin-jaune text-gray-900 dark:text-gray-100 hover:bg-benin-jaune hover:text-black dark:text-gray-100 px-8 sm:px-10 py-3 sm:py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg text-sm sm:text-base"
           >
             {t('cart.back_to_home')}
           </Link>
@@ -271,7 +271,7 @@ export default function Panier() {
   if (!mounted) {
     return (
       <div className="min-h-screen flex items-center justify-center mt-16">
-        <p className="text-xl font-basecoat text-gray-400">{t('common.loading')}...</p>
+        <p className="text-xl font-basecoat text-gray-400 dark:text-gray-500">{t('common.loading')}...</p>
       </div>
     );
   }
@@ -281,15 +281,15 @@ export default function Panier() {
       <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24">
         <div className="text-center py-12 sm:py-16">
           <ShoppingCartIcon className="w-20 h-20 text-gray-200 mx-auto mb-6" strokeWidth={1} />
-          <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-gray-900 mb-3">
+          <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-3">
             {t('cart.empty_title')}
           </h1>
-          <p className="font-basecoat text-gray-500 text-base mb-8">
+          <p className="font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-base mb-8">
             {t('cart.empty_subtitle')}
           </p>
           <Link
             to={lp("/realisations")}
-            className="font-basecoat border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg text-sm sm:text-base inline-block"
+            className="font-basecoat border-2 border-benin-jaune text-gray-900 dark:text-gray-100 hover:bg-benin-jaune hover:text-black dark:text-gray-100 px-10 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg text-sm sm:text-base inline-block"
           >
             {t('cart.see_all_shop')}
           </Link>
@@ -297,16 +297,16 @@ export default function Panier() {
 
         {featuredProducts.length > 0 && (
           <div className="mt-10 sm:mt-14">
-            <h2 className="font-basecoat text-lg sm:text-xl font-bold uppercase text-gray-900 mb-2 text-center">
+            <h2 className="font-basecoat text-lg sm:text-xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-2 text-center">
               {t('cart.featured_title')}
             </h2>
-            <p className="font-basecoat text-gray-500 text-sm text-center mb-6 sm:mb-8">
+            <p className="font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm text-center mb-6 sm:mb-8">
               {t('cart.featured_subtitle')}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
               {featuredProducts.map((product) => (
                 <Link key={product.id} to={`/realisations/${product.id}`} className="group">
-                  <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                  <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                     <div className="relative overflow-hidden aspect-square">
                       {product.image_url ? (
                         <img
@@ -318,18 +318,18 @@ export default function Panier() {
                           className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
-                        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                          <span className="font-basecoat text-gray-400 text-sm">{t('cart.no_image')}</span>
+                        <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                          <span className="font-basecoat text-gray-400 dark:text-gray-500 text-sm">{t('cart.no_image')}</span>
                         </div>
                       )}
                       {product.prix && (
-                        <div className="absolute top-3 right-3 bg-benin-jaune text-black font-basecoat font-bold text-sm px-3 py-1 rounded-full shadow-sm">
+                        <div className="absolute top-3 right-3 bg-benin-jaune text-black dark:text-gray-100 font-basecoat font-bold text-sm px-3 py-1 rounded-full shadow-sm">
                           {Number(product.prix).toFixed(2)} €
                         </div>
                       )}
                     </div>
                     <div className="p-4 flex flex-col flex-1 justify-between">
-                      <h3 className="font-basecoat font-semibold text-gray-900 text-base leading-snug mb-3">
+                      <h3 className="font-basecoat font-semibold text-gray-900 dark:text-gray-100 text-base leading-snug mb-3">
                         {product.title}
                       </h3>
                       <span className="font-basecoat text-sm font-semibold text-benin-jaune group-hover:text-yellow-700 flex items-center gap-1 transition">
@@ -363,15 +363,15 @@ export default function Panier() {
       {/* Breadcrumb */}
       <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
         <Link to={lp("/")} className="text-benin-jaune hover:text-benin-terre font-medium transition">{t('common.home')}</Link>
-        <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
-        <span className="text-gray-600">{t('cart.breadcrumb')}</span>
+        <span className="mx-1.5 sm:mx-2 text-gray-400 dark:text-gray-500">/</span>
+        <span className="text-gray-600 dark:text-gray-400 dark:text-gray-500">{t('cart.breadcrumb')}</span>
       </nav>
 
-      <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900" data-delay="0.1">
+      <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100" data-delay="0.1">
         {t('cart.your_cart')}
       </h1>
       <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4" data-delay="0.15"></div>
-      <p className="anim-fade-up font-basecoat text-gray-500 text-sm sm:text-base mt-3 mb-8 sm:mb-10 md:mb-12" data-delay="0.2">
+      <p className="anim-fade-up font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm sm:text-base mt-3 mb-8 sm:mb-10 md:mb-12" data-delay="0.2">
         {t('cart.items_count', {count: totalItems})}
       </p>
 
@@ -379,7 +379,7 @@ export default function Panier() {
         {/* Liste des articles */}
         <div className="lg:col-span-2 order-2 lg:order-1 anim-stagger space-y-5" data-stagger="0.1">
           {items.map((item) => (
-            <div key={item.id} className="flex gap-4 sm:gap-5 p-4 sm:p-5 rounded-2xl bg-white border border-gray-100 shadow-sm">
+            <div key={item.id} className="flex gap-4 sm:gap-5 p-4 sm:p-5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 shadow-sm">
               {item.image_url && (
                 <img
                   src={item.image_url}
@@ -393,7 +393,7 @@ export default function Panier() {
               <div className="flex-1 flex flex-col justify-between min-w-0">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <h3 className="font-basecoat text-base sm:text-lg font-bold text-gray-900 leading-tight">
+                    <h3 className="font-basecoat text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 leading-tight">
                       {item.title}
                     </h3>
                     <p className="font-basecoat text-benin-jaune font-bold text-lg sm:text-xl mt-1">
@@ -412,30 +412,30 @@ export default function Panier() {
                 </div>
 
                 <div className="flex items-center gap-3 sm:gap-4 mt-3">
-                  <div className="inline-flex items-center border border-gray-200 rounded-xl overflow-hidden">
+                  <div className="inline-flex items-center border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
                       disabled={item.quantity <= 1}
                       aria-label="Diminuer la quantité"
-                      className="w-10 h-10 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition font-bold disabled:opacity-30 disabled:cursor-not-allowed"
+                      className="w-10 h-10 flex items-center justify-center text-gray-600 dark:text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:bg-gray-800 transition font-bold disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       -
                     </button>
-                    <span className="w-10 h-10 flex items-center justify-center font-basecoat font-bold text-gray-900 text-sm border-x border-gray-200">
+                    <span className="w-10 h-10 flex items-center justify-center font-basecoat font-bold text-gray-900 dark:text-gray-100 text-sm border-x border-gray-200 dark:border-gray-700">
                       {item.quantity}
                     </span>
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
                       disabled={item.stock !== undefined && item.quantity >= item.stock}
                       aria-label="Augmenter la quantité"
-                      className="w-10 h-10 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition font-bold disabled:opacity-30 disabled:cursor-not-allowed"
+                      className="w-10 h-10 flex items-center justify-center text-gray-600 dark:text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:bg-gray-800 transition font-bold disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       +
                     </button>
                   </div>
 
                   {item.stock !== undefined && item.quantity >= item.stock && (
-                    <span className="inline-flex items-center gap-1 font-basecoat text-xs font-semibold text-gray-500 whitespace-nowrap">
+                    <span className="inline-flex items-center gap-1 font-basecoat text-xs font-semibold text-gray-500 dark:text-gray-400 dark:text-gray-500 whitespace-nowrap">
                       <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -446,7 +446,7 @@ export default function Panier() {
               </div>
 
               <div className="hidden sm:flex items-start pt-1">
-                <p className="font-basecoat text-xl lg:text-2xl font-bold text-gray-900 whitespace-nowrap">
+                <p className="font-basecoat text-xl lg:text-2xl font-bold text-gray-900 dark:text-gray-100 whitespace-nowrap">
                   {(Number(item.prix) * item.quantity).toFixed(2)} €
                 </p>
               </div>
@@ -456,42 +456,42 @@ export default function Panier() {
 
         {/* Résumé */}
         <div className="lg:col-span-1 order-1 lg:order-2 anim-fade-left" data-delay="0.3">
-          <div className="bg-white border border-gray-100 rounded-2xl p-6 sm:p-7 shadow-sm lg:sticky lg:top-[100px]">
-            <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900 mb-5">
+          <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-2xl p-6 sm:p-7 shadow-sm lg:sticky lg:top-[100px]">
+            <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-5">
               {t('cart.summary')}
             </h2>
 
             <div className="space-y-3 mb-5">
-              <div className="font-basecoat flex justify-between text-base text-gray-600">
+              <div className="font-basecoat flex justify-between text-base text-gray-600 dark:text-gray-400 dark:text-gray-500">
                 <span>{t('cart.subtotal')} ({t('cart.items_count', {count: totalItems})})</span>
-                <span className="font-semibold text-gray-900">{total.toFixed(2)} €</span>
+                <span className="font-semibold text-gray-900 dark:text-gray-100">{total.toFixed(2)} €</span>
               </div>
-              <div className="font-basecoat flex justify-between text-sm text-gray-400">
+              <div className="font-basecoat flex justify-between text-sm text-gray-400 dark:text-gray-500">
                 <span>{t('cart.shipping')}</span>
                 <span>{t('cart.shipping_next_step')}</span>
               </div>
             </div>
 
-            <div className="border-t border-gray-100 pt-5 mb-6">
+            <div className="border-t border-gray-100 dark:border-gray-700 pt-5 mb-6">
               <div className="font-basecoat flex justify-between items-center">
                 <div>
-                  <span className="font-bold text-gray-900 text-base">{t('cart.estimated_total')}</span>
-                  <p className="text-xs text-gray-400 mt-0.5">{t('cart.excl_shipping')}</p>
+                  <span className="font-bold text-gray-900 dark:text-gray-100 text-base">{t('cart.estimated_total')}</span>
+                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{t('cart.excl_shipping')}</p>
                 </div>
-                <span className="text-2xl sm:text-3xl font-bold text-gray-900">{total.toFixed(2)} €</span>
+                <span className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">{total.toFixed(2)} €</span>
               </div>
             </div>
 
             <button
               onClick={() => setShowCheckout(true)}
-              className="font-basecoat w-full border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg mb-3 text-sm sm:text-base"
+              className="font-basecoat w-full border-2 border-benin-jaune text-gray-900 dark:text-gray-100 hover:bg-benin-jaune hover:text-black dark:text-gray-100 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg mb-3 text-sm sm:text-base"
             >
               {t('cart.place_order')}
             </button>
 
             <Link
               to={lp("/realisations")}
-              className="font-basecoat block w-full text-center py-3 rounded-xl font-semibold text-gray-500 hover:text-gray-900 border border-gray-200 hover:border-gray-300 transition text-sm sm:text-base"
+              className="font-basecoat block w-full text-center py-3 rounded-xl font-semibold text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:border-gray-600 transition text-sm sm:text-base"
             >
               {t('cart.continue_shopping')}
             </Link>
@@ -658,32 +658,32 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
         {t('cart.back_to_cart')}
       </button>
 
-      <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900" data-delay="0.1">
+      <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100" data-delay="0.1">
         {t('cart.finalize')}
       </h1>
       <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.15"></div>
 
       {/* Récapitulatif dynamique */}
-      <div className="anim-fade-up bg-white border border-gray-100 rounded-2xl p-5 sm:p-6 mb-8 sm:mb-10 shadow-sm" data-delay="0.15">
-        <h2 className="font-basecoat font-bold text-gray-900 text-base sm:text-lg mb-4">{t('cart.recap')}</h2>
+      <div className="anim-fade-up bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-2xl p-5 sm:p-6 mb-8 sm:mb-10 shadow-sm" data-delay="0.15">
+        <h2 className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-base sm:text-lg mb-4">{t('cart.recap')}</h2>
         <div className="space-y-2">
-          <div className="font-basecoat flex justify-between text-sm text-gray-600">
+          <div className="font-basecoat flex justify-between text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500">
             <span>{t('cart.subtotal')} ({t('cart.items_count', {count: cart.reduce((s, i) => s + i.quantity, 0)})})</span>
-            <span className="font-semibold text-gray-900">{total.toFixed(2)} €</span>
+            <span className="font-semibold text-gray-900 dark:text-gray-100">{total.toFixed(2)} €</span>
           </div>
-          <div className="font-basecoat flex justify-between text-sm text-gray-600">
+          <div className="font-basecoat flex justify-between text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500">
             <span>
               {deliveryMode === 'retrait'
                 ? `${t('cart.pickup_label')} — ${pickupLocation === 'grimbergen' ? 'Grimbergen' : pickupLocation === 'watermael' ? 'Watermael-Boisfort' : 'Bénin'}`
                 : `${t('cart.home_delivery')} — ${SHIPPING_COSTS[country]?.label ?? country}`}
             </span>
-            <span className={`font-semibold ${shippingCost === 0 ? 'text-benin-vert' : 'text-gray-900'}`}>
+            <span className={`font-semibold ${shippingCost === 0 ? 'text-benin-vert' : 'text-gray-900 dark:text-gray-100'}`}>
               {shippingLabel}
             </span>
           </div>
-          <div className="border-t border-gray-100 pt-3 mt-3 font-basecoat flex justify-between items-center">
-            <span className="font-bold text-gray-900 text-base">{t('cart.total')}</span>
-            <span className="font-bold text-2xl text-gray-900">{grandTotal.toFixed(2)} €</span>
+          <div className="border-t border-gray-100 dark:border-gray-700 pt-3 mt-3 font-basecoat flex justify-between items-center">
+            <span className="font-bold text-gray-900 dark:text-gray-100 text-base">{t('cart.total')}</span>
+            <span className="font-bold text-2xl text-gray-900 dark:text-gray-100">{grandTotal.toFixed(2)} €</span>
           </div>
         </div>
       </div>
@@ -696,29 +696,29 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             <svg className="w-5 h-5 text-benin-vert flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
             </svg>
-            <span className="font-basecoat font-bold text-gray-900 text-sm sm:text-base">{t('cart.secure_payment')}</span>
+            <span className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-sm sm:text-base">{t('cart.secure_payment')}</span>
           </div>
           <div className="flex gap-2 flex-wrap items-center">
-            <svg viewBox="0 0 48 30" className="h-8 rounded-md shadow-sm border border-gray-200 bg-white">
+            <svg viewBox="0 0 48 30" className="h-8 rounded-md shadow-sm border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
               <rect width="48" height="30" rx="3" fill="#1A1F71"/>
               <text x="24" y="20" textAnchor="middle" fill="white" fontSize="13" fontStyle="italic" fontFamily="Arial, sans-serif" fontWeight="bold">VISA</text>
             </svg>
-            <svg viewBox="0 0 48 30" className="h-8 rounded-md shadow-sm border border-gray-200 bg-white">
+            <svg viewBox="0 0 48 30" className="h-8 rounded-md shadow-sm border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
               <rect width="48" height="30" rx="3" fill="#fff"/>
               <circle cx="19" cy="15" r="9" fill="#EB001B"/>
               <circle cx="29" cy="15" r="9" fill="#F79E1B"/>
               <path d="M24 7.7 a9 9 0 0 1 0 14.6 a9 9 0 0 1 0-14.6z" fill="#FF5F00"/>
             </svg>
-            <svg viewBox="0 0 48 30" className="h-8 rounded-md shadow-sm border border-gray-200 bg-white">
+            <svg viewBox="0 0 48 30" className="h-8 rounded-md shadow-sm border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
               <rect width="48" height="30" rx="3" fill="#0052A5"/>
               <text x="24" y="20" textAnchor="middle" fill="white" fontSize="14" fontFamily="Arial, sans-serif" fontWeight="bold">CB</text>
             </svg>
-            <svg viewBox="0 0 48 30" className="h-8 rounded-md shadow-sm border border-gray-200 bg-white">
+            <svg viewBox="0 0 48 30" className="h-8 rounded-md shadow-sm border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
               <rect width="48" height="30" rx="3" fill="#007BC1"/>
               <text x="24" y="14" textAnchor="middle" fill="white" fontSize="7.5" fontFamily="Arial, sans-serif" fontWeight="bold">AMERICAN</text>
               <text x="24" y="23" textAnchor="middle" fill="white" fontSize="7.5" fontFamily="Arial, sans-serif" fontWeight="bold">EXPRESS</text>
             </svg>
-            <svg viewBox="0 0 48 30" className="h-8 rounded-md shadow-sm border border-gray-200 bg-white">
+            <svg viewBox="0 0 48 30" className="h-8 rounded-md shadow-sm border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
               <rect width="48" height="30" rx="3" fill="#fff"/>
               <rect width="24" height="30" rx="0" fill="#005498"/>
               <rect x="24" width="24" height="30" rx="0" fill="#F7A800"/>
@@ -729,46 +729,46 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
         {/* Nom */}
         <div className="anim-fade-up" data-delay="0.15">
-          <label htmlFor="checkout-nom" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">{t('cart.full_name')} *</label>
+          <label htmlFor="checkout-nom" className="font-basecoat block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{t('cart.full_name')} *</label>
           <input
             id="checkout-nom"
             type="text"
             required
             value={formData.nom}
             onChange={(e) => setFormData({...formData, nom: e.target.value})}
-            className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white"
+            className="font-basecoat w-full rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white dark:bg-gray-900"
           />
         </div>
 
         {/* Email */}
         <div className="anim-fade-up" data-delay="0.2">
-          <label htmlFor="checkout-email" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">{t('cart.email')} *</label>
+          <label htmlFor="checkout-email" className="font-basecoat block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{t('cart.email')} *</label>
           <input
             id="checkout-email"
             type="email"
             required
             value={formData.email}
             onChange={(e) => setFormData({...formData, email: e.target.value})}
-            className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white"
+            className="font-basecoat w-full rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white dark:bg-gray-900"
           />
         </div>
 
         {/* Téléphone */}
         <div className="anim-fade-up" data-delay="0.25">
-          <label htmlFor="checkout-tel" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">{t('cart.phone')} *</label>
+          <label htmlFor="checkout-tel" className="font-basecoat block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{t('cart.phone')} *</label>
           <input
             id="checkout-tel"
             type="tel"
             required
             value={formData.telephone}
             onChange={(e) => setFormData({...formData, telephone: e.target.value})}
-            className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white"
+            className="font-basecoat w-full rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white dark:bg-gray-900"
           />
         </div>
 
         {/* ===== MODE DE LIVRAISON ===== */}
         <div className="anim-fade-up" data-delay="0.3">
-          <p className="font-basecoat block text-sm font-semibold text-gray-700 mb-3">{t('cart.delivery_mode')} *</p>
+          <p className="font-basecoat block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">{t('cart.delivery_mode')} *</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
             {/* Livraison à domicile */}
@@ -778,14 +778,14 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
               className={`flex items-center gap-3 p-4 rounded-xl border-2 transition text-left ${
                 deliveryMode === 'livraison'
                   ? 'border-benin-jaune bg-benin-jaune/10'
-                  : 'border-gray-200 bg-white hover:border-gray-300'
+                  : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:border-gray-300 dark:border-gray-600'
               }`}
             >
               <span className="text-2xl">🚚</span>
               <div>
-                <p className="font-basecoat font-bold text-gray-900 text-sm">{t('cart.home_delivery')}</p>
-                <p className="font-basecoat text-xs text-gray-500 mt-0.5">{t('cart.delivery_be_desc')}</p>
-                <p className="font-basecoat text-xs text-gray-400">{t('cart.delivery_eu_desc')}</p>
+                <p className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-sm">{t('cart.home_delivery')}</p>
+                <p className="font-basecoat text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-0.5">{t('cart.delivery_be_desc')}</p>
+                <p className="font-basecoat text-xs text-gray-400 dark:text-gray-500">{t('cart.delivery_eu_desc')}</p>
               </div>
             </button>
 
@@ -796,12 +796,12 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
               className={`flex items-center gap-3 p-4 rounded-xl border-2 transition text-left ${
                 deliveryMode === 'retrait'
                   ? 'border-benin-vert bg-benin-vert/10'
-                  : 'border-gray-200 bg-white hover:border-gray-300'
+                  : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:border-gray-300 dark:border-gray-600'
               }`}
             >
               <span className="text-2xl">🤝</span>
               <div>
-                <p className="font-basecoat font-bold text-gray-900 text-sm">{t('cart.pickup_label')}</p>
+                <p className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-sm">{t('cart.pickup_label')}</p>
                 <p className="font-basecoat text-xs text-benin-vert font-semibold mt-0.5">{t('cart.pickup_free_desc')}</p>
               </div>
             </button>
@@ -811,11 +811,11 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
         {/* ===== RETRAIT ===== */}
         {deliveryMode === 'retrait' && (
           <div className="anim-fade-up">
-            <p className="font-basecoat block text-sm font-semibold text-gray-700 mb-3">{t('cart.pickup_location_label')} *</p>
+            <p className="font-basecoat block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">{t('cart.pickup_location_label')} *</p>
             <div className="space-y-3">
 
               <label className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition ${
-                pickupLocation === 'grimbergen' ? 'border-benin-vert bg-benin-vert/10' : 'border-gray-200 bg-white'
+                pickupLocation === 'grimbergen' ? 'border-benin-vert bg-benin-vert/10' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900'
               }`}>
                 <input
                   type="radio"
@@ -827,13 +827,13 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                 />
                 <span className="text-xl">🇧🇪</span>
                 <div>
-                  <p className="font-basecoat font-bold text-gray-900 text-sm">Grimbergen</p>
-                  <p className="font-basecoat text-xs text-gray-500 mt-0.5">{t('cart.pickup_exact')}</p>
+                  <p className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-sm">Grimbergen</p>
+                  <p className="font-basecoat text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-0.5">{t('cart.pickup_exact')}</p>
                 </div>
               </label>
 
               <label className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition ${
-                pickupLocation === 'watermael' ? 'border-benin-vert bg-benin-vert/10' : 'border-gray-200 bg-white'
+                pickupLocation === 'watermael' ? 'border-benin-vert bg-benin-vert/10' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900'
               }`}>
                 <input
                   type="radio"
@@ -845,13 +845,13 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                 />
                 <span className="text-xl">🇧🇪</span>
                 <div>
-                  <p className="font-basecoat font-bold text-gray-900 text-sm">Watermael-Boisfort</p>
-                  <p className="font-basecoat text-xs text-gray-500 mt-0.5">{t('cart.pickup_exact')}</p>
+                  <p className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-sm">Watermael-Boisfort</p>
+                  <p className="font-basecoat text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-0.5">{t('cart.pickup_exact')}</p>
                 </div>
               </label>
 
               <label className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition ${
-                pickupLocation === 'benin' ? 'border-benin-vert bg-benin-vert/10' : 'border-gray-200 bg-white'
+                pickupLocation === 'benin' ? 'border-benin-vert bg-benin-vert/10' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900'
               }`}>
                 <input
                   type="radio"
@@ -863,8 +863,8 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                 />
                 <span className="text-xl">🇧🇯</span>
                 <div>
-                  <p className="font-basecoat font-bold text-gray-900 text-sm">Bénin — Cotonou</p>
-                  <p className="font-basecoat text-xs text-gray-500 mt-0.5">{t('cart.pickup_exact_benin')}</p>
+                  <p className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-sm">Bénin — Cotonou</p>
+                  <p className="font-basecoat text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-0.5">{t('cart.pickup_exact_benin')}</p>
                 </div>
               </label>
             </div>
@@ -877,14 +877,14 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
             {/* Pays */}
             <div>
-              <label htmlFor="checkout-country" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">
+              <label htmlFor="checkout-country" className="font-basecoat block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                 {t('cart.delivery_country')} *
               </label>
               <select
                 id="checkout-country"
                 value={country}
                 onChange={(e) => handleCountryChange(e.target.value)}
-                className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white"
+                className="font-basecoat w-full rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white dark:bg-gray-900"
               >
                 <option value="belgique">{t('cart.country_be_option')}</option>
                 <option value="europe">{t('cart.country_eu_option')}</option>
@@ -894,7 +894,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             {/* Code postal + Ville (côte à côte) */}
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label htmlFor="checkout-postal" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">
+                <label htmlFor="checkout-postal" className="font-basecoat block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                   {t('cart.postal_code')} *
                 </label>
                 <input
@@ -905,14 +905,14 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                   onChange={(e) => handlePostalCodeChange(e.target.value)}
                   placeholder={country === 'belgique' ? 'ex: 4000' : ''}
                   maxLength={10}
-                  className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white"
+                  className="font-basecoat w-full rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white dark:bg-gray-900"
                 />
               </div>
               <div>
-                <label htmlFor="checkout-city" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">
+                <label htmlFor="checkout-city" className="font-basecoat block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                   {t('cart.city')} *
                   {country === 'belgique' && (
-                    <span className="text-gray-400 font-normal ml-1">(auto)</span>
+                    <span className="text-gray-400 dark:text-gray-500 font-normal ml-1">(auto)</span>
                   )}
                 </label>
                 <input
@@ -922,14 +922,14 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   placeholder={t('cart.city')}
-                  className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white"
+                  className="font-basecoat w-full rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white dark:bg-gray-900"
                 />
               </div>
             </div>
 
             {/* Rue et numéro */}
             <div>
-              <label htmlFor="checkout-street" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">
+              <label htmlFor="checkout-street" className="font-basecoat block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                 {t('cart.street')} *
               </label>
               <input
@@ -939,7 +939,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
                 value={street}
                 onChange={(e) => setStreet(e.target.value)}
                 placeholder={t('cart.street_placeholder')}
-                className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white"
+                className="font-basecoat w-full rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition bg-white dark:bg-gray-900"
               />
             </div>
 
@@ -948,13 +948,13 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
         {/* Notes */}
         <div className="anim-fade-up" data-delay="0.35">
-          <label htmlFor="checkout-notes" className="font-basecoat block text-sm font-semibold text-gray-700 mb-2">{t('cart.notes_optional')}</label>
+          <label htmlFor="checkout-notes" className="font-basecoat block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{t('cart.notes_optional')}</label>
           <textarea
             id="checkout-notes"
             rows={3}
             value={formData.notes}
             onChange={(e) => setFormData({...formData, notes: e.target.value})}
-            className="font-basecoat w-full rounded-xl border border-gray-200 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition resize-none bg-white"
+            className="font-basecoat w-full rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune outline-none transition resize-none bg-white dark:bg-gray-900"
             placeholder={t('cart.notes_optional_placeholder')}
           />
         </div>
@@ -968,12 +968,12 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
         <button
           type="submit"
           disabled={loading}
-          className="anim-fade-up font-basecoat w-full border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm sm:text-base"
+          className="anim-fade-up font-basecoat w-full border-2 border-benin-jaune text-gray-900 dark:text-gray-100 hover:bg-benin-jaune hover:text-black dark:text-gray-100 py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm sm:text-base"
           data-delay="0.4"
         >
           {loading ? (
             <span className="inline-flex items-center justify-center gap-2">
-              <svg className="animate-spin h-5 w-5 text-black flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <svg className="animate-spin h-5 w-5 text-black dark:text-gray-100 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
               </svg>
@@ -991,7 +991,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
               isSubmittingRef.current = false;
               setError(t('cart.cancelled'));
             }}
-            className="font-basecoat w-full text-center py-3 text-gray-500 hover:text-gray-700 text-sm font-medium transition"
+            className="font-basecoat w-full text-center py-3 text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:text-gray-300 text-sm font-medium transition"
           >
             {t('cart.cancel')}
           </button>

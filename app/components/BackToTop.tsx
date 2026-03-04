@@ -17,7 +17,7 @@ export default function BackToTop() {
         visible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
       }`}
     >
-      <span className="font-basecoat text-xs tracking-widest text-gray-500 uppercase">
+      <span className="font-basecoat text-xs tracking-widest text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase">
         Haut
       </span>
       <span className="w-[2px] h-8 bg-benin-jaune group-hover:h-12 transition-all duration-300"></span>
