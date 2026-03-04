@@ -29,8 +29,8 @@ export default function CheckoutStepper({ currentStep }: CheckoutStepperProps) {
               <div
                 className={`stepper-step-circle text-sm font-bold
                   ${isDone    ? 'bg-benin-vert text-white' : ''}
-                  ${isActive  ? 'bg-benin-jaune text-black' : ''}
-                  ${isPending ? 'bg-gray-100 dark:bg-gray-800 text-gray-400' : ''}
+                  ${isActive  ? 'bg-benin-jaune text-black dark:text-gray-100' : ''}
+                  ${isPending ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500' : ''}
                 `}
               >
                 {isDone ? (
@@ -45,7 +45,7 @@ export default function CheckoutStepper({ currentStep }: CheckoutStepperProps) {
                 className={`font-basecoat text-xs uppercase tracking-widest hidden sm:block
                   ${isActive  ? 'text-gray-900 dark:text-gray-100 font-bold' : ''}
                   ${isDone    ? 'text-benin-vert font-semibold' : ''}
-                  ${isPending ? 'text-gray-400' : ''}
+                  ${isPending ? 'text-gray-400 dark:text-gray-500' : ''}
                 `}
               >
                 {step.label}

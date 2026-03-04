@@ -37,8 +37,8 @@ export default function DarkModeToggle({ transparent = false }: DarkModeTogglePr
       aria-label={dark ? 'Passer en mode clair' : 'Passer en mode sombre'}
       className={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors duration-200
         ${transparent
-          ? 'text-white/80 hover:text-white hover:bg-white/10'
-          : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+          ? 'text-white/80 hover:text-white hover:bg-white dark:bg-gray-900/10'
+          : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-800'
         }
       `}
     >

@@ -188,7 +188,7 @@ export default function Index() {
           <div className="mt-2 sm:mt-4 anim-fade-up flex flex-col items-center gap-2 sm:gap-3" data-delay="0.3">
             <Link
               to={lp('/realisations')}
-              className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+              className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
             >
               {t('home.hero_cta')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -201,7 +201,7 @@ export default function Index() {
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
 
         {/* ── Ticker social proof (superposé sur le hero, fond transparent) ── */}
-        <div className="absolute bottom-0 left-0 right-0 z-10 bg-white/10 backdrop-blur-sm py-3 overflow-hidden select-none">
+        <div className="absolute bottom-0 left-0 right-0 z-10 bg-white dark:bg-gray-900/10 backdrop-blur-sm py-3 overflow-hidden select-none">
           <div className="animate-ticker flex whitespace-nowrap w-max">
             {[0, 1].map((copy) => (
               <span key={copy} className="inline-flex items-center">
@@ -229,15 +229,15 @@ export default function Index() {
 
 
       {/* ── Nouveaux arrivages ── */}
-      <section id="nouveaux-arrivages" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-white">
+      <section id="nouveaux-arrivages" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <div className="mb-3 sm:mb-4">
-            <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+            <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">
               {t('home.new_creations')}
             </h2>
             <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
           </div>
-          <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mt-4 mb-8 sm:mb-10" data-delay="0.15">
+          <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mt-4 mb-8 sm:mb-10" data-delay="0.15">
             {t('home.new_creations_sub')}
           </p>
         </div>
@@ -247,10 +247,10 @@ export default function Index() {
             <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6" data-stagger="0.1">
               {featured.map((realisation) => (
                 <Link key={realisation.id} to={lp(`/realisations/${realisation.id}`)} className="group">
-                  <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 h-full flex flex-col">
+                  <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 h-full flex flex-col">
                     <div className="relative overflow-hidden aspect-square">
                       <div className="absolute top-2 left-2 z-10 flex flex-col gap-1">
-                        <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-benin-jaune text-black px-2 py-0.5 rounded-full">{t('home.badge_handmade')}</span>
+                        <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-benin-jaune text-black dark:text-gray-100 px-2 py-0.5 rounded-full">{t('home.badge_handmade')}</span>
                         <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-gray-800 text-white px-2 py-0.5 rounded-full">{t('home.badge_benin')}</span>
                       </div>
                       {realisation.image_url ? (
@@ -263,15 +263,15 @@ export default function Index() {
                           className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
-                        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                          <span className="font-basecoat text-gray-400 text-sm">{t('home.no_image')}</span>
+                        <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                          <span className="font-basecoat text-gray-400 dark:text-gray-500 text-sm">{t('home.no_image')}</span>
                         </div>
                       )}
                     </div>
                     <div className="p-4 flex flex-col flex-1 justify-between">
                       <div>
                         <div className="flex items-baseline justify-between gap-2 mb-3">
-                          <h3 className="font-basecoat font-semibold text-gray-900 text-base leading-snug">
+                          <h3 className="font-basecoat font-semibold text-gray-900 dark:text-gray-100 text-base leading-snug">
                             {realisation.title}
                           </h3>
                           {realisation.prix && (
@@ -296,7 +296,7 @@ export default function Index() {
             <div className="anim-fade-up text-center mt-10 sm:mt-12" data-delay="0.3">
               <Link
                 to={lp('/realisations')}
-                className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+                className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
               >
                 {t('home.see_all_shop_full')}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -306,29 +306,29 @@ export default function Index() {
             </div>
           </>
         ) : (
-          <p className="text-center text-gray-400 font-basecoat">{t('home.no_products')}</p>
+          <p className="text-center text-gray-400 dark:text-gray-500 font-basecoat">{t('home.no_products')}</p>
         )}
       </section>
 
       {/* ── Qui sommes-nous ── */}
-      <section id="qui-sommes-nous" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-6 sm:py-8 md:py-[60px] bg-beige">
+      <section id="qui-sommes-nous" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-6 sm:py-8 md:py-[60px] bg-beige dark:bg-gray-900">
         <div className="mb-8 sm:mb-10 md:mb-12">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('about.title')}
           </h2>
           <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.1"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
             <div className="order-2 md:order-1 anim-fade-right" data-delay="0.2">
-              <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
+              <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
                 {t('home.about_p1')}
               </p>
-              <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mt-4">
+              <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
                 {t('home.about_p2')}
               </p>
               <div className="mt-6">
                 <Link
                   to={lp('/qui-sommes-nous')}
-                  className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+                  className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
                 >
                   {t('home.atelier_cta')}
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -351,34 +351,34 @@ export default function Index() {
       </section>
 
       {/* ── Dans notre atelier ── */}
-      <section id="notre-atelier" className="bg-white px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]">
-        <div className="max-w-5xl mx-auto bg-beige rounded-3xl shadow-lg p-8 sm:p-10 md:p-14">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+      <section id="notre-atelier" className="bg-white dark:bg-gray-900 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]">
+        <div className="max-w-5xl mx-auto bg-beige dark:bg-gray-900 rounded-3xl shadow-lg p-8 sm:p-10 md:p-14">
+          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('home.atelier_title')}
           </h2>
           <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4 mb-6 sm:mb-8" data-delay="0.1"></div>
-          <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-10 sm:mb-12" data-delay="0.15">
+          <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-10 sm:mb-12" data-delay="0.15">
             {t('home.atelier_sub')}
           </p>
           <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6" data-stagger="0.1">
-            <div className="bg-white rounded-2xl shadow-sm border-t-4 border-benin-jaune min-h-[180px] p-6">
+            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border-t-4 border-benin-jaune min-h-[180px] p-6">
               <p className="font-basecoat text-3xl mb-3">✂️</p>
-              <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">{t('home.atelier_item1_title')}</h3>
-              <p className="font-basecoat text-sm text-gray-700 leading-relaxed">{t('home.atelier_item1_desc')}</p>
+              <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">{t('home.atelier_item1_title')}</h3>
+              <p className="font-basecoat text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{t('home.atelier_item1_desc')}</p>
             </div>
-            <div className="bg-white rounded-2xl shadow-sm border-t-4 border-benin-jaune min-h-[180px] p-6">
+            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border-t-4 border-benin-jaune min-h-[180px] p-6">
               <p className="font-basecoat text-3xl mb-3">🌿</p>
-              <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 mb-2">{t('home.atelier_item2_title')}</h3>
-              <p className="font-basecoat text-sm text-gray-700 leading-relaxed">{t('home.atelier_item2_desc')}</p>
+              <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">{t('home.atelier_item2_title')}</h3>
+              <p className="font-basecoat text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{t('home.atelier_item2_desc')}</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* ── Actualités ── */}
-      <section className="bg-beige">
+      <section className="bg-beige dark:bg-gray-900">
         <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] pt-6 sm:pt-8 md:pt-[60px] pb-8 sm:pb-10 md:pb-12">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900">
+          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('news.title')}
           </h2>
           <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
@@ -407,15 +407,15 @@ export default function Index() {
                         {new Date(actu.date).toLocaleDateString(locale === 'en' ? 'en-GB' : 'fr-FR', { day: "numeric", month: "long", year: "numeric" })}
                       </p>
                     )}
-                    <h3 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-5 leading-tight">
+                    <h3 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-5 leading-tight">
                       {actu.title}
                     </h3>
-                    <p className="mb-6 sm:mb-8 font-basecoat text-gray-700 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed">
+                    <p className="mb-6 sm:mb-8 font-basecoat text-gray-700 dark:text-gray-300 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed">
                       {actu.content}
                     </p>
                     <Link
                       to={lp('/actualites')}
-                      className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+                      className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
                     >
                       {t('home.see_all_news')}
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -429,16 +429,16 @@ export default function Index() {
           ))
         ) : (
           <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] pb-10">
-            <p className="text-center text-gray-500 text-base sm:text-lg font-basecoat">{t('home.no_news')}</p>
+            <p className="text-center text-gray-500 dark:text-gray-400 dark:text-gray-500 text-base sm:text-lg font-basecoat">{t('home.no_news')}</p>
           </div>
         )}
       </section>
 
       {/* ── Commandes personnalisées ── */}
-      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-white">
+      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <div className="mb-3 sm:mb-4">
-            <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 leading-tight">
+            <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
               {t('home.event_title')}
             </h2>
             <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
@@ -465,7 +465,7 @@ export default function Index() {
             px-4 py-3 text-sm
             text-center
             font-basecoat font-semibold
-            bg-white
+            bg-white dark:bg-gray-900
             border border-red-900/20
             text-red-900
             rounded-2xl
@@ -486,7 +486,7 @@ export default function Index() {
 
   {/* Colonne droite : Texte */}
   <div className="anim-fade-left order-1 md:order-2 text-center md:text-left" data-delay="0.3">
-    <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl mx-auto md:mx-0">
+    <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed max-w-xl mx-auto md:mx-0">
       {t('home.event_sub')}
     </p>
   </div>
@@ -499,7 +499,7 @@ export default function Index() {
 <div className="anim-fade-up text-center mt-8 sm:mt-10" data-delay="0.3">
   <Link
     to={lp('/commandes-personnalisees')}
-    className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+    className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
   >
     {t('common.learn_more')}
     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -531,7 +531,7 @@ export default function Index() {
   {/* Contenu texte */}
   <div className="relative z-10 h-full flex flex-col justify-center px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
     <div className="max-w-xl">
-      <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 leading-snug md:leading-tight">
+      <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100 leading-snug md:leading-tight">
         {t('home.location_title')}
       </h2>
 
@@ -541,7 +541,7 @@ export default function Index() {
       ></div>
 
       <p
-        className="anim-fade-up mt-6 mb-6 font-basecoat text-base sm:text-lg md:text-xl text-gray-800 leading-relaxed whitespace-pre-line"
+        className="anim-fade-up mt-6 mb-6 font-basecoat text-base sm:text-lg md:text-xl text-gray-800 dark:text-gray-200 leading-relaxed whitespace-pre-line"
         data-delay="0.2"
       >
         {t('home.location_desc')}

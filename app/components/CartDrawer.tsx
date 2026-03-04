@@ -71,14 +71,14 @@ export default function CartDrawer() {
             <h2 className="font-basecoat font-bold text-xl sm:text-2xl uppercase text-gray-900 dark:text-gray-100">
               Votre panier
             </h2>
-            <p className="font-basecoat text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+            <p className="font-basecoat text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-0.5">
               {totalItems} article{totalItems > 1 ? 's' : ''}
             </p>
           </div>
           <button
             ref={closeButtonRef}
             aria-label="Fermer le panier"
-            className="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
+            className="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:text-gray-100 dark:hover:text-gray-100 transition"
             onClick={() => setIsOpen(false)}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -95,13 +95,13 @@ export default function CartDrawer() {
                 <ShoppingCartIcon className="w-10 h-10 text-gray-200 dark:text-gray-600" strokeWidth={1} />
               </div>
               <div className="text-center">
-                <p className="text-gray-500 dark:text-gray-400 font-basecoat text-base font-semibold">Votre panier est vide</p>
+                <p className="text-gray-500 dark:text-gray-400 dark:text-gray-500 font-basecoat text-base font-semibold">Votre panier est vide</p>
                 <p className="text-gray-400 dark:text-gray-500 font-basecoat text-sm mt-1">Découvrez nos créations wax !</p>
               </div>
               <Link
                 to={lp('/realisations')}
                 onClick={() => setIsOpen(false)}
-                className="font-basecoat text-sm font-bold uppercase tracking-wider border-2 border-benin-jaune px-6 py-2.5 rounded-xl hover:bg-benin-jaune hover:text-black transition-all duration-200"
+                className="font-basecoat text-sm font-bold uppercase tracking-wider border-2 border-benin-jaune px-6 py-2.5 rounded-xl hover:bg-benin-jaune hover:text-black dark:text-gray-100 transition-all duration-200"
               >
                 Voir la boutique
               </Link>
@@ -138,7 +138,7 @@ export default function CartDrawer() {
                       <button
                         onClick={() => item.quantity > 1 && updateQuantity(item.id, item.quantity - 1)}
                         aria-label="Diminuer la quantité"
-                        className="w-9 h-9 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition font-bold"
+                        className="w-9 h-9 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 transition font-bold"
                       >
                         −
                       </button>
@@ -148,7 +148,7 @@ export default function CartDrawer() {
                       <button
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
                         aria-label="Augmenter la quantité"
-                        className="w-9 h-9 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition font-bold"
+                        className="w-9 h-9 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 transition font-bold"
                       >
                         +
                       </button>
@@ -176,7 +176,7 @@ export default function CartDrawer() {
           <div className="px-6 sm:px-8 py-5 border-t border-gray-100 dark:border-gray-700 space-y-3">
             {/* Subtotal */}
             <div className="flex justify-between items-center">
-              <span className="font-basecoat text-gray-500 dark:text-gray-400 text-sm uppercase tracking-wider">Sous-total</span>
+              <span className="font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm uppercase tracking-wider">Sous-total</span>
               <span className="font-basecoat font-bold text-2xl text-gray-900 dark:text-gray-100">{total.toFixed(2)} €</span>
             </div>
 
@@ -188,13 +188,13 @@ export default function CartDrawer() {
             <Link
               to={lp('/panier')}
               onClick={() => setIsOpen(false)}
-              className="block w-full bg-benin-jaune text-black text-center py-4 rounded-xl font-basecoat font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:bg-benin-ocre text-sm sm:text-base"
+              className="block w-full bg-benin-jaune text-black dark:text-gray-100 text-center py-4 rounded-xl font-basecoat font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:bg-benin-ocre text-sm sm:text-base"
             >
               Commander →
             </Link>
             <button
               onClick={() => setIsOpen(false)}
-              className="w-full py-3 rounded-xl font-basecoat font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition text-sm"
+              className="w-full py-3 rounded-xl font-basecoat font-semibold text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:text-gray-100 dark:hover:text-gray-100 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:border-gray-600 dark:hover:border-gray-600 transition text-sm"
             >
               Continuer les achats
             </button>

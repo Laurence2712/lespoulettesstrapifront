@@ -154,7 +154,7 @@ function FaqAccordion({ section }: { section: FaqSection }) {
 
   return (
     <div className="mb-10 sm:mb-12">
-      <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900 mb-5 flex items-center gap-3">
+      <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-5 flex items-center gap-3">
         <span>{section.emoji}</span>
         <span>{section.title}</span>
       </h2>
@@ -164,13 +164,13 @@ function FaqAccordion({ section }: { section: FaqSection }) {
           return (
             <div
               key={idx}
-              className="border border-gray-200 rounded-2xl overflow-hidden bg-white"
+              className="border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden bg-white dark:bg-gray-900"
             >
               <button
                 type="button"
                 onClick={() => setOpenIndex(isOpen ? null : idx)}
                 aria-expanded={isOpen}
-                className="w-full flex items-center justify-between gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left font-basecoat font-semibold text-gray-900 text-sm sm:text-base hover:bg-white transition-colors"
+                className="w-full flex items-center justify-between gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left font-basecoat font-semibold text-gray-900 dark:text-gray-100 text-sm sm:text-base hover:bg-white dark:bg-gray-900 transition-colors"
               >
                 <span className="flex-1">{item.question}</span>
                 <span
@@ -192,8 +192,8 @@ function FaqAccordion({ section }: { section: FaqSection }) {
               </button>
               {isOpen && (
                 <div className="px-5 sm:px-6 pb-5">
-                  <div className="border-t border-gray-100 pt-4">
-                    <p className="font-basecoat text-gray-600 text-sm sm:text-base leading-relaxed">
+                  <div className="border-t border-gray-100 dark:border-gray-700 pt-4">
+                    <p className="font-basecoat text-gray-600 dark:text-gray-400 dark:text-gray-500 text-sm sm:text-base leading-relaxed">
                       {item.answer}
                     </p>
                   </div>
@@ -222,20 +222,20 @@ export default function FAQ() {
         <Link to={lp("/")} className="text-benin-jaune hover:text-benin-jaune/70 font-medium transition">
           {t('common.home')}
         </Link>
-        <span className="mx-1.5 sm:mx-2 text-gray-400">/</span>
-        <span className="text-gray-600">{t('faq.breadcrumb')}</span>
+        <span className="mx-1.5 sm:mx-2 text-gray-400 dark:text-gray-500">/</span>
+        <span className="text-gray-600 dark:text-gray-400 dark:text-gray-500">{t('faq.breadcrumb')}</span>
       </nav>
 
       {/* Titre */}
       <h1
-        className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900"
+        className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100"
         data-delay="0.1"
       >
         {t('faq.title')}
       </h1>
       <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.15"></div>
       <p
-        className="anim-fade-up font-basecoat text-gray-500 text-sm sm:text-base mt-3 mb-10 sm:mb-12 md:mb-16 max-w-xl"
+        className="anim-fade-up font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm sm:text-base mt-3 mb-10 sm:mb-12 md:mb-16 max-w-xl"
         data-delay="0.2"
       >
         {t('faq.intro_text')}
@@ -249,11 +249,11 @@ export default function FAQ() {
       </div>
 
       {/* CTA Contact */}
-      <div className="anim-fade-up mt-10 sm:mt-12 p-6 sm:p-8 bg-white border border-gray-200 rounded-2xl max-w-xl" data-delay="0.3">
-        <h2 className="font-basecoat font-bold text-gray-900 text-lg sm:text-xl uppercase mb-2">
+      <div className="anim-fade-up mt-10 sm:mt-12 p-6 sm:p-8 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl max-w-xl" data-delay="0.3">
+        <h2 className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-lg sm:text-xl uppercase mb-2">
           {t('faq.cta_title')}
         </h2>
-        <p className="font-basecoat text-gray-600 text-sm sm:text-base mb-5">
+        <p className="font-basecoat text-gray-600 dark:text-gray-400 dark:text-gray-500 text-sm sm:text-base mb-5">
           {t('faq.cta_desc')}
         </p>
         <div className="flex flex-wrap gap-3">
@@ -270,7 +270,7 @@ export default function FAQ() {
           </a>
           <Link
             to={lp("/contact")}
-            className="font-basecoat inline-flex items-center gap-2 border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black font-bold px-5 py-2.5 rounded-xl transition hover:scale-105 text-sm"
+            className="font-basecoat inline-flex items-center gap-2 border-2 border-benin-jaune text-gray-900 dark:text-gray-100 hover:bg-benin-jaune hover:text-black dark:text-gray-100 font-bold px-5 py-2.5 rounded-xl transition hover:scale-105 text-sm"
           >
             {t('faq.contact_us')}
           </Link>

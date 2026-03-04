@@ -286,17 +286,33 @@ body {
   color: #F5F1E8;
 }
 
-/* Force text colors in dark mode (override hardcoded Tailwind utilities) */
-.dark .text-black,
-.dark .text-gray-900 { color: #F5F1E8 !important; }
-.dark .text-gray-800 { color: #e5e7eb !important; }
-.dark .text-gray-700 { color: #d1d5db !important; }
-.dark .text-gray-600 { color: #9ca3af !important; }
+/* Force native input/select/textarea backgrounds in dark mode */
+.dark input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+.dark textarea,
+.dark select {
+  background-color: #1E1A14;
+  color: #F5F1E8;
+  border-color: #2d2922;
+}
 
-/* Backgrounds */
-.dark .bg-white     { background-color: #1E1A14 !important; }
-.dark .bg-beige,
-.dark .bg-\[#F5F1E8\] { background-color: #16130E !important; }
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #6b7280;
+}
+
+/* Tables */
+.dark table { border-color: #2d2922; }
+.dark thead tr { background-color: #1E1A14; }
+.dark tbody tr:nth-child(even) { background-color: #1a1710; }
+
+/* Prose / rich text content */
+.dark .prose p,
+.dark .prose li,
+.dark .prose blockquote { color: #d1d5db; }
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3,
+.dark .prose h4 { color: #F5F1E8; }
 
 /* ── Reduced motion : désactive les animations CSS pour les utilisateurs sensibles ── */
 @media (prefers-reduced-motion: reduce) {

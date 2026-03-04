@@ -82,8 +82,8 @@ export default function NewsletterForm({ variant = 'dark' }: NewsletterFormProps
         required
         className={`font-basecoat flex-1 rounded-xl px-4 py-3 text-sm outline-none transition focus:ring-2 focus:ring-offset-1
           ${isLight
-            ? 'border border-black/20 bg-white text-gray-900 placeholder-gray-400 focus:ring-black/30'
-            : 'border border-gray-700 bg-gray-800 text-white placeholder-gray-500 focus:ring-benin-jaune focus:border-benin-jaune'
+            ? 'border border-black/20 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-black/30'
+            : 'border border-gray-700 bg-gray-800 text-white placeholder-gray-500 dark:placeholder-gray-600 focus:ring-benin-jaune focus:border-benin-jaune'
           }`}
       />
       <button
@@ -92,7 +92,7 @@ export default function NewsletterForm({ variant = 'dark' }: NewsletterFormProps
         className={`font-basecoat font-bold uppercase tracking-wider px-6 py-3 rounded-xl transition-all duration-200 hover:scale-[1.02] text-sm whitespace-nowrap disabled:opacity-60
           ${isLight
             ? 'bg-black hover:bg-gray-900 text-white'
-            : 'border-2 border-benin-jaune text-white hover:bg-benin-jaune hover:text-black'
+            : 'border-2 border-benin-jaune text-white hover:bg-benin-jaune hover:text-black dark:text-gray-100'
           }`}
       >
         {isSubmitting ? 'Envoi...' : "S'inscrire"}
