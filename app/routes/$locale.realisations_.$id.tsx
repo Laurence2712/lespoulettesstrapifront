@@ -11,6 +11,21 @@ import CartDrawer from '../components/CartDrawer';
 import { useLocalePath } from '../hooks/useLocalePath';
 import { useTranslation } from 'react-i18next';
 
+// Detect when main CTA scrolls out of view → show sticky bar on mobile
+function useStickyCTA(ref: React.RefObject<HTMLElement | null>) {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    if (!ref.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setShow(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [ref]);
+  return show;
+}
+
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   const title = data?.realisation?.title;
   const description = data?.realisation?.description;
@@ -226,7 +241,9 @@ export default function RealisationDetail() {
   }, [searchParams, realisation]);
 
   const imageRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
   const scrollRef = useScrollAnimations([]);
+  const showStickyCTA = useStickyCTA(ctaRef);
 
   if (error || !realisation) {
     return (
@@ -609,11 +626,11 @@ export default function RealisationDetail() {
 
             {/* Bouton panier */}
             {hasDeclinaisons && (
-              <div className="mt-auto pt-2">
+              <div className="mt-auto pt-2" ref={ctaRef}>
                 <button
                   onClick={handleAddToCart}
                   disabled={!selectedDeclinaison || !isInStock}
-                  className={`w-full py-4 rounded-xl font-bold uppercase text-base tracking-wider transition-all duration-200 ${
+                  className={`w-full py-4 rounded-xl font-bold uppercase text-base tracking-wider transition-all duration-200 font-basecoat ${
                     selectedDeclinaison && isInStock
                       ? 'border-2 border-benin-jaune text-gray-900 hover:bg-benin-jaune hover:text-black hover:scale-[1.02] hover:shadow-lg'
                       : 'bg-gray-200 text-gray-400 cursor-not-allowed'
@@ -678,6 +695,36 @@ export default function RealisationDetail() {
           </div>
         )}
       </div>
+
+      {/* ── Sticky mobile CTA ── */}
+      {showStickyCTA && hasDeclinaisons && (
+        <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-700 px-4 py-3 shadow-2xl animate-sticky-bar-in">
+          <div className="flex items-center gap-3">
+            <div className="flex-1 min-w-0">
+              <p className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-sm truncate uppercase">{realisation.title}</p>
+              {realisation.prix && (
+                <p className="font-basecoat text-benin-jaune font-bold text-lg">{realisation.prix} €</p>
+              )}
+            </div>
+            <button
+              onClick={handleAddToCart}
+              disabled={!selectedDeclinaison || !isInStock}
+              className={`flex-shrink-0 inline-flex items-center gap-2 px-5 py-3 rounded-xl font-basecoat font-bold uppercase tracking-wide text-sm transition-all duration-200 ${
+                selectedDeclinaison && isInStock
+                  ? 'bg-benin-jaune text-black hover:bg-benin-ocre hover:scale-105 shadow-md'
+                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              }`}
+            >
+              <ShoppingCartIcon className="w-4 h-4" />
+              {!selectedDeclinaison
+                ? 'Choisir'
+                : !isInStock
+                ? 'Épuisé'
+                : 'Ajouter'}
+            </button>
+          </div>
+        </div>
+      )}
 
       <CartDrawer />
     </>
