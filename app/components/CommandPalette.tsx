@@ -100,7 +100,7 @@ export default function CommandPalette() {
             value={query}
             onChange={e => { setQuery(e.target.value); setSelected(0); }}
             onKeyDown={onKeyDown}
-            placeholder="Rechercher un produit…"
+            placeholder=""
             className="flex-1 bg-transparent font-basecoat text-gray-900 dark:text-gray-100 placeholder-gray-400 text-base outline-none"
             autoComplete="off"
           />

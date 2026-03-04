@@ -4,7 +4,7 @@ import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import { useTranslation } from "react-i18next";
 import { useCartStore } from "../store/cartStore";
 import { useLocalePath, useLocale } from "../hooks/useLocalePath";
-import DarkModeToggle from "./DarkModeToggle";
+import DarkModeToggle, { useDarkMode } from "./DarkModeToggle";
 
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
@@ -20,6 +20,8 @@ export default function NavBar() {
 
   const getTotalItems = useCartStore((state) => state.getTotalItems);
   const totalItems = mounted ? getTotalItems() : 0;
+
+  const { dark } = useDarkMode();
 
   const isHomePage =
     location.pathname === `/${locale}` || location.pathname === `/${locale}/`;
@@ -64,7 +66,7 @@ export default function NavBar() {
 
             <Link to={lp("/")} className="flex items-center">
               <img
-                src={isTransparent ? "/assets/logo_t_poulettes_white.png" : "/assets/logo_t_poulettes.png"}
+                src={(isTransparent || dark) ? "/assets/logo_t_poulettes_white.png" : "/assets/logo_t_poulettes.png"}
                 alt="Les Poulettes"
                 className={`h-16 sm:h-24 md:h-28 lg:h-40 w-auto max-w-[200px] sm:max-w-[240px] lg:max-w-[300px] block object-contain transition-transform duration-500 ease-in-out ${
                   scrolled ? "scale-90" : "scale-100"
