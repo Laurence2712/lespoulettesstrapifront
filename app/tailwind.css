@@ -286,6 +286,18 @@ body {
   color: #F5F1E8;
 }
 
+/* Force text colors in dark mode (override hardcoded Tailwind utilities) */
+.dark .text-black,
+.dark .text-gray-900 { color: #F5F1E8 !important; }
+.dark .text-gray-800 { color: #e5e7eb !important; }
+.dark .text-gray-700 { color: #d1d5db !important; }
+.dark .text-gray-600 { color: #9ca3af !important; }
+
+/* Backgrounds */
+.dark .bg-white     { background-color: #1E1A14 !important; }
+.dark .bg-beige,
+.dark .bg-\[#F5F1E8\] { background-color: #16130E !important; }
+
 /* ── Reduced motion : désactive les animations CSS pour les utilisateurs sensibles ── */
 @media (prefers-reduced-motion: reduce) {
   .anim-fade-up,
