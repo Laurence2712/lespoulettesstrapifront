@@ -52,7 +52,7 @@ export default function QuiSommesNous() {
 
 
       {/* ── Notre histoire ── */}
-      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
+      <section className="bg-white dark:bg-gray-950 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           <div className="anim-fade-right order-2 md:order-1" data-delay="0.1">
             <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">
@@ -98,7 +98,7 @@ export default function QuiSommesNous() {
       </section>
 
       {/* ── Nos valeurs ── */}
-      <section className="bg-white dark:bg-gray-900 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
+      <section className="bg-beige dark:bg-gray-900 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
         <div className="mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('about.values_title')}
@@ -152,7 +152,7 @@ export default function QuiSommesNous() {
       </section>
 
       {/* ── Dans notre atelier ── */}
-      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24 bg-beige dark:bg-gray-900">
+      <section className="bg-white dark:bg-gray-950 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           <div className="anim-fade-right" data-delay="0.1">
             <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">
@@ -176,7 +176,7 @@ export default function QuiSommesNous() {
       </section>
 
       {/* ── Impact social ── */}
-      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
+      <section className="bg-beige dark:bg-gray-900 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
         <div className="mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('about.impact_title')}

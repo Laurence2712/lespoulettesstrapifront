@@ -77,7 +77,7 @@ export default function NavBar() {
             {/* Hamburger button */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="md:hidden group flex items-center gap-1.5 sm:gap-2 focus:outline-none px-2 sm:px-3 py-2 rounded-lg transition"
+              className="xl:hidden group flex items-center gap-1.5 sm:gap-2 focus:outline-none px-2 sm:px-3 py-2 rounded-lg transition"
               aria-label={menuOpen ? t("nav.aria_close") : t("nav.aria_open")}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
@@ -164,7 +164,7 @@ export default function NavBar() {
           </div>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-3 lg:gap-5">
+          <div className="hidden xl:flex items-center gap-3 xl:gap-5">
             {[
               { path: "/qui-sommes-nous",           label: t("nav.about") },
               { path: "/realisations",              label: t("nav.shop") },
@@ -210,7 +210,8 @@ export default function NavBar() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-14 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 shadow-lg rounded-xl overflow-hidden opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-200">
+              <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-14 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-200">
+              <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 shadow-lg rounded-xl overflow-hidden">
                 {["fr", "en"].map((lang) => (
                   <Link
                     key={lang}
@@ -222,6 +223,7 @@ export default function NavBar() {
                     {lang.toUpperCase()}
                   </Link>
                 ))}
+              </div>
               </div>
             </div>
 
@@ -246,7 +248,7 @@ export default function NavBar() {
           {/* Mobile: cart only */}
           <Link
             to={lp("/panier")}
-            className="relative md:hidden font-basecoat inline-flex items-center gap-2 border-2 border-benin-jaune text-gray-900 dark:text-gray-100 hover:bg-benin-jaune hover:text-black dark:text-gray-100 px-4 py-2.5 rounded-xl font-semibold transition hover:scale-105 text-base"
+            className="relative xl:hidden font-basecoat inline-flex items-center gap-2 border-2 border-benin-jaune text-gray-900 dark:text-gray-100 hover:bg-benin-jaune hover:text-black dark:text-gray-100 px-4 py-2.5 rounded-xl font-semibold transition hover:scale-105 text-base"
             aria-label={t("nav.cart_label")}
           >
             <ShoppingCartIcon className="w-6 h-6" />

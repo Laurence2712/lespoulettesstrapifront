@@ -123,7 +123,7 @@ export default function CommandPalette() {
           {!query && (
             <div className="px-4 py-6 text-center font-basecoat text-gray-400 dark:text-gray-500 text-sm">
               <span className="block mb-1 text-2xl">🔍</span>
-              Tapez pour rechercher parmi nos créations
+              Que recherchez-vous ?
             </div>
           )}
 
