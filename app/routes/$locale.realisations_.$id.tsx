@@ -614,15 +614,6 @@ export default function RealisationDetail() {
               </div>
             )}
 
-            {/* Lien guide des tailles */}
-            <div className="mb-4">
-              <Link
-                to={lp("/guide-des-tailles")}
-                className="font-basecoat text-xs text-benin-jaune hover:text-benin-terre underline transition"
-              >
-                {t('sizes.title')} →
-              </Link>
-            </div>
 
             {/* Bouton panier */}
             {hasDeclinaisons && (

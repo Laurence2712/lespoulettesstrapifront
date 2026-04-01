@@ -77,7 +77,7 @@ export default function NavBar() {
             {/* Hamburger button */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="group flex items-center gap-1.5 sm:gap-2 focus:outline-none px-2 sm:px-3 py-2 rounded-lg transition"
+              className="md:hidden group flex items-center gap-1.5 sm:gap-2 focus:outline-none px-2 sm:px-3 py-2 rounded-lg transition"
               aria-label={menuOpen ? t("nav.aria_close") : t("nav.aria_open")}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
@@ -166,9 +166,11 @@ export default function NavBar() {
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-3 lg:gap-5">
             {[
-              { path: "/realisations", label: t("nav.shop") },
-              { path: "/actualites",   label: t("nav.news") },
-              { path: "/contact",      label: t("nav.contact") },
+              { path: "/qui-sommes-nous",           label: t("nav.about") },
+              { path: "/realisations",              label: t("nav.shop") },
+              { path: "/commandes-personnalisees",  label: t("nav.custom") },
+              { path: "/actualites",                label: t("nav.news") },
+              { path: "/contact",                   label: t("nav.contact") },
             ].map(({ path, label }) => (
               <Link
                 key={path}
@@ -186,32 +188,42 @@ export default function NavBar() {
               onClick={openSearch}
               aria-label="Rechercher (Ctrl+K)"
               title="Rechercher (Ctrl+K)"
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border transition-colors duration-200 font-basecoat text-xs font-semibold
+              className={`p-1.5 rounded-md transition-colors duration-200
                 ${isTransparent
-                  ? "border-white/30 text-white/70 hover:border-white/60 hover:text-white hover:bg-white dark:bg-gray-900/10"
-                  : "border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:border-benin-jaune/50 hover:text-benin-jaune dark:hover:border-benin-jaune/40"
+                  ? "text-white/70 hover:text-white"
+                  : "text-gray-500 dark:text-gray-400 hover:text-benin-jaune dark:hover:text-benin-jaune"
                 }
               `}
             >
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
               </svg>
-              <kbd className="hidden lg:inline opacity-60">Ctrl+K</kbd>
             </button>
 
-            {/* Dark mode toggle */}
-            <DarkModeToggle transparent={isTransparent} />
-
-            {/* Language */}
-            <Link
-              to={otherLocalePath}
-              className={`font-basecoat font-semibold uppercase tracking-wide hover:text-benin-jaune transition-colors duration-300 text-sm ${
+            {/* Language dropdown */}
+            <div className="relative group">
+              <button className={`font-basecoat font-semibold uppercase tracking-wide text-sm flex items-center gap-1 transition-colors duration-300 hover:text-benin-jaune ${
                 isTransparent ? "text-white/70" : "text-gray-400 dark:text-gray-500"
-              }`}
-              title={otherLocale === "en" ? "Switch to English" : "Passer en français"}
-            >
-              {otherLocale.toUpperCase()}
-            </Link>
+              }`}>
+                {locale.toUpperCase()}
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-14 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 shadow-lg rounded-xl overflow-hidden opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-200">
+                {["fr", "en"].map((lang) => (
+                  <Link
+                    key={lang}
+                    to={location.pathname.replace(`/${locale}`, `/${lang}`)}
+                    className={`block px-3 py-2 font-basecoat font-semibold uppercase text-xs tracking-wide text-center transition-colors hover:text-benin-jaune hover:bg-gray-50 dark:hover:bg-gray-800 ${
+                      locale === lang ? "text-benin-jaune" : "text-gray-700 dark:text-gray-300"
+                    }`}
+                  >
+                    {lang.toUpperCase()}
+                  </Link>
+                ))}
+              </div>
+            </div>
 
             {/* Cart */}
             <Link

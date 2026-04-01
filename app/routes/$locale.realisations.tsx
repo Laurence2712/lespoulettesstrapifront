@@ -307,11 +307,6 @@ export default function Realisations() {
               className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4"
               data-delay="0.15"
             ></div>
-            <p className="anim-fade-up font-basecoat text-xs text-gray-400 dark:text-gray-500 mt-3" data-delay="0.2">
-              <Link to={lp('/guide-des-tailles')} className="text-benin-jaune hover:text-benin-terre hover:underline transition font-semibold">
-                {t('sizes.title')} →
-              </Link>
-            </p>
           </div>
           <div className="anim-fade-up flex items-center gap-2" data-delay="0.2">
             <label

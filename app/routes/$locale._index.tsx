@@ -182,9 +182,7 @@ export default function Index() {
           <h1 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-[44px] font-bold uppercase tracking-wide mb-6 sm:mb-8 mt-10 sm:mt-14 md:mt-16 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-tight lg:leading-snug">
             {t('home.hero_title')}
           </h1>
-          <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl italic text-benin-ocre mb-8 px-4 max-w-[85%] sm:max-w-[70%] text-center leading-relaxed" data-delay="0.2">
-            {t('home.hero_subtitle')}
-          </p>
+
           <div className="mt-2 sm:mt-4 anim-fade-up flex flex-col items-center gap-2 sm:gap-3" data-delay="0.3">
             <Link
               to={lp('/realisations')}
@@ -195,13 +193,13 @@ export default function Index() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </Link>
-            <span className="font-basecoat text-xs text-white/60 tracking-widest uppercase">{t('home.ticker_handmade')}</span>
+
           </div>
         </div>
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
 
         {/* ── Ticker social proof (superposé sur le hero, fond transparent) ── */}
-        <div className="absolute bottom-0 left-0 right-0 z-10 bg-white dark:bg-gray-900/10 backdrop-blur-sm py-3 overflow-hidden select-none">
+        <div className="absolute bottom-0 left-0 right-0 z-10 bg-gray-900/10 backdrop-blur-sm py-3 overflow-hidden select-none">
           <div className="animate-ticker flex whitespace-nowrap w-max">
             {[0, 1].map((copy) => (
               <span key={copy} className="inline-flex items-center">

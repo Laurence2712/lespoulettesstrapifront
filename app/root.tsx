@@ -19,7 +19,6 @@ import Footer from "./components/footer";
 import CookieBanner from "./components/CookieBanner";
 import BackToTop from "./components/BackToTop";
 import { ToastProvider } from "./components/ToastProvider";
-import CustomCursor from "./components/CustomCursor";
 import CommandPalette from "./components/CommandPalette";
 import { useCartStore } from "./store/cartStore";
 import i18next from "./i18n.server";
@@ -179,8 +178,7 @@ export default function App() {
       <Outlet />
 
       {/* Global UI layers */}
-      <CustomCursor />
-      <CommandPalette />
+<CommandPalette />
     </ToastProvider>
   );
 }
