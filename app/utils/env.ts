@@ -1,1 +1,1 @@
-export const STRAPI_URL = process.env.STRAPI_URL;
+export const SITE_URL = process.env.SITE_URL ?? 'https://lespoulettes.be';
