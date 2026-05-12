@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLoaderData, useNavigate } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs } from '@remix-run/node';
-import { apiEndpoints, getImageUrl } from '../config/api';
+import { realisations as allRealisations, getCoupsDeCoeur } from '../data/realisations';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 import { useTranslation } from 'react-i18next';
 import { useLocalePath } from '../hooks/useLocalePath';
@@ -55,78 +55,29 @@ interface LoaderData {
 }
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  const locale = params.locale ?? 'fr';
-  const endpoints = apiEndpoints(locale);
-  const baseUrl = endpoints.realisations.split('?')[0];
+  const realisations: Realisation[] = allRealisations.map((r) => ({
+    id: r.id,
+    title: r.title,
+    image_url: r.image_url,
+    description: r.description,
+    prix: r.prix,
+    isNew: r.isNew,
+    totalStock: r.totalStock ?? null,
+    categorie: r.categorie,
+  }));
 
-  try {
-    const url = `${baseUrl}?populate[0]=ImagePrincipale&populate[1]=Images&populate[2]=Declinaison&populate[3]=Declinaison.Image&locale=${locale}`;
-    const response = await fetch(url);
+  const coupsDeCoeur: CoupDeCoeur[] = getCoupsDeCoeur().map((c) => ({
+    id: c.id,
+    productId: c.productId,
+    productTitle: c.productTitle,
+    prix: c.prix,
+    image_url: c.image_url,
+    motif: c.motif,
+  }));
 
-    if (!response.ok) {
-      throw new Error(`Erreur HTTP : ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    if (data?.data) {
-      const coupsDeCoeur: CoupDeCoeur[] = [];
-
-      const realisations: Realisation[] = data.data.map((realisation: any) => {
-        // Extraire les coups de cœur
-        if (Array.isArray(realisation.Declinaison)) {
-          realisation.Declinaison.forEach((decl: any) => {
-            if (decl.CoupDeCoeur === true) {
-              const imgUrl = decl.Image?.url
-                ? getImageUrl(decl.Image.url)
-                : realisation.ImagePrincipale?.url
-                  ? getImageUrl(realisation.ImagePrincipale.url)
-                  : realisation.Images?.[0]?.url
-                    ? getImageUrl(realisation.Images[0].url)
-                    : '';
-              coupsDeCoeur.push({
-                id: decl.id,
-                productId: realisation.documentId,
-                productTitle: realisation.Titre || 'Titre indisponible',
-                prix: realisation.Prix,
-                image_url: imgUrl,
-                motif: decl.Description || '',
-              });
-            }
-          });
-        }
-
-        return {
-          id: realisation.documentId,
-          title: realisation.Titre || 'Titre indisponible',
-          image_url: realisation.ImagePrincipale?.url
-            ? getImageUrl(realisation.ImagePrincipale.url)
-            : realisation.Images?.[0]?.url
-              ? getImageUrl(realisation.Images[0].url)
-              : undefined,
-          description: realisation.Description || '',
-          prix: realisation.Prix,
-          isNew: realisation.isNew || false,
-          totalStock: Array.isArray(realisation.Declinaison)
-            ? realisation.Declinaison.reduce((sum: number, d: any) => sum + (d.Stock ?? 0), 0)
-            : null,
-          categorie: realisation.Categorie || undefined,
-        };
-      });
-
-      return json<LoaderData>({ realisations, coupsDeCoeur, error: null }, {
-        headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=60' },
-      });
-    }
-
-    return json<LoaderData>({ realisations: [], coupsDeCoeur: [], error: 'Aucune réalisation trouvée.' });
-  } catch (err: any) {
-    return json<LoaderData>({
-      realisations: [],
-      coupsDeCoeur: [],
-      error: 'Erreur lors du chargement des réalisations',
-    });
-  }
+  return json<LoaderData>({ realisations, coupsDeCoeur, error: null }, {
+    headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=60' },
+  });
 }
 
 const REGION_KEY = 'lespoulettes_region';

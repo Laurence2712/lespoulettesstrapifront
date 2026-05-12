@@ -3,7 +3,7 @@ import { Link, useNavigate, useLoaderData, useSearchParams } from '@remix-run/re
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
-import { apiEndpoints, getImageUrl } from '../config/api';
+import { getRealisationById, getRelatedRealisations } from '../data/realisations';
 import { useCartStore } from '../store/cartStore';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 import { useToast } from '../components/ToastProvider';
@@ -108,106 +108,34 @@ interface LoaderData {
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { id } = params;
-  const locale = params.locale ?? 'fr';
-  const endpoints = apiEndpoints(locale);
-  const baseUrl = endpoints.realisations.split('?')[0];
-
-  try {
-    const productUrl = `${baseUrl}/${id}?populate[0]=Images&populate[1]=Declinaison&populate[2]=Declinaison.Image&locale=${locale}`;
-    const relatedUrl = `${baseUrl}?populate[0]=ImagePrincipale&populate[1]=Images&pagination[limit]=5&locale=${locale}`;
-
-    const [response, relatedRes] = await Promise.all([
-      fetch(productUrl),
-      fetch(relatedUrl).catch(() => null),
-    ]);
-
-    if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
-    const data = await response.json();
-
-    // Produits similaires
-    let relatedProducts: RelatedProduct[] = [];
-    if (relatedRes?.ok) {
-      const relatedData = await relatedRes.json();
-      if (relatedData?.data) {
-        relatedProducts = relatedData.data
-          .filter((r: any) => r.documentId !== id)
-          .slice(0, 4)
-          .map((r: any) => ({
-            id: r.documentId,
-            title: r.Titre || 'Titre indisponible',
-            image_url: r.ImagePrincipale?.url
-              ? getImageUrl(r.ImagePrincipale.url)
-              : r.Images?.[0]?.url
-                ? getImageUrl(r.Images[0].url)
-                : '',
-            prix: r.Prix,
-          }));
-      }
-    }
-
-    if (data?.data) {
-      const item = data.data;
-
-      const declinaisons: Declinaison[] =
-        item.Declinaison?.map((decl: any) => {
-          const imgData = decl.Image;
-          const image: ImageData = imgData
-            ? {
-                id: imgData.id,
-                url: getImageUrl(imgData.url),
-                formats: imgData.formats
-                  ? {
-                      large: imgData.formats.large ? { url: getImageUrl(imgData.formats.large.url) } : undefined,
-                      medium: imgData.formats.medium ? { url: getImageUrl(imgData.formats.medium.url) } : undefined,
-                      small: imgData.formats.small ? { url: getImageUrl(imgData.formats.small.url) } : undefined,
-                      thumbnail: imgData.formats.thumbnail ? { url: getImageUrl(imgData.formats.thumbnail.url) } : undefined,
-                    }
-                  : undefined,
-              }
-            : { id: 0, url: '' };
-
-          return {
-            id: decl.id,
-            Stock: decl.Stock ?? 0,
-            Description: decl.Description ?? '',
-            Image: image,
-          };
-        }) || [];
-
-      const mainImages: ImageData[] =
-        item.Images?.map((img: any) => ({
-          id: img.id,
-          url: getImageUrl(img.url),
-          formats: img.formats
-            ? {
-                large: img.formats.large ? { url: getImageUrl(img.formats.large.url) } : undefined,
-                medium: img.formats.medium ? { url: getImageUrl(img.formats.medium.url) } : undefined,
-                small: img.formats.small ? { url: getImageUrl(img.formats.small.url) } : undefined,
-                thumbnail: img.formats.thumbnail ? { url: getImageUrl(img.formats.thumbnail.url) } : undefined,
-              }
-            : undefined,
-        })) || [];
-
-      return json<LoaderData>({
-        realisation: {
-          id: item.id,
-          title: item.Titre || 'Titre indisponible',
-          description: item.Description || '',
-          prix: item.Prix,
-          mainImages,
-          declinaisons,
-          dimensions: item.Dimensions || undefined,
-          categorie: item.Categorie || undefined,
-        },
-        relatedProducts,
-        error: null,
-      });
-    }
-
+  if (!id) {
     return json<LoaderData>({ realisation: null, relatedProducts: [], error: 'Produit introuvable' });
-  } catch (err: any) {
-    return json<LoaderData>({ realisation: null, relatedProducts: [], error: 'Erreur lors du chargement du produit' });
   }
+
+  const raw = getRealisationById(id);
+  if (!raw) {
+    return json<LoaderData>({ realisation: null, relatedProducts: [], error: 'Produit introuvable' });
+  }
+
+  const realisation: Realisation = {
+    id: raw.id as unknown as number,
+    title: raw.title,
+    description: raw.description,
+    prix: raw.prix,
+    mainImages: raw.mainImages,
+    declinaisons: raw.declinaisons,
+    dimensions: raw.dimensions,
+    categorie: raw.categorie,
+  };
+
+  const relatedProducts: RelatedProduct[] = getRelatedRealisations(id, 4).map((r) => ({
+    id: r.id,
+    title: r.title,
+    image_url: r.image_url || '',
+    prix: r.prix,
+  }));
+
+  return json<LoaderData>({ realisation, relatedProducts, error: null });
 }
 
 export default function RealisationDetail() {

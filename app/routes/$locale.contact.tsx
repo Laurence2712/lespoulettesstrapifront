@@ -3,7 +3,6 @@ import { Link, Form, useActionData, useNavigation } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import type { ActionFunctionArgs } from "@remix-run/node";
 import { useScrollAnimations } from "../hooks/useScrollAnimations";
-import { getApiUrl } from "../config/api";
 import { useTranslation } from "react-i18next";
 import { useLocalePath } from "../hooks/useLocalePath";
 
@@ -33,20 +32,36 @@ export async function action({ request }: ActionFunctionArgs) {
     return json({ success: false, error: "Tous les champs sont requis." });
   }
 
-  const API_URL = getApiUrl();
-  try {
-    const res = await fetch(`${API_URL}/api/contact-messages`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data: { name, email, message } }),
+  const RESEND_API_KEY = process.env.RESEND_API_KEY;
+  if (!RESEND_API_KEY) {
+    return json({
+      success: false,
+      error: "Contactez-nous directement à lespoulettes.benin@gmail.com",
     });
-    if (!res.ok) throw new Error("API error");
+  }
+
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: "site@lespoulettes.be",
+        to: ["lespoulettes.benin@gmail.com"],
+        reply_to: email,
+        subject: `Message de contact — ${name}`,
+        text: `Nom : ${name}\nEmail : ${email}\n\n${message}`,
+      }),
+    });
+    if (!res.ok) throw new Error("Resend error");
     return json({ success: true, error: null });
   } catch {
     return json({
       success: false,
       error:
-        "Le message n'a pas pu être envoyé automatiquement. Contactez-nous directement via WhatsApp ou à lespoulettes.benin@gmail.com",
+        "Le message n'a pas pu être envoyé. Contactez-nous directement via WhatsApp ou à lespoulettes.benin@gmail.com",
     });
   }
 }
