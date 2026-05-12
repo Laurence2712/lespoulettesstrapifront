@@ -1,9 +1,7 @@
 import { Link, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs } from '@remix-run/node';
-import { realisations } from '../data/realisations';
-import { actualites } from '../data/actualites';
-import { homepageData } from '../data/homepage';
+import { apiEndpoints, getImageUrl } from '../config/api';
 import { useScrollAnimations, useParallaxHero } from '../hooks/useScrollAnimations';
 import { useTranslation } from 'react-i18next';
 import { useLocalePath } from '../hooks/useLocalePath';
@@ -29,36 +27,147 @@ export function meta() {
   ];
 }
 
-export function headers() {
-  return { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=60' };
+interface HomepageData {
+  image_url?: string;
+  description?: string;
+}
+
+interface Realisation {
+  id: number;
+  title: string;
+  image_url?: string;
+  description?: string;
+  prix?: string | number;
+}
+
+interface Actualite {
+  id: number;
+  title: string;
+  content: string;
+  image_url?: string;
+  date?: string;
+}
+
+interface LoaderData {
+  homepageData: HomepageData | null;
+  realisations: Realisation[];
+  actualites: Actualite[];
+  locale: string;
+  error: string | null;
+}
+
+function fetchWithTimeout(url: string, timeoutMs = 8000): Promise<Response | null> {
+  return Promise.race([
+    fetch(url).catch(() => null),
+    new Promise<null>((resolve) => setTimeout(() => resolve(null), timeoutMs)),
+  ]);
+}
+
+export function headers({ loaderHeaders }: { loaderHeaders: Headers }) {
+  const link = loaderHeaders.get('Link');
+  if (link) return { Link: link };
+  return {};
 }
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const locale = params.locale ?? 'fr';
-  const featured = realisations.slice(0, 4).map((r) => ({
-    id: r.id,
-    title: r.title,
-    image_url: r.image_url,
-    description: r.description,
-    prix: r.prix,
-  }));
-  const latestActualite = actualites.slice(0, 1).map((a) => ({
-    id: a.id,
-    title: a.title,
-    content: a.content,
-    image_url: a.image_url,
-    date: a.date,
-  }));
-  return json({ homepageData, realisations: featured, actualites: latestActualite, locale });
+  const endpoints = apiEndpoints(locale);
+
+  try {
+    const [homepageRes, realisationsRes, actualitesRes] = await Promise.all([
+      fetchWithTimeout(endpoints.homepages, 8000),
+      fetchWithTimeout(endpoints.realisations, 8000),
+      fetchWithTimeout(endpoints.latestActualite, 8000),
+    ]);
+
+    let homepageData: HomepageData | null = null;
+    let realisations: Realisation[] = [];
+    let actualites: Actualite[] = [];
+
+    if (homepageRes?.ok) {
+      const data = await homepageRes.json();
+      if (data?.data?.length) {
+        const homepage = data.data[0];
+        const bannerImageUrl = homepage.banner_image?.formats?.large?.url
+          ? getImageUrl(homepage.banner_image.formats.large.url)
+          : homepage.banner_image?.url
+            ? getImageUrl(homepage.banner_image.url)
+            : '';
+        let descriptionText = '';
+        if (Array.isArray(homepage.description)) {
+          homepage.description.forEach((block: any) => {
+            block.children?.forEach((child: any) => {
+              descriptionText += child.text + ' ';
+            });
+          });
+        }
+        homepageData = { image_url: bannerImageUrl, description: descriptionText.trim() };
+      }
+    }
+
+    const heroImageUrl = homepageData?.image_url;
+
+    if (realisationsRes?.ok) {
+      const data = await realisationsRes.json();
+      if (data?.data) {
+        realisations = data.data.map((realisation: any) => ({
+          id: realisation.documentId,
+          title: realisation.Titre || 'Titre indisponible',
+          image_url: realisation.ImagePrincipale?.url
+            ? getImageUrl(realisation.ImagePrincipale.url)
+            : realisation.Images?.[0]?.url
+              ? getImageUrl(realisation.Images[0].url)
+              : undefined,
+          description: realisation.Description || 'Description indisponible',
+          prix: realisation.Prix,
+        }));
+      }
+    }
+
+    if (actualitesRes?.ok) {
+      const data = await actualitesRes.json();
+      if (data?.data) {
+        actualites = data.data.map((item: any) => ({
+          id: item.id,
+          title: item.Title || 'Titre indisponible',
+          content: item.content || '',
+          date: item.date || '',
+          image_url: item.image?.formats?.large?.url
+            ? getImageUrl(item.image.formats.large.url)
+            : item.image?.url
+              ? getImageUrl(item.image.url)
+              : '',
+        }));
+      }
+    }
+
+    const responseHeaders = new Headers();
+    if (heroImageUrl) {
+      responseHeaders.set('Link', `<${heroImageUrl}>; rel=preload; as=image`);
+    }
+    responseHeaders.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
+
+    return json<LoaderData>({ homepageData, realisations, actualites, locale, error: null }, { headers: responseHeaders });
+  } catch (err: any) {
+    return json<LoaderData>({
+      homepageData: null,
+      realisations: [],
+      actualites: [],
+      locale,
+      error: 'Erreur lors du chargement des données',
+    });
+  }
 }
 
 export default function Index() {
-  const { homepageData: hp, realisations: featured, actualites, locale } = useLoaderData<typeof loader>();
+  const { homepageData, realisations, actualites, locale } = useLoaderData<LoaderData>();
   const { t } = useTranslation();
   const lp = useLocalePath();
 
   const heroRef = useParallaxHero();
   const scrollRef = useScrollAnimations([]);
+
+  const featured = realisations.slice(0, 4);
 
   return (
     <div className="overflow-x-hidden" ref={scrollRef}>
@@ -67,12 +176,13 @@ export default function Index() {
       <header
         ref={heroRef}
         className="banner relative bg-cover bg-center h-[75vh] sm:h-[75vh] md:h-[80vh] lg:h-[100vh] flex flex-col justify-center items-center text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24 pb-14 sm:pb-12"
-        style={{ backgroundImage: `url(${hp.image_url || '/images/banner-default.jpg'})` }}
+        style={{ backgroundImage: `url(${homepageData?.image_url || '/images/banner-default.jpg'})` }}
       >
         <div className="banner-content text-center z-20 flex flex-col items-center justify-center pb-8 sm:pb-12 md:pb-16">
           <h1 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-[44px] font-bold uppercase tracking-wide mb-6 sm:mb-8 mt-10 sm:mt-14 md:mt-16 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-tight lg:leading-snug">
             {t('home.hero_title')}
           </h1>
+
           <div className="mt-2 sm:mt-4 anim-fade-up flex flex-col items-center gap-2 sm:gap-3" data-delay="0.3">
             <Link
               to={lp('/realisations')}
@@ -83,9 +193,12 @@ export default function Index() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </Link>
+
           </div>
         </div>
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
+
+        {/* ── Ticker social proof (superposé sur le hero, fond transparent) ── */}
         <div className="absolute bottom-0 left-0 right-0 z-10 bg-gray-900/10 backdrop-blur-sm py-3 overflow-hidden select-none">
           <div className="animate-ticker flex whitespace-nowrap w-max">
             {[0, 1].map((copy) => (
@@ -112,6 +225,7 @@ export default function Index() {
         </div>
       </header>
 
+
       {/* ── Nouveaux arrivages ── */}
       <section id="nouveaux-arrivages" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
         <div className="mb-8 sm:mb-10 md:mb-12">
@@ -125,6 +239,7 @@ export default function Index() {
             {t('home.new_creations_sub')}
           </p>
         </div>
+
         {featured.length > 0 ? (
           <>
             <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6" data-stagger="0.1">
@@ -137,7 +252,14 @@ export default function Index() {
                         <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-gray-800 text-white px-2 py-0.5 rounded-full">{t('home.badge_benin')}</span>
                       </div>
                       {realisation.image_url ? (
-                        <img src={realisation.image_url} alt={realisation.title} loading="lazy" width={500} height={500} className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
+                        <img
+                          src={realisation.image_url}
+                          alt={realisation.title}
+                          loading="lazy"
+                          width={500}
+                          height={500}
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                        />
                       ) : (
                         <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
                           <span className="font-basecoat text-gray-400 dark:text-gray-500 text-sm">{t('home.no_image')}</span>
@@ -147,9 +269,13 @@ export default function Index() {
                     <div className="p-4 flex flex-col flex-1 justify-between">
                       <div>
                         <div className="flex items-baseline justify-between gap-2 mb-3">
-                          <h3 className="font-basecoat font-semibold text-gray-900 dark:text-gray-100 text-base leading-snug">{realisation.title}</h3>
+                          <h3 className="font-basecoat font-semibold text-gray-900 dark:text-gray-100 text-base leading-snug">
+                            {realisation.title}
+                          </h3>
                           {realisation.prix && (
-                            <p className="font-basecoat text-xl font-bold text-benin-jaune whitespace-nowrap flex-shrink-0">{Number(realisation.prix).toFixed(2)} €</p>
+                            <p className="font-basecoat text-xl font-bold text-benin-jaune whitespace-nowrap flex-shrink-0">
+                              {Number(realisation.prix).toFixed(2)} €
+                            </p>
                           )}
                         </div>
                       </div>
@@ -164,8 +290,12 @@ export default function Index() {
                 </Link>
               ))}
             </div>
+
             <div className="anim-fade-up text-center mt-10 sm:mt-12" data-delay="0.3">
-              <Link to={lp('/realisations')} className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2">
+              <Link
+                to={lp('/realisations')}
+                className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+              >
                 {t('home.see_all_shop_full')}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -181,16 +311,27 @@ export default function Index() {
       {/* ── Qui sommes-nous ── */}
       <section id="qui-sommes-nous" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-6 sm:py-8 md:py-[60px] bg-beige dark:bg-gray-900">
         <div className="mb-8 sm:mb-10 md:mb-12">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">{t('about.title')}</h2>
+          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">
+            {t('about.title')}
+          </h2>
           <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.1"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
             <div className="order-2 md:order-1 anim-fade-right" data-delay="0.2">
-              <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">{t('home.about_p1')}</p>
-              <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mt-4">{t('home.about_p2')}</p>
+              <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+                {t('home.about_p1')}
+              </p>
+              <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+                {t('home.about_p2')}
+              </p>
               <div className="mt-6">
-                <Link to={lp('/qui-sommes-nous')} className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2">
+                <Link
+                  to={lp('/qui-sommes-nous')}
+                  className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+                >
                   {t('home.atelier_cta')}
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
                 </Link>
               </div>
             </div>
@@ -198,7 +339,7 @@ export default function Index() {
               <div className="relative w-full max-w-sm mx-auto">
                 <div className="shimmer-border-wrapper shadow-2xl">
                   <div className="shimmer-inner aspect-square overflow-hidden">
-                    <img src="/assets/equipe-1.jpg" alt="Fondatrice" loading="lazy" width={400} height={400} className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110" />
+                    <img src="/assets/equipe-1.jpg" alt="Fondatrice 1" loading="lazy" width={400} height={400} className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110" />
                   </div>
                 </div>
               </div>
@@ -210,9 +351,13 @@ export default function Index() {
       {/* ── Dans notre atelier ── */}
       <section id="notre-atelier" className="bg-white dark:bg-gray-900 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]">
         <div className="max-w-5xl mx-auto bg-beige dark:bg-gray-900 rounded-3xl shadow-lg p-8 sm:p-10 md:p-14">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">{t('home.atelier_title')}</h2>
+          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">
+            {t('home.atelier_title')}
+          </h2>
           <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4 mb-6 sm:mb-8" data-delay="0.1"></div>
-          <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-10 sm:mb-12" data-delay="0.15">{t('home.atelier_sub')}</p>
+          <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-10 sm:mb-12" data-delay="0.15">
+            {t('home.atelier_sub')}
+          </p>
           <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6" data-stagger="0.1">
             <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border-t-4 border-benin-jaune min-h-[180px] p-6">
               <p className="font-basecoat text-3xl mb-3">✂️</p>
@@ -231,17 +376,27 @@ export default function Index() {
       {/* ── Actualités ── */}
       <section className="bg-beige dark:bg-gray-900">
         <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] pt-6 sm:pt-8 md:pt-[60px] pb-8 sm:pb-10 md:pb-12">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">{t('news.title')}</h2>
+          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">
+            {t('news.title')}
+          </h2>
           <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
         </div>
+
         {actualites.length > 0 ? (
-          actualites.map((actu) => (
+          actualites.map((actu, idx) => (
             <div key={actu.id}>
               <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-8 sm:py-10 md:py-14">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
                   {actu.image_url && (
                     <div className="anim-fade-right rounded-2xl overflow-hidden shadow-xl" data-delay="0.2">
-                      <img src={actu.image_url} alt={actu.title} loading="lazy" width={800} height={400} className="w-full h-72 sm:h-80 md:h-96 lg:h-[480px] object-cover transition-transform duration-700 hover:scale-105" />
+                      <img
+                        src={actu.image_url}
+                        alt={actu.title}
+                        loading="lazy"
+                        width={800}
+                        height={400}
+                        className="w-full h-72 sm:h-80 md:h-96 lg:h-[480px] object-cover transition-transform duration-700 hover:scale-105"
+                      />
                     </div>
                   )}
                   <div className={`anim-fade-left ${!actu.image_url ? 'lg:col-span-2' : ''}`} data-delay="0.3">
@@ -250,11 +405,20 @@ export default function Index() {
                         {new Date(actu.date).toLocaleDateString(locale === 'en' ? 'en-GB' : 'fr-FR', { day: "numeric", month: "long", year: "numeric" })}
                       </p>
                     )}
-                    <h3 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-5 leading-tight">{actu.title}</h3>
-                    <p className="mb-6 sm:mb-8 font-basecoat text-gray-700 dark:text-gray-300 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed">{actu.content}</p>
-                    <Link to={lp('/actualites')} className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2">
+                    <h3 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-5 leading-tight">
+                      {actu.title}
+                    </h3>
+                    <p className="mb-6 sm:mb-8 font-basecoat text-gray-700 dark:text-gray-300 text-base sm:text-lg md:text-xl whitespace-pre-line leading-relaxed">
+                      {actu.content}
+                    </p>
+                    <Link
+                      to={lp('/actualites')}
+                      className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+                    >
                       {t('home.see_all_news')}
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
                     </Link>
                   </div>
                 </div>
@@ -263,7 +427,7 @@ export default function Index() {
           ))
         ) : (
           <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] pb-10">
-            <p className="text-center text-gray-500 dark:text-gray-400 text-base sm:text-lg font-basecoat">{t('home.no_news')}</p>
+            <p className="text-center text-gray-500 dark:text-gray-400 dark:text-gray-500 text-base sm:text-lg font-basecoat">{t('home.no_news')}</p>
           </div>
         )}
       </section>
@@ -272,58 +436,135 @@ export default function Index() {
       <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <div className="mb-3 sm:mb-4">
-            <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">{t('home.event_title')}</h2>
+            <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
+              {t('home.event_title')}
+            </h2>
             <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
-          <div className="anim-fade-right order-2 md:order-1" data-delay="0.2">
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-sm mx-auto">
-              {[
-                { label: t('home.event_tag_mariage'), rotate: '-rotate-1' },
-                { label: t('home.event_tag_baby_shower'), rotate: 'rotate-1' },
-                { label: t('home.event_tag_anniv'), rotate: 'rotate-1' },
-                { label: t('home.event_tag_bapt'), rotate: '-rotate-1' },
-                { label: t('home.event_tag_birth'), rotate: 'rotate-1' },
-                { label: t('home.event_tag_corporate'), rotate: '-rotate-1' },
-              ].map((event) => (
-                <div key={event.label} className={`${event.rotate} px-4 py-3 text-sm text-center font-basecoat font-semibold bg-white dark:bg-gray-900 border border-red-900/20 text-red-900 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 hover:rotate-0 hover:scale-105 transition-all duration-300 ease-out cursor-default`}>
-                  {event.label}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="anim-fade-left order-1 md:order-2 text-center md:text-left" data-delay="0.3">
-            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed max-w-xl mx-auto md:mx-0">{t('home.event_sub')}</p>
-          </div>
+
+       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+
+  {/* Colonne gauche : Tags premium */}
+  <div className="anim-fade-right order-2 md:order-1" data-delay="0.2">
+    <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-sm mx-auto">
+      {[
+        { label: t('home.event_tag_mariage'), rotate: '-rotate-1' },
+        { label: t('home.event_tag_baby_shower'), rotate: 'rotate-1' },
+        { label: t('home.event_tag_anniv'), rotate: 'rotate-1' },
+        { label: t('home.event_tag_bapt'), rotate: '-rotate-1' },
+        { label: t('home.event_tag_birth'), rotate: 'rotate-1' },
+        { label: t('home.event_tag_corporate'), rotate: '-rotate-1' },
+      ].map((event) => (
+        <div
+          key={event.label}
+          className={`
+            ${event.rotate}
+            px-4 py-3 text-sm
+            text-center
+            font-basecoat font-semibold
+            bg-white dark:bg-gray-900
+            border border-red-900/20
+            text-red-900
+            rounded-2xl
+            shadow-sm
+            hover:shadow-xl
+            hover:-translate-y-1
+            hover:rotate-0
+            hover:scale-105
+            transition-all duration-300 ease-out
+            cursor-default
+          `}
+        >
+          {event.label}
         </div>
-        <p className="mt-16 sm:mt-10 md:mt-12 font-basecoat max-w-[90%] sm:max-w-[80%] md:max-w-[70%] font-bold lg:max-w-[50%] mx-auto text-center text-base sm:text-lg text-benin-jaune uppercase leading-relaxed">{t('home.event_quote')}</p>
-        <div className="anim-fade-up text-center mt-8 sm:mt-10" data-delay="0.3">
-          <Link to={lp('/commandes-personnalisees')} className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2">
-            {t('common.learn_more')}
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-          </Link>
-        </div>
+      ))}
+    </div>
+  </div>
+
+  {/* Colonne droite : Texte */}
+  <div className="anim-fade-left order-1 md:order-2 text-center md:text-left" data-delay="0.3">
+    <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed max-w-xl mx-auto md:mx-0">
+      {t('home.event_sub')}
+    </p>
+  </div>
+
+</div>
+
+<p className="mt-16 sm:mt-10 md:mt-12 font-basecoat max-w-[90%] sm:max-w-[80%] md:max-w-[70%] font-bold lg:max-w-[50%] mx-auto text-center text-base sm:text-lg text-benin-jaune uppercase leading-relaxed">
+  {t('home.event_quote')}
+</p>
+<div className="anim-fade-up text-center mt-8 sm:mt-10" data-delay="0.3">
+  <Link
+    to={lp('/commandes-personnalisees')}
+    className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+  >
+    {t('common.learn_more')}
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+    </svg>
+  </Link>
+</div>
       </section>
 
-      {/* ── Où nous trouver ── */}
-      <section id="ou-nous-trouver" className="relative w-full h-[440px] sm:h-[500px] md:h-[580px] overflow-hidden">
-        <iframe src="https://maps.google.com/maps?q=6.3554,2.3793&z=14&output=embed" className="absolute inset-0 w-full h-full" style={{ border: 0 }} allowFullScreen={true} loading="lazy" referrerPolicy="no-referrer-when-downgrade" title={t('home.map_title')}></iframe>
-        <div className="absolute inset-0 bg-gradient-to-r from-[#F5F1E8] via-[#F5F1E8]/95 to-[#F5F1E8]/40 md:to-transparent backdrop-blur-[2px]" />
-        <div className="relative z-10 h-full flex flex-col justify-center px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
-          <div className="max-w-xl">
-            <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100 leading-snug md:leading-tight">{t('home.location_title')}</h2>
-            <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
-            <p className="anim-fade-up mt-6 mb-6 font-basecoat text-base sm:text-lg md:text-xl text-gray-800 dark:text-gray-200 leading-relaxed whitespace-pre-line" data-delay="0.2">{t('home.location_desc')}</p>
-            <p className="anim-fade-up" data-delay="0.3">
-              <a href="https://wa.me/2290162007580" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2.5 font-basecoat font-semibold text-sm sm:text-base text-benin-jaune hover:text-benin-terre transition-colors duration-200">
-                <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" /></svg>
-                +229 01 62 00 75 80
-              </a>
-            </p>
-          </div>
-        </div>
-      </section>
+    {/* ── Où nous trouver ── */}
+<section
+  id="ou-nous-trouver"
+  className="relative w-full h-[440px] sm:h-[500px] md:h-[580px] overflow-hidden"
+>
+  {/* Map full background */}
+  <iframe
+    src="https://maps.google.com/maps?q=6.3554,2.3793&z=14&output=embed"
+    className="absolute inset-0 w-full h-full"
+    style={{ border: 0 }}
+    allowFullScreen={true}
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+    title={t('home.map_title')}
+  ></iframe>
+
+  {/* Overlay dégradé + blur */}
+  <div className="absolute inset-0 bg-gradient-to-r from-[#F5F1E8] via-[#F5F1E8]/95 to-[#F5F1E8]/40 md:to-transparent backdrop-blur-[2px]" />
+
+  {/* Contenu texte */}
+  <div className="relative z-10 h-full flex flex-col justify-center px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
+    <div className="max-w-xl">
+      <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100 leading-snug md:leading-tight">
+        {t('home.location_title')}
+      </h2>
+
+      <div
+        className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4"
+        data-delay="0.1"
+      ></div>
+
+      <p
+        className="anim-fade-up mt-6 mb-6 font-basecoat text-base sm:text-lg md:text-xl text-gray-800 dark:text-gray-200 leading-relaxed whitespace-pre-line"
+        data-delay="0.2"
+      >
+        {t('home.location_desc')}
+      </p>
+
+      <p className="anim-fade-up" data-delay="0.3">
+        <a
+          href="https://wa.me/2290162007580"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2.5 font-basecoat font-semibold text-sm sm:text-base text-benin-jaune hover:text-benin-terre transition-colors duration-200"
+        >
+          <svg
+            className="w-5 h-5 flex-shrink-0"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
+          </svg>
+          +229 01 62 00 75 80
+        </a>
+      </p>
+    </div>
+  </div>
+</section>
 
     </div>
   );

@@ -3,7 +3,7 @@ import { Link, useSearchParams, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useCartStore } from '../store/cartStore';
-import { realisations as allRealisations } from '../data/realisations';
+import { getApiUrl, getImageUrl } from '../config/api';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 import { useLocalePath } from '../hooks/useLocalePath';
 import { useTranslation } from 'react-i18next';
@@ -24,14 +24,28 @@ interface FeaturedProduct {
 }
 
 export async function loader() {
-  const featuredProducts: FeaturedProduct[] = allRealisations.slice(0, 4).map((r) => ({
-    id: r.id,
-    title: r.title,
-    image_url: r.image_url,
-    prix: r.prix,
-  }));
-  return json({ featuredProducts });
+  try {
+    const API_URL = getApiUrl();
+    const response = await fetch(`${API_URL}/api/realisations?populate=*`);
+    if (!response.ok) return json({ featuredProducts: [] });
+    const data = await response.json();
+    const featuredProducts: FeaturedProduct[] = (data?.data ?? []).slice(0, 4).map((r: any) => ({
+      id: r.documentId,
+      title: r.Titre || 'Titre indisponible',
+      image_url: r.ImagePrincipale?.url
+        ? getImageUrl(r.ImagePrincipale.url)
+        : r.Images?.[0]?.url
+          ? getImageUrl(r.Images[0].url)
+          : undefined,
+      prix: r.Prix,
+    }));
+    return json({ featuredProducts });
+  } catch {
+    return json({ featuredProducts: [] });
+  }
 }
+
+const API_URL = getApiUrl();
 
 // Codes postaux belges → villes
 const BELGIAN_CITIES: Record<string, string> = {
@@ -198,6 +212,7 @@ export default function Panier() {
 
   useEffect(() => {
     setMounted(true);
+    fetch(`${API_URL}/api/commandes`, { method: 'HEAD', mode: 'no-cors' }).catch(() => {});
   }, []);
 
   // Stripe redirige vers /panier?session_id=xxx après paiement réussi
@@ -522,6 +537,10 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
   const shippingLabel = deliveryMode === 'retrait' ? 'GRATUIT' : `${shippingCost.toFixed(2)} €`;
   const grandTotal = total + shippingCost;
 
+  useEffect(() => {
+    fetch(`${API_URL}/api/commandes`, { method: 'HEAD', mode: 'no-cors' }).catch(() => {});
+  }, []);
+
   // Auto-remplissage ville pour codes postaux belges
   const handlePostalCodeChange = (val: string) => {
     setPostalCode(val);
@@ -577,7 +596,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
     ].filter(Boolean).join(' | ');
 
     try {
-      const response = await fetch(`/api/create-checkout-session`, {
+      const response = await fetch(`${API_URL}/api/commandes/create-checkout-session`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
