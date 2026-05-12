@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { actualites as allActualites } from "../data/actualites";
+import { apiEndpoints, getImageUrl } from "../config/api";
 import { useScrollAnimations } from "../hooks/useScrollAnimations";
 import { useTranslation } from "react-i18next";
 import { useLocalePath } from "../hooks/useLocalePath";
@@ -36,8 +36,31 @@ interface LoaderData {
   error: string | null;
 }
 
-export async function loader({ params: _params }: LoaderFunctionArgs) {
-  return json<LoaderData>({ actualites: allActualites, error: null });
+export async function loader({ params }: LoaderFunctionArgs) {
+  const locale = params.locale ?? 'fr';
+  try {
+    const response = await fetch(apiEndpoints(locale).actualites);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+
+    if (data?.data) {
+      const actualites: Actualite[] = data.data.map((item: any) => ({
+        id: item.id,
+        title: item.Title || 'Titre indisponible',
+        content: item.content || '',
+        image_url: item.image?.formats?.large?.url
+          ? getImageUrl(item.image.formats.large.url)
+          : item.image?.url
+          ? getImageUrl(item.image.url)
+          : '',
+        date: item.date || '',
+      }));
+      return json<LoaderData>({ actualites, error: null });
+    }
+    return json<LoaderData>({ actualites: [], error: null });
+  } catch (err: any) {
+    return json<LoaderData>({ actualites: [], error: "Erreur lors du chargement des actualités" });
+  }
 }
 
 export default function ActualitesPage() {

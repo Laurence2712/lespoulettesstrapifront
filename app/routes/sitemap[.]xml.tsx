@@ -1,9 +1,11 @@
-import type { LoaderFunctionArgs as _LoaderFunctionArgs } from '@remix-run/node';
-import { realisations } from '../data/realisations';
+import type { LoaderFunctionArgs } from '@remix-run/node';
+import { getApiUrl } from '../config/api';
 
 const BASE_URL = 'https://lespoulettes.be';
 
-export async function loader() {
+export async function loader({ request }: LoaderFunctionArgs) {
+  const API_URL = getApiUrl();
+
   // Static routes
   const staticRoutes = [
     { url: BASE_URL, priority: '1.0', changefreq: 'weekly' },
@@ -16,11 +18,23 @@ export async function loader() {
     { url: `${BASE_URL}/faq`, priority: '0.6', changefreq: 'monthly' },
   ];
 
-  const dynamicRoutes = realisations.map((r) => ({
-    url: `${BASE_URL}/realisations/${r.id}`,
-    priority: '0.8',
-    changefreq: 'weekly',
-  }));
+  // Dynamic product routes
+  let dynamicRoutes: { url: string; priority: string; changefreq: string }[] = [];
+  try {
+    const response = await fetch(`${API_URL}/api/realisations?fields[0]=documentId&pagination[pageSize]=100`);
+    if (response.ok) {
+      const data = await response.json();
+      if (data?.data) {
+        dynamicRoutes = data.data.map((item: { documentId: string }) => ({
+          url: `${BASE_URL}/realisations/${item.documentId}`,
+          priority: '0.8',
+          changefreq: 'weekly',
+        }));
+      }
+    }
+  } catch {
+    // Fallback silencieux
+  }
 
   const allRoutes = [...staticRoutes, ...dynamicRoutes];
 
