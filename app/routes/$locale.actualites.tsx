@@ -103,9 +103,6 @@ export default function ActualitesPage() {
               className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4"
               data-delay="0.15"
             ></div>
-            <p className="anim-fade-up font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm sm:text-base mt-3" data-delay="0.2">
-              {t('news.subtitle_base')}
-            </p>
           </div>
           <div className="anim-fade-up flex items-center gap-2" data-delay="0.2">
             <label
