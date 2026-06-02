@@ -348,33 +348,6 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ── Dans notre atelier ── */}
-      <section id="notre-atelier" className="bg-white dark:bg-gray-900 py-10 sm:py-14 md:py-[70px]">
-        <div className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto">
-        <div className="max-w-5xl mx-auto bg-beige dark:bg-gray-900 rounded-3xl shadow-lg p-8 sm:p-10 md:p-14">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">
-            {t('home.atelier_title')}
-          </h2>
-          <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4 mb-6 sm:mb-8" data-delay="0.1"></div>
-          <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-10 sm:mb-12" data-delay="0.15">
-            {t('home.atelier_sub')}
-          </p>
-          <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6" data-stagger="0.1">
-            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border-t-4 border-benin-jaune min-h-[180px] p-6">
-              <p className="font-basecoat text-3xl mb-3">✂️</p>
-              <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">{t('home.atelier_item1_title')}</h3>
-              <p className="font-basecoat text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{t('home.atelier_item1_desc')}</p>
-            </div>
-            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border-t-4 border-benin-jaune min-h-[180px] p-6">
-              <p className="font-basecoat text-3xl mb-3">🌿</p>
-              <h3 className="font-basecoat text-base font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">{t('home.atelier_item2_title')}</h3>
-              <p className="font-basecoat text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{t('home.atelier_item2_desc')}</p>
-            </div>
-          </div>
-        </div>
-        </div>
-      </section>
-
       {/* ── Actualités ── */}
       <section className="bg-beige dark:bg-gray-900">
         <div className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto pt-6 sm:pt-8 md:pt-[60px] pb-8 sm:pb-10 md:pb-12">
