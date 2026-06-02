@@ -216,31 +216,6 @@ export default function Index() {
         </div>
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
 
-        {/* ── Ticker social proof (superposé sur le hero, fond transparent) ── */}
-        <div className="absolute bottom-0 left-0 right-0 z-10 bg-gray-900/10 backdrop-blur-sm py-6 overflow-hidden select-none">
-          <div className="animate-ticker flex whitespace-nowrap w-max">
-            {[0, 1].map((copy) => (
-              <span key={copy} className="inline-flex items-center">
-                {[
-                  { icon: '', label: t('home.ticker_handmade') },
-                  { icon: '', label: 'Handmade with love' },
-                  { icon: '', label: t('home.ticker_eco') },
-                  { icon: '', label: t('home.ticker_shipping') },
-                  { icon: '', label: 'Color up your day' },
-                  { icon: '', label: t('home.ticker_wax') },
-                  { icon: '', label: t('home.ticker_artisan') },
-                  { icon: '', label: 'Made in Bénin with love' },
-                ].map((item) => (
-                  <span key={`${copy}-${item.label}`} className="inline-flex items-center gap-2 font-basecoat font-bold text-white text-xs md:text-base px-6 sm:px-10">
-                    <span className="text-sm sm:text-base">{item.icon}</span>
-                    <span>{item.label}</span>
-                    <span className="ml-6 sm:ml-10 text-white/40 text-xs">◆</span>
-                  </span>
-                ))}
-              </span>
-            ))}
-          </div>
-        </div>
       </header>
 
 
