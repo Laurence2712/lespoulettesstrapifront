@@ -229,7 +229,7 @@ export default function Panier() {
   if (orderSuccess) {
     const isPaid = Boolean(sessionId);
     return (
-      <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24 min-h-[60vh] flex items-center justify-center">
+      <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto mt-16 sm:mt-20 md:mt-24 min-h-[60vh] flex items-center justify-center">
         <div className="text-center max-w-lg">
           <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 ${isPaid ? 'bg-benin-vert/15' : 'bg-benin-jaune/15'}`}>
             <svg className={`w-10 h-10 ${isPaid ? 'text-benin-vert' : 'text-benin-jaune'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
@@ -278,7 +278,7 @@ export default function Panier() {
 
   if (items.length === 0) {
     return (
-      <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24">
+      <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto mt-16 sm:mt-20 md:mt-24">
         <div className="text-center py-12 sm:py-16">
           <ShoppingCartIcon className="w-20 h-20 text-gray-200 mx-auto mb-6" strokeWidth={1} />
           <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-3">
@@ -354,7 +354,7 @@ export default function Panier() {
   }
 
   return (
-    <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24">
+    <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto mt-16 sm:mt-20 md:mt-24">
       {/* Checkout progress stepper */}
       <div className="max-w-md mx-auto mb-6 sm:mb-8">
         <CheckoutStepper currentStep={1} />
@@ -647,7 +647,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
   };
 
   return (
-    <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24">
+    <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto mt-16 sm:mt-20 md:mt-24">
       <button
         onClick={onBack}
         className="anim-fade-up font-basecoat text-benin-jaune hover:text-benin-terre mb-6 sm:mb-8 flex items-center gap-2 text-sm sm:text-base font-medium transition"

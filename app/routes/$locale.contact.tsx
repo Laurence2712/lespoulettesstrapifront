@@ -65,7 +65,7 @@ export default function Contact() {
   return (
     <div
       ref={scrollRef}
-      className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px] mt-16 sm:mt-20 md:mt-24"
+      className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto mt-16 sm:mt-20 md:mt-24"
     >
       {/* Breadcrumb */}
       <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">

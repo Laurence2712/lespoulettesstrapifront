@@ -104,7 +104,7 @@ export default function GuideTailles() {
     <div ref={scrollRef} className="overflow-x-hidden">
 
       {/* ── Header ── */}
-      <header className="bg-beige dark:bg-gray-900 pt-28 sm:pt-32 md:pt-40 pb-14 sm:pb-18 md:pb-24 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
+      <header className="bg-beige dark:bg-gray-900 pt-28 sm:pt-32 md:pt-40 pb-14 sm:pb-18 md:pb-24 px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto">
         <nav className="anim-fade-up font-basecoat mb-8 text-xs sm:text-sm">
           <Link to={lp("/")} className="text-benin-jaune hover:text-benin-terre font-medium transition">{t('common.home')}</Link>
           <span className="mx-1.5 text-gray-400 dark:text-gray-500">/</span>
@@ -123,7 +123,7 @@ export default function GuideTailles() {
 
 
       {/* ── Note dimensions ── */}
-      <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-6 sm:py-8">
+      <div className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-6 sm:py-8">
         <div className="bg-benin-jaune/10 border-l-4 border-benin-jaune rounded-r-xl p-5 font-basecoat text-sm text-gray-700 dark:text-gray-300 max-w-3xl">
           <strong>{t('sizes.note_important')} :</strong> {t('sizes.note_text')}
         </div>
@@ -131,7 +131,7 @@ export default function GuideTailles() {
 
       {/* ── Tableaux par catégorie ── */}
       {SIZES.map((cat) => (
-        <section key={cat.category} className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-12">
+        <section key={cat.category} className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-10 sm:py-12">
           <div className="flex items-center gap-3 mb-2">
             <span className="text-3xl">{cat.icon}</span>
             <h2 className="font-basecoat text-2xl sm:text-3xl font-bold uppercase text-gray-900 dark:text-gray-100">{cat.category}</h2>
@@ -171,7 +171,7 @@ export default function GuideTailles() {
       ))}
 
       {/* ── Matières ── */}
-      <section className="bg-beige dark:bg-gray-900 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18">
+      <section className="bg-beige dark:bg-gray-900 px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-14 sm:py-18">
         <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">
           {t('sizes.materials_title')}
         </h2>
@@ -193,7 +193,7 @@ export default function GuideTailles() {
       </section>
 
       {/* ── Entretien ── */}
-      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18">
+      <section className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-14 sm:py-18">
         <div className="mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('sizes.care_title')}
@@ -215,7 +215,7 @@ export default function GuideTailles() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="bg-white dark:bg-gray-900 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-12 sm:py-14 text-center">
+      <section className="bg-white dark:bg-gray-900 px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-12 sm:py-14 text-center">
         <p className="font-basecoat text-gray-600 dark:text-gray-400 dark:text-gray-500 text-base sm:text-lg mb-6">
           {t('sizes.cta_question')}
         </p>

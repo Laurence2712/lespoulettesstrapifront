@@ -334,7 +334,7 @@ export default function RealisationDetail() {
       />
       <div
         ref={scrollRef}
-        className="py-6 sm:py-8 md:py-[60px] mt-16 sm:mt-20 md:mt-24 px-4 sm:px-6 md:px-[60px] lg:px-[120px]"
+        className="py-6 sm:py-8 md:py-[60px] mt-16 sm:mt-20 md:mt-24 px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto"
       >
         {/* Breadcrumb */}
         <nav className="anim-fade-up mb-4 text-xs sm:text-sm font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500">

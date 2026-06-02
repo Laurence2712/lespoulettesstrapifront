@@ -227,7 +227,7 @@ export default function Index() {
 
 
       {/* ── Nouveaux arrivages ── */}
-      <section id="nouveaux-arrivages" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
+      <section id="nouveaux-arrivages" className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <div className="mb-3 sm:mb-4">
             <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">
@@ -309,7 +309,7 @@ export default function Index() {
       </section>
 
       {/* ── Qui sommes-nous ── */}
-      <section id="qui-sommes-nous" className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-6 sm:py-8 md:py-[60px] bg-beige dark:bg-gray-900">
+      <section id="qui-sommes-nous" className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-6 sm:py-8 md:py-[60px] bg-beige dark:bg-gray-900">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('about.title')}
@@ -349,7 +349,7 @@ export default function Index() {
       </section>
 
       {/* ── Dans notre atelier ── */}
-      <section id="notre-atelier" className="bg-white dark:bg-gray-900 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px]">
+      <section id="notre-atelier" className="bg-white dark:bg-gray-900 px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-10 sm:py-14 md:py-[70px]">
         <div className="max-w-5xl mx-auto bg-beige dark:bg-gray-900 rounded-3xl shadow-lg p-8 sm:p-10 md:p-14">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('home.atelier_title')}
@@ -375,7 +375,7 @@ export default function Index() {
 
       {/* ── Actualités ── */}
       <section className="bg-beige dark:bg-gray-900">
-        <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] pt-6 sm:pt-8 md:pt-[60px] pb-8 sm:pb-10 md:pb-12">
+        <div className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto pt-6 sm:pt-8 md:pt-[60px] pb-8 sm:pb-10 md:pb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('news.title')}
           </h2>
@@ -385,7 +385,7 @@ export default function Index() {
         {actualites.length > 0 ? (
           actualites.map((actu, idx) => (
             <div key={actu.id}>
-              <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-8 sm:py-10 md:py-14">
+              <div className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-8 sm:py-10 md:py-14">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
                   {actu.image_url && (
                     <div className="anim-fade-right rounded-2xl overflow-hidden shadow-xl" data-delay="0.2">
@@ -426,14 +426,14 @@ export default function Index() {
             </div>
           ))
         ) : (
-          <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] pb-10">
+          <div className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto pb-10">
             <p className="text-center text-gray-500 dark:text-gray-400 dark:text-gray-500 text-base sm:text-lg font-basecoat">{t('home.no_news')}</p>
           </div>
         )}
       </section>
 
       {/* ── Commandes personnalisées ── */}
-      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
+      <section className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <div className="mb-3 sm:mb-4">
             <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
@@ -527,7 +527,7 @@ export default function Index() {
   <div className="absolute inset-0 bg-gradient-to-r from-[#F5F1E8] via-[#F5F1E8]/95 to-[#F5F1E8]/40 md:to-transparent backdrop-blur-[2px]" />
 
   {/* Contenu texte */}
-  <div className="relative z-10 h-full flex flex-col justify-center px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
+  <div className="relative z-10 h-full flex flex-col justify-center px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto">
     <div className="max-w-xl">
       <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100 leading-snug md:leading-tight">
         {t('home.location_title')}
