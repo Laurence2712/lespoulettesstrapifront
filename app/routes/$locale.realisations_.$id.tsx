@@ -379,9 +379,6 @@ export default function RealisationDetail() {
                   {t('home.no_image')}
                 </div>
               )}
-              <div className="absolute top-4 left-4 bg-benin-jaune text-black dark:text-gray-100 text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
-                ✂ {t('home.badge_handmade')}
-              </div>
               {currentImage?.url && (
                 <div className="absolute bottom-4 right-4 bg-white dark:bg-gray-900/80 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow">
                   <svg className="w-4 h-4 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
