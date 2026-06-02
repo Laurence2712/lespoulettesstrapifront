@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLoaderData, useNavigate } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs } from '@remix-run/node';
@@ -188,7 +188,10 @@ export default function Realisations() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<string>('Tout');
 
-  const scrollRef = useScrollAnimations([showPopup]);
+  const [filterKey, setFilterKey] = useState(0);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  const scrollRef = useScrollAnimations([showPopup, filterKey]);
 
   const navigate = useNavigate();
 
@@ -242,6 +245,8 @@ export default function Realisations() {
   const handleCategoryChange = (cat: string) => {
     setSelectedCategory(cat);
     setCurrentPage(1);
+    setFilterKey((k) => k + 1);
+    setTimeout(() => gridRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   };
 
   return (
@@ -294,44 +299,50 @@ export default function Realisations() {
           <span className="text-gray-600 dark:text-gray-400 dark:text-gray-500">{t('products.breadcrumb_shop')}</span>
         </nav>
 
-        {/* Titre + Tri */}
-        {/* Titre + Filtres sur la même ligne */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10 md:mb-12">
-          <div className="flex-shrink-0">
-            <h1
-              className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100"
-              data-delay="0.1"
-            >
-              {t('products.title')}
-            </h1>
-            <div
-              className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4"
-              data-delay="0.15"
-            ></div>
-          </div>
-          {!error && (
-            <div className="anim-fade-up flex gap-2 flex-wrap sm:justify-end" data-delay="0.2">
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => handleCategoryChange(cat)}
-                  className={`font-basecoat text-sm font-semibold px-4 py-2 rounded-full border-2 transition-all duration-200 ${
-                    selectedCategory === cat
-                      ? 'bg-benin-jaune border-benin-jaune text-black dark:text-gray-100 shadow-md'
-                      : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
-                  }`}
-                >
-                  {t(CAT_KEY[cat])}
-                  {cat !== 'Tout' && (
-                    <span className="ml-1.5 text-xs opacity-60">
-                      ({realisations.filter((r) => matchesCategory(r, cat)).length})
-                    </span>
-                  )}
-                </button>
-              ))}
-            </div>
-          )}
+        {/* Titre */}
+        <div className="mb-6 sm:mb-8">
+          <h1
+            className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100"
+            data-delay="0.1"
+          >
+            {t('products.title')}
+          </h1>
+          <div
+            className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4"
+            data-delay="0.15"
+          ></div>
         </div>
+
+        {/* Barre sticky : filtres + compteur */}
+        {!error && (
+          <div className="sticky top-16 sm:top-20 md:top-24 z-30 bg-beige/95 dark:bg-gray-950/95 backdrop-blur-sm py-3 -mx-4 sm:-mx-6 md:-mx-12 px-4 sm:px-6 md:px-12 border-b border-gray-100 dark:border-gray-800 mb-8 sm:mb-10">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <span className="font-basecoat text-sm text-gray-500 dark:text-gray-400 flex-shrink-0">
+                <span className="font-bold text-gray-900 dark:text-gray-100">{filteredRealisations.length}</span> {filteredRealisations.length === 1 ? 'produit' : 'produits'}
+              </span>
+              <div className="flex gap-2 flex-wrap sm:justify-end">
+                {CATEGORIES.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => handleCategoryChange(cat)}
+                    className={`font-basecoat text-sm font-semibold px-4 py-1.5 rounded-full border-2 transition-all duration-200 ${
+                      selectedCategory === cat
+                        ? 'bg-benin-jaune border-benin-jaune text-black shadow-md'
+                        : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
+                    }`}
+                  >
+                    {t(CAT_KEY[cat])}
+                    {cat !== 'Tout' && (
+                      <span className="ml-1.5 text-xs opacity-60">
+                        ({realisations.filter((r) => matchesCategory(r, cat)).length})
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="flex flex-col">
 
@@ -397,8 +408,10 @@ export default function Realisations() {
         {/* ── Grille produits ── */}
         {!error && (
           <div
-            className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
-            data-stagger="0.1"
+            ref={gridRef}
+            key={filterKey}
+            className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6"
+            data-stagger="0.08"
           >
             {paginatedRealisations.map((realisation) => (
               <Link
@@ -414,7 +427,7 @@ export default function Realisations() {
                       alt={realisation.title}
                       loading="lazy"
                       width={600}
-                      height={400}
+                      height={600}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   ) : (
@@ -423,9 +436,16 @@ export default function Realisations() {
                     </div>
                   )}
 
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10">
+                    <span className="font-basecoat text-white font-bold uppercase tracking-widest text-sm border-2 border-white px-5 py-2 rounded-xl">
+                      {t('products.view')}
+                    </span>
+                  </div>
+
                   {/* Badge Nouveau */}
                   {realisation.isNew && (
-                    <div className="absolute top-3 left-3 bg-benin-jaune text-black dark:text-gray-100 text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
+                    <div className="absolute top-3 left-3 z-20 bg-benin-jaune text-black text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
                       {t('products.new_badge')}
                     </div>
                   )}
@@ -433,39 +453,29 @@ export default function Realisations() {
                   {/* Badge stock faible / épuisé */}
                   {!realisation.isNew && realisation.totalStock !== null && realisation.totalStock !== undefined && (
                     realisation.totalStock === 0 ? (
-                      <div className="absolute top-3 left-3 bg-benin-rouge/100 text-white text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
+                      <div className="absolute top-3 left-3 z-20 bg-benin-rouge text-white text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
                         {t('products.sold_out')}
                       </div>
-                    ) : realisation.totalStock <= 5 ? (
-                      <div className="absolute top-3 left-3 bg-benin-jaune/80 text-black dark:text-gray-100 text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
-                        {t('products.low_stock', { count: realisation.totalStock })}
+                    ) : realisation.totalStock <= 2 ? (
+                      <div className="absolute top-3 left-3 z-20 bg-orange-500 text-white text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
+                        Plus que {realisation.totalStock}
                       </div>
                     ) : null
                   )}
-
                 </div>
 
                 {/* Info section */}
-                <div className="flex flex-col flex-1 p-5">
-                  <h3 className="font-basecoat text-gray-900 dark:text-gray-100 text-lg sm:text-xl font-bold uppercase leading-tight mb-2 group-hover:text-benin-jaune transition-colors duration-300">
+                <div className="flex flex-col flex-1 p-4">
+                  <h3 className="font-basecoat text-gray-900 dark:text-gray-100 text-base font-bold uppercase leading-tight mb-1 group-hover:text-benin-jaune transition-colors duration-300">
                     {realisation.title}
                   </h3>
 
-                  {realisation.description && (
-                    <p className="font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4 flex-1">
-                      {realisation.description}
-                    </p>
-                  )}
-
-                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
-                    <span className="font-basecoat text-2xl font-bold text-benin-jaune">
+                  <div className="mt-auto pt-3 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between">
+                    <span className="font-basecoat text-xl font-bold text-benin-jaune">
                       {realisation.prix ? `${realisation.prix} €` : t('products.on_request')}
                     </span>
-                    <span className="inline-flex items-center gap-1.5 font-basecoat text-sm font-bold uppercase tracking-wide text-black dark:text-gray-100 bg-beige dark:bg-gray-900 group-hover:bg-benin-jaune px-4 py-2 rounded-xl transition-all duration-200 group-hover:shadow-md">
-                      {t('products.view')}
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
+                    <span className="font-basecoat text-xs font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400 group-hover:text-benin-jaune transition-colors duration-200">
+                      {t('products.view')} →
                     </span>
                   </div>
                 </div>
