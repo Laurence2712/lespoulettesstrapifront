@@ -28,7 +28,7 @@ export default function Footer() {
 
         {/* Colonne 2 : Navigation */}
         <div>
-          <h3 className="text-base sm:text-lg font-bold mb-4 sm:mb-5 uppercase font-basecoat tracking-wider">{t("footer.nav_title")}</h3>
+          <h3 className="text-sm sm:text-base font-bold mb-4 sm:mb-5 uppercase font-basecoat tracking-wider">{t("footer.nav_title")}</h3>
           <ul className="space-y-3 text-gray-400 dark:text-gray-500 font-basecoat text-sm sm:text-base">
             <li><Link to={lp("/qui-sommes-nous")} className="hover:text-benin-jaune transition">{t("footer.about")}</Link></li>
             <li><Link to={lp("/realisations")} className="hover:text-benin-jaune transition">{t("footer.shop")}</Link></li>
@@ -43,14 +43,14 @@ export default function Footer() {
 
         {/* Colonne 3 : Contact */}
         <div>
-          <h3 className="text-base sm:text-lg font-bold mb-4 sm:mb-5 uppercase font-basecoat tracking-wider">{t("footer.contact_title")}</h3>
+          <h3 className="text-sm sm:text-base font-bold mb-4 sm:mb-5 uppercase font-basecoat tracking-wider">{t("footer.contact_title")}</h3>
           <ul className="space-y-4 text-gray-400 dark:text-gray-500 text-sm sm:text-base font-basecoat">
             <li>
               <a href="mailto:lespoulettes.benin@gmail.com" className="flex items-center gap-3 hover:text-benin-jaune transition">
                 <svg className="w-5 h-5 text-benin-jaune flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                 </svg>
-                <span className="whitespace-nowrap text-xs sm:text-sm">lespoulettes.benin@gmail.com</span>
+                <span className="whitespace-nowrap text-xs">lespoulettes.benin@gmail.com</span>
               </a>
             </li>
             <li>
@@ -66,7 +66,7 @@ export default function Footer() {
 
         {/* Colonne 4 : Réseaux sociaux */}
         <div>
-          <h3 className="text-base sm:text-lg font-bold mb-4 sm:mb-5 uppercase font-basecoat tracking-wider">{t("footer.social")}</h3>
+          <h3 className="text-sm sm:text-base font-bold mb-4 sm:mb-5 uppercase font-basecoat tracking-wider">{t("footer.social")}</h3>
           <div className="flex gap-4">
             <a href="https://www.facebook.com/lespoulettescouture" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-xl bg-gray-800 hover:bg-benin-jaune flex items-center justify-center transition-all duration-300 group" aria-label="Facebook">
               <svg className="w-5 h-5 text-gray-400 dark:text-gray-500 group-hover:text-black dark:text-gray-100 transition-colors" fill="currentColor" viewBox="0 0 24 24">

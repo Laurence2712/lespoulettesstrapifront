@@ -128,7 +128,7 @@ export default function CartDrawer() {
                   <h3 className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-sm sm:text-base leading-tight break-words">
                     {item.title}
                   </h3>
-                  <p className="font-basecoat text-benin-jaune font-bold text-base sm:text-lg mt-1">
+                  <p className="font-basecoat text-benin-jaune font-bold text-sm sm:text-base mt-1">
                     {item.prix} €
                   </p>
 

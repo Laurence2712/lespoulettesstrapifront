@@ -30,7 +30,7 @@ export default function MentionsLegales() {
       className="py-6 sm:py-8 md:py-[60px] px-6 sm:px-10 md:px-16 lg:px-24 mt-16 sm:mt-20 md:mt-24"
     >
       {/* Breadcrumb */}
-      <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
+      <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs">
         <Link to={lp("/")} className="text-benin-jaune hover:text-benin-terre font-medium transition">
           {t('common.home')}
         </Link>
@@ -39,7 +39,7 @@ export default function MentionsLegales() {
       </nav>
 
       <h1
-        className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100"
+        className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100"
         data-delay="0.1"
       >
         {t('legal.title')}

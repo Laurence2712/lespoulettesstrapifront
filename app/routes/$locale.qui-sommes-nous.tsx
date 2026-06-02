@@ -35,13 +35,13 @@ export default function QuiSommesNous() {
       {/* ── Hero ── */}
       <header className="bg-beige dark:bg-gray-900 pt-28 sm:pt-32 md:pt-40 pb-14 sm:pb-18 md:pb-24">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
-        <nav className="anim-fade-up font-basecoat mb-8 text-xs sm:text-sm">
+        <nav className="anim-fade-up font-basecoat mb-8 text-xs">
           <Link to={lp("/")} className="text-benin-jaune hover:text-benin-terre font-medium transition">{t('common.home')}</Link>
           <span className="mx-1.5 text-gray-400 dark:text-gray-500">{t('common.breadcrumb_sep')}</span>
           <span className="text-gray-600 dark:text-gray-400 dark:text-gray-500">{t('about.breadcrumb')}</span>
         </nav>
         <div className="max-w-3xl">
-          <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">
+          <h1 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">
             {t('about.hero_title')}
           </h1>
           <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-4 mb-6" data-delay="0.1"></div>
@@ -58,23 +58,23 @@ export default function QuiSommesNous() {
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           <div className="anim-fade-right order-2 md:order-1" data-delay="0.1">
-            <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">
+            <h2 className="font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">
               {t('about.title')}
             </h2>
             <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mb-6"></div>
-            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+            <p className="font-basecoat text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
               {t('about.story_p1')}
             </p>
-            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+            <p className="font-basecoat text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
               {t('about.story_p2')}
             </p>
-            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+            <p className="font-basecoat text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
               {t('about.story_p3')}
             </p>
-            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+            <p className="font-basecoat text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
               {t('about.story_p4')}
             </p>
-            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+            <p className="font-basecoat text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
               {t('about.story_p5')}
             </p>
           </div>
@@ -105,7 +105,7 @@ export default function QuiSommesNous() {
       <section className="bg-beige dark:bg-gray-900 py-14 sm:py-18 md:py-24">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="mb-12">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100">
+          <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('about.values_title')}
           </h2>
           <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-4" data-delay="0.1"></div>
@@ -162,17 +162,17 @@ export default function QuiSommesNous() {
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           <div className="anim-fade-right" data-delay="0.1">
-            <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">
+            <h2 className="font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">
               {t('home.atelier_title')}
             </h2>
             <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mb-6"></div>
-            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+            <p className="font-basecoat text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
               {t('about.atelier_p1')}
             </p>
-            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+            <p className="font-basecoat text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
               {t('about.atelier_p2')}
             </p>
-            <p className="font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+            <p className="font-basecoat text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
               {t('about.atelier_p3')}
             </p>
           </div>
@@ -187,11 +187,11 @@ export default function QuiSommesNous() {
       <section className="bg-beige dark:bg-gray-900 py-14 sm:py-18 md:py-24">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="mb-12">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100">
+          <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('about.impact_title')}
           </h2>
           <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-4 mb-6" data-delay="0.1"></div>
-          <p className="anim-fade-up font-basecoat text-gray-700 dark:text-gray-300 text-base sm:text-lg max-w-2xl md:text-xl leading-relaxed mb-4" data-delay="0.15">
+          <p className="anim-fade-up font-basecoat text-gray-700 dark:text-gray-300 text-sm sm:text-base max-w-2xl md:text-xl leading-relaxed mb-4" data-delay="0.15">
             {t('about.impact_sub')}
           </p>
         </div>
@@ -215,17 +215,17 @@ export default function QuiSommesNous() {
       {/* ── CTAs ── */}
       <section className="bg-black py-14 sm:py-18 md:py-24 text-center">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
-        <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-white mb-4">
+        <h2 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl font-bold uppercase text-white mb-4">
           {t('about.cta_title')}
         </h2>
         <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mx-auto mt-4 mb-8" data-delay="0.1"></div>
-        <p className="anim-fade-up font-basecoat text-gray-400 dark:text-gray-500 text-base sm:text-lg mb-10 max-w-xl mx-auto" data-delay="0.15">
+        <p className="anim-fade-up font-basecoat text-gray-400 dark:text-gray-500 text-sm sm:text-base mb-10 max-w-xl mx-auto" data-delay="0.15">
           {t('about.cta_sub')}
         </p>
         <div className="anim-fade-up flex flex-col sm:flex-row gap-4 justify-center" data-delay="0.2">
           <Link
             to={lp("/realisations")}
-            className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+            className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
           >
             {t('about.cta_shop')}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -234,7 +234,7 @@ export default function QuiSommesNous() {
           </Link>
           <Link
             to={lp("/commandes-personnalisees")}
-            className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+            className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
           >
             {t('about.cta_custom')}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

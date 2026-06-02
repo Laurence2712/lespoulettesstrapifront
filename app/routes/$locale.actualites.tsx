@@ -82,7 +82,7 @@ export default function ActualitesPage() {
       {/* Header */}
       <div className="py-6 sm:py-8 md:py-[60px] px-6 sm:px-10 md:px-16 lg:px-24">
         {/* Breadcrumb */}
-        <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
+        <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs">
           <Link to={lp('/')} className="text-benin-jaune hover:text-benin-terre font-medium transition">
             {t('common.home')}
           </Link>
@@ -94,7 +94,7 @@ export default function ActualitesPage() {
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6">
           <div>
             <h1
-              className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100"
+              className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100"
               data-delay="0.1"
             >
               {t('news.title')}
@@ -163,7 +163,7 @@ export default function ActualitesPage() {
                     className={`anim-fade-left ${index % 2 !== 0 ? 'md:order-1' : ''}`}
                     data-delay="0.3"
                   >
-                    <p className="font-basecoat text-sm text-benin-jaune font-semibold mb-3 tracking-wider uppercase">
+                    <p className="font-basecoat text-xs text-benin-jaune font-semibold mb-2 tracking-widest uppercase">
                       {actu.date
                         ? new Date(actu.date).toLocaleDateString("fr-FR", {
                             day: "2-digit",
@@ -172,10 +172,10 @@ export default function ActualitesPage() {
                           })
                         : t('news.date_unknown')}
                     </p>
-                    <h2 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 leading-tight">
+                    <h2 className="font-basecoat text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 leading-tight">
                       {actu.title}
                     </h2>
-                    <p className="font-basecoat text-gray-700 dark:text-gray-300 text-base sm:text-lg whitespace-pre-line leading-relaxed">
+                    <p className="font-basecoat text-gray-700 dark:text-gray-300 text-sm sm:text-base whitespace-pre-line leading-relaxed">
                       {actu.content}
                     </p>
                   </div>

@@ -235,10 +235,10 @@ export default function Panier() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
             </svg>
           </div>
-          <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 uppercase">
+          <h1 className="font-basecoat text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 uppercase">
             {isPaid ? t('cart.paid_title') : t('cart.order_sent_title')}
           </h1>
-          <p className="font-basecoat text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-3 text-base sm:text-lg leading-relaxed">
+          <p className="font-basecoat text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-3 text-sm sm:text-base leading-relaxed">
             {isPaid ? t('cart.paid_desc') : t('cart.order_sent_desc')}
           </p>
           {isPaid && (
@@ -280,7 +280,7 @@ export default function Panier() {
       <div className="py-6 sm:py-8 md:py-[60px] px-6 sm:px-10 md:px-16 lg:px-24 mt-16 sm:mt-20 md:mt-24">
         <div className="text-center py-12 sm:py-16">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" className="w-20 h-20 text-gray-200 mx-auto mb-6" fill="currentColor"><path fillRule="evenodd" clipRule="evenodd" d="M12 1C15.159 1 17.53 3.734 17.938 7H21.5A.5.5 0 0 1 22 7.5V17.914C22 18.616 21.75 19.3 21.178 19.705 19.929 20.592 17.138 22 12 22S4.071 20.592 2.822 19.705C2.25 19.3 2 18.615 2 17.915V7.5A.5.5 0 0 1 2.5 7H6.063C6.47 3.734 8.84 1 12 1M12 3C11.334 3 10.609 3.406 10.004 4.313 9.543 5.004 9.199 5.933 9.064 7H14.936C14.8 5.932 14.457 5.004 13.997 4.313 13.39 3.406 12.666 3 12 3" /></svg>
-          <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-3">
+          <h1 className="font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-3">
             {t('cart.empty_title')}
           </h1>
           <p className="font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-base mb-8">
@@ -360,13 +360,13 @@ export default function Panier() {
       </div>
 
       {/* Breadcrumb */}
-      <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
+      <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs">
         <Link to={lp("/")} className="text-benin-jaune hover:text-benin-terre font-medium transition">{t('common.home')}</Link>
         <span className="mx-1.5 sm:mx-2 text-gray-400 dark:text-gray-500">/</span>
         <span className="text-gray-600 dark:text-gray-400 dark:text-gray-500">{t('cart.breadcrumb')}</span>
       </nav>
 
-      <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100" data-delay="0.1">
+      <h1 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100" data-delay="0.1">
         {t('cart.your_cart')}
       </h1>
       <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4" data-delay="0.15"></div>
@@ -392,7 +392,7 @@ export default function Panier() {
               <div className="flex-1 flex flex-col justify-between min-w-0">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <h3 className="font-basecoat text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 leading-tight">
+                    <h3 className="font-basecoat text-sm sm:text-base font-bold text-gray-900 dark:text-gray-100 leading-tight">
                       {item.title}
                     </h3>
                     <p className="font-basecoat text-benin-jaune font-bold text-lg sm:text-xl mt-1">
@@ -477,7 +477,7 @@ export default function Panier() {
                   <span className="font-bold text-gray-900 dark:text-gray-100 text-base">{t('cart.estimated_total')}</span>
                   <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{t('cart.excl_shipping')}</p>
                 </div>
-                <span className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">{total.toFixed(2)} €</span>
+                <span className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100">{total.toFixed(2)} €</span>
               </div>
             </div>
 
@@ -657,14 +657,14 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
         {t('cart.back_to_cart')}
       </button>
 
-      <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100" data-delay="0.1">
+      <h1 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100" data-delay="0.1">
         {t('cart.finalize')}
       </h1>
       <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.15"></div>
 
       {/* Récapitulatif dynamique */}
       <div className="anim-fade-up bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-2xl p-5 sm:p-6 mb-8 sm:mb-10 shadow-sm" data-delay="0.15">
-        <h2 className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-base sm:text-lg mb-4">{t('cart.recap')}</h2>
+        <h2 className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-sm sm:text-base mb-4">{t('cart.recap')}</h2>
         <div className="space-y-2">
           <div className="font-basecoat flex justify-between text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500">
             <span>{t('cart.subtotal')} ({t('cart.items_count', {count: cart.reduce((s, i) => s + i.quantity, 0)})})</span>

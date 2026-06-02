@@ -55,7 +55,7 @@ export default function RecherchePage() {
     <div className="min-h-screen bg-white dark:bg-gray-950 pt-20 md:pt-24 pb-20">
       {/* Titre + input centré */}
       <div className="text-center px-6 sm:px-10 md:px-16 lg:px-24 pt-10 pb-8">
-        <h1 className="font-basecoat text-2xl sm:text-3xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-8">
+        <h1 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-8">
           Rechercher
         </h1>
         <div className="relative max-w-xl mx-auto">

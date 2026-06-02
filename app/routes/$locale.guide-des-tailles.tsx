@@ -106,7 +106,7 @@ export default function GuideTailles() {
       {/* ── Header ── */}
       <header className="bg-beige dark:bg-gray-900 pt-28 sm:pt-32 md:pt-40 pb-14 sm:pb-18 md:pb-24">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
-        <nav className="anim-fade-up font-basecoat mb-8 text-xs sm:text-sm">
+        <nav className="anim-fade-up font-basecoat mb-8 text-xs">
           <Link to={lp("/")} className="text-benin-jaune hover:text-benin-terre font-medium transition">{t('common.home')}</Link>
           <span className="mx-1.5 text-gray-400 dark:text-gray-500">/</span>
           <span className="text-gray-600 dark:text-gray-400 dark:text-gray-500">{t('sizes.breadcrumb')}</span>
@@ -136,7 +136,7 @@ export default function GuideTailles() {
         <section key={cat.category} className="px-6 sm:px-10 md:px-16 lg:px-24 py-10 sm:py-12">
           <div className="flex items-center gap-3 mb-2">
             <span className="text-3xl">{cat.icon}</span>
-            <h2 className="font-basecoat text-2xl sm:text-3xl font-bold uppercase text-gray-900 dark:text-gray-100">{cat.category}</h2>
+            <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">{cat.category}</h2>
           </div>
           <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mb-4"></div>
           <p className="font-basecoat text-gray-600 dark:text-gray-400 dark:text-gray-500 text-sm sm:text-base mb-6 max-w-xl">{cat.description}</p>
@@ -145,9 +145,9 @@ export default function GuideTailles() {
             <table className="w-full font-basecoat text-sm sm:text-base">
               <thead>
                 <tr className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-700">
-                  <th className={`text-left py-4 px-5 font-bold uppercase text-gray-900 dark:text-gray-100 text-xs sm:text-sm tracking-wider border-l-4 ${cat.color}`}>{t('sizes.model_col')}</th>
-                  <th className="text-left py-4 px-5 font-bold uppercase text-gray-900 dark:text-gray-100 text-xs sm:text-sm tracking-wider">{t('sizes.dims_col')}</th>
-                  <th className="text-left py-4 px-5 font-bold uppercase text-gray-900 dark:text-gray-100 text-xs sm:text-sm tracking-wider hidden sm:table-cell">{t('sizes.ideal_col')}</th>
+                  <th className={`text-left py-4 px-5 font-bold uppercase text-gray-900 dark:text-gray-100 text-xs tracking-wider border-l-4 ${cat.color}`}>{t('sizes.model_col')}</th>
+                  <th className="text-left py-4 px-5 font-bold uppercase text-gray-900 dark:text-gray-100 text-xs tracking-wider">{t('sizes.dims_col')}</th>
+                  <th className="text-left py-4 px-5 font-bold uppercase text-gray-900 dark:text-gray-100 text-xs tracking-wider hidden sm:table-cell">{t('sizes.ideal_col')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
@@ -175,7 +175,7 @@ export default function GuideTailles() {
       {/* ── Matières ── */}
       <section className="bg-beige dark:bg-gray-900 py-14 sm:py-18">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
-        <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">
+        <h2 className="anim-fade-up font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">
           {t('sizes.materials_title')}
         </h2>
         <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mb-6" data-delay="0.1"></div>
@@ -199,11 +199,11 @@ export default function GuideTailles() {
       {/* ── Entretien ── */}
       <section className="px-6 sm:px-10 md:px-16 lg:px-24 py-14 sm:py-18">
         <div className="mb-12">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100">
+          <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('sizes.care_title')}
           </h2>
           <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-4 mb-6" data-delay="0.1"></div>
-          <p className="anim-fade-up font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-base sm:text-lg max-w-xl" data-delay="0.15">
+          <p className="anim-fade-up font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm sm:text-base max-w-xl" data-delay="0.15">
             {t('sizes.care_subtitle')}
           </p>
         </div>
@@ -221,7 +221,7 @@ export default function GuideTailles() {
       {/* ── CTA ── */}
       <section className="bg-white dark:bg-gray-900 py-12 sm:py-14 text-center">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
-        <p className="font-basecoat text-gray-600 dark:text-gray-400 dark:text-gray-500 text-base sm:text-lg mb-6">
+        <p className="font-basecoat text-gray-600 dark:text-gray-400 dark:text-gray-500 text-sm sm:text-base mb-6">
           {t('sizes.cta_question')}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

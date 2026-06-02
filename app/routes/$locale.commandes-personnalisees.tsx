@@ -54,13 +54,13 @@ export default function CommandesPersonnalisees() {
       {/* ── Hero ── */}
       <header className="bg-beige dark:bg-gray-900 pt-28 sm:pt-32 md:pt-40 pb-14 sm:pb-18 md:pb-24">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
-        <nav className="anim-fade-up font-basecoat mb-8 text-xs sm:text-sm">
+        <nav className="anim-fade-up font-basecoat mb-8 text-xs">
           <Link to={lp("/")} className="text-benin-jaune hover:text-benin-terre font-medium transition">{t('common.home')}</Link>
           <span className="mx-1.5 text-gray-400 dark:text-gray-500">/</span>
           <span className="text-gray-600 dark:text-gray-400 dark:text-gray-500">{t('custom.breadcrumb')}</span>
         </nav>
         <div className="max-w-3xl">
-          <h1 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100">
+          <h1 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('custom.title')}
           </h1>
           <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-4 mb-6" data-delay="0.1"></div>
@@ -75,11 +75,11 @@ export default function CommandesPersonnalisees() {
       <section className="bg-white dark:bg-gray-900 py-14 sm:py-18 md:py-24">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="mb-12">
-          <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100">
+          <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('custom.how_title')}
           </h2>
           <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-4 mb-6" data-delay="0.1"></div>
-          <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed max-w-xl" data-delay="0.15">
+          <p className="anim-fade-up font-basecoat text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed max-w-xl" data-delay="0.15">
             {t('custom.how_subtitle')}
           </p>
         </div>
@@ -102,11 +102,11 @@ export default function CommandesPersonnalisees() {
       <section className="px-6 sm:px-10 md:px-16 lg:px-24 py-14 sm:py-18 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
           <div className="anim-fade-right" data-delay="0.1">
-            <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100">
+            <h2 className="font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">
               {t('custom.what_title')}
             </h2>
             <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-4 mb-6" data-delay="0.1"></div>
-            <ul className="space-y-3 font-basecoat text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+            <ul className="space-y-3 font-basecoat text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
               {[
                 'Sachets et pochettes pour dragées',
                 'Trousses de toilette et trousses de maquillage',
@@ -184,7 +184,7 @@ export default function CommandesPersonnalisees() {
           {t('custom.cta_title')}
         </h2>
         <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mx-auto mt-4 mb-8" data-delay="0.1"></div>
-        <p className="anim-fade-up font-basecoat text-base sm:text-lg md:text-xl text-gray-400 dark:text-gray-500 leading-relaxed mb-10 max-w-xl mx-auto" data-delay="0.15">
+        <p className="anim-fade-up font-basecoat text-sm sm:text-base text-gray-400 dark:text-gray-500 leading-relaxed mb-10 max-w-xl mx-auto" data-delay="0.15">
           {t('custom.cta_desc')}
         </p>
         <div className="anim-fade-up flex flex-col sm:flex-row gap-4 justify-center" data-delay="0.2">
@@ -201,7 +201,7 @@ export default function CommandesPersonnalisees() {
           </a>
           <Link
             to={lp("/contact")}
-            className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-sm sm:text-base font-semibold uppercase tracking-wide transition-all duration-300 inline-flex items-center gap-2"
+            className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
           >
             {t('custom.contact_form_cta')}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

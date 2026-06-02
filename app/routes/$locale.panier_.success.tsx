@@ -41,7 +41,7 @@ export default function PaymentSuccess() {
     <div className="py-6 sm:py-8 md:py-[60px] px-6 sm:px-10 md:px-16 lg:px-24 text-center mt-16 sm:mt-20 md:mt-24">
       <div className="bg-benin-vert/10 border-2 border-benin-vert rounded-lg p-6 sm:p-8">
         <div className="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4">✓</div>
-        <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-benin-vert mb-3 sm:mb-4 uppercase">
+        <h1 className="font-basecoat text-xl sm:text-2xl md:text-3xl font-bold text-benin-vert mb-3 sm:mb-4 uppercase">
           {t('cart.paid_title')}
         </h1>
         <p className="font-basecoat text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">

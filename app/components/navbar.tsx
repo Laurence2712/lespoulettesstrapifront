@@ -63,7 +63,7 @@ export default function NavBar() {
                 onClick={() => setMenuOpen(!menuOpen)}
                 aria-label={menuOpen ? t("nav.aria_close") : t("nav.aria_open")}
                 aria-expanded={menuOpen}
-                className="font-basecoat font-bold uppercase tracking-widest text-xs sm:text-sm text-gray-900 dark:text-gray-100 hover:text-benin-jaune transition-colors duration-200 flex items-center gap-2"
+                className="font-basecoat font-bold uppercase tracking-widest text-xs text-gray-900 dark:text-gray-100 hover:text-benin-jaune transition-colors duration-200 flex items-center gap-2"
               >
                 {menuOpen ? (
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
@@ -163,7 +163,7 @@ export default function NavBar() {
               key={path}
               to={lp(path)}
               onClick={() => setMenuOpen(false)}
-              className={`font-basecoat font-bold uppercase tracking-wider text-base sm:text-lg block px-6 sm:px-8 py-4 border-b border-gray-100 dark:border-gray-800 transition-colors duration-200 hover:text-benin-jaune ${
+              className={`font-basecoat font-bold uppercase tracking-wider text-sm sm:text-base block px-6 sm:px-8 py-4 border-b border-gray-100 dark:border-gray-800 transition-colors duration-200 hover:text-benin-jaune ${
                 isActive(path) ? "text-benin-jaune" : "text-gray-900 dark:text-gray-100"
               }`}
             >

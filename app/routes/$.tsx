@@ -12,7 +12,7 @@ export default function NotFound() {
     <div className="min-h-screen flex items-center justify-center py-20 px-4 bg-beige dark:bg-gray-900">
       <div className="text-center max-w-md">
         <p className="font-basecoat text-8xl font-bold text-benin-jaune mb-4">404</p>
-        <h1 className="font-basecoat text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 uppercase mb-4">
+        <h1 className="font-basecoat text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 uppercase mb-4">
           Page introuvable
         </h1>
         <p className="font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-8 leading-relaxed">

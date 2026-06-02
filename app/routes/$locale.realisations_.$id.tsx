@@ -356,7 +356,7 @@ export default function RealisationDetail() {
         className="py-6 sm:py-8 md:py-[60px] mt-16 sm:mt-20 md:mt-24 px-6 sm:px-10 md:px-16 lg:px-24"
       >
         {/* Breadcrumb */}
-        <nav className="anim-fade-up mb-4 text-xs sm:text-sm font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500">
+        <nav className="anim-fade-up mb-4 text-xs font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500">
           <Link to={lp("/")} className="hover:text-benin-jaune transition">{t('common.home')}</Link>
           <span className="mx-2">/</span>
           <Link to={lp("/realisations")} className="hover:text-benin-jaune transition">{t('products.breadcrumb_shop')}</Link>
@@ -484,7 +484,7 @@ export default function RealisationDetail() {
           <div className="anim-fade-left flex flex-col font-basecoat">
 
             <div className="flex items-start justify-between gap-4">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
+              <h1 className="text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
                 {realisation.title}
               </h1>
               <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-benin-jaune whitespace-nowrap flex-shrink-0">
@@ -692,7 +692,7 @@ export default function RealisationDetail() {
         {/* ── Produits similaires ── */}
         {relatedProducts.length > 0 && (
           <div className="mt-16 sm:mt-20">
-            <h2 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">
+            <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-2">
               {t('products.related')}
             </h2>
             <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mb-8" data-delay="0.1"></div>
@@ -725,7 +725,7 @@ export default function RealisationDetail() {
                       </div>
                     )}
                     <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4">
-                      <h3 className="font-basecoat text-white text-sm sm:text-base font-bold uppercase leading-tight">
+                      <h3 className="font-basecoat text-white text-xs font-bold uppercase tracking-widest leading-tight">
                         {product.title}
                       </h3>
                     </div>
