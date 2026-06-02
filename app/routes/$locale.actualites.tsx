@@ -206,7 +206,8 @@ export default function ActualitesPage() {
 
       {/* ── Newsletter CTA ── */}
       {!error && (
-        <div className="bg-gray-900 px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-14 sm:py-16 text-center">
+        <div className="bg-gray-900 py-14 sm:py-16 text-center">
+          <div className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto">
           <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-white mb-2">
             {t('news.newsletter_cta_title')}
           </h2>
@@ -230,6 +231,7 @@ export default function ActualitesPage() {
           >
             {t('products.see_all')}
           </Link>
+          </div>
         </div>
       )}
     </div>
