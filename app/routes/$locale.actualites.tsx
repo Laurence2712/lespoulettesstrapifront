@@ -104,7 +104,7 @@ export default function ActualitesPage() {
               data-delay="0.15"
             ></div>
             <p className="anim-fade-up font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm sm:text-base mt-3" data-delay="0.2">
-              {t('news.subtitle_base')} — {actualites.length} publication{actualites.length > 1 ? 's' : ''}
+              {t('news.subtitle_base')}
             </p>
           </div>
           <div className="anim-fade-up flex items-center gap-2" data-delay="0.2">
