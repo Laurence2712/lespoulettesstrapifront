@@ -295,8 +295,9 @@ export default function Realisations() {
         </nav>
 
         {/* Titre + Tri */}
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10 md:mb-12">
-          <div>
+        {/* Titre + Filtres sur la même ligne */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10 md:mb-12">
+          <div className="flex-shrink-0">
             <h1
               className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100"
               data-delay="0.1"
@@ -308,50 +309,31 @@ export default function Realisations() {
               data-delay="0.15"
             ></div>
           </div>
-          <div className="anim-fade-up flex items-center gap-2" data-delay="0.2">
-            <label
-              htmlFor="sort-price"
-              className="font-basecoat text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500 whitespace-nowrap"
-            >
-              {t('products.sort_by')}
-            </label>
-            <select
-              id="sort-price"
-              value={sortOrder}
-              onChange={(e) => handleSortChange(e.target.value as 'asc' | 'desc')}
-              className="font-basecoat text-sm border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune"
-            >
-              <option value="asc">{t('products.sort_price_asc')}</option>
-              <option value="desc">{t('products.sort_price_desc')}</option>
-            </select>
-          </div>
+          {!error && (
+            <div className="anim-fade-up flex gap-2 flex-wrap sm:justify-end" data-delay="0.2">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => handleCategoryChange(cat)}
+                  className={`font-basecoat text-sm font-semibold px-4 py-2 rounded-full border-2 transition-all duration-200 ${
+                    selectedCategory === cat
+                      ? 'bg-benin-jaune border-benin-jaune text-black dark:text-gray-100 shadow-md'
+                      : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
+                  }`}
+                >
+                  {t(CAT_KEY[cat])}
+                  {cat !== 'Tout' && (
+                    <span className="ml-1.5 text-xs opacity-60">
+                      ({realisations.filter((r) => matchesCategory(r, cat)).length})
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col">
-
-        {/* ── Filtres catégories ── */}
-        {!error && (
-          <div className="order-2 sm:order-1 anim-fade-up flex gap-2 sm:gap-3 flex-wrap mb-8 sm:mb-10" data-delay="0.25">
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => handleCategoryChange(cat)}
-                className={`font-basecoat text-sm sm:text-base font-semibold px-4 sm:px-5 py-2 rounded-full border-2 transition-all duration-200 ${
-                  selectedCategory === cat
-                    ? 'bg-benin-jaune border-benin-jaune text-black dark:text-gray-100 shadow-md'
-                    : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
-                }`}
-              >
-                {t(CAT_KEY[cat])}
-                {cat !== 'Tout' && (
-                  <span className="ml-1.5 text-xs opacity-60">
-                    ({realisations.filter((r) => matchesCategory(r, cat)).length})
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
-        )}
 
         {/* ── Coups de cœur ── */}
         <div className="order-1 sm:order-2">
