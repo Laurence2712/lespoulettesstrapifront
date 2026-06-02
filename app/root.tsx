@@ -16,7 +16,6 @@ import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next/react";
 import NavBar from "./components/navbar";
 import Footer from "./components/footer";
-import CookieBanner from "./components/CookieBanner";
 import BackToTop from "./components/BackToTop";
 import { ToastProvider } from "./components/ToastProvider";
 import CommandPalette from "./components/CommandPalette";
@@ -100,7 +99,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <NavBar />
         <main id="main-content" className="flex-grow">{children}</main>
         <Footer />
-        <CookieBanner />
         <BackToTop />
         <ScrollRestoration />
         <Scripts />

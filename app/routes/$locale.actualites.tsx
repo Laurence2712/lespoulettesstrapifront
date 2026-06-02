@@ -80,7 +80,7 @@ export default function ActualitesPage() {
   return (
     <div ref={scrollRef} className="mt-16 sm:mt-20 md:mt-24">
       {/* Header */}
-      <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
+      <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto">
         {/* Breadcrumb */}
         <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs sm:text-sm">
           <Link to={lp('/')} className="text-benin-jaune hover:text-benin-terre font-medium transition">
@@ -142,7 +142,7 @@ export default function ActualitesPage() {
               key={actu.id}
               className={index % 2 === 0 ? 'bg-white dark:bg-gray-900' : 'bg-beige dark:bg-gray-900'}
             >
-              <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-16 sm:py-20 md:py-24">
+              <div className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-16 sm:py-20 md:py-24">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
                   {/* Image */}
                   {actu.image_url && (
@@ -206,7 +206,7 @@ export default function ActualitesPage() {
 
       {/* ── Newsletter CTA ── */}
       {!error && (
-        <div className="bg-gray-900 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-16 text-center">
+        <div className="bg-gray-900 px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-14 sm:py-16 text-center">
           <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-white mb-2">
             {t('news.newsletter_cta_title')}
           </h2>
