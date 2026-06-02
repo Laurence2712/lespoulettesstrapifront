@@ -227,7 +227,7 @@ export default function Index() {
 
 
       {/* ── Nouveaux arrivages ── */}
-      <section id="nouveaux-arrivages" className="py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
+      <section id="nouveaux-arrivages" className="py-10 sm:py-14 md:py-[70px] bg-beige dark:bg-gray-900">
         <div className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <div className="mb-3 sm:mb-4">
