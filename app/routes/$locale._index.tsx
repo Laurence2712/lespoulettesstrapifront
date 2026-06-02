@@ -227,7 +227,8 @@ export default function Index() {
 
 
       {/* ── Nouveaux arrivages ── */}
-      <section id="nouveaux-arrivages" className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
+      <section id="nouveaux-arrivages" className="py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
+        <div className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <div className="mb-3 sm:mb-4">
             <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">
@@ -302,10 +303,12 @@ export default function Index() {
         ) : (
           <p className="text-center text-gray-400 dark:text-gray-500 font-basecoat">{t('home.no_products')}</p>
         )}
+        </div>
       </section>
 
       {/* ── Qui sommes-nous ── */}
-      <section id="qui-sommes-nous" className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-6 sm:py-8 md:py-[60px] bg-beige dark:bg-gray-900">
+      <section id="qui-sommes-nous" className="py-6 sm:py-8 md:py-[60px] bg-beige dark:bg-gray-900">
+        <div className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('about.title')}
@@ -342,10 +345,12 @@ export default function Index() {
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ── Dans notre atelier ── */}
-      <section id="notre-atelier" className="bg-white dark:bg-gray-900 px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-10 sm:py-14 md:py-[70px]">
+      <section id="notre-atelier" className="bg-white dark:bg-gray-900 py-10 sm:py-14 md:py-[70px]">
+        <div className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto">
         <div className="max-w-5xl mx-auto bg-beige dark:bg-gray-900 rounded-3xl shadow-lg p-8 sm:p-10 md:p-14">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('home.atelier_title')}
@@ -366,6 +371,7 @@ export default function Index() {
               <p className="font-basecoat text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{t('home.atelier_item2_desc')}</p>
             </div>
           </div>
+        </div>
         </div>
       </section>
 
@@ -429,7 +435,8 @@ export default function Index() {
       </section>
 
       {/* ── Commandes personnalisées ── */}
-      <section className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
+      <section className="py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
+        <div className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <div className="mb-3 sm:mb-4">
             <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
@@ -501,6 +508,7 @@ export default function Index() {
     </svg>
   </Link>
 </div>
+        </div>
       </section>
 
     {/* ── Où nous trouver ── */}
