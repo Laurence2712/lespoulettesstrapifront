@@ -354,7 +354,7 @@ export default function Index() {
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('news.title')}
           </h2>
-          <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
+          <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.1"></div>
         </div>
 
         {actualites.length > 0 ? (
@@ -516,7 +516,7 @@ export default function Index() {
       ></div>
 
       <p
-        className="anim-fade-up mt-6 mb-6 font-basecoat text-base sm:text-lg md:text-xl text-gray-800 dark:text-gray-200 leading-relaxed whitespace-pre-line"
+        className="anim-fade-up mt-4 mb-8 sm:mb-10 font-basecoat text-base sm:text-lg md:text-xl text-gray-800 dark:text-gray-200 leading-relaxed whitespace-pre-line"
         data-delay="0.2"
       >
         {t('home.location_desc')}
