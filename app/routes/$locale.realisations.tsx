@@ -251,7 +251,6 @@ export default function Realisations() {
     setSelectedCategory(cat);
     setCurrentPage(1);
     setFilterKey((k) => k + 1);
-    setTimeout(() => gridRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   };
 
   return (
