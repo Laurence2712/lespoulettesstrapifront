@@ -17,6 +17,7 @@ import { useChangeLanguage } from "remix-i18next/react";
 import NavBar from "./components/navbar";
 import Footer from "./components/footer";
 import BackToTop from "./components/BackToTop";
+import ScrollProgress from "./components/ScrollProgress";
 import { ToastProvider } from "./components/ToastProvider";
 import CommandPalette from "./components/CommandPalette";
 import { useCartStore } from "./store/cartStore";
@@ -96,6 +97,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         >
           {locale === "en" ? "Skip to main content" : "Aller au contenu principal"}
         </a>
+        <ScrollProgress />
         <NavBar />
         <main id="main-content" className="flex-grow">{children}</main>
         <Footer />

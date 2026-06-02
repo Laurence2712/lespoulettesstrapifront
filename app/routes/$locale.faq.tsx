@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Link } from '@remix-run/react';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 import { useLocalePath } from '../hooks/useLocalePath';
@@ -149,43 +149,52 @@ const FAQ_SECTIONS: FaqSection[] = [
   },
 ];
 
-function FaqAccordion({ section }: { section: FaqSection }) {
+function slugify(str: string) {
+  return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function FaqAccordion({ section, sectionIdx }: { section: FaqSection; sectionIdx: number }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const copyAnchor = useCallback((id: string) => {
+    if (typeof window === 'undefined') return;
+    navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}#${id}`);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 1500);
+  }, []);
 
   return (
     <div className="mb-10 sm:mb-12">
-      <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-5 flex items-center gap-3">
+      <h2
+        id={`section-${sectionIdx}`}
+        className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 mb-5 flex items-center gap-3"
+      >
         <span>{section.emoji}</span>
         <span>{section.title}</span>
       </h2>
       <div className="space-y-3">
         {section.items.map((item, idx) => {
           const isOpen = openIndex === idx;
+          const anchorId = `faq-${slugify(item.question)}`;
           return (
             <div
               key={idx}
-              className="border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden bg-white dark:bg-gray-900"
+              id={anchorId}
+              className="border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden bg-white dark:bg-gray-900 scroll-mt-28"
             >
               <button
                 type="button"
                 onClick={() => setOpenIndex(isOpen ? null : idx)}
                 aria-expanded={isOpen}
-                className="w-full flex items-center justify-between gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left font-basecoat font-semibold text-gray-900 dark:text-gray-100 text-sm sm:text-base hover:bg-white dark:bg-gray-900 transition-colors"
+                className="w-full flex items-center justify-between gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left font-basecoat font-semibold text-gray-900 dark:text-gray-100 text-sm sm:text-base hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
               >
                 <span className="flex-1">{item.question}</span>
                 <span
-                  className={`flex-shrink-0 w-6 h-6 rounded-full bg-benin-jaune/10 flex items-center justify-center transition-transform duration-300 ${
-                    isOpen ? 'rotate-180' : ''
-                  }`}
+                  className={`flex-shrink-0 w-6 h-6 rounded-full bg-benin-jaune/10 flex items-center justify-center transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
                   aria-hidden="true"
                 >
-                  <svg
-                    className="w-3.5 h-3.5 text-benin-jaune"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2.5}
-                  >
+                  <svg className="w-3.5 h-3.5 text-benin-jaune" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                   </svg>
                 </span>
@@ -193,9 +202,19 @@ function FaqAccordion({ section }: { section: FaqSection }) {
               {isOpen && (
                 <div className="px-5 sm:px-6 pb-5">
                   <div className="border-t border-gray-100 dark:border-gray-700 pt-4">
-                    <p className="font-basecoat text-gray-600 dark:text-gray-400 dark:text-gray-500 text-sm sm:text-base leading-relaxed">
+                    <p className="font-basecoat text-gray-600 dark:text-gray-400 text-sm sm:text-base leading-relaxed">
                       {item.answer}
                     </p>
+                    <button
+                      onClick={() => copyAnchor(anchorId)}
+                      className="mt-3 inline-flex items-center gap-1 font-basecoat text-xs text-gray-400 hover:text-benin-jaune transition"
+                    >
+                      {copiedId === anchorId ? (
+                        <><svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg> Lien copié</>
+                      ) : (
+                        <><svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg> Copier le lien</>
+                      )}
+                    </button>
                   </div>
                 </div>
               )}
@@ -243,8 +262,8 @@ export default function FAQ() {
 
       {/* Sections FAQ */}
       <div className="anim-fade-up max-w-3xl" data-delay="0.2">
-        {FAQ_SECTIONS.map((section) => (
-          <FaqAccordion key={section.title} section={section} />
+        {FAQ_SECTIONS.map((section, idx) => (
+          <FaqAccordion key={section.title} section={section} sectionIdx={idx} />
         ))}
       </div>
 

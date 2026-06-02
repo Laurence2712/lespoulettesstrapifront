@@ -271,7 +271,7 @@ export default function Index() {
                           </h3>
                           {realisation.prix && (
                             <p className="font-basecoat text-xl font-bold text-benin-jaune whitespace-nowrap flex-shrink-0">
-                              {Number(realisation.prix).toFixed(2)} €
+                              {realisation.prix} €
                             </p>
                           )}
                         </div>
