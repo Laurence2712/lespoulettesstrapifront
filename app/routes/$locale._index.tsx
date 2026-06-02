@@ -1,4 +1,5 @@
-import { Link, useLoaderData } from '@remix-run/react';
+import { Link, useLoaderData, useNavigate } from '@remix-run/react';
+import { useState } from 'react';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { apiEndpoints, getImageUrl } from '../config/api';
@@ -38,6 +39,7 @@ interface Realisation {
   image_url?: string;
   description?: string;
   prix?: string | number;
+  categorie?: string;
 }
 
 interface Actualite {
@@ -120,6 +122,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
               : undefined,
           description: realisation.Description || 'Description indisponible',
           prix: realisation.Prix,
+          categorie: realisation.Categorie || undefined,
         }));
       }
     }
@@ -166,8 +169,23 @@ export default function Index() {
 
   const heroRef = useParallaxHero();
   const scrollRef = useScrollAnimations([]);
+  const navigate = useNavigate();
 
-  const featured = realisations.slice(0, 4);
+  const CATEGORIES = [
+    { label: t('products.cat_all'),        value: 'Tout' },
+    { label: t('products.cat_pouches'),    value: 'Trousses' },
+    { label: t('products.cat_bags'),       value: 'Sacs' },
+    { label: t('products.cat_sleeves'),    value: 'Housses' },
+    { label: t('products.cat_accessories'),value: 'Accessoires' },
+  ];
+
+  const [activeCategory, setActiveCategory] = useState('Tout');
+
+  const filtered = activeCategory === 'Tout'
+    ? realisations
+    : realisations.filter((r) => r.categorie === activeCategory);
+
+  const featured = filtered.slice(0, 8);
 
   return (
     <div className="overflow-x-hidden" ref={scrollRef}>
@@ -175,7 +193,7 @@ export default function Index() {
       {/* ── Hero Banner ── */}
       <header
         ref={heroRef}
-        className="banner relative bg-cover bg-center h-[75vh] sm:h-[75vh] md:h-[80vh] lg:h-[100vh] flex flex-col justify-center items-center text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24 pb-14 sm:pb-12"
+        className="banner relative bg-cover bg-center h-[55vh] sm:h-[60vh] md:h-[65vh] flex flex-col justify-center items-center text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24 pb-14 sm:pb-12"
         style={{ backgroundImage: `url(${homepageData?.image_url || '/images/banner-default.jpg'})` }}
       >
         <div className="banner-content text-center z-20 flex flex-col items-center justify-center pb-8 sm:pb-12 md:pb-16">
@@ -241,13 +259,30 @@ export default function Index() {
           </p>
         </div>
 
+        {/* Barre catégories */}
+        <div className="flex gap-2 flex-wrap mb-8 sm:mb-10">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat.value}
+              onClick={() => setActiveCategory(cat.value)}
+              className={`font-basecoat text-sm font-bold uppercase tracking-wide px-5 py-2 border-2 transition-all duration-200 ${
+                activeCategory === cat.value
+                  ? 'bg-gray-900 border-gray-900 text-white dark:bg-gray-100 dark:text-gray-900'
+                  : 'bg-transparent border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-gray-900 dark:hover:border-gray-100'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
         {featured.length > 0 ? (
           <>
-            <div className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6" data-stagger="0.1">
+            <div className="anim-stagger grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5" data-stagger="0.08">
               {featured.map((realisation) => (
-                <Link key={realisation.id} to={lp(`/realisations/${realisation.id}`)} className="group">
-                  <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 h-full flex flex-col">
-                    <div className="relative overflow-hidden aspect-square">
+                <div key={realisation.id} className="group flex flex-col">
+                  <Link to={lp(`/realisations/${realisation.id}`)}>
+                    <div className="relative overflow-hidden aspect-square bg-gray-50 dark:bg-gray-800 mb-3">
                       {realisation.image_url ? (
                         <img
                           src={realisation.image_url}
@@ -258,33 +293,30 @@ export default function Index() {
                           className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
-                        <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                          <span className="font-basecoat text-gray-400 dark:text-gray-500 text-sm">{t('home.no_image')}</span>
+                        <div className="w-full h-full flex items-center justify-center">
+                          <span className="font-basecoat text-gray-400 text-sm">{t('home.no_image')}</span>
                         </div>
                       )}
                     </div>
-                    <div className="p-4 flex flex-col flex-1 justify-between">
-                      <div>
-                        <div className="flex items-baseline justify-between gap-2 mb-3">
-                          <h3 className="font-basecoat font-semibold text-gray-900 dark:text-gray-100 text-base leading-snug">
-                            {realisation.title}
-                          </h3>
-                          {realisation.prix && (
-                            <p className="font-basecoat text-xl font-bold text-benin-jaune whitespace-nowrap flex-shrink-0">
-                              {realisation.prix} €
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                      <span className="font-basecoat text-sm font-semibold text-benin-jaune group-hover:text-benin-terre flex items-center gap-1 transition">
-                        {t('home.view_product')}
-                        <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </span>
-                    </div>
-                  </div>
-                </Link>
+                    <h3 className="font-basecoat font-bold uppercase text-sm sm:text-base text-gray-900 dark:text-gray-100 leading-tight mb-0.5">
+                      {realisation.title}
+                    </h3>
+                    {realisation.categorie && (
+                      <p className="font-basecoat text-xs text-gray-500 dark:text-gray-400 mb-1">{realisation.categorie}</p>
+                    )}
+                    {realisation.prix && (
+                      <p className="font-basecoat text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                        {realisation.prix} €
+                      </p>
+                    )}
+                  </Link>
+                  <Link
+                    to={lp(`/realisations/${realisation.id}`)}
+                    className="mt-auto font-basecoat text-xs sm:text-sm font-bold uppercase tracking-wide text-center py-2.5 border-2 border-gray-900 dark:border-gray-100 text-gray-900 dark:text-gray-100 hover:bg-gray-900 hover:text-white dark:hover:bg-gray-100 dark:hover:text-gray-900 transition-all duration-200"
+                  >
+                    {t('home.view_product')}
+                  </Link>
+                </div>
               ))}
             </div>
 
