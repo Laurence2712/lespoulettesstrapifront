@@ -126,51 +126,58 @@ export default function NavBar() {
         </div>
       </nav>
 
-      {/* Full-screen menu overlay */}
+      {/* Backdrop */}
+      {menuOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50"
+          onClick={() => setMenuOpen(false)}
+        />
+      )}
+
+      {/* Left drawer */}
       <div
-        className={`fixed inset-0 z-40 bg-beige dark:bg-gray-950 transition-all duration-300 ease-in-out flex flex-col ${
-          menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        className={`fixed top-0 left-0 h-full z-50 w-[85vw] sm:w-[420px] bg-white dark:bg-gray-950 flex flex-col transition-transform duration-300 ease-in-out ${
+          menuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
-        style={{ top: menuOpen ? 0 : 0 }}
       >
-        {/* Close button top-right */}
-        <div className="flex justify-end px-4 sm:px-6 md:px-10 pt-5">
+        {/* Header: logo + close */}
+        <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-gray-100 dark:border-gray-800">
+          <Link to={lp("/")} onClick={() => setMenuOpen(false)}>
+            <img
+              src={dark ? "/assets/logo_t_poulettes_white.png" : "/assets/logo_t_poulettes.png"}
+              alt="Les Poulettes"
+              className="h-10 sm:h-12 w-auto object-contain"
+            />
+          </Link>
           <button
             onClick={() => setMenuOpen(false)}
             className="text-gray-900 dark:text-gray-100 hover:text-benin-jaune transition-colors"
             aria-label="Fermer le menu"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
-        {/* Nav links centered */}
-        <nav className="flex-1 flex flex-col items-center justify-center gap-2 sm:gap-3">
-          {navLinks.map(({ path, label }) => (
+        {/* Nav links */}
+        <nav className="flex-1 overflow-y-auto">
+          {[...navLinks, { path: "/#ou-nous-trouver", label: t("nav.locations") }].map(({ path, label }) => (
             <Link
               key={path}
               to={lp(path)}
               onClick={() => setMenuOpen(false)}
-              className={`font-basecoat font-bold uppercase tracking-widest text-2xl sm:text-3xl md:text-4xl transition-colors duration-200 hover:text-benin-jaune ${
+              className={`font-basecoat font-bold uppercase tracking-wider text-base sm:text-lg block px-6 sm:px-8 py-4 border-b border-gray-100 dark:border-gray-800 transition-colors duration-200 hover:text-benin-jaune ${
                 isActive(path) ? "text-benin-jaune" : "text-gray-900 dark:text-gray-100"
               }`}
             >
               {label}
             </Link>
           ))}
-          <Link
-            to={lp("/#ou-nous-trouver")}
-            onClick={() => setMenuOpen(false)}
-            className="font-basecoat font-bold uppercase tracking-widest text-2xl sm:text-3xl md:text-4xl text-gray-900 dark:text-gray-100 hover:text-benin-jaune transition-colors duration-200"
-          >
-            {t("nav.locations")}
-          </Link>
         </nav>
 
-        {/* Bottom bar: language + dark mode */}
-        <div className="flex items-center justify-center gap-6 pb-10 border-t border-gray-200 dark:border-gray-800 pt-6">
+        {/* Bottom: language + dark mode */}
+        <div className="flex items-center gap-4 px-6 sm:px-8 py-5 border-t border-gray-100 dark:border-gray-800">
           <Link
             to={otherLocalePath}
             onClick={() => setMenuOpen(false)}
