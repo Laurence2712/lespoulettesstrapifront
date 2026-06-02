@@ -199,7 +199,7 @@ export default function Index() {
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
 
         {/* ── Ticker social proof (superposé sur le hero, fond transparent) ── */}
-        <div className="absolute bottom-0 left-0 right-0 z-10 bg-gray-900/10 backdrop-blur-sm py-3 overflow-hidden select-none">
+        <div className="absolute bottom-0 left-0 right-0 z-10 bg-gray-900/10 backdrop-blur-sm py-6 overflow-hidden select-none">
           <div className="animate-ticker flex whitespace-nowrap w-max">
             {[0, 1].map((copy) => (
               <span key={copy} className="inline-flex items-center">
