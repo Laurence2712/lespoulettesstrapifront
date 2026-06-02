@@ -52,7 +52,7 @@ export default function CommandesPersonnalisees() {
     <div ref={scrollRef} className="overflow-x-hidden">
 
       {/* ── Hero ── */}
-      <header className="bg-beige dark:bg-gray-900 pt-28 sm:pt-32 md:pt-40 pb-14 sm:pb-18 md:pb-24 px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
+      <header className="bg-beige dark:bg-gray-900 pt-28 sm:pt-32 md:pt-40 pb-14 sm:pb-18 md:pb-24 px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto">
         <nav className="anim-fade-up font-basecoat mb-8 text-xs sm:text-sm">
           <Link to={lp("/")} className="text-benin-jaune hover:text-benin-terre font-medium transition">{t('common.home')}</Link>
           <span className="mx-1.5 text-gray-400 dark:text-gray-500">/</span>
@@ -70,7 +70,7 @@ export default function CommandesPersonnalisees() {
       </header>
 
       {/* ── Comment ça marche ── */}
-      <section className="bg-white dark:bg-gray-900 px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
+      <section className="bg-white dark:bg-gray-900 px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-14 sm:py-18 md:py-24">
         <div className="mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100">
             {t('custom.how_title')}
@@ -95,7 +95,7 @@ export default function CommandesPersonnalisees() {
       </section>
 
       {/* ── Ce qu'on peut créer ── */}
-      <section className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24">
+      <section className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-14 sm:py-18 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
           <div className="anim-fade-right" data-delay="0.1">
             <h2 className="font-basecoat text-2xl sm:text-3xl md:text-[40px] font-bold uppercase text-gray-900 dark:text-gray-100">
@@ -174,7 +174,7 @@ export default function CommandesPersonnalisees() {
       </section>
 
       {/* ── CTA Contact ── */}
-      <section className="bg-black px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-14 sm:py-18 md:py-24 text-center">
+      <section className="bg-black px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-14 sm:py-18 md:py-24 text-center">
         <h2 className="anim-fade-up font-basecoat text-xl sm:text-3xl md:text-[40px] font-bold uppercase text-white mb-4 whitespace-nowrap">
           {t('custom.cta_title')}
         </h2>

@@ -1,6 +1,7 @@
 import { Link } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { useLocalePath } from "../hooks/useLocalePath";
+import CookieBanner from "./CookieBanner";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -9,7 +10,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-black text-white">
-      <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px] py-12 sm:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-x-8 sm:gap-y-12 lg:gap-12">
+      <div className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto py-12 sm:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-x-8 sm:gap-y-12 lg:gap-12">
 
         {/* Colonne 1 : Logo */}
         <div className="flex flex-col">
@@ -82,19 +83,22 @@ export default function Footer() {
       </div>
 
       {/* Ligne du bas */}
-      <div className="border-t border-gray-800 mt-10 sm:mt-12 py-6 sm:py-8 px-4 sm:px-6 md:px-[60px] lg:px-[120px] flex flex-col sm:flex-row items-center justify-between gap-3 text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm font-basecoat">
-        <p>© {currentYear} Les Poulettes. {t("footer.copyright")}</p>
-        <p className="flex items-center gap-1.5">
-          <span>{t("footer.made_by")}</span>
-          <a href="https://www.laurencepirard.be" target="_blank" rel="noopener noreferrer" className="text-white font-bold hover:text-benin-jaune transition">
-            Laurence Pirard
-          </a>
-          <span>✦</span>
-        </p>
-        <Link to={lp("/mentions-legales")} className="hover:text-benin-jaune transition">
-          {t("footer.legal")}
-        </Link>
+      <div className="border-t border-gray-800">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm font-basecoat">
+          <p>© {currentYear} Les Poulettes. {t("footer.copyright")}</p>
+          <p className="flex items-center gap-1.5">
+            <span>{t("footer.made_by")}</span>
+            <a href="https://www.laurencepirard.be" target="_blank" rel="noopener noreferrer" className="text-white font-bold hover:text-benin-jaune transition">
+              Laurence Pirard
+            </a>
+            <span>✦</span>
+          </p>
+          <Link to={lp("/mentions-legales")} className="hover:text-benin-jaune transition">
+            {t("footer.legal")}
+          </Link>
+        </div>
       </div>
+      <CookieBanner />
     </footer>
   );
 }

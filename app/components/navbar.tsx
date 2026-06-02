@@ -58,7 +58,7 @@ export default function NavBar() {
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
       isTransparent ? "bg-transparent" : "bg-beige dark:bg-gray-950 shadow-md dark:shadow-gray-900"
     }`}>
-      <div className="px-4 sm:px-6 md:px-[60px] lg:px-[120px]">
+      <div className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto">
         <div className="flex items-center justify-between h-16 sm:h-20 md:h-24">
 
           {/* Left: Logo + hamburger */}
