@@ -350,7 +350,7 @@ export default function Realisations() {
                   to={lp(`/realisations/${item.productId}?declinaison=${item.id}`)}
                   className="group flex-shrink-0 w-44 sm:w-52 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700"
                 >
-                  <div className="relative h-44 sm:h-52 overflow-hidden bg-amber-50">
+                  <div className="relative aspect-square overflow-hidden bg-amber-50">
                     {item.image_url ? (
                       <img
                         src={item.image_url}
@@ -407,7 +407,7 @@ export default function Realisations() {
                 className="group flex flex-col rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-1.5 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700"
               >
                 {/* Image */}
-                <div className="relative h-60 sm:h-68 md:h-72 overflow-hidden bg-amber-50 flex-shrink-0">
+                <div className="relative aspect-square overflow-hidden bg-amber-50 flex-shrink-0">
                   {realisation.image_url ? (
                     <img
                       src={realisation.image_url}
