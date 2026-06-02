@@ -307,7 +307,7 @@ export default function Index() {
       </section>
 
       {/* ── Qui sommes-nous ── */}
-      <section id="qui-sommes-nous" className="py-6 sm:py-8 md:py-[60px] bg-beige dark:bg-gray-900">
+      <section id="qui-sommes-nous" className="py-6 sm:py-8 md:py-[60px] bg-white dark:bg-gray-900">
         <div className="px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <h2 className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100">
