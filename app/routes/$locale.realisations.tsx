@@ -187,7 +187,6 @@ export default function Realisations() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<string>('Tout');
-  const [searchTerm, setSearchTerm] = useState('');
   const [filterKey, setFilterKey] = useState(0);
   const gridRef = useRef<HTMLDivElement>(null);
 
@@ -225,9 +224,7 @@ export default function Realisations() {
 
   const filteredRealisations = realisations.filter((r) => {
     if (!matchesCategory(r, selectedCategory)) return false;
-    if (!searchTerm.trim()) return true;
-    const q = searchTerm.toLowerCase();
-    return r.title.toLowerCase().includes(q) || (r.description || '').toLowerCase().includes(q);
+    return true;
   });
 
   const sortedRealisations = [...filteredRealisations].sort((a, b) => {
@@ -303,73 +300,43 @@ export default function Realisations() {
           <span className="text-gray-600 dark:text-gray-400 dark:text-gray-500">{t('products.breadcrumb_shop')}</span>
         </nav>
 
-        {/* Titre */}
-        <div className="mb-6 sm:mb-8">
-          <h1
-            className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100"
-            data-delay="0.1"
-          >
-            {t('products.title')}
-          </h1>
-          <div
-            className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4"
-            data-delay="0.15"
-          ></div>
-        </div>
-
-        {/* Barre sticky : filtres + compteur */}
-        {!error && (
-          <div className="sticky top-16 sm:top-20 md:top-24 z-30 bg-beige/95 dark:bg-gray-950/95 backdrop-blur-sm py-3 -mx-4 sm:-mx-6 md:-mx-12 px-4 sm:px-6 md:px-12 border-b border-gray-100 dark:border-gray-800 mb-8 sm:mb-10">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div className="flex items-center gap-3 flex-shrink-0">
-                <span className="font-basecoat text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
-                  <span className="font-bold text-gray-900 dark:text-gray-100">{filteredRealisations.length}</span> {filteredRealisations.length === 1 ? 'produit' : 'produits'}
-                </span>
-                {/* Search */}
-                <div className="relative">
-                  <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
-                  </svg>
-                  <input
-                    type="search"
-                    value={searchTerm}
-                    onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); setFilterKey((k) => k + 1); }}
-                    placeholder="Rechercher..."
-                    className="font-basecoat text-sm pl-8 pr-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-benin-jaune focus:border-transparent w-36 sm:w-44 transition"
-                  />
-                  {searchTerm && (
-                    <button
-                      onClick={() => { setSearchTerm(''); setFilterKey((k) => k + 1); }}
-                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                    >
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-                    </button>
-                  )}
-                </div>
-              </div>
-              <div className="flex gap-2 flex-wrap sm:justify-end">
-                {CATEGORIES.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => handleCategoryChange(cat)}
-                    className={`font-basecoat text-sm font-semibold px-4 py-1.5 rounded-full border-2 transition-all duration-200 ${
-                      selectedCategory === cat
-                        ? 'bg-benin-jaune border-benin-jaune text-black shadow-md'
-                        : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
-                    }`}
-                  >
-                    {t(CAT_KEY[cat])}
-                    {cat !== 'Tout' && (
-                      <span className="ml-1.5 text-xs opacity-60">
-                        ({realisations.filter((r) => matchesCategory(r, cat)).length})
-                      </span>
-                    )}
-                  </button>
-                ))}
-              </div>
-            </div>
+        {/* Titre + Filtres */}
+        <div className="mb-8 sm:mb-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+          <div>
+            <h1
+              className="anim-fade-up font-basecoat text-2xl sm:text-3xl md:text-[44px] font-bold uppercase text-gray-900 dark:text-gray-100"
+              data-delay="0.1"
+            >
+              {t('products.title')}
+            </h1>
+            <div
+              className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4"
+              data-delay="0.15"
+            ></div>
           </div>
-        )}
+          {!error && (
+            <div className="flex gap-2 flex-wrap sm:justify-end">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => handleCategoryChange(cat)}
+                  className={`font-basecoat text-sm font-semibold px-4 py-1.5 rounded-full border-2 transition-all duration-200 ${
+                    selectedCategory === cat
+                      ? 'bg-benin-jaune border-benin-jaune text-black shadow-md'
+                      : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
+                  }`}
+                >
+                  {t(CAT_KEY[cat])}
+                  {cat !== 'Tout' && (
+                    <span className="ml-1.5 text-xs opacity-60">
+                      ({realisations.filter((r) => matchesCategory(r, cat)).length})
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
         <div className="flex flex-col">
 
