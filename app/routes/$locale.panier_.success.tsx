@@ -38,7 +38,7 @@ export default function PaymentSuccess() {
   }, [clearCart, cleared]);
 
   return (
-    <div className="py-6 sm:py-8 md:py-[60px] px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto text-center mt-16 sm:mt-20 md:mt-24">
+    <div className="py-6 sm:py-8 md:py-[60px] px-6 sm:px-10 md:px-16 lg:px-24 text-center mt-16 sm:mt-20 md:mt-24">
       <div className="bg-benin-vert/10 border-2 border-benin-vert rounded-lg p-6 sm:p-8">
         <div className="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4">✓</div>
         <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-benin-vert mb-3 sm:mb-4 uppercase">
