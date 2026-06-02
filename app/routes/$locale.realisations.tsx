@@ -376,7 +376,7 @@ export default function Realisations() {
 
         {/* ── Coups de cœur ── */}
         <div className="order-1 sm:order-2">
-        {!error && coupsDeCoeur.length > 0 && (
+        {!error && coupsDeCoeur.length > 0 && selectedCategory === 'Tout' && (
           <div className="mb-12 sm:mb-14">
             <div className="mb-6 flex items-center gap-3">
               <span className="text-benin-jaune text-2xl">♥</span>
