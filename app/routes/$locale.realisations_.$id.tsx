@@ -363,7 +363,7 @@ export default function RealisationDetail() {
 
             {/* Image principale */}
             <div
-              className="relative rounded-2xl shadow-xl mb-4 bg-beige dark:bg-gray-900 group p-3 cursor-zoom-in"
+              className="relative rounded-2xl shadow-xl mb-4 overflow-hidden bg-beige dark:bg-gray-900 group cursor-zoom-in aspect-square"
               onClick={() => currentImage?.url && setZoomOpen(true)}
             >
               {currentImage?.url ? (
@@ -371,8 +371,8 @@ export default function RealisationDetail() {
                   src={currentImage.formats?.large?.url || currentImage.url}
                   alt={realisation.title}
                   width={800}
-                  height={500}
-                  className="w-full h-[300px] sm:h-[380px] md:h-[440px] lg:h-[480px] object-contain rounded-xl transition-transform duration-500 group-hover:scale-[1.02]"
+                  height={800}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                 />
               ) : (
                 <div className="w-full h-[300px] flex items-center justify-center text-gray-400 dark:text-gray-500 font-basecoat">
@@ -438,7 +438,7 @@ export default function RealisationDetail() {
                         alt={`Vue ${idx + 1}`}
                         width={96}
                         height={96}
-                        className="w-full h-full object-contain bg-beige dark:bg-gray-900 rounded-lg"
+                        className="w-full h-full object-cover rounded-lg"
                       />
                       {!selectedDeclinaisonId && mainImageIndex === idx && (
                         <div className="absolute inset-0 bg-benin-jaune/10 rounded-xl pointer-events-none" />
@@ -522,7 +522,7 @@ export default function RealisationDetail() {
                             alt={decl.Description || 'Déclinaison'}
                             width={80}
                             height={80}
-                            className="w-full h-full object-contain bg-beige dark:bg-gray-900 rounded-lg"
+                            className="w-full h-full object-cover rounded-lg"
                           />
                         ) : (
                           <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-xs text-gray-400 dark:text-gray-500">
