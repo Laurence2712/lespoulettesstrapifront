@@ -461,12 +461,6 @@ export default function Realisations() {
                     ) : null
                   )}
 
-                  {/* Badges Fait main / Made in Bénin */}
-                  <div className="absolute bottom-2 right-2 flex flex-col items-end gap-1">
-                    <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-benin-jaune text-black dark:text-gray-100 px-2 py-0.5 rounded-full shadow">{t('home.badge_handmade')}</span>
-                    <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-gray-800 text-white px-2 py-0.5 rounded-full shadow">{t('home.badge_benin')}</span>
-                  </div>
-
                 </div>
 
                 {/* Info section */}

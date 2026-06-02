@@ -247,10 +247,6 @@ export default function Index() {
                 <Link key={realisation.id} to={lp(`/realisations/${realisation.id}`)} className="group">
                   <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 h-full flex flex-col">
                     <div className="relative overflow-hidden aspect-square">
-                      <div className="absolute top-2 left-2 z-10 flex flex-col gap-1">
-                        <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-benin-jaune text-black dark:text-gray-100 px-2 py-0.5 rounded-full">{t('home.badge_handmade')}</span>
-                        <span className="font-basecoat text-[10px] font-bold uppercase tracking-wide bg-gray-800 text-white px-2 py-0.5 rounded-full">{t('home.badge_benin')}</span>
-                      </div>
                       {realisation.image_url ? (
                         <img
                           src={realisation.image_url}
