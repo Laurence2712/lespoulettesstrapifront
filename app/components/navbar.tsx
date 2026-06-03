@@ -94,7 +94,7 @@ export default function NavBar() {
                 <img
                   src={dark ? "/assets/logo_t_poulettes_white.png" : "/assets/logo_t_poulettes.png"}
                   alt="Les Poulettes"
-                  className="h-14 sm:h-16 md:h-20 lg:h-24 w-auto object-contain"
+                  className="h-14 sm:h-16 md:h-44 w-auto object-contain"
                 />
               </Link>
             </div>
