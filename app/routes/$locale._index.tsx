@@ -193,7 +193,7 @@ export default function Index() {
       {/* ── Hero Banner ── */}
       <header
         ref={heroRef}
-        className="banner relative bg-cover bg-center h-[55vh] sm:h-[60vh] md:h-[65vh] flex flex-col justify-center items-center text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24 pb-14 sm:pb-12"
+        className="banner relative bg-cover bg-center h-[55vh] sm:h-[60vh] md:h-[65vh] max-h-[75vh] flex flex-col justify-center items-center text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24 pb-14 sm:pb-12"
         style={{ backgroundImage: `url(${homepageData?.image_url || '/images/banner-default.jpg'})` }}
       >
         <div className="banner-content text-center z-20 flex flex-col items-center justify-center pb-8 sm:pb-12 md:pb-16">
