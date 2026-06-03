@@ -411,7 +411,7 @@ export default function Realisations() {
               <Link
                 key={realisation.id}
                 to={lp(`/realisations/${realisation.id}`)}
-                className="group flex flex-col rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-1.5 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700"
+                className="group flex flex-col rounded-lg overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow duration-300 bg-white dark:bg-gray-900"
               >
                 {/* Image */}
                 <div className="relative aspect-square overflow-hidden bg-amber-50 flex-shrink-0">

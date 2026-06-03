@@ -162,6 +162,18 @@ export async function loader({ params }: LoaderFunctionArgs) {
   }
 }
 
+function matchesCategory(r: Realisation, category: string): boolean {
+  if (category === 'Tout') return true;
+  if (r.categorie) return r.categorie === category;
+  const text = `${r.title} ${r.description}`.toLowerCase();
+  if (category === 'Sacs') return text.includes('tote') && !text.includes('porte-cl');
+  if (category === 'Accessoires') {
+    if (text.includes('porte-cl')) return true;
+    return !text.includes('trousse') && !text.includes('tote') && !text.includes('housse');
+  }
+  return text.includes(category.toLowerCase().slice(0, -1));
+}
+
 export default function Index() {
   const { homepageData, realisations, actualites, locale } = useLoaderData<LoaderData>();
   const { t } = useTranslation();
@@ -181,9 +193,7 @@ export default function Index() {
 
   const [activeCategory, setActiveCategory] = useState('Tout');
 
-  const filtered = activeCategory === 'Tout'
-    ? realisations
-    : realisations.filter((r) => r.categorie === activeCategory);
+  const filtered = realisations.filter((r) => matchesCategory(r, activeCategory));
 
   const featured = filtered.slice(0, 8);
 
@@ -240,10 +250,10 @@ export default function Index() {
             <button
               key={cat.value}
               onClick={() => setActiveCategory(cat.value)}
-              className={`font-basecoat text-sm font-bold uppercase tracking-wide px-5 py-2 border-2 transition-all duration-200 ${
+              className={`font-basecoat text-sm font-semibold px-4 py-1.5 rounded-full border-2 transition-all duration-200 ${
                 activeCategory === cat.value
-                  ? 'bg-gray-900 border-gray-900 text-white dark:bg-gray-100 dark:text-gray-900'
-                  : 'bg-transparent border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-gray-900 dark:hover:border-gray-100'
+                  ? 'bg-benin-jaune border-benin-jaune text-black shadow-md'
+                  : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
               }`}
             >
               {cat.label}
@@ -255,9 +265,9 @@ export default function Index() {
           <>
             <div className="anim-stagger grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5" data-stagger="0.08">
               {featured.map((realisation) => (
-                <div key={realisation.id} className="group flex flex-col">
+                <div key={realisation.id} className="group flex flex-col bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow duration-300">
                   <Link to={lp(`/realisations/${realisation.id}`)}>
-                    <div className="relative overflow-hidden aspect-square bg-gray-50 dark:bg-gray-800 mb-3">
+                    <div className="relative overflow-hidden aspect-square bg-gray-50 dark:bg-gray-800">
                       {realisation.image_url ? (
                         <img
                           src={realisation.image_url}
@@ -273,21 +283,23 @@ export default function Index() {
                         </div>
                       )}
                     </div>
-                    <h3 className="font-basecoat font-bold uppercase text-base sm:text-lg text-gray-900 dark:text-gray-100 leading-tight mb-0.5">
-                      {realisation.title}
-                    </h3>
-                    {realisation.categorie && (
-                      <p className="font-basecoat text-sm text-gray-500 dark:text-gray-400 mb-1">{realisation.categorie}</p>
-                    )}
-                    {realisation.prix && (
-                      <p className="font-basecoat text-base font-bold text-gray-900 dark:text-gray-100 mb-3">
-                        {realisation.prix} €
-                      </p>
-                    )}
+                    <div className="p-3 sm:p-4">
+                      <h3 className="font-basecoat font-bold uppercase text-base sm:text-lg text-gray-900 dark:text-gray-100 leading-tight mb-0.5">
+                        {realisation.title}
+                      </h3>
+                      {realisation.categorie && (
+                        <p className="font-basecoat text-sm text-gray-500 dark:text-gray-400 mb-1">{realisation.categorie}</p>
+                      )}
+                      {realisation.prix && (
+                        <p className="font-basecoat text-base font-bold text-gray-900 dark:text-gray-100 mb-3">
+                          {realisation.prix} €
+                        </p>
+                      )}
+                    </div>
                   </Link>
                   <Link
                     to={lp(`/realisations/${realisation.id}`)}
-                    className="mt-auto font-basecoat text-xs font-bold uppercase tracking-wide text-center py-2.5 border-2 border-gray-900 dark:border-gray-100 text-gray-900 dark:text-gray-100 hover:bg-gray-900 hover:text-white dark:hover:bg-gray-100 dark:hover:text-gray-900 transition-all duration-200"
+                    className="mx-3 mb-3 sm:mx-4 sm:mb-4 font-basecoat text-xs font-bold uppercase tracking-widest text-center py-2.5 border border-gray-900 dark:border-gray-100 text-gray-900 dark:text-gray-100 hover:bg-gray-900 hover:text-white dark:hover:bg-gray-100 dark:hover:text-gray-900 transition-all duration-200 rounded-md"
                   >
                     {t('home.view_product')}
                   </Link>
