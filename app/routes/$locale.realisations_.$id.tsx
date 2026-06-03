@@ -376,7 +376,7 @@ export default function RealisationDetail() {
           <div className="anim-fade-right" ref={imageRef}>
 
             {/* Slider principal */}
-            <div className="relative rounded-2xl shadow-xl mb-4 overflow-hidden bg-beige dark:bg-gray-900 aspect-[3/4] select-none group">
+            <div className="relative rounded-lg shadow-xl mb-4 overflow-hidden bg-beige dark:bg-gray-900 aspect-[3/4] select-none group">
               {currentImage?.url ? (
                 <img
                   src={currentImage.formats?.large?.url || currentImage.url}
@@ -456,7 +456,7 @@ export default function RealisationDetail() {
                     key={idx}
                     onClick={() => goToSlide(idx)}
                     aria-label={`Image ${idx + 1}`}
-                    className={`relative rounded-xl overflow-hidden transition-all flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 ${
+                    className={`relative rounded-lg overflow-hidden transition-all flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 ${
                       sliderIndex === idx
                         ? 'ring-2 ring-benin-jaune shadow-md scale-105'
                         : 'ring-1 ring-gray-200 dark:ring-gray-700 opacity-60 hover:opacity-100 hover:ring-benin-ocre hover:scale-105'
@@ -564,7 +564,7 @@ export default function RealisationDetail() {
                         key={decl.id}
                         onClick={() => handleSelectDeclinaison(decl)}
                         disabled={!inStock}
-                        className={`relative rounded-xl overflow-hidden transition-all w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 ${
+                        className={`relative rounded-lg overflow-hidden transition-all w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 ${
                           !inStock
                             ? 'opacity-40 cursor-not-allowed grayscale'
                             : isSelected

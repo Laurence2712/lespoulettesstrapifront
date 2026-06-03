@@ -120,7 +120,7 @@ export default function CartDrawer() {
                   alt={item.title}
                   width={112}
                   height={112}
-                  className="w-24 h-24 sm:w-28 sm:h-28 object-cover rounded-xl flex-shrink-0"
+                  className="w-24 h-24 sm:w-28 sm:h-28 object-cover rounded-lg flex-shrink-0"
                 />
 
                 {/* Info */}

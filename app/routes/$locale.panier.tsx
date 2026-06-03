@@ -358,7 +358,7 @@ export default function Panier() {
                   alt={item.title}
                   width={160}
                   height={160}
-                  className="w-28 h-28 sm:w-36 sm:h-36 lg:w-40 lg:h-40 object-cover rounded-xl flex-shrink-0"
+                  className="w-28 h-28 sm:w-36 sm:h-36 lg:w-40 lg:h-40 object-cover rounded-lg flex-shrink-0"
                 />
               )}
 

@@ -354,7 +354,7 @@ export default function Realisations() {
                 <Link
                   key={`${item.productId}-${item.id}`}
                   to={lp(`/realisations/${item.productId}?declinaison=${item.id}`)}
-                  className="group flex-shrink-0 w-44 sm:w-52 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700"
+                  className="group flex-shrink-0 w-44 sm:w-52 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700"
                 >
                   <div className="relative aspect-square overflow-hidden bg-amber-50">
                     {item.image_url ? (
