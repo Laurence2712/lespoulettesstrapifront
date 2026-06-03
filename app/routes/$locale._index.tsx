@@ -204,10 +204,16 @@ export default function Index() {
       {/* ── Hero Banner ── */}
       <header
         ref={heroRef}
-        className="banner relative bg-cover bg-center h-[75vh] sm:h-[80vh] md:h-[90vh] flex flex-col justify-center items-center text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24 pb-14 sm:pb-12"
-        style={{ backgroundImage: `url(${homepageData?.image_url || '/images/banner-default.jpg'})` }}
+        className="banner relative flex flex-col justify-center items-center text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24 pb-14 sm:pb-12 overflow-hidden min-h-[75vh] sm:min-h-[80vh] md:min-h-[90vh]"
       >
-        <div className="banner-content text-center z-20 flex flex-col items-center justify-center pb-8 sm:pb-12 md:pb-16">
+        {homepageData?.image_url && (
+          <img
+            src={homepageData.image_url}
+            alt="Les Poulettes"
+            className="absolute inset-0 w-full h-full object-contain object-center z-0 bg-gray-900"
+          />
+        )}
+        <div className="banner-content text-center z-20 flex flex-col items-center justify-center pb-8 sm:pb-12 md:pb-16 relative">
           <h1 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold uppercase tracking-wide mb-6 sm:mb-8 mt-10 sm:mt-14 md:mt-16 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-tight lg:leading-snug">
             {t('home.hero_title')}
           </h1>
@@ -222,11 +228,9 @@ export default function Index() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </Link>
-
           </div>
         </div>
-        <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
-
+        <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
       </header>
 
 

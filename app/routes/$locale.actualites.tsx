@@ -144,7 +144,7 @@ export default function ActualitesPage() {
                   {/* Image */}
                   {actu.image_url && (
                     <div
-                      className={`anim-fade-right rounded-2xl overflow-hidden shadow-xl ${index % 2 !== 0 ? 'md:order-2' : ''}`}
+                      className={`anim-fade-right rounded-lg shadow-xl overflow-hidden ${index % 2 !== 0 ? 'md:order-2' : ''}`}
                       data-delay="0.2"
                     >
                       <img
@@ -153,7 +153,7 @@ export default function ActualitesPage() {
                         loading="lazy"
                         width={800}
                         height={500}
-                        className="w-full h-72 sm:h-80 md:h-96 lg:h-[480px] object-cover transition-transform duration-700 hover:scale-105"
+                        className="w-full h-auto object-contain transition-transform duration-700 hover:scale-105"
                       />
                     </div>
                   )}
