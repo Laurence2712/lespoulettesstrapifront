@@ -8,6 +8,7 @@ import { useCartStore } from '../store/cartStore';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 import { useToast } from '../components/ToastProvider';
 import CartDrawer from '../components/CartDrawer';
+import ProductCard from '../components/ProductCard';
 import { useLocalePath } from '../hooks/useLocalePath';
 import { useTranslation } from 'react-i18next';
 
@@ -219,7 +220,7 @@ export default function RealisationDetail() {
   const { t } = useTranslation();
 
   const [searchParams] = useSearchParams();
-  const [mainImageIndex, setMainImageIndex] = useState(0);
+  const [sliderIndex, setSliderIndex] = useState(0);
   const [selectedDeclinaisonId, setSelectedDeclinaisonId] = useState<number | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [shareCopied, setShareCopied] = useState(false);
@@ -263,23 +264,37 @@ export default function RealisationDetail() {
     ? realisation.declinaisons.find((d) => d.id === selectedDeclinaisonId) ?? null
     : null;
 
-  // ✅ Image affichée = déclinaison sélectionnée OU angle miniature du bas
-  const currentImage = selectedDeclinaison
-    ? selectedDeclinaison.Image
-    : realisation.mainImages[mainImageIndex] || realisation.mainImages[0];
+  // Build a flat slides array: mainImages first, then declinaison images
+  const allSlides: Array<{ image: ImageData; declinaisonId?: number }> = [
+    ...realisation.mainImages.map((img) => ({ image: img })),
+    ...realisation.declinaisons.filter((d) => d.Image?.url).map((d) => ({ image: d.Image, declinaisonId: d.id })),
+  ];
+
+  const currentSlide = allSlides[sliderIndex] || allSlides[0];
+  const currentImage = currentSlide?.image;
 
   const isInStock = selectedDeclinaison ? selectedDeclinaison.Stock > 0 : false;
   const hasDeclinaisons = realisation.declinaisons.length > 0;
 
-  // ✅ Sélectionner une déclinaison ne touche plus à mainImageIndex
+  const goToSlide = (idx: number) => {
+    const clamped = Math.max(0, Math.min(allSlides.length - 1, idx));
+    setSliderIndex(clamped);
+    const slide = allSlides[clamped];
+    if (slide?.declinaisonId != null) {
+      setSelectedDeclinaisonId(slide.declinaisonId);
+      setQuantity(1);
+    } else {
+      setSelectedDeclinaisonId(null);
+    }
+  };
+
   const handleSelectDeclinaison = (decl: Declinaison) => {
+    const idx = allSlides.findIndex((s) => s.declinaisonId === decl.id);
+    if (idx >= 0) setSliderIndex(idx);
     setSelectedDeclinaisonId(decl.id);
     setQuantity(1);
-    // Sur mobile/tablet (< 1024px), scroll vers l'image principale pour voir le résultat
     if (typeof window !== 'undefined' && window.innerWidth < 1024) {
-      setTimeout(() => {
-        imageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 50);
+      setTimeout(() => { imageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
     }
   };
 
@@ -357,42 +372,53 @@ export default function RealisationDetail() {
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
 
-          {/* ── COLONNE IMAGES ── */}
+          {/* ── COLONNE IMAGES (slider) ── */}
           <div className="anim-fade-right" ref={imageRef}>
 
-            {/* Image principale */}
-            <div
-              className="relative rounded-2xl shadow-xl mb-4 overflow-hidden bg-beige dark:bg-gray-900 group cursor-zoom-in aspect-[3/4] select-none"
-              onClick={() => currentImage?.url && setZoomOpen(true)}
-            >
+            {/* Slider principal */}
+            <div className="relative rounded-2xl shadow-xl mb-4 overflow-hidden bg-beige dark:bg-gray-900 aspect-[3/4] select-none group">
               {currentImage?.url ? (
                 <img
                   src={currentImage.formats?.large?.url || currentImage.url}
                   alt={realisation.title}
                   width={800}
-                  height={800}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                  height={1067}
+                  className="w-full h-full object-cover transition-opacity duration-300 cursor-zoom-in"
+                  onClick={() => setZoomOpen(true)}
                 />
               ) : (
-                <div className="w-full h-[300px] flex items-center justify-center text-gray-400 dark:text-gray-500 font-basecoat">
+                <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500 font-basecoat">
                   {t('home.no_image')}
                 </div>
               )}
-              {currentImage?.url && (
+
+              {/* Flèches navigation */}
+              {allSlides.length > 1 && (
                 <>
-                  {/* Hint desktop hover */}
-                  <div className="hidden sm:flex absolute bottom-4 right-4 bg-white dark:bg-gray-900/80 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow items-center gap-1.5 pr-3">
-                    <svg className="w-4 h-4 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16zm3-8H8m3-3v6" />
+                  <button
+                    onClick={() => goToSlide(sliderIndex - 1)}
+                    disabled={sliderIndex === 0}
+                    aria-label="Image précédente"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-full shadow-md hover:bg-white dark:hover:bg-gray-900 transition disabled:opacity-20"
+                  >
+                    <svg className="w-4 h-4 text-gray-900 dark:text-gray-100" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                     </svg>
-                    <span className="font-basecoat text-xs text-gray-600 dark:text-gray-300">Zoom</span>
-                  </div>
-                  {/* Hint mobile permanent */}
-                  <div className="sm:hidden absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm rounded-full px-2.5 py-1 flex items-center gap-1">
-                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16zm3-8H8m3-3v6" />
+                  </button>
+                  <button
+                    onClick={() => goToSlide(sliderIndex + 1)}
+                    disabled={sliderIndex === allSlides.length - 1}
+                    aria-label="Image suivante"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-full shadow-md hover:bg-white dark:hover:bg-gray-900 transition disabled:opacity-20"
+                  >
+                    <svg className="w-4 h-4 text-gray-900 dark:text-gray-100" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
-                    <span className="font-basecoat text-[10px] text-white">Tap</span>
+                  </button>
+
+                  {/* Compteur */}
+                  <div className="absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm rounded-full px-2.5 py-1 font-basecoat text-[10px] text-white">
+                    {sliderIndex + 1} / {allSlides.length}
                   </div>
                 </>
               )}
@@ -406,7 +432,7 @@ export default function RealisationDetail() {
               >
                 <button
                   onClick={() => setZoomOpen(false)}
-                  className="absolute top-4 right-4 bg-white dark:bg-gray-900/20 hover:bg-white dark:bg-gray-900/40 text-white rounded-full p-2 transition"
+                  className="absolute top-4 right-4 bg-white/20 hover:bg-white/40 text-white rounded-full p-2 transition"
                   aria-label="Fermer"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -422,40 +448,34 @@ export default function RealisationDetail() {
               </div>
             )}
 
-            {/* Galerie de vignettes — angles de l'image principale */}
-            {realisation.mainImages.length >= 1 && (
-              <div className="mt-4">
-                <p className="text-xs font-basecoat font-semibold uppercase text-gray-400 dark:text-gray-500 tracking-widest mb-2">
-                  {t('products.other_views')}
-                </p>
-                <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-benin-ocre scrollbar-track-gray-100 dark:scrollbar-track-gray-800">
-                  {realisation.mainImages.map((img, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => {
-                        setMainImageIndex(idx);
-                        setSelectedDeclinaisonId(null);
-                      }}
-                      className={`relative rounded-xl overflow-hidden transition-all flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 ${
-                        !selectedDeclinaisonId && mainImageIndex === idx
-                          ? 'ring-2 ring-benin-jaune shadow-md scale-105'
-                          : 'ring-1 ring-gray-200 dark:ring-gray-700 hover:ring-benin-ocre opacity-60 hover:opacity-100 hover:scale-105'
-                      }`}
-                      aria-label={`Vue ${idx + 1}`}
-                    >
-                      <img
-                        src={img.formats?.small?.url || img.formats?.thumbnail?.url || img.url}
-                        alt={`Vue ${idx + 1}`}
-                        width={96}
-                        height={96}
-                        className="w-full h-full object-cover rounded-lg"
-                      />
-                      {!selectedDeclinaisonId && mainImageIndex === idx && (
-                        <div className="absolute inset-0 bg-benin-jaune/10 rounded-xl pointer-events-none" />
-                      )}
-                    </button>
-                  ))}
-                </div>
+            {/* Vignettes */}
+            {allSlides.length > 1 && (
+              <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 mt-4">
+                {allSlides.map((slide, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => goToSlide(idx)}
+                    aria-label={`Image ${idx + 1}`}
+                    className={`relative rounded-xl overflow-hidden transition-all flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 ${
+                      sliderIndex === idx
+                        ? 'ring-2 ring-benin-jaune shadow-md scale-105'
+                        : 'ring-1 ring-gray-200 dark:ring-gray-700 opacity-60 hover:opacity-100 hover:ring-benin-ocre hover:scale-105'
+                    }`}
+                  >
+                    <img
+                      src={slide.image.formats?.small?.url || slide.image.formats?.thumbnail?.url || slide.image.url}
+                      alt={`Vue ${idx + 1}`}
+                      width={96}
+                      height={96}
+                      className="w-full h-full object-cover"
+                    />
+                    {slide.declinaisonId != null && (
+                      <div className="absolute bottom-0 left-0 right-0 bg-black/40 py-0.5 flex items-center justify-center">
+                        <span className="font-basecoat text-[9px] text-white uppercase tracking-wide">coloris</span>
+                      </div>
+                    )}
+                  </button>
+                ))}
               </div>
             )}
           </div>
@@ -685,41 +705,15 @@ export default function RealisationDetail() {
               {t('products.related')}
             </h2>
             <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mb-8" data-delay="0.1"></div>
-            <div className="anim-stagger grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5" data-stagger="0.08">
+            <div className="anim-stagger grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6" data-stagger="0.08">
               {relatedProducts.map((product) => (
-                <Link
+                <ProductCard
                   key={product.id}
-                  to={lp(`/realisations/${product.id}`)}
-                  className="group relative rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 hover:-translate-y-1 block"
-                >
-                  <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
-                    {product.image_url ? (
-                      <img
-                        src={product.image_url}
-                        alt={product.title}
-                        loading="lazy"
-                        width={400}
-                        height={300}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                        <span className="font-basecoat text-gray-400 dark:text-gray-500 text-xs">{t('home.no_image')}</span>
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
-                    {product.prix && (
-                      <div className="absolute top-2 right-2 bg-white dark:bg-gray-900/90 backdrop-blur-sm text-gray-900 dark:text-gray-100 font-basecoat font-bold text-sm px-2.5 py-1 rounded-full shadow">
-                        {product.prix} €
-                      </div>
-                    )}
-                    <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4">
-                      <h3 className="font-basecoat text-white text-xs font-bold uppercase tracking-widest leading-tight">
-                        {product.title}
-                      </h3>
-                    </div>
-                  </div>
-                </Link>
+                  id={product.id}
+                  title={product.title}
+                  image_url={product.image_url}
+                  prix={product.prix}
+                />
               ))}
             </div>
           </div>
