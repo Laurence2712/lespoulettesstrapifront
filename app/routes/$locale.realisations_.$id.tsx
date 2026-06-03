@@ -448,10 +448,10 @@ export default function RealisationDetail() {
               </div>
             )}
 
-            {/* Vignettes */}
-            {allSlides.length > 1 && (
+            {/* Vignettes — images principales uniquement (pas les déclinaisons) */}
+            {realisation.mainImages.length > 1 && (
               <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 mt-4">
-                {allSlides.map((slide, idx) => (
+                {realisation.mainImages.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => goToSlide(idx)}
@@ -463,17 +463,12 @@ export default function RealisationDetail() {
                     }`}
                   >
                     <img
-                      src={slide.image.formats?.small?.url || slide.image.formats?.thumbnail?.url || slide.image.url}
+                      src={img.formats?.small?.url || img.formats?.thumbnail?.url || img.url}
                       alt={`Vue ${idx + 1}`}
                       width={96}
                       height={96}
                       className="w-full h-full object-cover"
                     />
-                    {slide.declinaisonId != null && (
-                      <div className="absolute bottom-0 left-0 right-0 bg-black/40 py-0.5 flex items-center justify-center">
-                        <span className="font-basecoat text-[9px] text-white uppercase tracking-wide">coloris</span>
-                      </div>
-                    )}
                   </button>
                 ))}
               </div>
