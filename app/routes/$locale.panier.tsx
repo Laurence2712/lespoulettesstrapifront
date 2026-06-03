@@ -188,8 +188,8 @@ const BELGIAN_CITIES: Record<string, string> = {
 
 // Frais de livraison
 const SHIPPING_COSTS: Record<string, { label: string; cost: number }> = {
-  belgique: { label: 'Belgique', cost: 4 },
-  europe: { label: 'Autre pays Europe', cost: 8 },
+  belgique: { label: 'Belgique', cost: 7.75 },
+  europe: { label: 'Autre pays Europe', cost: 7.75 },
 };
 
 export default function Panier() {
