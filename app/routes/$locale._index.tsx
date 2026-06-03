@@ -234,32 +234,30 @@ export default function Index() {
       <section id="nouveaux-arrivages" className="py-10 sm:py-14 md:py-[70px] bg-beige dark:bg-gray-900">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="mb-8 sm:mb-10 md:mb-12">
-          <div className="mb-3 sm:mb-4">
-            <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">
-              {t('home.new_creations')}
-            </h2>
-            <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
+          <div className="flex items-center justify-between gap-4 flex-wrap mb-3 sm:mb-4">
+            <div>
+              <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">
+                {t('home.new_creations')}
+              </h2>
+              <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
+            </div>
+            {/* Filtres alignés à droite */}
+            <div className="flex gap-2 flex-wrap">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat.value}
+                  onClick={() => setActiveCategory(cat.value)}
+                  className={`font-basecoat text-sm font-semibold px-4 py-1.5 rounded-lg border-2 transition-all duration-200 ${
+                    activeCategory === cat.value
+                      ? 'bg-benin-jaune border-benin-jaune text-black shadow-md'
+                      : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
           </div>
-          <p className="anim-fade-up font-basecoat text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed mt-4 mb-8 sm:mb-10" data-delay="0.15">
-            {t('home.new_creations_sub')}
-          </p>
-        </div>
-
-        {/* Barre catégories */}
-        <div className="flex gap-2 flex-wrap mb-8 sm:mb-10">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.value}
-              onClick={() => setActiveCategory(cat.value)}
-              className={`font-basecoat text-sm font-semibold px-4 py-1.5 rounded-lg border-2 transition-all duration-200 ${
-                activeCategory === cat.value
-                  ? 'bg-benin-jaune border-benin-jaune text-black shadow-md'
-                  : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
         </div>
 
         {featured.length > 0 ? (
