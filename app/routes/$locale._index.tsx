@@ -210,7 +210,7 @@ export default function Index() {
           <img
             src={homepageData.image_url}
             alt="Les Poulettes"
-            className="absolute inset-0 w-full h-full object-contain object-center z-0 bg-gray-900"
+            className="absolute inset-0 w-full h-full object-cover object-center z-0"
           />
         )}
         <div className="banner-content text-center z-20 flex flex-col items-center justify-center pb-8 sm:pb-12 md:pb-16 relative">
