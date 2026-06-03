@@ -189,7 +189,7 @@ const BELGIAN_CITIES: Record<string, string> = {
 // Frais de livraison
 const SHIPPING_COSTS: Record<string, { label: string; cost: number }> = {
   belgique: { label: 'Belgique', cost: 7.75 },
-  europe: { label: 'Autre pays Europe', cost: 7.75 },
+  europe: { label: 'Autre pays Europe', cost: 12 },
 };
 
 export default function Panier() {
@@ -505,7 +505,7 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
 
   const scrollRef = useScrollAnimations([deliveryMode]);
 
-  const shippingCost = deliveryMode === 'retrait' ? 0 : (SHIPPING_COSTS[country]?.cost ?? 8);
+  const shippingCost = deliveryMode === 'retrait' ? 0 : (SHIPPING_COSTS[country]?.cost ?? 12);
   const shippingLabel = deliveryMode === 'retrait' ? 'GRATUIT' : `${shippingCost.toFixed(2)} €`;
   const grandTotal = total + shippingCost;
 
