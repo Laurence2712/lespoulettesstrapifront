@@ -319,7 +319,7 @@ export default function Index() {
                         loading="lazy"
                         width={800}
                         height={400}
-                        className="w-full h-72 sm:h-80 md:h-96 lg:h-[480px] object-contain bg-gray-50 dark:bg-gray-800"
+                        className="h-auto w-full max-w-[500px]"
                       />
                     </div>
                   )}
