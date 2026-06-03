@@ -1,8 +1,8 @@
 import { useCartStore } from '../store/cartStore';
 import { useState, useEffect, useRef } from 'react';
 import { Link } from '@remix-run/react';
-import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useLocalePath } from '../hooks/useLocalePath';
+import BagIcon from './BagIcon';
 
 export default function CartDrawer() {
   const cart = useCartStore((state) => state.items);
@@ -92,7 +92,7 @@ export default function CartDrawer() {
           {cart.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full gap-5 pb-16">
               <div className="w-20 h-20 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
-                <ShoppingCartIcon className="w-10 h-10 text-gray-200 dark:text-gray-600" strokeWidth={1} />
+                <BagIcon className="w-10 h-10 text-gray-200 dark:text-gray-600" />
               </div>
               <div className="text-center">
                 <p className="text-gray-500 dark:text-gray-400 dark:text-gray-500 font-basecoat text-base font-semibold">Votre panier est vide</p>

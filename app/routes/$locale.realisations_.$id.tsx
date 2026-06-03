@@ -2,8 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLoaderData, useSearchParams } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
-import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { apiEndpoints, getImageUrl } from '../config/api';
+import BagIcon from '../components/BagIcon';
 import { useCartStore } from '../store/cartStore';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 import { useToast } from '../components/ToastProvider';
@@ -685,7 +685,7 @@ export default function RealisationDetail() {
                     ? t('products.choose_variant')
                     : !isInStock
                     ? t('products.out_of_stock')
-                    : <span className="inline-flex items-center gap-2"><ShoppingCartIcon className="w-5 h-5" />{t('products.add_to_cart')}</span>}
+                    : <span className="inline-flex items-center gap-2"><BagIcon className="w-5 h-5" />{t('products.add_to_cart')}</span>}
                 </button>
               </div>
             )}
@@ -734,7 +734,7 @@ export default function RealisationDetail() {
                   : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
               }`}
             >
-              <ShoppingCartIcon className="w-4 h-4" />
+              <BagIcon className="w-4 h-4" />
               {!selectedDeclinaison
                 ? 'Choisir'
                 : !isInStock
