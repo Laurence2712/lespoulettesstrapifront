@@ -7,6 +7,7 @@ import { useScrollAnimations } from '../hooks/useScrollAnimations';
 import { useLocalePath } from '../hooks/useLocalePath';
 import { useTranslation } from 'react-i18next';
 import CheckoutStepper from '../components/CheckoutStepper';
+import ProductCard from '../components/ProductCard';
 
 export function meta() {
   return [
@@ -302,44 +303,15 @@ export default function Panier() {
             <p className="font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm text-center mb-6 sm:mb-8">
               {t('cart.featured_subtitle')}
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {featuredProducts.map((product) => (
-                <Link key={product.id} to={`/realisations/${product.id}`} className="group">
-                  <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
-                    <div className="relative overflow-hidden aspect-square">
-                      {product.image_url ? (
-                        <img
-                          src={product.image_url}
-                          alt={product.title}
-                          loading="lazy"
-                          width={500}
-                          height={500}
-                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                          <span className="font-basecoat text-gray-400 dark:text-gray-500 text-sm">{t('cart.no_image')}</span>
-                        </div>
-                      )}
-                      {product.prix && (
-                        <div className="absolute top-3 right-3 bg-benin-jaune text-black dark:text-gray-100 font-basecoat font-bold text-sm px-3 py-1 rounded-full shadow-sm">
-                          {Number(product.prix).toFixed(2)} €
-                        </div>
-                      )}
-                    </div>
-                    <div className="p-4 flex flex-col flex-1 justify-between">
-                      <h3 className="font-basecoat font-semibold text-gray-900 dark:text-gray-100 text-base leading-snug mb-3">
-                        {product.title}
-                      </h3>
-                      <span className="font-basecoat text-sm font-semibold text-benin-jaune group-hover:text-yellow-700 flex items-center gap-1 transition">
-                        {t('cart.view_product')}
-                        <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </span>
-                    </div>
-                  </div>
-                </Link>
+                <ProductCard
+                  key={product.id}
+                  id={product.id}
+                  title={product.title}
+                  image_url={product.image_url}
+                  prix={product.prix}
+                />
               ))}
             </div>
           </div>
