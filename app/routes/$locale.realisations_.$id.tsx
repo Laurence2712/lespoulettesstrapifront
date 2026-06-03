@@ -671,7 +671,7 @@ export default function RealisationDetail() {
 
             {/* Bouton panier */}
             {hasDeclinaisons && (
-              <div className="mt-auto pt-2" ref={ctaRef}>
+              <div className="mt-6 pt-2" ref={ctaRef}>
                 <button
                   onClick={handleAddToCart}
                   disabled={!selectedDeclinaison || !isInStock}
