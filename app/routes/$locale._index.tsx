@@ -274,6 +274,7 @@ export default function Index() {
                   prix={realisation.prix}
                   categorie={realisation.categorie}
                 />
+              ))}
             </div>
 
             <div className="anim-fade-up text-center mt-10 sm:mt-12" data-delay="0.3">
