@@ -144,7 +144,7 @@ export default function ActualitesPage() {
                   {/* Image */}
                   {actu.image_url && (
                     <div
-                      className={`anim-fade-right rounded-lg shadow-xl overflow-hidden ${index % 2 !== 0 ? 'md:order-2' : ''}`}
+                      className={`anim-fade-right ${index % 2 !== 0 ? 'md:order-2' : ''}`}
                       data-delay="0.2"
                     >
                       <img
