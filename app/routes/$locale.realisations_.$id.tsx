@@ -355,26 +355,6 @@ export default function RealisationDetail() {
         ref={scrollRef}
         className="py-6 sm:py-8 md:py-[60px] mt-16 sm:mt-20 md:mt-24 px-6 sm:px-10 md:px-16 lg:px-24"
       >
-        {/* Breadcrumb */}
-        <nav className="anim-fade-up mb-4 text-xs font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500">
-          <Link to={lp("/")} className="hover:text-benin-jaune transition">{t('common.home')}</Link>
-          <span className="mx-2">/</span>
-          <Link to={lp("/realisations")} className="hover:text-benin-jaune transition">{t('products.breadcrumb_shop')}</Link>
-          <span className="mx-2">/</span>
-          <span className="text-gray-800 dark:text-gray-200 uppercase font-semibold">{realisation.title}</span>
-        </nav>
-
-        {/* Bouton retour */}
-        <button
-          onClick={() => navigate(-1)}
-          className="anim-fade-up font-basecoat inline-flex items-center gap-2 text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:text-gray-100 mb-6 sm:mb-8 transition text-sm"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-          {t('products.back_to_shop')}
-        </button>
-
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
 
           {/* ── COLONNE IMAGES ── */}
@@ -382,7 +362,7 @@ export default function RealisationDetail() {
 
             {/* Image principale */}
             <div
-              className="relative rounded-2xl shadow-xl mb-4 overflow-hidden bg-beige dark:bg-gray-900 group cursor-zoom-in aspect-square select-none"
+              className="relative rounded-2xl shadow-xl mb-4 overflow-hidden bg-beige dark:bg-gray-900 group cursor-zoom-in aspect-[3/4] select-none"
               onClick={() => currentImage?.url && setZoomOpen(true)}
             >
               {currentImage?.url ? (
@@ -482,6 +462,15 @@ export default function RealisationDetail() {
 
           {/* ── COLONNE INFOS ── */}
           <div className="anim-fade-left flex flex-col font-basecoat">
+
+            {/* Breadcrumb */}
+            <nav className="mb-4 text-xs font-basecoat text-gray-400 dark:text-gray-500 flex items-center flex-wrap gap-1">
+              <Link to={lp("/")} className="hover:text-benin-jaune transition">{t('common.home')}</Link>
+              <span>/</span>
+              <Link to={lp("/realisations")} className="hover:text-benin-jaune transition">{t('products.breadcrumb_shop')}</Link>
+              <span>/</span>
+              <span className="text-gray-600 dark:text-gray-300 uppercase">{realisation.title}</span>
+            </nav>
 
             <div className="flex items-start justify-between gap-4">
               <h1 className="text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
