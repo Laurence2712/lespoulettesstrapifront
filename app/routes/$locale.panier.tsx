@@ -635,35 +635,32 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
       </h1>
       <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.15"></div>
 
-      {/* Récapitulatif dynamique */}
-      <div className="anim-fade-up bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-2xl p-5 sm:p-6 mb-8 sm:mb-10 shadow-sm" data-delay="0.15">
-        <h2 className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-sm sm:text-base mb-4">{t('cart.recap')}</h2>
-        <div className="space-y-2">
-          <div className="font-basecoat flex justify-between text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500">
-            <span>{t('cart.subtotal')} ({t('cart.items_count', {count: cart.reduce((s, i) => s + i.quantity, 0)})})</span>
-            <span className="font-semibold text-gray-900 dark:text-gray-100">{total.toFixed(2)} €</span>
-          </div>
-          <div className="font-basecoat flex justify-between text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500">
-            <span>
-              {deliveryMode === 'retrait'
-                ? `${t('cart.pickup_label')} — ${pickupLocation === 'grimbergen' ? 'Grimbergen' : pickupLocation === 'watermael' ? 'Watermael-Boisfort' : 'Bénin'}`
-                : `${t('cart.home_delivery')} — ${SHIPPING_COSTS[country]?.label ?? country}`}
-            </span>
-            <span className={`font-semibold ${shippingCost === 0 ? 'text-benin-vert' : 'text-gray-900 dark:text-gray-100'}`}>
-              {shippingLabel}
-            </span>
-          </div>
-          <div className="border-t border-gray-100 dark:border-gray-700 pt-3 mt-3 font-basecoat flex justify-between items-center">
-            <span className="font-bold text-gray-900 dark:text-gray-100 text-base">{t('cart.total')}</span>
-            <span className="font-bold text-2xl text-gray-900 dark:text-gray-100">{grandTotal.toFixed(2)} €</span>
+      {/* Récapitulatif + Paiement sécurisé côte à côte */}
+      <div className="anim-fade-up grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 sm:mb-10" data-delay="0.15">
+        <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-2xl p-5 sm:p-6 shadow-sm">
+          <h2 className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-sm sm:text-base mb-4">{t('cart.recap')}</h2>
+          <div className="space-y-2">
+            <div className="font-basecoat flex justify-between text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500">
+              <span>{t('cart.subtotal')} ({t('cart.items_count', {count: cart.reduce((s, i) => s + i.quantity, 0)})})</span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{total.toFixed(2)} €</span>
+            </div>
+            <div className="font-basecoat flex justify-between text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500">
+              <span>
+                {deliveryMode === 'retrait'
+                  ? `${t('cart.pickup_label')} — ${pickupLocation === 'grimbergen' ? 'Grimbergen' : pickupLocation === 'watermael' ? 'Watermael-Boisfort' : 'Bénin'}`
+                  : `${t('cart.home_delivery')} — ${SHIPPING_COSTS[country]?.label ?? country}`}
+              </span>
+              <span className={`font-semibold ${shippingCost === 0 ? 'text-benin-vert' : 'text-gray-900 dark:text-gray-100'}`}>
+                {shippingLabel}
+              </span>
+            </div>
+            <div className="border-t border-gray-100 dark:border-gray-700 pt-3 mt-3 font-basecoat flex justify-between items-center">
+              <span className="font-bold text-gray-900 dark:text-gray-100 text-base">{t('cart.total')}</span>
+              <span className="font-bold text-2xl text-gray-900 dark:text-gray-100">{grandTotal.toFixed(2)} €</span>
+            </div>
           </div>
         </div>
-      </div>
-
-      <form onSubmit={handleCheckout} className="space-y-5 sm:space-y-6 max-w-2xl">
-
-        {/* Paiement sécurisé */}
-        <div className="anim-fade-up bg-benin-vert/10 border border-benin-vert/20 rounded-2xl p-5 sm:p-6" data-delay="0.1">
+        <div className="bg-benin-vert/10 border border-benin-vert/20 rounded-2xl p-5 sm:p-6">
           <div className="flex items-center gap-3 mb-4">
             <svg className="w-5 h-5 text-benin-vert flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
@@ -698,6 +695,9 @@ function CheckoutForm({ cart, total, clearCart, onBack, onSuccess }: {
             </svg>
           </div>
         </div>
+      </div>
+
+      <form onSubmit={handleCheckout} className="space-y-5 sm:space-y-6 max-w-2xl">
 
         {/* Nom */}
         <div className="anim-fade-up" data-delay="0.15">
