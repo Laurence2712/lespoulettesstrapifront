@@ -8,6 +8,7 @@ import BagIcon from "./BagIcon";
 
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const navigate = useNavigate();
@@ -27,8 +28,15 @@ export default function NavBar() {
 
   useEffect(() => { setMounted(true); }, []);
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
+    let lastY = window.scrollY;
+    const handleScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 10);
+      if (y > lastY && y > 80) setHidden(true);
+      else if (y < lastY) setHidden(false);
+      lastY = y;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   useEffect(() => { setMenuOpen(false); }, [location]);
@@ -48,7 +56,7 @@ export default function NavBar() {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full z-50 bg-beige dark:bg-gray-950 transition-shadow duration-300 ${scrolled ? "shadow-md dark:shadow-gray-900" : ""}`}>
+      <nav className={`fixed top-0 left-0 w-full z-50 bg-beige dark:bg-gray-950 transition-all duration-300 ${scrolled ? "shadow-md dark:shadow-gray-900" : ""} ${hidden && !menuOpen ? "-translate-y-full" : "translate-y-0"}`}>
         <div className="px-4 sm:px-6 md:px-10">
           <div className="relative flex items-center justify-between h-16 sm:h-18 md:h-20">
 
