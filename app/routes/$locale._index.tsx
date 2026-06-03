@@ -273,14 +273,14 @@ export default function Index() {
                         </div>
                       )}
                     </div>
-                    <h3 className="font-basecoat font-bold uppercase text-sm sm:text-base text-gray-900 dark:text-gray-100 leading-tight mb-0.5">
+                    <h3 className="font-basecoat font-bold uppercase text-base sm:text-lg text-gray-900 dark:text-gray-100 leading-tight mb-0.5">
                       {realisation.title}
                     </h3>
                     {realisation.categorie && (
-                      <p className="font-basecoat text-xs text-gray-500 dark:text-gray-400 mb-1">{realisation.categorie}</p>
+                      <p className="font-basecoat text-sm text-gray-500 dark:text-gray-400 mb-1">{realisation.categorie}</p>
                     )}
                     {realisation.prix && (
-                      <p className="font-basecoat text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                      <p className="font-basecoat text-base font-bold text-gray-900 dark:text-gray-100 mb-3">
                         {realisation.prix} €
                       </p>
                     )}
