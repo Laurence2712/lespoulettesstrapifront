@@ -98,7 +98,7 @@ export default function CommandesPersonnalisees() {
             </div>
             {/* Bloc décoratif */}
             <div className="anim-fade-left hidden md:grid grid-cols-2 gap-3" data-delay="0.2">
-              {['💍 Mariage', '🎀 Baby shower', '🎂 Anniversaire', '🕊️ Baptême', '🎓 Communion', '🏢 Événement pro'].map((item) => (
+              {['Mariage', 'Baby shower', 'Anniversaire', 'Baptême', 'Communion', 'Événement pro'].map((item) => (
                 <div key={item} className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-lg px-4 py-3 font-basecoat text-sm font-semibold text-gray-700 dark:text-gray-300 shadow-sm">
                   {item}
                 </div>
