@@ -555,6 +555,26 @@ export default function RealisationDetail() {
                   {t('products.choose_variant')}
                 </h2>
                 <div className="flex flex-wrap gap-3">
+                  {/* Image principale comme première vignette */}
+                  {realisation.mainImages[0]?.url && (
+                    <button
+                      onClick={() => { setSelectedDeclinaisonId(null); goToSlide(0); }}
+                      className={`relative rounded-lg overflow-hidden transition-all w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 ${
+                        selectedDeclinaisonId === null
+                          ? 'ring-2 ring-benin-jaune ring-offset-2 scale-105 shadow-lg'
+                          : 'ring-1 ring-gray-200 dark:ring-gray-700 hover:ring-benin-ocre hover:scale-105 hover:shadow-md'
+                      }`}
+                      title="Vue principale"
+                    >
+                      <img
+                        src={realisation.mainImages[0].formats?.thumbnail?.url || realisation.mainImages[0].url}
+                        alt="Vue principale"
+                        width={80}
+                        height={80}
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  )}
                   {realisation.declinaisons.map((decl) => {
                     const isSelected = selectedDeclinaisonId === decl.id;
                     const inStock = decl.Stock > 0;
