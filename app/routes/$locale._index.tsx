@@ -190,7 +190,7 @@ export default function Index() {
     { label: t('products.cat_bags'),       value: 'Sacs' },
     { label: t('products.cat_sleeves'),    value: 'Housses' },
     { label: t('products.cat_accessories'),value: 'Accessoires' },
-  ];
+  ].filter((cat) => cat.value === 'Tout' || realisations.some((r) => matchesCategory(r, cat.value)));
 
   const [activeCategory, setActiveCategory] = useState('Tout');
 
