@@ -321,7 +321,7 @@ export default function Realisations() {
                 <button
                   key={cat}
                   onClick={() => handleCategoryChange(cat)}
-                  className={`font-basecoat text-sm font-semibold px-4 py-1.5 rounded-full border-2 transition-all duration-200 ${
+                  className={`font-basecoat text-sm font-semibold px-4 py-1.5 rounded-lg border-2 transition-all duration-200 ${
                     selectedCategory === cat
                       ? 'bg-benin-jaune border-benin-jaune text-black shadow-md'
                       : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
