@@ -153,7 +153,7 @@ export default function ActualitesPage() {
                         loading="lazy"
                         width={800}
                         height={500}
-                        className="h-auto w-full max-w-[500px]"
+                        className="h-auto w-full"
                       />
                     </div>
                   )}
