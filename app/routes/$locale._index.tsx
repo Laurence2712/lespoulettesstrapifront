@@ -297,48 +297,6 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ── Qui sommes-nous ── */}
-      <section id="qui-sommes-nous" className="py-6 sm:py-8 md:py-[60px] bg-white dark:bg-gray-900">
-        <div className="px-6 sm:px-10 md:px-16 lg:px-24">
-        <div className="mb-8 sm:mb-10 md:mb-12">
-          <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">
-            {t('about.title')}
-          </h2>
-          <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.1"></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
-            <div className="order-2 md:order-1 anim-fade-right" data-delay="0.2">
-              <p className="font-basecoat text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
-                {t('home.about_p1')}
-              </p>
-              <p className="font-basecoat text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
-                {t('home.about_p2')}
-              </p>
-              <div className="mt-6">
-                <Link
-                  to={lp('/qui-sommes-nous')}
-                  className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
-                >
-                  {t('home.atelier_cta')}
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              </div>
-            </div>
-            <div className="order-1 md:order-2 flex justify-center items-center anim-scale" data-delay="0.3">
-              <div className="relative w-full max-w-sm mx-auto">
-                <div className="shimmer-border-wrapper shadow-2xl">
-                  <div className="shimmer-inner aspect-square overflow-hidden">
-                    <img src="/assets/equipe-1.jpg" alt="Fondatrice 1" loading="lazy" width={400} height={400} className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
-      </section>
-
       {/* ── Actualités ── */}
       <section className="bg-beige dark:bg-gray-900">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24 pt-6 sm:pt-8 md:pt-[60px] pb-8 sm:pb-10 md:pb-12">
