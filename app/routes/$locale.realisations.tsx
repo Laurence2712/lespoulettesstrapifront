@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLoaderData, useNavigate } from '@remix-run/react';
+import ProductCard from '../components/ProductCard';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { apiEndpoints, getImageUrl } from '../config/api';
@@ -408,72 +409,16 @@ export default function Realisations() {
             data-stagger="0.08"
           >
             {paginatedRealisations.map((realisation) => (
-              <Link
+              <ProductCard
                 key={realisation.id}
-                to={lp(`/realisations/${realisation.id}`)}
-                className="group flex flex-col rounded-lg overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow duration-300 bg-white dark:bg-gray-900"
-              >
-                {/* Image */}
-                <div className="relative aspect-square overflow-hidden bg-amber-50 flex-shrink-0">
-                  {realisation.image_url ? (
-                    <img
-                      src={realisation.image_url}
-                      alt={realisation.title}
-                      loading="lazy"
-                      width={600}
-                      height={600}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <span className="font-basecoat text-gray-400 dark:text-gray-500 text-sm">{t('home.no_image')}</span>
-                    </div>
-                  )}
-
-                  {/* Hover overlay */}
-                  <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10">
-                    <span className="font-basecoat text-white font-bold uppercase tracking-widest text-sm border-2 border-white px-5 py-2 rounded-xl">
-                      {t('products.view')}
-                    </span>
-                  </div>
-
-                  {/* Badge Nouveau */}
-                  {realisation.isNew && (
-                    <div className="absolute top-3 left-3 z-20 bg-benin-jaune text-black text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
-                      {t('products.new_badge')}
-                    </div>
-                  )}
-
-                  {/* Badge stock faible / épuisé */}
-                  {!realisation.isNew && realisation.totalStock !== null && realisation.totalStock !== undefined && (
-                    realisation.totalStock === 0 ? (
-                      <div className="absolute top-3 left-3 z-20 bg-benin-rouge text-white text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
-                        {t('products.sold_out')}
-                      </div>
-                    ) : realisation.totalStock <= 2 ? (
-                      <div className="absolute top-3 left-3 z-20 bg-orange-500 text-white text-xs font-basecoat font-bold uppercase px-3 py-1 rounded-full shadow">
-                        Plus que {realisation.totalStock}
-                      </div>
-                    ) : null
-                  )}
-                </div>
-
-                {/* Info section */}
-                <div className="flex flex-col flex-1 p-4">
-                  <h3 className="font-basecoat text-gray-900 dark:text-gray-100 text-base font-bold uppercase leading-tight mb-1 group-hover:text-benin-jaune transition-colors duration-300">
-                    {realisation.title}
-                  </h3>
-
-                  <div className="mt-auto pt-3 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between">
-                    <span className="font-basecoat text-xl font-bold text-benin-jaune">
-                      {realisation.prix ? `${realisation.prix} €` : t('products.on_request')}
-                    </span>
-                    <span className="font-basecoat text-xs font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400 group-hover:text-benin-jaune transition-colors duration-200">
-                      {t('products.view')} →
-                    </span>
-                  </div>
-                </div>
-              </Link>
+                id={realisation.id}
+                title={realisation.title}
+                image_url={realisation.image_url}
+                prix={realisation.prix}
+                categorie={realisation.categorie}
+                isNew={realisation.isNew}
+                totalStock={realisation.totalStock}
+              />
             ))}
           </div>
         )}

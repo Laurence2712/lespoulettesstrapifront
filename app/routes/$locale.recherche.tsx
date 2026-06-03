@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { useLocalePath } from "../hooks/useLocalePath";
+import ProductCard from "../components/ProductCard";
 
 interface SearchResult {
   id: string;
@@ -95,33 +96,15 @@ export default function RecherchePage() {
         )}
 
         {!loading && results.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 mt-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 mt-4">
             {results.map((item) => (
-              <Link
+              <ProductCard
                 key={item.id}
-                to={lp(`/realisations/${item.id}`)}
-                className="group flex flex-col"
-              >
-                <div className="aspect-square bg-gray-50 dark:bg-gray-900 overflow-hidden mb-3">
-                  {item.image_url ? (
-                    <img
-                      src={item.image_url}
-                      alt={item.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-gray-300 dark:text-gray-600 text-xs font-basecoat">
-                      Pas d'image
-                    </div>
-                  )}
-                </div>
-                <h2 className="font-basecoat font-bold uppercase text-sm sm:text-base text-gray-900 dark:text-gray-100 leading-tight mb-1 group-hover:text-benin-jaune transition-colors">
-                  {item.title}
-                </h2>
-                <p className="font-basecoat text-sm text-gray-500 dark:text-gray-400">
-                  {item.prix ? `${item.prix} €` : "Sur demande"}
-                </p>
-              </Link>
+                id={item.id}
+                title={item.title}
+                image_url={item.image_url}
+                prix={item.prix}
+              />
             ))}
           </div>
         )}

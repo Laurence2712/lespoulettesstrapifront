@@ -6,6 +6,7 @@ import { apiEndpoints, getImageUrl } from '../config/api';
 import { useScrollAnimations, useParallaxHero } from '../hooks/useScrollAnimations';
 import { useTranslation } from 'react-i18next';
 import { useLocalePath } from '../hooks/useLocalePath';
+import ProductCard from '../components/ProductCard';
 
 export function meta() {
   return [
@@ -263,48 +264,16 @@ export default function Index() {
 
         {featured.length > 0 ? (
           <>
-            <div className="anim-stagger grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5" data-stagger="0.08">
+            <div className="anim-stagger grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5" data-stagger="0.08">
               {featured.map((realisation) => (
-                <div key={realisation.id} className="group flex flex-col bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow duration-300">
-                  <Link to={lp(`/realisations/${realisation.id}`)}>
-                    <div className="relative overflow-hidden aspect-square bg-gray-50 dark:bg-gray-800">
-                      {realisation.image_url ? (
-                        <img
-                          src={realisation.image_url}
-                          alt={realisation.title}
-                          loading="lazy"
-                          width={500}
-                          height={500}
-                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <span className="font-basecoat text-gray-400 text-sm">{t('home.no_image')}</span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="p-3 sm:p-4">
-                      <h3 className="font-basecoat font-bold uppercase text-base sm:text-lg text-gray-900 dark:text-gray-100 leading-tight mb-0.5">
-                        {realisation.title}
-                      </h3>
-                      {realisation.categorie && (
-                        <p className="font-basecoat text-sm text-gray-500 dark:text-gray-400 mb-1">{realisation.categorie}</p>
-                      )}
-                      {realisation.prix && (
-                        <p className="font-basecoat text-base font-bold text-gray-900 dark:text-gray-100 mb-3">
-                          {realisation.prix} €
-                        </p>
-                      )}
-                    </div>
-                  </Link>
-                  <Link
-                    to={lp(`/realisations/${realisation.id}`)}
-                    className="mx-3 mb-3 sm:mx-4 sm:mb-4 font-basecoat text-xs font-bold uppercase tracking-widest text-center py-2.5 border border-gray-900 dark:border-gray-100 text-gray-900 dark:text-gray-100 hover:bg-gray-900 hover:text-white dark:hover:bg-gray-100 dark:hover:text-gray-900 transition-all duration-200 rounded-md"
-                  >
-                    {t('home.view_product')}
-                  </Link>
-                </div>
-              ))}
+                <ProductCard
+                  key={realisation.id}
+                  id={realisation.id}
+                  title={realisation.title}
+                  image_url={realisation.image_url}
+                  prix={realisation.prix}
+                  categorie={realisation.categorie}
+                />
             </div>
 
             <div className="anim-fade-up text-center mt-10 sm:mt-12" data-delay="0.3">
