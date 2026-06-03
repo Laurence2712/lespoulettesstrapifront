@@ -45,7 +45,7 @@ export default function QuiSommesNous() {
             {t('about.hero_title')}
           </h1>
           <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-4 mb-6" data-delay="0.1"></div>
-          <p className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed" data-delay="0.2">
+          <p className="anim-fade-up font-basecoat text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed" data-delay="0.2">
             {t('about.hero_subtitle')}
           </p>
         </div>
