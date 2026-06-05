@@ -8,10 +8,12 @@ import {
   isRouteErrorResponse,
   useLoaderData,
   useNavigation,
+  useLocation,
 } from "@remix-run/react";
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { useEffect } from "react";
+import { isAuthenticated } from "~/sessions.server";
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next/react";
 import NavBar from "./components/navbar";
@@ -25,6 +27,10 @@ import i18next from "./i18n.server";
 import "./tailwind.css";
 
 export async function loader({ request }: LoaderFunctionArgs) {
+  const url = new URL(request.url);
+  if (url.pathname !== "/password" && !(await isAuthenticated(request))) {
+    throw redirect(`/password?redirectTo=${encodeURIComponent(url.pathname)}`);
+  }
   const locale = await i18next.getLocale(request);
   return json({
     locale,
@@ -77,6 +83,8 @@ const orgJsonLd = {
 export function Layout({ children }: { children: React.ReactNode }) {
   const data = useLoaderData<typeof loader>();
   const locale = data?.locale ?? "fr";
+  const location = useLocation();
+  const isPasswordPage = location.pathname === "/password";
 
   return (
     <html lang={locale} className="overflow-x-hidden">
@@ -97,11 +105,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         >
           {locale === "en" ? "Skip to main content" : "Aller au contenu principal"}
         </a>
-        <ScrollProgress />
-        <NavBar />
+        {!isPasswordPage && <ScrollProgress />}
+        {!isPasswordPage && <NavBar />}
         <main id="main-content" className="flex-grow">{children}</main>
-        <Footer />
-        <BackToTop />
+        {!isPasswordPage && <Footer />}
+        {!isPasswordPage && <BackToTop />}
         <ScrollRestoration />
         <Scripts />
       </body>
