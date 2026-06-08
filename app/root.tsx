@@ -11,7 +11,7 @@ import {
 } from "@remix-run/react";
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next/react";
 import NavBar from "./components/navbar";
@@ -22,6 +22,7 @@ import { ToastProvider } from "./components/ToastProvider";
 import CommandPalette from "./components/CommandPalette";
 import { useCartStore } from "./store/cartStore";
 import i18next from "./i18n.server";
+import { SITE_CONFIG } from "./config/site";
 import "./tailwind.css";
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -56,22 +57,19 @@ export const links: LinksFunction = () => [
 const orgJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Les Poulettes",
-  url: "https://lespoulettes.be",
-  logo: "https://lespoulettes.be/assets/logo_t_poulettes.png",
+  name: SITE_CONFIG.name,
+  url: SITE_CONFIG.url,
+  logo: SITE_CONFIG.logo,
   description:
     "Marque d'accessoires éco-responsables faits main au Bénin. Trousses, sacs et housses en tissu wax authentique.",
-  email: "lespoulettes.benin@gmail.com",
-  telephone: "+2290162007580",
+  email: SITE_CONFIG.email,
+  telephone: SITE_CONFIG.phoneE164,
   address: {
     "@type": "PostalAddress",
-    addressCountry: "BJ",
-    addressLocality: "Cotonou",
+    addressCountry: SITE_CONFIG.address.country,
+    addressLocality: SITE_CONFIG.address.city,
   },
-  sameAs: [
-    "https://www.facebook.com/lespoulettescouture",
-    "https://www.instagram.com/lespoulettes.benin/",
-  ],
+  sameAs: [SITE_CONFIG.facebook, SITE_CONFIG.instagram],
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -114,6 +112,7 @@ export default function App() {
   const checkExpiration = useCartStore((state) => state.checkExpiration);
   const navigation = useNavigation();
   const isNavigating = navigation.state === "loading";
+  const recaptchaLoaded = useRef(false);
   const { t } = useTranslation();
 
   useChangeLanguage(locale);
@@ -126,13 +125,19 @@ export default function App() {
     return () => clearInterval(interval);
   }, [checkExpiration]);
 
+  // Load reCAPTCHA only on pages that need it (contact, newsletter)
   useEffect(() => {
-    if (!recaptchaSiteKey || typeof window === "undefined") return;
+    if (!recaptchaSiteKey || typeof window === "undefined" || recaptchaLoaded.current) return;
+    const needsRecaptcha = ['/contact', '/newsletter', '/commandes-personnalisees'].some(
+      (path) => window.location.pathname.includes(path)
+    );
+    if (!needsRecaptcha) return;
+    recaptchaLoaded.current = true;
     const script = document.createElement("script");
     script.src = `https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`;
     script.async = true;
     document.head.appendChild(script);
-  }, [recaptchaSiteKey]);
+  }, [recaptchaSiteKey, navigation.location?.pathname]);
 
   useEffect(() => {
     if (!gaId || typeof window === "undefined") return;

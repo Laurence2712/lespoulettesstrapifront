@@ -23,6 +23,7 @@ export function meta() {
     },
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://lespoulettes.be/realisations" },
+    { tagName: "link", rel: "canonical", href: "https://lespoulettes.be/fr/realisations" },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: "Nos Créations — Les Poulettes" },
     { name: "twitter:description", content: "Trousses, sacs et housses en tissu wax, faits main au Bénin." },
@@ -251,8 +252,21 @@ export default function Realisations() {
     setFilterKey((k) => k + 1);
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Accueil", item: "https://lespoulettes.be" },
+      { "@type": "ListItem", position: 2, name: "Nos Créations", item: "https://lespoulettes.be/fr/realisations" },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* ── Bannière région (bottom) ── */}
       {showPopup && (
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-t-4 border-benin-jaune shadow-2xl p-4 sm:p-5">

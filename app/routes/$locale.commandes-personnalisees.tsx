@@ -12,6 +12,7 @@ export function meta() {
     { property: "og:description", content: "Accessoires wax sur mesure pour tous vos événements. Mariage, baby shower, anniversaire... Commandez des cadeaux uniques faits main au Bénin." },
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://lespoulettes.be/commandes-personnalisees" },
+    { tagName: "link", rel: "canonical", href: "https://lespoulettes.be/fr/commandes-personnalisees" },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: "Commandes personnalisées — Les Poulettes" },
   ];

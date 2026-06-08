@@ -14,7 +14,7 @@ interface CartItem {
 
 interface CartState {
   items: CartItem[];
-  lastActivity: number; // Timestamp de la dernière activité
+  lastActivity: number;
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
@@ -22,6 +22,7 @@ interface CartState {
   getTotalPrice: () => number;
   getTotalItems: () => number;
   checkExpiration: () => void;
+  getMinutesUntilExpiry: () => number | null;
 }
 
 const EXPIRATION_TIME = 24 * 60 * 60 * 1000; // 24 heures en millisecondes
@@ -98,13 +99,18 @@ export const useCartStore = create<CartState>()(
       checkExpiration: () => {
         const now = Date.now();
         const lastActivity = get().lastActivity;
-
-        // Skip if store hasn't been hydrated from localStorage yet
         if (lastActivity === 0) return;
-
         if (now - lastActivity > EXPIRATION_TIME) {
           get().clearCart();
         }
+      },
+
+      getMinutesUntilExpiry: () => {
+        const lastActivity = get().lastActivity;
+        if (lastActivity === 0 || get().items.length === 0) return null;
+        const remaining = EXPIRATION_TIME - (Date.now() - lastActivity);
+        if (remaining <= 0) return 0;
+        return Math.floor(remaining / 60000);
       },
     }),
     {

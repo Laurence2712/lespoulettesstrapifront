@@ -18,6 +18,7 @@ export function meta() {
     },
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://lespoulettes.be/qui-sommes-nous" },
+    { tagName: "link", rel: "canonical", href: "https://lespoulettes.be/fr/qui-sommes-nous" },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: "Qui sommes-nous — Les Poulettes" },
     { name: "twitter:description", content: "L'histoire et les valeurs des Poulettes, accessoires wax fait main au Bénin." },
