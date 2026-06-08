@@ -12,7 +12,8 @@ export async function action({ request }: ActionFunctionArgs) {
   const email = formData.get('email');
   const recaptchaToken = formData.get('recaptchaToken');
 
-  if (!email || typeof email !== 'string' || !email.includes('@') || !email.includes('.')) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  if (!email || typeof email !== 'string' || !emailRegex.test(email.trim())) {
     return json({ error: 'Adresse email invalide.' }, { status: 400 });
   }
 

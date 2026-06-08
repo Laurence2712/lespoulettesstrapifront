@@ -18,6 +18,7 @@ export function meta() {
     { property: "og:title", content: "Nous contacter — Les Poulettes" },
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://lespoulettes.be/contact" },
+    { tagName: "link", rel: "canonical", href: "https://lespoulettes.be/fr/contact" },
     { name: "twitter:card", content: "summary" },
     { name: "twitter:title", content: "Nous contacter — Les Poulettes" },
   ];

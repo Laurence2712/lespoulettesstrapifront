@@ -15,6 +15,7 @@ export function meta() {
     { property: "og:title", content: "FAQ — Les Poulettes" },
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://lespoulettes.be/faq" },
+    { tagName: "link", rel: "canonical", href: "https://lespoulettes.be/fr/faq" },
     { name: "twitter:card", content: "summary" },
     { name: "twitter:title", content: "FAQ — Les Poulettes" },
   ];

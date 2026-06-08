@@ -18,6 +18,7 @@ export function meta() {
     },
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://lespoulettes.be/guide-des-tailles" },
+    { tagName: "link", rel: "canonical", href: "https://lespoulettes.be/fr/guide-des-tailles" },
     { name: "twitter:card", content: "summary" },
     { name: "twitter:title", content: "Guide des tailles & Entretien — Les Poulettes" },
   ];

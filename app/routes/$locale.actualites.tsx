@@ -18,6 +18,7 @@ export function meta() {
     { property: "og:title", content: "Actualités — Les Poulettes" },
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://lespoulettes.be/actualites" },
+    { tagName: "link", rel: "canonical", href: "https://lespoulettes.be/fr/actualites" },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: "Actualités — Les Poulettes" },
   ];

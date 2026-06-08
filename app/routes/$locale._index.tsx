@@ -23,6 +23,7 @@ export function meta() {
     },
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://lespoulettes.be" },
+    { tagName: "link", rel: "canonical", href: "https://lespoulettes.be" },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: "Les Poulettes — Accessoires wax fait main au Bénin" },
     { name: "twitter:description", content: "Trousses, sacs et housses en tissu wax africain, confectionnés à la main au Bénin. Éco-responsables, uniques et solidaires." },

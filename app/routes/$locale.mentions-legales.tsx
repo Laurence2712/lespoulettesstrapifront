@@ -13,6 +13,7 @@ export function meta() {
     },
     { property: "og:title", content: "Mentions légales & CGV — Les Poulettes" },
     { property: "og:url", content: "https://lespoulettes.be/mentions-legales" },
+    { tagName: "link", rel: "canonical", href: "https://lespoulettes.be/fr/mentions-legales" },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary" },
     { name: "twitter:title", content: "Mentions légales & CGV — Les Poulettes" },
