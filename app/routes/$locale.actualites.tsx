@@ -78,8 +78,18 @@ export default function ActualitesPage() {
     return sortOrder === 'desc' ? dateB - dateA : dateA - dateB;
   });
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Accueil", item: "https://lespoulettes.be" },
+      { "@type": "ListItem", position: 2, name: "Actualités", item: "https://lespoulettes.be/fr/actualites" },
+    ],
+  };
+
   return (
     <div ref={scrollRef} className="mt-16 sm:mt-20 md:mt-24">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       {/* Header */}
       <div className="py-6 sm:py-8 md:py-[60px] px-6 sm:px-10 md:px-16 lg:px-24">
         {/* Breadcrumb */}

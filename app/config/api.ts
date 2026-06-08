@@ -12,6 +12,36 @@ export const getImageUrl = (path: string) => {
   return `${API_URL}${path}`;
 };
 
+type ImageFormat = 'thumbnail' | 'small' | 'medium' | 'large';
+
+interface StrapiImageData {
+  url?: string;
+  formats?: Partial<Record<ImageFormat, { url: string }>>;
+}
+
+const FORMAT_FALLBACK: Record<ImageFormat, ImageFormat[]> = {
+  large:     ['large', 'medium', 'small', 'thumbnail'],
+  medium:    ['medium', 'small', 'thumbnail'],
+  small:     ['small', 'thumbnail'],
+  thumbnail: ['thumbnail'],
+};
+
+/**
+ * Returns the best available Strapi image URL for a given size hint.
+ * Falls back through smaller formats → original if the preferred one isn't generated.
+ */
+export const getStrapiImageUrl = (
+  image: StrapiImageData | undefined | null,
+  prefer: ImageFormat = 'medium'
+): string => {
+  if (!image) return '';
+  for (const fmt of FORMAT_FALLBACK[prefer]) {
+    const url = image.formats?.[fmt]?.url;
+    if (url) return getImageUrl(url);
+  }
+  return image.url ? getImageUrl(image.url) : '';
+};
+
 export const apiEndpoints = (locale = 'fr') => ({
   homepages: `${API_URL}/api/homepages?populate=*&locale=${locale}`,
   realisations: `${API_URL}/api/realisations?populate=*&locale=${locale}`,

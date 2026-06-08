@@ -54,6 +54,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
     { property: "og:type", content: "product" },
     { property: "og:url", content: pageUrl },
     { property: "og:site_name", content: "Les Poulettes" },
+    { tagName: "link", rel: "canonical", href: pageUrl },
     ...(imageUrl ? [
       { property: "og:image", content: imageUrl },
       { property: "og:image:alt", content: `${title} — Les Poulettes` },
@@ -332,6 +333,16 @@ export default function RealisationDetail() {
     setTimeout(() => setShareCopied(false), 2000);
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Accueil", item: "https://lespoulettes.be" },
+      { "@type": "ListItem", position: 2, name: "Nos Créations", item: "https://lespoulettes.be/fr/realisations" },
+      { "@type": "ListItem", position: 3, name: realisation.title, item: `https://lespoulettes.be/fr/realisations/${realisation.id}` },
+    ],
+  };
+
   // JSON-LD données structurées produit (enrichi pour Google Shopping / SEO)
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -362,6 +373,10 @@ export default function RealisationDetail() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
