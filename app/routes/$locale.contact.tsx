@@ -63,11 +63,21 @@ export default function Contact() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Accueil", item: "https://lespoulettes.be" },
+      { "@type": "ListItem", position: 2, name: "Contact", item: "https://lespoulettes.be/fr/contact" },
+    ],
+  };
+
   return (
     <div
       ref={scrollRef}
       className="py-6 sm:py-8 md:py-[60px] px-6 sm:px-10 md:px-16 lg:px-24 mt-16 sm:mt-20 md:mt-24"
     >
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       {/* Breadcrumb */}
       <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs">
         <Link to={lp('/')} className="text-benin-jaune hover:text-benin-jaune/70 font-medium transition">

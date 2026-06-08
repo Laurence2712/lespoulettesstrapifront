@@ -2,7 +2,7 @@ import { Link, useLoaderData, useNavigate } from '@remix-run/react';
 import { useState } from 'react';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs } from '@remix-run/node';
-import { apiEndpoints, getImageUrl } from '../config/api';
+import { apiEndpoints, getImageUrl, getStrapiImageUrl } from '../config/api';
 import { useScrollAnimations, useParallaxHero } from '../hooks/useScrollAnimations';
 import { useTranslation } from 'react-i18next';
 import { useLocalePath } from '../hooks/useLocalePath';
@@ -92,11 +92,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
       const data = await homepageRes.json();
       if (data?.data?.length) {
         const homepage = data.data[0];
-        const bannerImageUrl = homepage.banner_image?.formats?.large?.url
-          ? getImageUrl(homepage.banner_image.formats.large.url)
-          : homepage.banner_image?.url
-            ? getImageUrl(homepage.banner_image.url)
-            : '';
+        const bannerImageUrl = getStrapiImageUrl(homepage.banner_image, 'large');
         let descriptionText = '';
         if (Array.isArray(homepage.description)) {
           homepage.description.forEach((block: any) => {
@@ -117,11 +113,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
         realisations = data.data.map((realisation: any) => ({
           id: realisation.documentId,
           title: realisation.Titre || 'Titre indisponible',
-          image_url: realisation.ImagePrincipale?.url
-            ? getImageUrl(realisation.ImagePrincipale.url)
-            : realisation.Images?.[0]?.url
-              ? getImageUrl(realisation.Images[0].url)
-              : undefined,
+          image_url: getStrapiImageUrl(realisation.ImagePrincipale ?? realisation.Images?.[0], 'medium') || undefined,
           description: realisation.Description || 'Description indisponible',
           prix: realisation.Prix,
           categorie: realisation.Categorie || undefined,
@@ -137,11 +129,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
           title: item.Title || 'Titre indisponible',
           content: item.content || '',
           date: item.date || '',
-          image_url: item.image?.formats?.large?.url
-            ? getImageUrl(item.image.formats.large.url)
-            : item.image?.url
-              ? getImageUrl(item.image.url)
-              : '',
+          image_url: getStrapiImageUrl(item.image, 'medium'),
         }));
       }
     }

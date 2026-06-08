@@ -69,6 +69,34 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
     return [street, `${postalCode} ${city}`.trim(), countryLabel].filter(Boolean).join(', ');
   };
 
+  const validateStock = async (): Promise<string | null> => {
+    try {
+      const checks = await Promise.all(
+        cart.map(async (item) => {
+          const res = await fetch(`${API_URL}/api/realisations/${item.id}?populate[0]=Declinaison`, {
+            signal: AbortSignal.timeout(8000),
+          });
+          if (!res.ok) return null;
+          const data = await res.json();
+          const r = data?.data;
+          if (!r) return null;
+          // Check total stock across all declinaisons, or direct Stock field
+          const totalStock: number = Array.isArray(r.Declinaison) && r.Declinaison.length > 0
+            ? r.Declinaison.reduce((sum: number, d: any) => sum + (d.Stock ?? 0), 0)
+            : (r.Stock ?? Infinity);
+          if (item.quantity > totalStock) {
+            return `"${item.title}" : seulement ${totalStock} disponible(s).`;
+          }
+          return null;
+        })
+      );
+      const errors = checks.filter(Boolean) as string[];
+      return errors.length > 0 ? errors.join(' ') : null;
+    } catch {
+      return null; // Network error during stock check → let Stripe backend handle it
+    }
+  };
+
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isSubmittingRef.current) return;
@@ -77,6 +105,14 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
     setLoading(true);
     setLoadingMessage(t('cart.redirecting'));
     setError('');
+
+    const stockError = await validateStock();
+    if (stockError) {
+      setError(stockError);
+      setLoading(false);
+      isSubmittingRef.current = false;
+      return;
+    }
 
     const slowTimer = setTimeout(() => setLoadingMessage(t('cart.server_starting')), 5000);
     const verySlowTimer = setTimeout(() => setLoadingMessage(t('cart.server_waking')), 15000);
