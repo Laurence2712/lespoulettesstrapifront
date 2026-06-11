@@ -39,20 +39,16 @@ export const links: LinksFunction = () => [
   { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
   { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" },
   { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
+  // Preconnect to font & API origins
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
+  { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+  { rel: "dns-prefetch", href: "https://lespoulettesstrapi.onrender.com" },
+  // Inter loaded with display=swap so text stays visible during font load
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
   },
-  {
-    rel: "stylesheet",
-    href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css",
-  },
+  // Font Awesome removed — not used in codebase (saves ~30KB render-blocking CSS)
 ];
 
 const orgJsonLd = {
