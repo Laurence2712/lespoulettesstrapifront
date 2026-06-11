@@ -78,10 +78,11 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const endpoints = apiEndpoints(locale);
 
   try {
+    // Reduce timeout to 5s — faster failure & faster TTFB on slow Strapi cold starts
     const [homepageRes, realisationsRes, actualitesRes] = await Promise.all([
-      fetchWithTimeout(endpoints.homepages, 8000),
-      fetchWithTimeout(endpoints.realisations, 8000),
-      fetchWithTimeout(endpoints.latestActualite, 8000),
+      fetchWithTimeout(endpoints.homepages, 5000),
+      fetchWithTimeout(endpoints.realisations, 5000),
+      fetchWithTimeout(endpoints.latestActualite, 5000),
     ]);
 
     let homepageData: HomepageData | null = null;
@@ -138,7 +139,8 @@ export async function loader({ params }: LoaderFunctionArgs) {
     if (heroImageUrl) {
       responseHeaders.set('Link', `<${heroImageUrl}>; rel=preload; as=image`);
     }
-    responseHeaders.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
+    // Cache 10min on Vercel Edge, serve stale up to 1h while revalidating in background
+    responseHeaders.set('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=3600');
 
     return json<LoaderData>({ homepageData, realisations, actualites, locale, error: null }, { headers: responseHeaders });
   } catch (err: any) {
