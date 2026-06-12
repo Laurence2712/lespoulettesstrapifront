@@ -21,7 +21,7 @@ interface CheckoutFormProps {
   onSuccess: () => void;
 }
 
-const INPUT_CLASS = "font-basecoat w-full rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm sm:text-base focus:ring-2 focus:ring-benin-jaune focus:border-transparent outline-none transition bg-white dark:bg-gray-900";
+const INPUT_CLASS = "font-basecoat w-full rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm sm:text-base focus:border-benin-jaune outline-none transition bg-white dark:bg-gray-900";
 const LABEL_CLASS = "font-basecoat block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2";
 
 export default function CheckoutForm({ cart, total, onBack, onSuccess }: CheckoutFormProps) {
