@@ -60,7 +60,7 @@ export default function NavBar() {
   return (
     <>
       <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isTransparent ? 'bg-transparent' : 'bg-beige dark:bg-gray-950'} ${scrolled ? "shadow-md dark:shadow-gray-900" : ""} ${hidden && !menuOpen ? "-translate-y-full" : "translate-y-0"}`}>
-        <div className="px-4 sm:px-6 md:px-10">
+        <div className="px-6 sm:px-10 md:px-16 lg:px-24">
           <div className="relative flex items-center justify-between h-16 sm:h-18 md:h-20">
 
             {/* LEFT: MENU + Search */}
