@@ -355,11 +355,22 @@ export default function Index() {
       <section className="py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="mb-8 sm:mb-10 md:mb-12">
-          <div className="mb-3 sm:mb-4">
-            <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
-              {t('home.event_title')}
-            </h2>
-            <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
+          <div className="flex items-center justify-between gap-4 flex-wrap mb-3 sm:mb-4">
+            <div>
+              <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
+                {t('home.event_title')}
+              </h2>
+              <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
+            </div>
+            <Link
+              to={lp('/commandes-personnalisees')}
+              className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+            >
+              {t('common.learn_more')}
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
           </div>
         </div>
 
@@ -411,20 +422,9 @@ export default function Index() {
 
 </div>
 
-<p className="mt-16 sm:mt-10 md:mt-12 font-basecoat max-w-[90%] sm:max-w-[80%] md:max-w-[70%] font-bold lg:max-w-[50%] mx-auto text-center text-sm sm:text-base text-benin-jaune uppercase leading-relaxed">
+<p className="mt-10 sm:mt-12 font-basecoat max-w-[90%] sm:max-w-[80%] md:max-w-[70%] font-bold lg:max-w-[50%] mx-auto text-center text-sm sm:text-base text-benin-jaune uppercase leading-relaxed">
   {t('home.event_quote')}
 </p>
-<div className="anim-fade-up text-center mt-8 sm:mt-10" data-delay="0.3">
-  <Link
-    to={lp('/commandes-personnalisees')}
-    className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
-  >
-    {t('common.learn_more')}
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-    </svg>
-  </Link>
-</div>
         </div>
       </section>
 
