@@ -323,8 +323,9 @@ export default function Index() {
       </section>
 
       {/* ── Actualités ── */}
-      <section className="bg-beige dark:bg-gray-900">
-        <div className="px-6 sm:px-10 md:px-16 lg:px-24 pt-6 sm:pt-8 md:pt-[60px] pb-8 sm:pb-10 md:pb-12">
+      <section className="py-10 sm:py-14 md:py-[70px] bg-beige dark:bg-gray-900">
+        <div className="px-6 sm:px-10 md:px-16 lg:px-24">
+          <div className="mb-8 sm:mb-10 md:mb-12">
           <div className="flex items-center justify-between gap-4 flex-wrap mb-3 sm:mb-4">
             <div>
               <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">
@@ -342,12 +343,12 @@ export default function Index() {
               </svg>
             </Link>
           </div>
-        </div>
+          </div>
 
         {actualites.length > 0 ? (
           actualites.map((actu, idx) => (
             <div key={actu.id}>
-              <div className="px-6 sm:px-10 md:px-16 lg:px-24 py-8 sm:py-10 md:py-14">
+              <div className="py-4 sm:py-6 md:py-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
                   {actu.image_url && (
                     <div className="anim-fade-right" data-delay="0.2">
@@ -379,10 +380,9 @@ export default function Index() {
             </div>
           ))
         ) : (
-          <div className="px-6 sm:px-10 md:px-16 lg:px-24 pb-10">
-            <p className="text-center text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm sm:text-base font-basecoat">{t('home.no_news')}</p>
-          </div>
+          <p className="text-center text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm sm:text-base font-basecoat">{t('home.no_news')}</p>
         )}
+        </div>
       </section>
 
       {/* ── Commandes personnalisées ── */}
