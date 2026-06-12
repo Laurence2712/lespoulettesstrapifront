@@ -249,7 +249,7 @@ export default function Index() {
           <div className="mt-2 sm:mt-4 anim-fade-up flex flex-col items-center gap-2 sm:gap-3" data-delay="0.3">
             <Link
               to={lp('/realisations')}
-              className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+              className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
             >
               {t('home.hero_cta')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
