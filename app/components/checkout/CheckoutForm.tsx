@@ -54,11 +54,10 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
     if (country !== 'belgique' || code.length !== 4) return;
     setCityLoading(true);
     try {
-      const res = await fetch(`https://api.bpost.be/tax/api/v1/geographic/postalCodes/${code}`, { signal: AbortSignal.timeout(4000) });
+      const res = await fetch(`/api/postal?code=${code}`, { signal: AbortSignal.timeout(6000) });
       if (res.ok) {
         const data = await res.json();
-        const name = data?.municipalities?.[0]?.name;
-        if (name) setCity(name);
+        if (data?.city) setCity(data.city);
       }
     } catch {
       // silently ignore — user can type city manually
