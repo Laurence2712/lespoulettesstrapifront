@@ -452,16 +452,12 @@ export default function Index() {
 
   {/* Colonne droite : Texte */}
   <div className="anim-fade-left order-1 md:order-2 text-center md:text-left" data-delay="0.3">
-    <p className="font-basecoat text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed max-w-xl mx-auto md:mx-0">
-      {t('home.event_sub')}
+    <p className="font-basecoat text-sm sm:text-base font-bold text-gray-900 dark:text-gray-100 uppercase leading-relaxed max-w-xl mx-auto md:mx-0">
+      {t('home.event_quote')}
     </p>
   </div>
 
 </div>
-
-<p className="mt-10 sm:mt-12 font-basecoat max-w-[90%] sm:max-w-[80%] md:max-w-[70%] font-bold lg:max-w-[50%] mx-auto text-center text-sm sm:text-base text-benin-jaune uppercase leading-relaxed">
-  {t('home.event_quote')}
-</p>
         </div>
       </section>
 
