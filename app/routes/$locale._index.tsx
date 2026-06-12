@@ -326,62 +326,57 @@ export default function Index() {
       <section className="py-10 sm:py-14 md:py-[70px] bg-beige dark:bg-gray-900">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
           <div className="mb-8 sm:mb-10 md:mb-12">
-          <div className="flex items-center justify-between gap-4 flex-wrap mb-3 sm:mb-4">
-            <div>
-              <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">
-                {t('news.title')}
-              </h2>
-              <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
+            <div className="flex items-center justify-between gap-4 flex-wrap mb-3 sm:mb-4">
+              <div>
+                <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">
+                  {t('news.title')}
+                </h2>
+                <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
+              </div>
+              <Link
+                to={lp('/actualites')}
+                className="font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+              >
+                {t('home.see_all_news')}
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
             </div>
-            <Link
-              to={lp('/actualites')}
-              className="font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
-            >
-              {t('home.see_all_news')}
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
           </div>
-          </div>
-
-        {actualites.length > 0 ? (
-          actualites.map((actu, idx) => (
-            <div key={actu.id}>
-              <div className="py-4 sm:py-6 md:py-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
-                  {actu.image_url && (
-                    <div className="anim-fade-right" data-delay="0.2">
-                      <img
-                        src={actu.image_url}
-                        alt={actu.title}
-                        loading="lazy"
-                        width={800}
-                        height={400}
-                        className="w-full max-w-sm md:max-w-md h-auto object-contain rounded-xl shadow-sm"
-                      />
-                    </div>
-                  )}
-                  <div className={`anim-fade-left ${!actu.image_url ? 'lg:col-span-2' : ''}`} data-delay="0.3">
-                    {actu.date && (
-                      <p className="font-basecoat text-xs text-benin-jaune font-semibold mb-2 tracking-widest uppercase">
-                        {new Date(actu.date).toLocaleDateString(locale === 'en' ? 'en-GB' : 'fr-FR', { day: "numeric", month: "long", year: "numeric" })}
-                      </p>
-                    )}
-                    <h3 className="font-basecoat text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-5 leading-tight">
-                      {actu.title}
-                    </h3>
-                    <p className="font-basecoat text-gray-700 dark:text-gray-300 text-sm sm:text-base whitespace-pre-line leading-relaxed">
-                      {actu.content}
-                    </p>
+          {actualites.length > 0 ? (
+            actualites.map((actu, idx) => (
+              <div key={actu.id} className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
+                {actu.image_url && (
+                  <div className="anim-fade-right" data-delay="0.2">
+                    <img
+                      src={actu.image_url}
+                      alt={actu.title}
+                      loading="lazy"
+                      width={800}
+                      height={400}
+                      className="w-full max-w-sm md:max-w-md h-auto object-contain rounded-xl shadow-sm"
+                    />
                   </div>
+                )}
+                <div className={`anim-fade-left ${!actu.image_url ? 'lg:col-span-2' : ''}`} data-delay="0.3">
+                  {actu.date && (
+                    <p className="font-basecoat text-xs text-benin-jaune font-semibold mb-2 tracking-widest uppercase">
+                      {new Date(actu.date).toLocaleDateString(locale === 'en' ? 'en-GB' : 'fr-FR', { day: "numeric", month: "long", year: "numeric" })}
+                    </p>
+                  )}
+                  <h3 className="font-basecoat text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-5 leading-tight">
+                    {actu.title}
+                  </h3>
+                  <p className="font-basecoat text-gray-700 dark:text-gray-300 text-sm sm:text-base whitespace-pre-line leading-relaxed">
+                    {actu.content}
+                  </p>
                 </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <p className="text-center text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm sm:text-base font-basecoat">{t('home.no_news')}</p>
-        )}
+            ))
+          ) : (
+            <p className="text-center text-gray-500 dark:text-gray-400 font-basecoat text-sm sm:text-base">{t('home.no_news')}</p>
+          )}
         </div>
       </section>
 
