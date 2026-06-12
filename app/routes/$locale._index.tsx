@@ -248,7 +248,7 @@ export default function Index() {
           <div className="anim-fade-up" data-delay="0.2">
             <Link
               to={lp('/realisations')}
-              className="font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+              className="font-basecoat bg-benin-jaune text-black hover:bg-beige hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
             >
               {t('home.hero_cta')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -261,7 +261,7 @@ export default function Index() {
 
 
       {/* ── Nouveaux arrivages ── */}
-      <section id="nouveaux-arrivages" className="py-10 sm:py-14 md:py-[70px] bg-beige dark:bg-gray-900">
+      <section id="nouveaux-arrivages" className="py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="mb-8 sm:mb-10 md:mb-12">
           {/* Titre + bouton boutique alignés */}
@@ -274,7 +274,7 @@ export default function Index() {
             </div>
             <Link
               to={lp('/realisations')}
-              className="font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+              className="font-basecoat bg-benin-jaune text-black hover:bg-beige hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
             >
               {t('home.see_all_shop_full')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -398,7 +398,7 @@ export default function Index() {
             </div>
             <Link
               to={lp('/commandes-personnalisees')}
-              className="font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+              className="font-basecoat bg-benin-jaune text-black hover:bg-beige hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
             >
               {t('common.learn_more')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

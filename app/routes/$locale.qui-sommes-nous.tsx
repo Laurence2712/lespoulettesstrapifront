@@ -226,7 +226,7 @@ export default function QuiSommesNous() {
         <div className="anim-fade-up flex flex-col sm:flex-row gap-4 justify-center" data-delay="0.2">
           <Link
             to={lp("/realisations")}
-            className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+            className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-beige hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
           >
             {t('about.cta_shop')}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -235,7 +235,7 @@ export default function QuiSommesNous() {
           </Link>
           <Link
             to={lp("/commandes-personnalisees")}
-            className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+            className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-beige hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
           >
             {t('about.cta_custom')}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
