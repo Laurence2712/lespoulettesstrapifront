@@ -230,23 +230,25 @@ export default function Index() {
       )}
 
       {/* ── Hero Banner ── */}
-      <header ref={heroRef} className="banner relative text-white overflow-hidden">
+      <header ref={heroRef} className="banner relative text-white overflow-hidden h-screen min-h-[500px]">
         {homepageData?.image_url && (
           <img
             src={homepageData.image_url}
             alt="Les Poulettes"
-            className="w-full h-auto object-contain block z-0"
+            className="absolute inset-0 w-full h-full object-cover object-center z-0"
           />
         )}
-        <div className="absolute inset-0 bg-black/50 z-10" />
-        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 pt-20">
-          <h1 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold uppercase tracking-wide mb-6 sm:mb-8 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-tight lg:leading-snug">
+        {/* Dégradé léger uniquement en bas pour lisibilité du texte */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
+        {/* Texte en bas à gauche — style Martine */}
+        <div className="absolute bottom-10 sm:bottom-14 left-6 sm:left-10 md:left-16 lg:left-24 z-20 max-w-lg">
+          <h1 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold uppercase tracking-wide mb-4 sm:mb-6 leading-tight">
             {t('home.hero_title')}
           </h1>
-          <div className="anim-fade-up flex flex-col items-center gap-2 sm:gap-3" data-delay="0.3">
+          <div className="anim-fade-up" data-delay="0.2">
             <Link
               to={lp('/realisations')}
-              className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+              className="font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
             >
               {t('home.hero_cta')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
