@@ -138,6 +138,7 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
           telephone: formData.telephone,
           adresse,
           notes: notesCompose,
+          mode_livraison: deliveryMode === 'retrait' ? 'retrait_gratuit' : 'livraison_domicile',
         }),
         signal: controller.signal,
       });
