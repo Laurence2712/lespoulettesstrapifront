@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, useLoaderData, useNavigate } from '@remix-run/react';
+import { Link, useLoaderData, useNavigate, useSearchParams } from '@remix-run/react';
 import ProductCard from '../components/ProductCard';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs } from '@remix-run/node';
@@ -53,21 +53,42 @@ interface CoupDeCoeur {
 interface LoaderData {
   realisations: Realisation[];
   coupsDeCoeur: CoupDeCoeur[];
+  selectedCategory: string;
   error: string | null;
 }
 
-export async function loader({ params }: LoaderFunctionArgs) {
+export const CATEGORIES = ['Tout', 'Trousses', 'Sacs', 'Housses', 'Accessoires'] as const;
+export type Category = typeof CATEGORIES[number];
+
+const CAT_KEY: Record<string, string> = {
+  'Tout': 'products.cat_all',
+  'Trousses': 'products.cat_pouches',
+  'Sacs': 'products.cat_bags',
+  'Housses': 'products.cat_sleeves',
+  'Accessoires': 'products.cat_accessories',
+};
+
+export async function loader({ params, request }: LoaderFunctionArgs) {
   const locale = params.locale ?? 'fr';
   const endpoints = apiEndpoints(locale);
   const baseUrl = endpoints.realisations.split('?')[0];
 
+  const { searchParams } = new URL(request.url);
+  const categorie = searchParams.get('categorie') ?? 'Tout';
+  const validCategory = (CATEGORIES as readonly string[]).includes(categorie) ? categorie : 'Tout';
+
   try {
-    const url = `${baseUrl}?populate[0]=ImagePrincipale&populate[1]=Images&populate[2]=Declinaison&populate[3]=Declinaison.Image&locale=${locale}`;
+    // Base populate params
+    let url = `${baseUrl}?populate[0]=ImagePrincipale&populate[1]=Images&populate[2]=Declinaison&populate[3]=Declinaison.Image&locale=${locale}`;
+
+    // Add Strapi category filter when a specific category is selected
+    if (validCategory !== 'Tout') {
+      url += `&filters[Categorie][$eq]=${encodeURIComponent(validCategory)}`;
+    }
+
     const response = await fetch(url);
 
-    if (!response.ok) {
-      throw new Error(`Erreur HTTP : ${response.status}`);
-    }
+    if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
 
     const data = await response.json();
 
@@ -75,7 +96,6 @@ export async function loader({ params }: LoaderFunctionArgs) {
       const coupsDeCoeur: CoupDeCoeur[] = [];
 
       const realisations: Realisation[] = data.data.map((realisation: any) => {
-        // Extraire les coups de cœur
         if (Array.isArray(realisation.Declinaison)) {
           realisation.Declinaison.forEach((decl: any) => {
             if (decl.CoupDeCoeur === true) {
@@ -116,16 +136,17 @@ export async function loader({ params }: LoaderFunctionArgs) {
         };
       });
 
-      return json<LoaderData>({ realisations, coupsDeCoeur, error: null }, {
+      return json<LoaderData>({ realisations, coupsDeCoeur, selectedCategory: validCategory, error: null }, {
         headers: { 'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=3600' },
       });
     }
 
-    return json<LoaderData>({ realisations: [], coupsDeCoeur: [], error: 'Aucune réalisation trouvée.' });
-  } catch (err: any) {
+    return json<LoaderData>({ realisations: [], coupsDeCoeur: [], selectedCategory: validCategory, error: 'Aucune réalisation trouvée.' });
+  } catch {
     return json<LoaderData>({
       realisations: [],
       coupsDeCoeur: [],
+      selectedCategory: validCategory,
       error: 'Erreur lors du chargement des réalisations',
     });
   }
@@ -139,14 +160,9 @@ function getSavedRegion(): boolean {
     const raw = localStorage.getItem(REGION_KEY);
     if (!raw) return false;
     const { value, expires } = JSON.parse(raw);
-    if (Date.now() > expires) {
-      localStorage.removeItem(REGION_KEY);
-      return false;
-    }
+    if (Date.now() > expires) { localStorage.removeItem(REGION_KEY); return false; }
     return value === 'belgique';
-  } catch {
-    return false;
-  }
+  } catch { return false; }
 }
 
 function saveRegion(region: 'belgique' | 'benin') {
@@ -156,80 +172,53 @@ function saveRegion(region: 'belgique' | 'benin') {
 
 const ITEMS_PER_PAGE = 9;
 
-const CATEGORIES = ['Tout', 'Trousses', 'Sacs', 'Housses', 'Accessoires'];
-const CAT_KEY: Record<string, string> = {
-  'Tout': 'products.cat_all',
-  'Trousses': 'products.cat_pouches',
-  'Sacs': 'products.cat_bags',
-  'Housses': 'products.cat_sleeves',
-  'Accessoires': 'products.cat_accessories',
-};
-
-function matchesCategory(realisation: Realisation, category: string): boolean {
-  if (category === 'Tout') return true;
-  // Si le champ Categorie est renseigné dans Strapi, on l'utilise directement
-  if (realisation.categorie) {
-    return realisation.categorie === category;
-  }
-  // Fallback : matching sur le texte (tant que Strapi n'est pas encore rempli)
-  const text = `${realisation.title} ${realisation.description}`.toLowerCase();
-  if (category === 'Sacs') return text.includes('tote') && !text.includes('porte-cl');
-  if (category === 'Accessoires') {
-    if (text.includes('porte-cl')) return true;
-    return !text.includes('trousse') && !text.includes('tote') && !text.includes('housse');
-  }
-  return text.includes(category.toLowerCase().slice(0, -1));
-}
-
 export default function Realisations() {
-  const { realisations, coupsDeCoeur, error } = useLoaderData<LoaderData>();
+  const { realisations, coupsDeCoeur, selectedCategory, error } = useLoaderData<LoaderData>();
   const { t } = useTranslation();
   const lp = useLocalePath();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
   const [showPopup, setShowPopup] = useState(false);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState<string>('Tout');
-  const [filterKey, setFilterKey] = useState(0);
   const gridRef = useRef<HTMLDivElement>(null);
 
-  const scrollRef = useScrollAnimations([showPopup, filterKey]);
+  const scrollRef = useScrollAnimations([selectedCategory]);
 
-  const navigate = useNavigate();
-
-  // Vérifier localStorage au montage côté client
   useEffect(() => {
     const alreadyChosen = getSavedRegion();
     if (!alreadyChosen) setShowPopup(true);
   }, []);
 
-  // Fermer le popup avec Escape
   useEffect(() => {
     if (!showPopup) return;
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        saveRegion('belgique');
-        setShowPopup(false);
-      }
+      if (e.key === 'Escape') { saveRegion('belgique'); setShowPopup(false); }
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
   }, [showPopup]);
 
-  const handleBelgiqueClick = () => {
-    saveRegion('belgique');
-    setShowPopup(false);
-  };
-  const handleBeninClick = () => {
-    saveRegion('benin');
-    navigate(lp('/#ou-nous-trouver'));
+  // Reset page when category changes (new loader data)
+  useEffect(() => { setCurrentPage(1); }, [selectedCategory]);
+
+  const handleBelgiqueClick = () => { saveRegion('belgique'); setShowPopup(false); };
+  const handleBeninClick = () => { saveRegion('benin'); navigate(lp('/#ou-nous-trouver')); };
+
+  const handleCategoryChange = (cat: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (cat === 'Tout') {
+      params.delete('categorie');
+    } else {
+      params.set('categorie', cat);
+    }
+    navigate(`?${params.toString()}`, { replace: true });
+    setCurrentPage(1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const filteredRealisations = realisations.filter((r) => {
-    if (!matchesCategory(r, selectedCategory)) return false;
-    return true;
-  });
-
-  const sortedRealisations = [...filteredRealisations].sort((a, b) => {
+  const sortedRealisations = [...realisations].sort((a, b) => {
     const prixA = typeof a.prix === 'string' ? parseFloat(a.prix) : (a.prix ?? 0);
     const prixB = typeof b.prix === 'string' ? parseFloat(b.prix) : (b.prix ?? 0);
     return sortOrder === 'asc' ? prixA - prixB : prixB - prixA;
@@ -240,17 +229,6 @@ export default function Realisations() {
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
-
-  const handleSortChange = (value: 'asc' | 'desc') => {
-    setSortOrder(value);
-    setCurrentPage(1);
-  };
-
-  const handleCategoryChange = (cat: string) => {
-    setSelectedCategory(cat);
-    setCurrentPage(1);
-    setFilterKey((k) => k + 1);
-  };
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -267,7 +245,8 @@ export default function Realisations() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      {/* ── Bannière région (bottom) ── */}
+
+      {/* Bannière région */}
       {showPopup && (
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-t-4 border-benin-jaune shadow-2xl p-4 sm:p-5">
           <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center gap-3 sm:gap-6">
@@ -277,7 +256,7 @@ export default function Realisations() {
             <div className="flex gap-3 flex-shrink-0">
               <button
                 onClick={handleBelgiqueClick}
-                className="font-basecoat border-2 border-benin-jaune text-gray-900 dark:text-gray-100 hover:bg-benin-jaune hover:text-black dark:text-gray-100 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wide transition-all hover:scale-105"
+                className="font-basecoat border-2 border-benin-jaune text-gray-900 dark:text-gray-100 hover:bg-benin-jaune hover:text-black px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wide transition-all hover:scale-105"
               >
                 {t('products.region_belgium')}
               </button>
@@ -290,10 +269,10 @@ export default function Realisations() {
             </div>
             <button
               onClick={handleBelgiqueClick}
-              className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:text-gray-500 transition sm:ml-auto flex-shrink-0"
+              className="text-gray-400 dark:text-gray-500 hover:text-gray-600 transition sm:ml-auto flex-shrink-0"
               aria-label={t('nav.aria_close')}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -301,40 +280,32 @@ export default function Realisations() {
         </div>
       )}
 
-      {/* ── Contenu principal ── */}
-      <div
-        ref={scrollRef}
-        className="py-6 sm:py-8 md:py-[60px] px-6 sm:px-10 md:px-16 lg:px-24 mt-16 sm:mt-20 md:mt-24"
-      >
+      <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-6 sm:px-10 md:px-16 lg:px-24 mt-16 sm:mt-20 md:mt-24">
         {/* Breadcrumb */}
-        <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs">
+        <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs" aria-label="Fil d'Ariane">
           <Link to={lp('/')} className="text-benin-jaune hover:text-benin-terre font-medium transition">
             {t('common.home')}
           </Link>
-          <span className="mx-1.5 sm:mx-2 text-gray-400 dark:text-gray-500">/</span>
-          <span className="text-gray-600 dark:text-gray-400 dark:text-gray-500">{t('products.breadcrumb_shop')}</span>
+          <span className="mx-1.5 sm:mx-2 text-gray-400 dark:text-gray-500" aria-hidden="true">/</span>
+          <span className="text-gray-600 dark:text-gray-400">{t('products.breadcrumb_shop')}</span>
         </nav>
 
         {/* Titre + Filtres */}
         <div className="mb-8 sm:mb-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
-            <h1
-              className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100"
-              data-delay="0.1"
-            >
+            <h1 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100" data-delay="0.1">
               {t('products.title')}
             </h1>
-            <div
-              className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4"
-              data-delay="0.15"
-            ></div>
+            <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.15" aria-hidden="true" />
           </div>
+
           {!error && (
-            <div className="flex gap-2 flex-wrap sm:justify-end">
+            <div className="flex gap-2 flex-wrap sm:justify-end" role="group" aria-label="Filtrer par catégorie">
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => handleCategoryChange(cat)}
+                  aria-pressed={selectedCategory === cat}
                   className={`font-basecoat text-sm font-semibold px-4 py-1.5 rounded-lg border-2 transition-all duration-200 ${
                     selectedCategory === cat
                       ? 'bg-benin-jaune border-benin-jaune text-black shadow-md'
@@ -342,11 +313,6 @@ export default function Realisations() {
                   }`}
                 >
                   {t(CAT_KEY[cat])}
-                  {cat !== 'Tout' && (
-                    <span className="ml-1.5 text-xs opacity-60">
-                      ({realisations.filter((r) => matchesCategory(r, cat)).length})
-                    </span>
-                  )}
                 </button>
               ))}
             </div>
@@ -355,157 +321,153 @@ export default function Realisations() {
 
         <div className="flex flex-col">
 
-        {/* ── Coups de cœur ── */}
-        <div className="order-1 sm:order-2">
-        {!error && coupsDeCoeur.length > 0 && selectedCategory === 'Tout' && (
-          <div className="mb-12 sm:mb-14">
-            <div className="mb-6 flex items-center gap-3">
-              <span className="text-benin-jaune text-2xl">♥</span>
-              <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">{t('products.favorites_title')}</h2>
-            </div>
-            <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-benin-ocre scrollbar-track-gray-100 dark:scrollbar-track-gray-800">
-              {coupsDeCoeur.map((item) => (
-                <Link
-                  key={`${item.productId}-${item.id}`}
-                  to={lp(`/realisations/${item.productId}?declinaison=${item.id}`)}
-                  className="group flex-shrink-0 w-44 sm:w-52 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700"
-                >
-                  <div className="relative aspect-square overflow-hidden bg-amber-50">
-                    {item.image_url ? (
-                      <img
-                        src={item.image_url}
-                        alt={item.motif || item.productTitle}
-                        loading="lazy"
-                        width={300}
-                        height={300}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <span className="font-basecoat text-gray-400 dark:text-gray-500 text-xs">{t('home.no_image')}</span>
+          {/* Coups de cœur — visible seulement sur "Tout" */}
+          {!error && coupsDeCoeur.length > 0 && selectedCategory === 'Tout' && (
+            <div className="mb-12 sm:mb-14">
+              <div className="mb-6 flex items-center gap-3">
+                <span className="text-benin-jaune text-2xl" aria-hidden="true">♥</span>
+                <h2 className="font-basecoat text-xl sm:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">
+                  {t('products.favorites_title')}
+                </h2>
+              </div>
+              <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-benin-ocre scrollbar-track-gray-100 dark:scrollbar-track-gray-800">
+                {coupsDeCoeur.map((item) => (
+                  <Link
+                    key={`${item.productId}-${item.id}`}
+                    to={lp(`/realisations/${item.productId}?declinaison=${item.id}`)}
+                    className="group flex-shrink-0 w-44 sm:w-52 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700"
+                  >
+                    <div className="relative aspect-square overflow-hidden bg-amber-50">
+                      {item.image_url ? (
+                        <img
+                          src={item.image_url}
+                          alt={item.motif || item.productTitle}
+                          loading="lazy"
+                          width={300}
+                          height={300}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <span className="font-basecoat text-gray-400 dark:text-gray-500 text-xs">{t('home.no_image')}</span>
+                        </div>
+                      )}
+                      <div className="absolute top-2 left-2 px-2.5 py-1 rounded-full" aria-hidden="true">
+                        <span className="text-benin-jaune text-xl">♥</span>
                       </div>
-                    )}
-                    <div className="absolute top-2 left-2 px-2.5 py-1 rounded-full">
-                      <span className="text-benin-jaune text-xl">♥</span>
                     </div>
-                  </div>
-                  <div className="p-3">
-                    <h3 className="font-basecoat text-gray-900 dark:text-gray-100 text-sm font-bold uppercase leading-tight group-hover:text-benin-jaune transition-colors">
-                      {item.productTitle}
-                    </h3>
-                    {item.motif && (
-                      <p className="font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-xs mt-0.5">{item.motif}</p>
-                    )}
-                    <p className="font-basecoat text-benin-jaune font-bold text-base mt-1">
-                      {item.prix ? `${item.prix} €` : t('products.on_request')}
-                    </p>
-                  </div>
-                </Link>
+                    <div className="p-3">
+                      <h3 className="font-basecoat text-gray-900 dark:text-gray-100 text-sm font-bold uppercase leading-tight group-hover:text-benin-jaune transition-colors">
+                        {item.productTitle}
+                      </h3>
+                      {item.motif && (
+                        <p className="font-basecoat text-gray-500 dark:text-gray-400 text-xs mt-0.5">{item.motif}</p>
+                      )}
+                      <p className="font-basecoat text-benin-jaune font-bold text-base mt-1">
+                        {item.prix ? `${item.prix} €` : t('products.on_request')}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Error */}
+          {error && (
+            <div className="flex items-center justify-center py-20">
+              <p className="font-basecoat text-benin-rouge text-center text-lg">{error}</p>
+            </div>
+          )}
+
+          {/* Grille produits */}
+          {!error && (
+            <div
+              ref={gridRef}
+              className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6"
+              data-stagger="0.08"
+            >
+              {paginatedRealisations.map((realisation) => (
+                <ProductCard
+                  key={realisation.id}
+                  id={realisation.id}
+                  title={realisation.title}
+                  image_url={realisation.image_url}
+                  prix={realisation.prix}
+                  categorie={realisation.categorie}
+                  isNew={realisation.isNew}
+                  totalStock={realisation.totalStock}
+                />
               ))}
             </div>
-          </div>
-        )}
-        </div>{/* end order-1 sm:order-2 */}
+          )}
 
-        <div className="order-3">
-        {/* Error state */}
-        {error && (
-          <div className="flex items-center justify-center py-20">
-            <p className="font-basecoat text-benin-rouge text-center text-lg">{error}</p>
-          </div>
-        )}
-        {/* ── Grille produits ── */}
-        {!error && (
-          <div
-            ref={gridRef}
-            key={filterKey}
-            className="anim-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6"
-            data-stagger="0.08"
-          >
-            {paginatedRealisations.map((realisation) => (
-              <ProductCard
-                key={realisation.id}
-                id={realisation.id}
-                title={realisation.title}
-                image_url={realisation.image_url}
-                prix={realisation.prix}
-                categorie={realisation.categorie}
-                isNew={realisation.isNew}
-                totalStock={realisation.totalStock}
-              />
-            ))}
-          </div>
-        )}
+          {/* Pagination */}
+          {!error && totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-10 sm:mt-14 flex-wrap">
+              <button
+                onClick={() => { setCurrentPage((p) => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                disabled={currentPage === 1}
+                className="font-basecoat flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune transition disabled:opacity-30 disabled:cursor-not-allowed bg-white dark:bg-gray-900"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+                {t('products.pagination_prev')}
+              </button>
 
-        {/* ── Pagination ── */}
-        {!error && totalPages > 1 && (
-          <div className="flex items-center justify-center gap-2 mt-10 sm:mt-14 flex-wrap">
-            <button
-              onClick={() => { setCurrentPage((p) => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-              disabled={currentPage === 1}
-              className="font-basecoat flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune transition disabled:opacity-30 disabled:cursor-not-allowed bg-white dark:bg-gray-900"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-              {t('products.pagination_prev')}
-            </button>
+              <div className="flex items-center gap-1">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                    aria-current={page === currentPage ? 'page' : undefined}
+                    className={`w-10 h-10 rounded-xl font-basecoat text-sm font-bold transition ${
+                      page === currentPage
+                        ? 'bg-benin-jaune text-black shadow-md'
+                        : 'bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
 
-            <div className="flex items-center gap-1">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <button
-                  key={page}
-                  onClick={() => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className={`w-10 h-10 rounded-xl font-basecoat text-sm font-bold transition ${
-                    page === currentPage
-                      ? 'bg-benin-jaune text-black dark:text-gray-100 shadow-md'
-                      : 'bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
-                  }`}
-                >
-                  {page}
-                </button>
-              ))}
+              <button
+                onClick={() => { setCurrentPage((p) => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                disabled={currentPage === totalPages}
+                className="font-basecoat flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune transition disabled:opacity-30 disabled:cursor-not-allowed bg-white dark:bg-gray-900"
+              >
+                {t('products.pagination_next')}
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+              </button>
             </div>
+          )}
 
-            <button
-              onClick={() => { setCurrentPage((p) => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-              disabled={currentPage === totalPages}
-              className="font-basecoat flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune transition disabled:opacity-30 disabled:cursor-not-allowed bg-white dark:bg-gray-900"
-            >
-              {t('products.pagination_next')}
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-            </button>
-          </div>
-        )}
+          {/* Empty states */}
+          {!error && realisations.length === 0 && selectedCategory === 'Tout' && (
+            <div className="flex flex-col items-center justify-center py-20 gap-4">
+              <p className="font-basecoat text-gray-500 dark:text-gray-400 text-center text-lg">
+                {t('products.coming_soon')}
+              </p>
+              <Link to={lp('/')} className="font-basecoat text-benin-jaune hover:text-benin-terre underline text-sm transition">
+                {t('common.home')}
+              </Link>
+            </div>
+          )}
+          {!error && realisations.length === 0 && selectedCategory !== 'Tout' && (
+            <div className="flex flex-col items-center justify-center py-20 gap-4">
+              <p className="font-basecoat text-gray-500 dark:text-gray-400 text-center text-lg">
+                {t('products.no_results_cat')}
+              </p>
+              <button
+                onClick={() => handleCategoryChange('Tout')}
+                className="font-basecoat text-benin-jaune hover:text-benin-terre underline text-sm transition"
+              >
+                {t('products.see_all_creations')}
+              </button>
+            </div>
+          )}
 
-        {/* Empty state */}
-        {!error && realisations.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <p className="font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-center text-lg">
-              {t('products.coming_soon')}
-            </p>
-            <Link
-              to={lp('/')}
-              className="font-basecoat text-benin-jaune hover:text-benin-terre underline text-sm transition"
-            >
-              {t('common.home')}
-            </Link>
-          </div>
-        )}
-        {!error && realisations.length > 0 && filteredRealisations.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <p className="font-basecoat text-gray-500 dark:text-gray-400 dark:text-gray-500 text-center text-lg">
-              {t('products.no_results_cat')}
-            </p>
-            <button
-              onClick={() => handleCategoryChange('Tout')}
-              className="font-basecoat text-benin-jaune hover:text-benin-terre underline text-sm transition"
-            >
-              {t('products.see_all_creations')}
-            </button>
-          </div>
-        )}
-        </div>{/* end order-3 */}
-
-        </div>{/* end flex flex-col */}
+        </div>
       </div>
     </>
   );
