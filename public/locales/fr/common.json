@@ -236,6 +236,7 @@
     "country_eu_option": "🌍 Autre pays Europe — 12 € (5–10 jours ouvrés)",
     "street": "Rue et numéro",
     "street_placeholder": "ex: Rue de la Paix 12",
+    "street_number_required": "Veuillez inclure un numéro de maison (ex: Rue de la Paix 12)",
     "notes_optional": "Notes (optionnel)",
     "notes_optional_placeholder": "Informations complémentaires, préférences de livraison...",
     "pay_online": "Payer {{amount}} en ligne",

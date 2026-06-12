@@ -1,8 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getApiUrl } from '../../config/api';
 import { SHIPPING_COSTS, PICKUP_LOCATIONS, buildPickupAddress, type PickupLocationId } from '../../config/site';
-import { BELGIAN_CITIES } from '../../data/belgianCities';
 import { useScrollAnimations } from '../../hooks/useScrollAnimations';
 
 interface CartItem {
@@ -32,6 +31,8 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
   const [postalCode, setPostalCode] = useState('');
   const [city, setCity] = useState('');
   const [street, setStreet] = useState('');
+  const [streetError, setStreetError] = useState('');
+  const [cityLoading, setCityLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('');
   const [error, setError] = useState('');
@@ -49,12 +50,26 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
     fetch(`${API_URL}/api/commandes`, { method: 'HEAD', mode: 'no-cors' }).catch(() => {});
   }, [API_URL]);
 
+  const fetchCityFromPostal = useCallback(async (code: string) => {
+    if (country !== 'belgique' || code.length !== 4) return;
+    setCityLoading(true);
+    try {
+      const res = await fetch(`https://api.bpost.be/tax/api/v1/geographic/postalCodes/${code}`, { signal: AbortSignal.timeout(4000) });
+      if (res.ok) {
+        const data = await res.json();
+        const name = data?.municipalities?.[0]?.name;
+        if (name) setCity(name);
+      }
+    } catch {
+      // silently ignore — user can type city manually
+    } finally {
+      setCityLoading(false);
+    }
+  }, [country]);
+
   const handlePostalCodeChange = (val: string) => {
     setPostalCode(val);
-    if (country === 'belgique' && val.length === 4) {
-      const found = BELGIAN_CITIES[val];
-      if (found) setCity(found);
-    }
+    if (country === 'belgique' && val.length === 4) fetchCityFromPostal(val);
   };
 
   const handleCountryChange = (val: string) => {
@@ -105,6 +120,15 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
     setLoading(true);
     setLoadingMessage(t('cart.redirecting'));
     setError('');
+
+    if (deliveryMode === 'livraison' && !/\d/.test(street)) {
+      setStreetError(t('cart.street_number_required'));
+      setError(t('cart.street_number_required'));
+      setLoading(false);
+      isSubmittingRef.current = false;
+      return;
+    }
+    setStreetError('');
 
     const stockError = await validateStock();
     if (stockError) {
@@ -405,7 +429,7 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
               <div>
                 <label htmlFor="checkout-city" className={LABEL_CLASS}>
                   {t('cart.city')} *
-                  {country === 'belgique' && <span className="text-gray-400 font-normal ml-1">(auto)</span>}
+                  {country === 'belgique' && <span className="text-gray-400 font-normal ml-1">{cityLoading ? '⏳' : '(auto)'}</span>}
                 </label>
                 <input
                   id="checkout-city"
@@ -415,7 +439,7 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
                   autoComplete="address-level2"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  placeholder={t('cart.city')}
+                  placeholder={cityLoading ? '...' : t('cart.city')}
                   className={INPUT_CLASS}
                 />
               </div>
@@ -430,10 +454,11 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
                 aria-required="true"
                 autoComplete="street-address"
                 value={street}
-                onChange={(e) => setStreet(e.target.value)}
+                onChange={(e) => { setStreet(e.target.value); if (streetError) setStreetError(''); }}
                 placeholder={t('cart.street_placeholder')}
-                className={INPUT_CLASS}
+                className={`${INPUT_CLASS} ${streetError ? 'border-benin-rouge' : ''}`}
               />
+              {streetError && <p className="font-basecoat text-xs text-benin-rouge mt-1">{streetError}</p>}
             </div>
           </div>
         )}

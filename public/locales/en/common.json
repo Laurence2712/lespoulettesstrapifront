@@ -236,6 +236,7 @@
     "country_eu_option": "🌍 Other European country — €12 (5–10 business days)",
     "street": "Street and number",
     "street_placeholder": "e.g. 12 Peace Street",
+    "street_number_required": "Please include a house number (e.g. 12 Peace Street)",
     "notes_optional": "Notes (optional)",
     "notes_optional_placeholder": "Additional information, delivery preferences...",
     "pay_online": "Pay {{amount}} online",
