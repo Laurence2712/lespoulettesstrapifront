@@ -152,7 +152,7 @@ export default function Contact() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+              className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
             >
               {isSubmitting ? t('contact.sending') : t('contact.send')}
             </button>
