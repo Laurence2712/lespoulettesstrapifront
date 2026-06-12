@@ -230,23 +230,20 @@ export default function Index() {
       )}
 
       {/* ── Hero Banner ── */}
-      <header
-        ref={heroRef}
-        className="banner relative flex flex-col justify-center items-center text-white p-4 sm:p-6 md:p-8 pt-20 sm:pt-24 pb-14 sm:pb-12 overflow-hidden min-h-[75vh] sm:min-h-[80vh] md:min-h-[90vh]"
-      >
+      <header ref={heroRef} className="banner relative text-white overflow-hidden">
         {homepageData?.image_url && (
           <img
             src={homepageData.image_url}
             alt="Les Poulettes"
-            className="absolute inset-0 w-full h-full object-cover object-center z-0"
+            className="w-full h-auto object-contain block z-0"
           />
         )}
-        <div className="banner-content text-center z-20 flex flex-col items-center justify-center pb-8 sm:pb-12 md:pb-16 relative">
-          <h1 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold uppercase tracking-wide mb-6 sm:mb-8 mt-10 sm:mt-14 md:mt-16 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-tight lg:leading-snug">
+        <div className="absolute inset-0 bg-black/50 z-10" />
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 pt-20">
+          <h1 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold uppercase tracking-wide mb-6 sm:mb-8 px-6 sm:px-8 md:px-12 max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] leading-tight lg:leading-snug">
             {t('home.hero_title')}
           </h1>
-
-          <div className="mt-2 sm:mt-4 anim-fade-up flex flex-col items-center gap-2 sm:gap-3" data-delay="0.3">
+          <div className="anim-fade-up flex flex-col items-center gap-2 sm:gap-3" data-delay="0.3">
             <Link
               to={lp('/realisations')}
               className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
@@ -258,7 +255,6 @@ export default function Index() {
             </Link>
           </div>
         </div>
-        <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
       </header>
 
 
