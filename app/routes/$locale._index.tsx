@@ -316,14 +316,14 @@ export default function Index() {
               <div className="px-6 sm:px-10 md:px-16 lg:px-24 py-8 sm:py-10 md:py-14">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
                   {actu.image_url && (
-                    <div className="anim-fade-right" data-delay="0.2">
+                    <div className="anim-fade-right flex justify-center" data-delay="0.2">
                       <img
                         src={actu.image_url}
                         alt={actu.title}
                         loading="lazy"
                         width={800}
                         height={400}
-                        className="h-auto w-full"
+                        className="w-full max-w-sm md:max-w-md h-auto object-contain rounded-xl shadow-sm"
                       />
                     </div>
                   )}
