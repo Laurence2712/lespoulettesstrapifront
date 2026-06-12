@@ -265,7 +265,7 @@ export default function Index() {
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="mb-8 sm:mb-10 md:mb-12">
           {/* Titre + bouton boutique alignés */}
-          <div className="flex items-center justify-between gap-4 flex-wrap mb-3 sm:mb-4">
+          <div className="flex items-center justify-between gap-4 mb-3 sm:mb-4">
             <div>
               <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">
                 {t('home.new_creations')}
@@ -274,7 +274,7 @@ export default function Index() {
             </div>
             <Link
               to={lp('/realisations')}
-              className="font-basecoat bg-benin-jaune text-black hover:bg-beige hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+              className="hidden md:inline-flex font-basecoat bg-benin-jaune text-black hover:bg-beige hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 items-center gap-2"
             >
               {t('home.see_all_shop_full')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -301,24 +301,32 @@ export default function Index() {
         </div>
 
         {featured.length > 0 ? (
-          <>
-            <div className="anim-stagger grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5" data-stagger="0.08">
-              {featured.map((realisation) => (
-                <ProductCard
-                  key={realisation.id}
-                  id={realisation.id}
-                  title={realisation.title}
-                  image_url={realisation.image_url}
-                  prix={realisation.prix}
-                  categorie={realisation.categorie}
-                />
-              ))}
-            </div>
-
-          </>
+          <div className="anim-stagger grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5" data-stagger="0.08">
+            {featured.map((realisation) => (
+              <ProductCard
+                key={realisation.id}
+                id={realisation.id}
+                title={realisation.title}
+                image_url={realisation.image_url}
+                prix={realisation.prix}
+                categorie={realisation.categorie}
+              />
+            ))}
+          </div>
         ) : (
           <p className="text-center text-gray-400 dark:text-gray-500 font-basecoat">{t('home.no_products')}</p>
         )}
+        <div className="mt-6 md:hidden">
+          <Link
+            to={lp('/realisations')}
+            className="font-basecoat bg-benin-jaune text-black hover:bg-beige hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+          >
+            {t('home.see_all_shop_full')}
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </div>
         </div>
       </section>
 
@@ -326,7 +334,7 @@ export default function Index() {
       <section className="py-10 sm:py-14 md:py-[70px] bg-beige dark:bg-gray-900">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
           <div className="mb-8 sm:mb-10 md:mb-12">
-            <div className="flex items-center justify-between gap-4 flex-wrap mb-3 sm:mb-4">
+            <div className="flex items-center justify-between gap-4 mb-3 sm:mb-4">
               <div>
                 <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">
                   {t('news.title')}
@@ -335,7 +343,7 @@ export default function Index() {
               </div>
               <Link
                 to={lp('/actualites')}
-                className="font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+                className="hidden md:inline-flex font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 items-center gap-2"
               >
                 {t('home.see_all_news')}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -377,6 +385,17 @@ export default function Index() {
           ) : (
             <p className="text-center text-gray-500 dark:text-gray-400 font-basecoat text-sm sm:text-base">{t('home.no_news')}</p>
           )}
+          <div className="mt-6 md:hidden">
+            <Link
+              to={lp('/actualites')}
+              className="font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+            >
+              {t('home.see_all_news')}
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -384,7 +403,7 @@ export default function Index() {
       <section className="py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="mb-8 sm:mb-10 md:mb-12">
-          <div className="flex items-center justify-between gap-4 flex-wrap mb-3 sm:mb-4">
+          <div className="flex items-center justify-between gap-4 mb-3 sm:mb-4">
             <div>
               <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
                 {t('home.event_title')}
@@ -393,7 +412,7 @@ export default function Index() {
             </div>
             <Link
               to={lp('/commandes-personnalisees')}
-              className="font-basecoat bg-benin-jaune text-black hover:bg-beige hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+              className="hidden md:inline-flex font-basecoat bg-benin-jaune text-black hover:bg-beige hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 items-center gap-2"
             >
               {t('common.learn_more')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -450,6 +469,17 @@ export default function Index() {
   </div>
 
 </div>
+        <div className="mt-6 md:hidden">
+          <Link
+            to={lp('/commandes-personnalisees')}
+            className="font-basecoat bg-benin-jaune text-black hover:bg-beige hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+          >
+            {t('common.learn_more')}
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </div>
         </div>
       </section>
 
