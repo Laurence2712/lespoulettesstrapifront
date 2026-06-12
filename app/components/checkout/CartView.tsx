@@ -2,7 +2,6 @@ import { Link } from '@remix-run/react';
 import { useTranslation } from 'react-i18next';
 import BagIcon from '../BagIcon';
 import ProductCard from '../ProductCard';
-import CheckoutStepper from '../CheckoutStepper';
 import { useLocalePath } from '../../hooks/useLocalePath';
 import { useCartStore } from '../../store/cartStore';
 
@@ -94,10 +93,6 @@ export default function CartView({
 
   return (
     <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-6 sm:px-10 md:px-16 lg:px-24 mt-16 sm:mt-20 md:mt-24">
-      <div className="max-w-md mx-auto mb-6 sm:mb-8">
-        <CheckoutStepper currentStep={1} />
-      </div>
-
       {showExpiryWarning && (
         <div role="alert" className="mb-6 flex items-center gap-3 bg-wax-orange/10 border border-wax-orange/30 text-wax-orange rounded-xl px-4 py-3 text-sm font-basecoat">
           <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2} aria-hidden="true">
@@ -140,33 +135,21 @@ export default function CartView({
               )}
 
               <div className="flex-1 flex flex-col justify-between min-w-0">
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <h3 className="font-basecoat text-sm sm:text-base font-bold text-gray-900 dark:text-gray-100 leading-tight">
-                      {item.title}
-                    </h3>
-                    <p className="font-basecoat text-benin-jaune font-bold text-lg sm:text-xl mt-1">
-                      {item.prix} €
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => onRemove(item.id)}
-                    aria-label={`Supprimer ${item.title} du panier`}
-                    className="w-10 h-10 rounded-xl bg-benin-rouge/10 hover:bg-benin-rouge/20 flex items-center justify-center text-benin-rouge transition flex-shrink-0"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2} aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                    </svg>
-                  </button>
+                <div>
+                  <h3 className="font-basecoat text-sm sm:text-base font-bold text-gray-900 dark:text-gray-100 leading-tight">
+                    {item.title}
+                  </h3>
+                  <p className="font-basecoat text-benin-jaune font-bold text-lg sm:text-xl mt-1">
+                    {item.prix} €
+                  </p>
                 </div>
 
-                <div className="flex items-center gap-3 sm:gap-4 mt-3">
+                <div className="flex items-center justify-between mt-3">
                   <div className="inline-flex items-center border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden" role="group" aria-label={`Quantité pour ${item.title}`}>
                     <button
-                      onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-                      disabled={item.quantity <= 1}
+                      onClick={() => item.quantity === 1 ? onRemove(item.id) : onUpdateQuantity(item.id, item.quantity - 1)}
                       aria-label="Diminuer la quantité"
-                      className="w-10 h-10 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition font-bold disabled:opacity-30 disabled:cursor-not-allowed"
+                      className="w-10 h-10 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition font-bold"
                     >
                       -
                     </button>
@@ -183,22 +166,18 @@ export default function CartView({
                     </button>
                   </div>
 
-                  {item.stock !== undefined && item.quantity >= item.stock && (
-                    <span className="inline-flex items-center gap-1 font-basecoat text-xs font-semibold text-gray-500 dark:text-gray-400 whitespace-nowrap">
-                      <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} aria-hidden="true">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      {t('cart.stock_max', { count: item.stock })}
-                    </span>
-                  )}
+                  <button
+                    onClick={() => onRemove(item.id)}
+                    aria-label={`Supprimer ${item.title} du panier`}
+                    className="w-10 h-10 rounded-xl bg-benin-rouge/10 hover:bg-benin-rouge/20 flex items-center justify-center text-benin-rouge transition flex-shrink-0"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2} aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                    </svg>
+                  </button>
                 </div>
               </div>
 
-              <div className="hidden sm:flex items-start pt-1">
-                <p className="font-basecoat text-xl lg:text-2xl font-bold text-gray-900 dark:text-gray-100 whitespace-nowrap">
-                  {(Number(item.prix) * item.quantity).toFixed(2)} €
-                </p>
-              </div>
             </div>
           ))}
         </div>

@@ -5,7 +5,6 @@ import { useCartStore } from '../store/cartStore';
 import { getApiUrl, getImageUrl } from '../config/api';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 import { useTranslation } from 'react-i18next';
-import CheckoutStepper from '../components/CheckoutStepper';
 import CartView from '../components/checkout/CartView';
 import CheckoutForm from '../components/checkout/CheckoutForm';
 import OrderSuccess from '../components/checkout/OrderSuccess';
@@ -90,9 +89,6 @@ export default function Panier() {
   if (showCheckout) {
     return (
       <>
-        <div className="max-w-md mx-auto pt-20 sm:pt-24 md:pt-28 px-6">
-          <CheckoutStepper currentStep={2} />
-        </div>
         <CheckoutForm
           cart={items}
           total={getTotalPrice()}
