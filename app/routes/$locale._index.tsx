@@ -262,6 +262,7 @@ export default function Index() {
       <section id="nouveaux-arrivages" className="py-10 sm:py-14 md:py-[70px] bg-beige dark:bg-gray-900">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="mb-8 sm:mb-10 md:mb-12">
+          {/* Titre + bouton boutique alignés */}
           <div className="flex items-center justify-between gap-4 flex-wrap mb-3 sm:mb-4">
             <div>
               <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100">
@@ -269,22 +270,31 @@ export default function Index() {
               </h2>
               <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
             </div>
-            {/* Filtres alignés à droite */}
-            <div className="flex gap-2 flex-wrap">
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat.value}
-                  onClick={() => setActiveCategory(cat.value)}
-                  className={`font-basecoat text-sm font-semibold px-4 py-1.5 rounded-lg border-2 transition-all duration-200 ${
-                    activeCategory === cat.value
-                      ? 'bg-benin-jaune border-benin-jaune text-black shadow-md'
-                      : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
-                  }`}
-                >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
+            <Link
+              to={lp('/realisations')}
+              className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+            >
+              {t('home.see_all_shop_full')}
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+          {/* Filtres en dessous du titre */}
+          <div className="flex gap-2 flex-wrap mt-4">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat.value}
+                onClick={() => setActiveCategory(cat.value)}
+                className={`font-basecoat text-sm font-semibold px-4 py-1.5 rounded-lg border-2 transition-all duration-200 ${
+                  activeCategory === cat.value
+                    ? 'bg-benin-jaune border-benin-jaune text-black shadow-md'
+                    : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -303,17 +313,6 @@ export default function Index() {
               ))}
             </div>
 
-            <div className="anim-fade-up text-center mt-10 sm:mt-12" data-delay="0.3">
-              <Link
-                to={lp('/realisations')}
-                className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
-              >
-                {t('home.see_all_shop_full')}
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </div>
           </>
         ) : (
           <p className="text-center text-gray-400 dark:text-gray-500 font-basecoat">{t('home.no_products')}</p>
