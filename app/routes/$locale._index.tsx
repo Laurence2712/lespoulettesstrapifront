@@ -1,5 +1,5 @@
 import { Link, useLoaderData, useNavigate } from '@remix-run/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { apiEndpoints, getImageUrl, getStrapiImageUrl } from '../config/api';
@@ -184,6 +184,17 @@ export default function Index() {
   ].filter((cat) => cat.value === 'Tout' || realisations.some((r) => matchesCategory(r, cat.value)));
 
   const [activeCategory, setActiveCategory] = useState('Tout');
+  const [preloaderVisible, setPreloaderVisible] = useState(true);
+
+  useEffect(() => {
+    const hide = () => setTimeout(() => setPreloaderVisible(false), 300);
+    if (document.readyState === 'complete') {
+      hide();
+    } else {
+      window.addEventListener('load', hide, { once: true });
+      return () => window.removeEventListener('load', hide);
+    }
+  }, []);
 
   const filtered = realisations.filter((r) => matchesCategory(r, activeCategory));
 
@@ -191,6 +202,32 @@ export default function Index() {
 
   return (
     <div className="overflow-x-hidden" ref={scrollRef}>
+
+      {/* ── Preloader ── */}
+      {preloaderVisible && (
+        <div
+          style={{
+            position: 'fixed', inset: 0, background: '#ffffff',
+            zIndex: 99999, display: 'flex', justifyContent: 'center', alignItems: 'center',
+            transition: 'opacity 0.5s ease, visibility 0.5s ease',
+          }}
+        >
+          <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
+            <img
+              src="/assets/logo_t_poulettes.png"
+              alt="Les Poulettes"
+              style={{ maxWidth: 280, height: 'auto', animation: 'breatheLogo 2s ease-in-out infinite' }}
+            />
+            <div style={{ width: 150, height: 3, background: '#f0f0f0', borderRadius: 10, overflow: 'hidden', position: 'relative' }}>
+              <div style={{ width: '100%', height: '100%', background: '#111111', position: 'absolute', animation: 'linkThread 1.6s infinite cubic-bezier(0.4,0,0.2,1)' }} />
+            </div>
+          </div>
+          <style>{`
+            @keyframes breatheLogo { 0%,100%{transform:scale(1);opacity:.95} 50%{transform:scale(1.04);opacity:1} }
+            @keyframes linkThread { 0%{left:-100%} 50%{left:0} 100%{left:100%} }
+          `}</style>
+        </div>
+      )}
 
       {/* ── Hero Banner ── */}
       <header
