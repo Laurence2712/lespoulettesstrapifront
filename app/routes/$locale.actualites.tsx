@@ -155,7 +155,7 @@ export default function ActualitesPage() {
                   {/* Image */}
                   {actu.image_url && (
                     <div
-                      className={`anim-fade-right ${index % 2 !== 0 ? 'md:order-2' : ''}`}
+                      className={`anim-fade-right flex justify-center ${index % 2 !== 0 ? 'md:order-2' : ''}`}
                       data-delay="0.2"
                     >
                       <img
@@ -164,7 +164,7 @@ export default function ActualitesPage() {
                         loading="lazy"
                         width={800}
                         height={500}
-                        className="h-auto w-full"
+                        className="w-full max-w-sm md:max-w-md h-auto object-contain rounded-xl shadow-sm"
                       />
                     </div>
                   )}

@@ -168,6 +168,9 @@ export default function CommandesPersonnalisees() {
                 >
                   <button
                     onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                    aria-expanded={openIndex === index}
+                    aria-controls={`info-panel-${index}`}
+                    id={`info-trigger-${index}`}
                     className="w-full flex items-center justify-between p-4 text-left font-basecoat"
                   >
                     <span className={`font-bold text-sm uppercase tracking-wide transition-colors ${openIndex === index ? 'text-benin-jaune' : 'text-gray-900 dark:text-gray-100'}`}>
@@ -177,7 +180,12 @@ export default function CommandesPersonnalisees() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  <div className={`overflow-hidden transition-all duration-400 ${openIndex === index ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
+                  <div
+                    id={`info-panel-${index}`}
+                    role="region"
+                    aria-labelledby={`info-trigger-${index}`}
+                    className={`overflow-hidden transition-all duration-300 ${openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
+                  >
                     <p className="px-4 pb-4 font-basecoat text-sm text-gray-600 dark:text-gray-400 leading-relaxed border-t border-gray-100 dark:border-gray-700 pt-3">
                       {info.content}
                     </p>
