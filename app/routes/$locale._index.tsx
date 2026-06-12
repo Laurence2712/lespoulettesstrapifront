@@ -310,7 +310,7 @@ export default function Index() {
             <div className="anim-fade-up text-center mt-10 sm:mt-12" data-delay="0.3">
               <Link
                 to={lp('/realisations')}
-                className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+                className="font-basecoat bg-benin-jaune text-black dark:text-gray-100 hover:bg-black hover:text-benin-jaune px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
               >
                 {t('home.see_all_shop_full')}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -337,7 +337,7 @@ export default function Index() {
             </div>
             <Link
               to={lp('/actualites')}
-              className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+              className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
             >
               {t('home.see_all_news')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -401,7 +401,7 @@ export default function Index() {
             </div>
             <Link
               to={lp('/commandes-personnalisees')}
-              className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-6 py-3 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+              className="font-basecoat bg-benin-jaune text-black hover:bg-black hover:text-benin-jaune px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
             >
               {t('common.learn_more')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
