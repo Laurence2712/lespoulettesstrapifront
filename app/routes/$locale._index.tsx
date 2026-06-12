@@ -481,8 +481,18 @@ export default function Index() {
     title={t('home.map_title')}
   ></iframe>
 
-  {/* Overlay dégradé + blur */}
-  <div className="absolute inset-0 bg-gradient-to-r from-[#F5F1E8] via-[#F5F1E8]/95 to-[#F5F1E8]/40 md:to-transparent backdrop-blur-[2px]" />
+  {/* Blur sur les bords, centre net autour de Cotonou */}
+  <div
+    className="absolute inset-0 pointer-events-none"
+    style={{
+      backdropFilter: 'blur(4px)',
+      WebkitBackdropFilter: 'blur(4px)',
+      maskImage: 'radial-gradient(ellipse 45% 55% at 68% 50%, transparent 30%, black 75%)',
+      WebkitMaskImage: 'radial-gradient(ellipse 45% 55% at 68% 50%, transparent 30%, black 75%)',
+    }}
+  />
+  {/* Dégradé beige sur la gauche pour le texte */}
+  <div className="absolute inset-0 bg-gradient-to-r from-[#F5F1E8] via-[#F5F1E8]/95 to-transparent pointer-events-none" />
 
   {/* Contenu texte */}
   <div className="relative z-10 h-full flex flex-col justify-center px-6 sm:px-10 md:px-16 lg:px-24">
