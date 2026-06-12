@@ -261,7 +261,7 @@ export default function Index() {
 
 
       {/* ── Nouveaux arrivages ── */}
-      <section id="nouveaux-arrivages" className="py-10 sm:py-14 md:py-[70px] bg-beige dark:bg-gray-900">
+      <section id="nouveaux-arrivages" className="py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="mb-8 sm:mb-10 md:mb-12">
           {/* Titre + bouton boutique alignés */}
