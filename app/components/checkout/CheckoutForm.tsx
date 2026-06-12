@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getApiUrl } from '../../config/api';
 import { SHIPPING_COSTS, PICKUP_LOCATIONS, buildPickupAddress, type PickupLocationId } from '../../config/site';
+import { BELGIAN_CITIES } from '../../data/belgianCities';
 import { useScrollAnimations } from '../../hooks/useScrollAnimations';
 
 interface CartItem {
@@ -52,6 +53,10 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
 
   const fetchCityFromPostal = useCallback(async (code: string) => {
     if (country !== 'belgique' || code.length !== 4) return;
+    // Fallback immédiat via dictionnaire statique
+    const staticCity = BELGIAN_CITIES[code];
+    if (staticCity) setCity(staticCity);
+    // Enrichissement via API bpost (plus précis)
     setCityLoading(true);
     try {
       const res = await fetch(`/api/postal?code=${code}`, { signal: AbortSignal.timeout(6000) });
@@ -60,7 +65,7 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
         if (data?.city) setCity(data.city);
       }
     } catch {
-      // silently ignore — user can type city manually
+      // dictionnaire statique déjà appliqué
     } finally {
       setCityLoading(false);
     }
