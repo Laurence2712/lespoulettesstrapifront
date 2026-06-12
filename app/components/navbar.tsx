@@ -59,7 +59,7 @@ export default function NavBar() {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isTransparent ? 'bg-transparent' : 'bg-beige dark:bg-gray-950'} ${scrolled ? "shadow-md dark:shadow-gray-900" : ""} ${hidden && !menuOpen ? "-translate-y-full" : "translate-y-0"}`}>
+      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isTransparent ? 'bg-beige/50 dark:bg-gray-950/50 backdrop-blur-sm' : 'bg-beige dark:bg-gray-950'} ${scrolled ? "shadow-md dark:shadow-gray-900" : ""} ${hidden && !menuOpen ? "-translate-y-full" : "translate-y-0"}`}>
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
           <div className="relative flex items-center justify-between h-16 sm:h-18 md:h-20">
 
@@ -69,7 +69,7 @@ export default function NavBar() {
                 onClick={() => setMenuOpen(!menuOpen)}
                 aria-label={menuOpen ? t("nav.aria_close") : t("nav.aria_open")}
                 aria-expanded={menuOpen}
-                className={`font-basecoat font-bold uppercase tracking-widest text-xs hover:text-benin-jaune transition-colors duration-200 flex items-center gap-2 ${isTransparent ? 'text-white' : 'text-gray-900 dark:text-gray-100'}`}
+                className="font-basecoat font-bold uppercase tracking-widest text-xs text-gray-900 dark:text-gray-100 hover:text-benin-jaune transition-colors duration-200 flex items-center gap-2"
               >
                 {menuOpen ? (
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
@@ -86,7 +86,7 @@ export default function NavBar() {
               <button
                 onClick={() => { setMenuOpen(false); navigate(lp("/recherche")); }}
                 aria-label="Rechercher"
-                className={`hover:text-benin-jaune transition-colors duration-200 ${isTransparent ? 'text-white' : 'text-gray-900 dark:text-gray-100'}`}
+                className="text-gray-900 dark:text-gray-100 hover:text-benin-jaune transition-colors duration-200"
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -98,7 +98,7 @@ export default function NavBar() {
             <div className="absolute left-1/2 -translate-x-1/2">
               <Link to={lp("/")}>
                 <img
-                  src={isTransparent || dark ? "/assets/logo_t_poulettes_white.png" : "/assets/logo_t_poulettes.png"}
+                  src={dark ? "/assets/logo_t_poulettes_white.png" : "/assets/logo_t_poulettes.png"}
                   alt="Les Poulettes"
                   className="h-14 sm:h-16 md:h-44 w-auto object-contain"
                 />
@@ -109,7 +109,7 @@ export default function NavBar() {
             <div className="flex items-center justify-end gap-3 w-1/3">
               <Link
                 to={lp("/panier")}
-                className={`relative hover:text-benin-jaune transition-colors duration-200 ${isTransparent ? 'text-white' : 'text-gray-900 dark:text-gray-100'}`}
+                className="relative text-gray-900 dark:text-gray-100 hover:text-benin-jaune transition-colors duration-200"
                 aria-label={t("nav.cart_label")}
               >
                 <BagIcon className="w-5 h-5 sm:w-6 sm:h-6" />
