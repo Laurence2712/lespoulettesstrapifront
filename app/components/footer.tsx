@@ -38,7 +38,6 @@ export default function Footer() {
             <li><Link to={lp("/actualites")} className="hover:text-benin-jaune transition">{t("footer.news")}</Link></li>
             <li><Link to={lp("/contact")} className="hover:text-benin-jaune transition">{t("footer.contact")}</Link></li>
             <li><Link to={lp("/faq")} className="hover:text-benin-jaune transition">{t("footer.faq")}</Link></li>
-            <li><Link to={lp("/mentions-legales")} className="hover:text-benin-jaune transition">{t("footer.legal")}</Link></li>
           </ul>
         </div>
 
@@ -92,7 +91,6 @@ export default function Footer() {
             <a href="https://www.laurencepirard.be" target="_blank" rel="noopener noreferrer" className="text-white font-bold hover:text-benin-jaune transition">
               Laurence Pirard
             </a>
-            <span>✦</span>
           </p>
           <Link to={lp("/mentions-legales")} className="hover:text-benin-jaune transition">
             {t("footer.legal")}
