@@ -19,7 +19,7 @@ export default function ProductCard({ id, title, image_url, prix, categorie, isN
   return (
     <Link
       to={lp(`/realisations/${id}`)}
-      className="group flex flex-col rounded-lg overflow-hidden bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300"
+      className="group flex flex-col rounded-lg overflow-hidden bg-beige dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300"
     >
       {/* Image */}
       <div className="relative aspect-[3/4] overflow-hidden bg-gray-50 dark:bg-gray-800 flex-shrink-0">
