@@ -609,27 +609,38 @@ export default function RealisationDetail() {
                 </div>
 
                 {selectedDeclinaison?.Description && (
-                  <p className="mt-3 text-sm font-semibold text-gray-700 dark:text-gray-300">
-                    {t('products.variant_label')} :{' '}
-                    <span className="text-benin-jaune">{selectedDeclinaison.Description}</span>
-                  </p>
+                  <div className="mt-3 flex items-center gap-3 flex-wrap">
+                    <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      {t('products.variant_label')} :{' '}
+                      <span className="text-benin-jaune">{selectedDeclinaison.Description}</span>
+                    </p>
+                    {isInStock ? (
+                      <span className="inline-flex items-center gap-1.5 bg-benin-vert/15 text-benin-vert px-3 py-1 rounded-full text-xs font-semibold">
+                        <span className="w-1.5 h-1.5 rounded-full bg-benin-vert inline-block"></span>
+                        {selectedDeclinaison.Stock} disponible{selectedDeclinaison.Stock > 1 ? 's' : ''}
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 bg-benin-rouge/15 text-benin-rouge px-3 py-1 rounded-full text-xs font-semibold">
+                        <span className="w-1.5 h-1.5 rounded-full bg-benin-rouge inline-block"></span>
+                        {t('products.out_of_stock')}
+                      </span>
+                    )}
+                  </div>
                 )}
-              </div>
-            )}
-
-            {/* Badge stock */}
-            {selectedDeclinaison && (
-              <div className="mb-5">
-                {isInStock ? (
-                  <span className="inline-flex items-center gap-2 bg-benin-vert/15 text-benin-vert px-4 py-1.5 rounded-full text-sm font-semibold">
-                    <span className="w-2 h-2 rounded-full bg-benin-vert/100 inline-block"></span>
-                    {selectedDeclinaison.Stock} disponible{selectedDeclinaison.Stock > 1 ? 's' : ''}
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center gap-2 bg-benin-rouge/15 text-benin-rouge px-4 py-1.5 rounded-full text-sm font-semibold">
-                    <span className="w-2 h-2 rounded-full bg-benin-rouge/100 inline-block"></span>
-                    {t('products.out_of_stock')}
-                  </span>
+                {selectedDeclinaison && !selectedDeclinaison.Description && (
+                  <div className="mt-3">
+                    {isInStock ? (
+                      <span className="inline-flex items-center gap-1.5 bg-benin-vert/15 text-benin-vert px-3 py-1 rounded-full text-xs font-semibold">
+                        <span className="w-1.5 h-1.5 rounded-full bg-benin-vert inline-block"></span>
+                        {selectedDeclinaison.Stock} disponible{selectedDeclinaison.Stock > 1 ? 's' : ''}
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 bg-benin-rouge/15 text-benin-rouge px-3 py-1 rounded-full text-xs font-semibold">
+                        <span className="w-1.5 h-1.5 rounded-full bg-benin-rouge inline-block"></span>
+                        {t('products.out_of_stock')}
+                      </span>
+                    )}
+                  </div>
                 )}
               </div>
             )}
