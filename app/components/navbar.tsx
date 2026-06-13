@@ -60,6 +60,12 @@ export default function NavBar() {
   return (
     <>
       <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isTransparent ? 'bg-beige/50 dark:bg-gray-950/50 backdrop-blur-sm' : 'bg-beige dark:bg-gray-950'} ${scrolled ? "shadow-md dark:shadow-gray-900" : ""} ${hidden && !menuOpen ? "-translate-y-full" : "translate-y-0"}`}>
+        {/* Free shipping banner — tout en haut */}
+        <div className="w-full bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 text-center py-1.5 px-4">
+          <p className="font-basecoat text-xs text-gray-900 dark:text-gray-100 font-semibold tracking-wide">
+            Livraison gratuite dès 49 € d&apos;achat en Belgique
+          </p>
+        </div>
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
           <div className="relative flex items-center justify-between h-16 sm:h-18 md:h-20">
 
