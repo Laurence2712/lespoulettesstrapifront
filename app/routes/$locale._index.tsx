@@ -370,11 +370,11 @@ export default function Index() {
                   )}
                   <div className="p-5 sm:p-6">
                     {actu.date && (
-                      <p className="font-basecoat text-xs text-benin-jaune font-semibold mb-2 tracking-widest uppercase">
+                      <p className="font-basecoat text-[1rem] text-benin-jaune font-semibold mb-2 tracking-widest uppercase">
                         {new Date(actu.date).toLocaleDateString(locale === 'en' ? 'en-GB' : 'fr-FR', { day: "numeric", month: "long", year: "numeric" })}
                       </p>
                     )}
-                    <h3 className="font-basecoat text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 leading-snug">
+                    <h3 className="font-basecoat text-[1.5rem] font-bold uppercase text-gray-900 dark:text-gray-100 mb-3 leading-snug">
                       {actu.title}
                     </h3>
                     <p className="font-basecoat text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-3">
