@@ -216,7 +216,7 @@ export default function RealisationDetail() {
   const navigate = useNavigate();
   const addToCart = useCartStore((state) => state.addToCart);
   const { realisation, relatedProducts, error } = useLoaderData<LoaderData>();
-  const { showToast } = useToast();
+
   const lp = useLocalePath();
   const { t } = useTranslation();
 
@@ -310,14 +310,6 @@ export default function RealisationDetail() {
         declinaisonId: selectedDeclinaison.id,
         stock: selectedDeclinaison.Stock,
       });
-      showToast(
-        `${realisation.title} ajouté au panier`,
-        'success',
-        {
-          image: currentImage?.url || undefined,
-          subtitle: selectedDeclinaison.Description || `${quantity} × ${realisation.prix} €`,
-        }
-      );
     }
   };
 

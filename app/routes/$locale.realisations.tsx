@@ -78,13 +78,8 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const validCategory = (CATEGORIES as readonly string[]).includes(categorie) ? categorie : 'Tout';
 
   try {
-    // Base populate params
-    let url = `${baseUrl}?populate[0]=ImagePrincipale&populate[1]=Images&populate[2]=Declinaison&populate[3]=Declinaison.Image&locale=${locale}`;
-
-    // Add Strapi category filter when a specific category is selected
-    if (validCategory !== 'Tout') {
-      url += `&filters[Categorie][$eq]=${encodeURIComponent(validCategory)}`;
-    }
+    // Load all products and filter client-side (server-side Strapi filter is unreliable)
+    const url = `${baseUrl}?populate[0]=ImagePrincipale&populate[1]=Images&populate[2]=Declinaison&populate[3]=Declinaison.Image&locale=${locale}&pagination[limit]=100`;
 
     const response = await fetch(url);
 
@@ -136,7 +131,12 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
         };
       });
 
-      return json<LoaderData>({ realisations, coupsDeCoeur, selectedCategory: validCategory, error: null }, {
+      // Client-side category filter
+      const filtered = validCategory === 'Tout'
+        ? realisations
+        : realisations.filter((r) => r.categorie === validCategory);
+
+      return json<LoaderData>({ realisations: filtered, coupsDeCoeur, selectedCategory: validCategory, error: null }, {
         headers: { 'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=3600' },
       });
     }
