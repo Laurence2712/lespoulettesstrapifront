@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from '@remix-run/react';
 import { useLocalePath } from '../hooks/useLocalePath';
 import BagIcon from './BagIcon';
+import CheckoutForm from './checkout/CheckoutForm';
 
 export default function CartDrawer() {
   const cart = useCartStore((state) => state.items);
@@ -11,6 +12,7 @@ export default function CartDrawer() {
   const lp = useLocalePath();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [step, setStep] = useState<'cart' | 'checkout'>('cart');
   const [removingId, setRemovingId] = useState<string | null>(null);
   const prevCartLength = useRef(cart.length);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -18,6 +20,7 @@ export default function CartDrawer() {
   useEffect(() => {
     if (cart.length > prevCartLength.current) {
       setIsOpen(true);
+      setStep('cart');
     }
     prevCartLength.current = cart.length;
   }, [cart]);
@@ -58,25 +61,40 @@ export default function CartDrawer() {
       <div
         role="dialog"
         aria-modal="true"
-        aria-label="Panier"
-        className="fixed top-0 right-0 h-full w-full sm:w-[480px] md:w-[520px] bg-white dark:bg-gray-900 shadow-2xl z-[1000] flex flex-col animate-drawer-in"
+        aria-label={step === 'checkout' ? 'Finaliser la commande' : 'Panier'}
+        className="fixed top-0 right-0 h-full w-full sm:w-[520px] md:w-[580px] bg-white dark:bg-gray-900 shadow-2xl z-[1000] flex flex-col animate-drawer-in"
       >
         {/* Top accent bar */}
         <div className="h-1 w-full bg-gradient-to-r from-benin-jaune via-wax-orange to-benin-terre flex-shrink-0" aria-hidden="true" />
 
         {/* Header */}
-        <div className="flex justify-between items-center px-6 sm:px-8 py-5 border-b border-gray-100 dark:border-gray-700">
-          <div>
-            <h2 className="font-basecoat font-bold text-xl sm:text-2xl uppercase text-gray-900 dark:text-gray-100">
-              Votre panier
-            </h2>
-            <p className="font-basecoat text-sm text-gray-500 dark:text-gray-400 mt-0.5">
-              {totalItems} article{totalItems > 1 ? 's' : ''}
-            </p>
+        <div className="flex justify-between items-center px-6 sm:px-8 py-5 border-b border-gray-100 dark:border-gray-700 flex-shrink-0">
+          <div className="flex items-center gap-3">
+            {step === 'checkout' && (
+              <button
+                onClick={() => setStep('cart')}
+                aria-label="Retour au panier"
+                className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+            )}
+            <div>
+              <h2 className="font-basecoat font-bold text-xl sm:text-2xl uppercase text-gray-900 dark:text-gray-100">
+                {step === 'checkout' ? 'Commande' : 'Votre panier'}
+              </h2>
+              {step === 'cart' && (
+                <p className="font-basecoat text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+                  {totalItems} article{totalItems > 1 ? 's' : ''}
+                </p>
+              )}
+            </div>
           </div>
           <button
             ref={closeButtonRef}
-            aria-label="Fermer le panier"
+            aria-label="Fermer"
             className="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
             onClick={() => setIsOpen(false)}
           >
@@ -86,8 +104,21 @@ export default function CartDrawer() {
           </button>
         </div>
 
-        {/* Cart items */}
-        <div className="flex-1 overflow-y-auto px-6 sm:px-8 py-6 space-y-4">
+        {/* Checkout step */}
+        {step === 'checkout' && (
+          <div className="flex-1 overflow-y-auto">
+            <CheckoutForm
+              cart={cart}
+              total={total}
+              onBack={() => setStep('cart')}
+              onSuccess={() => { setIsOpen(false); setStep('cart'); }}
+              inDrawer
+            />
+          </div>
+        )}
+
+        {/* Cart step */}
+        <div className={`flex-1 overflow-y-auto px-6 sm:px-8 py-6 space-y-4 ${step === 'checkout' ? 'hidden' : ''}`}>
           {cart.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full gap-5 pb-16">
               <div className="w-20 h-20 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
@@ -169,9 +200,9 @@ export default function CartDrawer() {
           )}
         </div>
 
-        {/* Footer */}
-        {cart.length > 0 && (
-          <div className="px-6 sm:px-8 py-5 border-t border-gray-100 dark:border-gray-700 space-y-3">
+        {/* Footer — cart step only */}
+        {cart.length > 0 && step === 'cart' && (
+          <div className="px-6 sm:px-8 py-5 border-t border-gray-100 dark:border-gray-700 space-y-3 flex-shrink-0">
             <div className="flex justify-between items-center">
               <span className="font-basecoat text-gray-500 dark:text-gray-400 text-sm uppercase tracking-wider">Sous-total</span>
               <span className="font-basecoat font-bold text-2xl text-gray-900 dark:text-gray-100">{total.toFixed(2)} €</span>
@@ -181,13 +212,12 @@ export default function CartDrawer() {
               Frais de livraison calculés à l&apos;étape suivante
             </p>
 
-            <Link
-              to={lp('/panier')}
-              onClick={() => setIsOpen(false)}
+            <button
+              onClick={() => setStep('checkout')}
               className="block w-full bg-benin-jaune text-black text-center py-4 rounded-xl font-basecoat font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:bg-benin-ocre text-sm sm:text-base"
             >
               Commander →
-            </Link>
+            </button>
             <button
               onClick={() => setIsOpen(false)}
               className="w-full py-3 rounded-xl font-basecoat font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 border border-gray-200 dark:border-gray-700 hover:border-gray-300 transition text-sm"

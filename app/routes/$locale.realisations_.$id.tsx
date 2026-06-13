@@ -265,9 +265,8 @@ export default function RealisationDetail() {
     ? realisation.declinaisons.find((d) => d.id === selectedDeclinaisonId) ?? null
     : null;
 
-  // Build a flat slides array: mainImages first, then declinaison images
+  // Slider only shows declinaison images; mainImages[0] is shown as hero banner
   const allSlides: Array<{ image: ImageData; declinaisonId?: number }> = [
-    ...realisation.mainImages.map((img) => ({ image: img })),
     ...realisation.declinaisons.filter((d) => d.Image?.url).map((d) => ({ image: d.Image, declinaisonId: d.id })),
   ];
 
@@ -371,6 +370,8 @@ export default function RealisationDetail() {
     },
   };
 
+  const heroImage = realisation.mainImages[0];
+
   return (
     <>
       <script
@@ -381,9 +382,30 @@ export default function RealisationDetail() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+
+      {/* ── Hero banner (image principale de catégorie) ── */}
+      {heroImage?.url && (
+        <div className="mt-16 sm:mt-20 md:mt-24 w-full h-[40vh] sm:h-[50vh] overflow-hidden relative">
+          <img
+            src={heroImage.formats?.large?.url || heroImage.url}
+            alt={realisation.title}
+            width={1600}
+            height={900}
+            className="w-full h-full object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+          <div className="absolute bottom-6 left-6 sm:left-10 md:left-16 lg:left-24">
+            <p className="font-basecoat text-white/80 text-xs uppercase tracking-widest mb-1">{realisation.categorie}</p>
+            <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-white uppercase leading-tight drop-shadow-lg">
+              {realisation.title}
+            </h1>
+          </div>
+        </div>
+      )}
+
       <div
         ref={scrollRef}
-        className="py-6 sm:py-8 md:py-[60px] mt-16 sm:mt-20 md:mt-24 px-6 sm:px-10 md:px-16 lg:px-24"
+        className="py-6 sm:py-8 md:py-[60px] px-6 sm:px-10 md:px-16 lg:px-24"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
 
@@ -463,31 +485,6 @@ export default function RealisationDetail() {
               </div>
             )}
 
-            {/* Vignettes — images principales uniquement (pas les déclinaisons) */}
-            {realisation.mainImages.length > 1 && (
-              <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 mt-4">
-                {realisation.mainImages.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => goToSlide(idx)}
-                    aria-label={`Image ${idx + 1}`}
-                    className={`relative rounded-lg overflow-hidden transition-all flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 ${
-                      sliderIndex === idx
-                        ? 'ring-2 ring-benin-jaune shadow-md scale-105'
-                        : 'ring-1 ring-gray-200 dark:ring-gray-700 opacity-60 hover:opacity-100 hover:ring-benin-ocre hover:scale-105'
-                    }`}
-                  >
-                    <img
-                      src={img.formats?.small?.url || img.formats?.thumbnail?.url || img.url}
-                      alt={`Vue ${idx + 1}`}
-                      width={96}
-                      height={96}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
 
           {/* ── COLONNE INFOS ── */}
@@ -503,10 +500,13 @@ export default function RealisationDetail() {
             </nav>
 
             <div className="flex items-start justify-between gap-4">
-              <h1 className="text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
-                {realisation.title}
-              </h1>
-              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-benin-jaune whitespace-nowrap flex-shrink-0">
+              {/* Title shown in hero when heroImage exists, keep as h2 fallback */}
+              {!heroImage?.url && (
+                <h1 className="text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
+                  {realisation.title}
+                </h1>
+              )}
+              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-benin-jaune whitespace-nowrap flex-shrink-0 ml-auto">
                 {realisation.prix ? `${realisation.prix} €` : t('products.on_request')}
               </p>
             </div>
@@ -570,26 +570,6 @@ export default function RealisationDetail() {
                   {t('products.choose_variant')}
                 </h2>
                 <div className="flex flex-wrap gap-3">
-                  {/* Image principale comme première vignette */}
-                  {realisation.mainImages[0]?.url && (
-                    <button
-                      onClick={() => { setSelectedDeclinaisonId(null); goToSlide(0); }}
-                      className={`relative rounded-lg overflow-hidden transition-all w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 ${
-                        selectedDeclinaisonId === null
-                          ? 'ring-2 ring-benin-jaune ring-offset-2 scale-105 shadow-lg'
-                          : 'ring-1 ring-gray-200 dark:ring-gray-700 hover:ring-benin-ocre hover:scale-105 hover:shadow-md'
-                      }`}
-                      title="Vue principale"
-                    >
-                      <img
-                        src={realisation.mainImages[0].formats?.thumbnail?.url || realisation.mainImages[0].url}
-                        alt="Vue principale"
-                        width={80}
-                        height={80}
-                        className="w-full h-full object-cover"
-                      />
-                    </button>
-                  )}
                   {realisation.declinaisons.map((decl) => {
                     const isSelected = selectedDeclinaisonId === decl.id;
                     const inStock = decl.Stock > 0;

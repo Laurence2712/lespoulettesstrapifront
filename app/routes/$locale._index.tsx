@@ -353,35 +353,37 @@ export default function Index() {
             </div>
           </div>
           {actualites.length > 0 ? (
-            actualites.map((actu, idx) => (
-              <div key={actu.id} className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
-                {actu.image_url && (
-                  <div className="anim-fade-right" data-delay="0.2">
-                    <img
-                      src={actu.image_url}
-                      alt={actu.title}
-                      loading="lazy"
-                      width={800}
-                      height={400}
-                      className="w-full max-w-sm md:max-w-md h-auto object-contain rounded-xl shadow-sm"
-                    />
-                  </div>
-                )}
-                <div className={`anim-fade-left ${!actu.image_url ? 'lg:col-span-2' : ''}`} data-delay="0.3">
-                  {actu.date && (
-                    <p className="font-basecoat text-xs text-benin-jaune font-semibold mb-2 tracking-widest uppercase">
-                      {new Date(actu.date).toLocaleDateString(locale === 'en' ? 'en-GB' : 'fr-FR', { day: "numeric", month: "long", year: "numeric" })}
-                    </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+              {actualites.map((actu, idx) => (
+                <div key={actu.id} className={`anim-fade-up bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300`} data-delay={`${0.1 + idx * 0.1}`}>
+                  {actu.image_url && (
+                    <div className="aspect-[4/3] overflow-hidden">
+                      <img
+                        src={actu.image_url}
+                        alt={actu.title}
+                        loading="lazy"
+                        width={600}
+                        height={450}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
                   )}
-                  <h3 className="font-basecoat text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-5 leading-tight">
-                    {actu.title}
-                  </h3>
-                  <p className="font-basecoat text-gray-700 dark:text-gray-300 text-sm sm:text-base whitespace-pre-line leading-relaxed">
-                    {actu.content}
-                  </p>
+                  <div className="p-5 sm:p-6">
+                    {actu.date && (
+                      <p className="font-basecoat text-xs text-benin-jaune font-semibold mb-2 tracking-widest uppercase">
+                        {new Date(actu.date).toLocaleDateString(locale === 'en' ? 'en-GB' : 'fr-FR', { day: "numeric", month: "long", year: "numeric" })}
+                      </p>
+                    )}
+                    <h3 className="font-basecoat text-base sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 leading-snug">
+                      {actu.title}
+                    </h3>
+                    <p className="font-basecoat text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-3">
+                      {actu.content}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))
+              ))}
+            </div>
           ) : (
             <p className="text-center text-gray-500 dark:text-gray-400 font-basecoat text-sm sm:text-base">{t('home.no_news')}</p>
           )}
