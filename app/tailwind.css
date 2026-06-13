@@ -100,6 +100,10 @@
 .animate-float-4 { animation: float 3.4s ease-in-out 0.3s infinite; }
 .animate-float-5 { animation: float 4s   ease-in-out 0.9s infinite; }
 
+html {
+  font-size: 18px;
+}
+
 html,
 body {
   @apply bg-white dark:bg-gray-950;
