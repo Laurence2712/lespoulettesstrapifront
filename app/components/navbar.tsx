@@ -132,12 +132,6 @@ export default function NavBar() {
 
           </div>
         </div>
-        {/* Free shipping banner */}
-        <div className="border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 text-center py-1.5 px-4">
-          <p className="font-basecoat text-xs text-gray-900 dark:text-gray-100 font-semibold tracking-wide">
-            Livraison gratuite dès 49 € d&apos;achat en Belgique
-          </p>
-        </div>
       </nav>
 
       {/* Backdrop with blur */}
