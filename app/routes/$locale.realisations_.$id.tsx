@@ -385,7 +385,7 @@ export default function RealisationDetail() {
 
       {/* ── Hero banner (image principale de catégorie) ── */}
       {heroImage?.url && (
-        <div className="mt-16 sm:mt-[4.5rem] md:mt-20 w-full h-64 sm:h-80 md:h-96 bg-beige dark:bg-gray-900 overflow-hidden relative">
+        <div className="mt-[109px] w-full h-64 sm:h-80 md:h-96 bg-beige dark:bg-gray-900 overflow-hidden relative">
           <img
             src={heroImage.formats?.large?.url || heroImage.url}
             alt={realisation.title}
