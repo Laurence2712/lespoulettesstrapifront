@@ -248,7 +248,7 @@ export default function Index() {
           <div className="anim-fade-up" data-delay="0.2">
             <Link
               to={lp('/realisations')}
-              className="font-basecoat bg-benin-jaune text-black hover:bg-beige hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+              className="font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
             >
               {t('home.hero_cta')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -274,7 +274,7 @@ export default function Index() {
             </div>
             <Link
               to={lp('/realisations')}
-              className="hidden md:inline-flex font-basecoat bg-benin-jaune text-black hover:bg-beige hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 items-center gap-2"
+              className="hidden md:inline-flex font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 items-center gap-2"
             >
               {t('home.see_all_shop_full')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -319,7 +319,7 @@ export default function Index() {
         <div className="mt-6 md:hidden">
           <Link
             to={lp('/realisations')}
-            className="font-basecoat bg-benin-jaune text-black hover:bg-beige hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+            className="font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
           >
             {t('home.see_all_shop_full')}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -414,7 +414,7 @@ export default function Index() {
             </div>
             <Link
               to={lp('/commandes-personnalisees')}
-              className="hidden md:inline-flex font-basecoat bg-benin-jaune text-black hover:bg-beige hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 items-center gap-2"
+              className="hidden md:inline-flex font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 items-center gap-2"
             >
               {t('common.learn_more')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -474,7 +474,7 @@ export default function Index() {
         <div className="mt-6 md:hidden">
           <Link
             to={lp('/commandes-personnalisees')}
-            className="font-basecoat bg-benin-jaune text-black hover:bg-beige hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+            className="font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
           >
             {t('common.learn_more')}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
