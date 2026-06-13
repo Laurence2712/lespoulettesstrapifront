@@ -93,12 +93,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
           {locale === "en" ? "Skip to main content" : "Aller au contenu principal"}
         </a>
         <ScrollProgress />
-        {/* Free shipping banner */}
-        <div className="w-full bg-gray-900 dark:bg-gray-950 text-center py-2 px-4 z-[60] relative">
-          <p className="font-basecoat text-xs sm:text-sm text-benin-jaune font-semibold tracking-wide">
-            🚚 Livraison gratuite dès 49 € d&apos;achat en Belgique
-          </p>
-        </div>
         <NavBar />
         <main id="main-content" className="flex-grow">{children}</main>
         <Footer />

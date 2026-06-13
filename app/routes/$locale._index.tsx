@@ -357,14 +357,14 @@ export default function Index() {
               {actualites.map((actu, idx) => (
                 <div key={actu.id} className={`anim-fade-up bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300`} data-delay={`${0.1 + idx * 0.1}`}>
                   {actu.image_url && (
-                    <div className="aspect-[4/3] overflow-hidden">
+                    <div className="bg-white dark:bg-gray-700 flex items-center justify-center overflow-hidden">
                       <img
                         src={actu.image_url}
                         alt={actu.title}
                         loading="lazy"
                         width={600}
-                        height={450}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        height={600}
+                        className="w-full h-auto object-contain"
                       />
                     </div>
                   )}
