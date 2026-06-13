@@ -19,12 +19,13 @@ interface CheckoutFormProps {
   total: number;
   onBack: () => void;
   onSuccess: () => void;
+  inDrawer?: boolean;
 }
 
 const INPUT_CLASS = "font-basecoat w-full rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm sm:text-base focus:border-benin-jaune outline-none transition bg-white dark:bg-gray-900";
 const LABEL_CLASS = "font-basecoat block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2";
 
-export default function CheckoutForm({ cart, total, onBack, onSuccess }: CheckoutFormProps) {
+export default function CheckoutForm({ cart, total, onBack, onSuccess, inDrawer = false }: CheckoutFormProps) {
   const [formData, setFormData] = useState({ nom: '', email: '', telephone: '', notes: '' });
   const [deliveryMode, setDeliveryMode] = useState<'livraison' | 'retrait'>('livraison');
   const [country, setCountry] = useState('belgique');
@@ -216,21 +217,24 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
   };
 
   return (
-    <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-6 sm:px-10 md:px-16 lg:px-24 mt-16 sm:mt-20 md:mt-24">
-      <button
-        onClick={onBack}
-        className="anim-fade-up font-basecoat text-benin-jaune hover:text-benin-terre mb-6 sm:mb-8 flex items-center gap-2 text-sm sm:text-base font-medium transition"
-      >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-        {t('cart.back_to_cart')}
-      </button>
-
-      <h1 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100" data-delay="0.1">
-        {t('cart.finalize')}
-      </h1>
-      <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.15" aria-hidden="true" />
+    <div ref={scrollRef} className={inDrawer ? 'px-6 sm:px-8 py-5' : 'py-6 sm:py-8 md:py-[60px] px-6 sm:px-10 md:px-16 lg:px-24 mt-16 sm:mt-20 md:mt-24'}>
+      {!inDrawer && (
+        <>
+          <button
+            onClick={onBack}
+            className="anim-fade-up font-basecoat text-benin-jaune hover:text-benin-terre mb-6 sm:mb-8 flex items-center gap-2 text-sm sm:text-base font-medium transition"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            {t('cart.back_to_cart')}
+          </button>
+          <h1 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100" data-delay="0.1">
+            {t('cart.finalize')}
+          </h1>
+          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.15" aria-hidden="true" />
+        </>
+      )}
 
       {/* Recap + secure payment */}
       <div className="anim-fade-up grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 sm:mb-10" data-delay="0.15">
