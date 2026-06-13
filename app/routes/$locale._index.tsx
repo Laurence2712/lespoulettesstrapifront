@@ -187,7 +187,7 @@ export default function Index() {
   const [preloaderVisible, setPreloaderVisible] = useState(true);
 
   useEffect(() => {
-    const hide = () => setTimeout(() => setPreloaderVisible(false), 300);
+    const hide = () => setTimeout(() => setPreloaderVisible(false), 2300);
     if (document.readyState === 'complete') {
       hide();
     } else {
@@ -261,7 +261,7 @@ export default function Index() {
 
 
       {/* ── Nouveaux arrivages ── */}
-      <section id="nouveaux-arrivages" className="py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
+      <section id="nouveaux-arrivages" className="py-10 sm:py-14 md:py-[70px] bg-beige dark:bg-gray-900">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="mb-8 sm:mb-10 md:mb-12">
           {/* Titre + bouton boutique alignés */}
@@ -291,7 +291,7 @@ export default function Index() {
                 className={`font-basecoat text-sm font-semibold px-4 py-1.5 rounded-lg border-2 transition-all duration-200 ${
                   activeCategory === cat.value
                     ? 'bg-benin-jaune border-benin-jaune text-black shadow-md'
-                    : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
+                    : 'bg-beige dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
                 }`}
               >
                 {cat.label}
@@ -402,7 +402,7 @@ export default function Index() {
       </section>
 
       {/* ── Commandes personnalisées ── */}
-      <section className="py-10 sm:py-14 md:py-[70px] bg-white dark:bg-gray-900">
+      <section className="py-10 sm:py-14 md:py-[70px] bg-beige dark:bg-gray-900">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <div className="flex items-center justify-between gap-4 mb-3 sm:mb-4">
