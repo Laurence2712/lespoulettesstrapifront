@@ -385,13 +385,7 @@ export default function RealisationDetail() {
             height={900}
             className="w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-          <div className="absolute bottom-6 left-6 sm:left-10 md:left-16 lg:left-24">
-            <p className="font-basecoat text-white/80 text-xs uppercase tracking-widest mb-1">{realisation.categorie}</p>
-            <h1 className="font-basecoat text-2xl sm:text-3xl md:text-4xl font-bold text-white uppercase leading-tight drop-shadow-lg">
-              {realisation.title}
-            </h1>
-          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
         </div>
       )}
 
@@ -492,13 +486,10 @@ export default function RealisationDetail() {
             </nav>
 
             <div className="flex items-start justify-between gap-4">
-              {/* Title shown in hero when heroImage exists, keep as h2 fallback */}
-              {!heroImage?.url && (
-                <h1 className="text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
-                  {realisation.title}
-                </h1>
-              )}
-              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-benin-jaune whitespace-nowrap flex-shrink-0 ml-auto">
+              <h1 className="text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
+                {realisation.title}
+              </h1>
+              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-benin-jaune whitespace-nowrap flex-shrink-0">
                 {realisation.prix ? `${realisation.prix} €` : t('products.on_request')}
               </p>
             </div>
