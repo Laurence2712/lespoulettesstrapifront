@@ -232,7 +232,7 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess, inDrawer 
           <h1 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100" data-delay="0.1">
             {t('cart.finalize')}
           </h1>
-          <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.15" aria-hidden="true" />
+          <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.15" aria-hidden="true" />
         </>
       )}
 
