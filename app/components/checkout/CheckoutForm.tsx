@@ -42,8 +42,16 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
   const scrollRef = useScrollAnimations([deliveryMode]);
 
   const API_URL = getApiUrl();
-  const shippingCost = deliveryMode === 'retrait' ? 0 : (SHIPPING_COSTS[country]?.cost ?? 12);
-  const shippingLabel = deliveryMode === 'retrait' ? 'GRATUIT' : `${shippingCost.toFixed(2)} €`;
+  const FREE_SHIPPING_THRESHOLD = 49;
+  const baseShippingCost = deliveryMode === 'retrait' ? 0 : (SHIPPING_COSTS[country]?.cost ?? 12);
+  const freeShipping = deliveryMode === 'livraison' && total >= FREE_SHIPPING_THRESHOLD;
+  const shippingCost = freeShipping ? 0 : baseShippingCost;
+  const shippingLabel = deliveryMode === 'retrait'
+    ? 'GRATUIT'
+    : freeShipping
+      ? t('cart.free_shipping')
+      : `${shippingCost.toFixed(2)} €`;
+  const amountToFreeShipping = FREE_SHIPPING_THRESHOLD - total;
   const grandTotal = total + shippingCost;
   const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
 
@@ -233,6 +241,11 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
               <span>{t('cart.subtotal')} ({t('cart.items_count', { count: totalItems })})</span>
               <span className="font-semibold text-gray-900 dark:text-gray-100">{total.toFixed(2)} €</span>
             </div>
+            {deliveryMode === 'livraison' && amountToFreeShipping > 0 && (
+              <div className="font-basecoat text-xs text-benin-jaune font-semibold bg-benin-jaune/10 rounded-lg px-3 py-2">
+                {t('cart.free_shipping_nudge', { amount: amountToFreeShipping.toFixed(2) })}
+              </div>
+            )}
             <div className="font-basecoat flex justify-between text-sm text-gray-600 dark:text-gray-400">
               <span>
                 {deliveryMode === 'retrait'

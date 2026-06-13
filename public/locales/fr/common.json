@@ -240,6 +240,8 @@
     "notes_optional": "Notes (optionnel)",
     "notes_optional_placeholder": "Informations complémentaires, préférences de livraison...",
     "pay_online": "Payer {{amount}} en ligne",
+    "free_shipping": "Livraison offerte 🎉",
+    "free_shipping_nudge": "Plus que {{amount}} € pour la livraison gratuite !",
     "cancel": "Annuler",
     "cancelled": "Opération annulée. Vous pouvez réessayer.",
     "redirecting": "Redirection vers le paiement...",
