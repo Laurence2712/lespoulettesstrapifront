@@ -385,13 +385,13 @@ export default function RealisationDetail() {
 
       {/* ── Hero banner (image principale de catégorie) ── */}
       {heroImage?.url && (
-        <div className="mt-16 sm:mt-[4.5rem] md:mt-20 w-full bg-beige dark:bg-gray-900 flex items-center justify-center overflow-hidden" style={{ minHeight: '45vh', maxHeight: '60vh' }}>
+        <div className="mt-16 sm:mt-[4.5rem] md:mt-20 w-full h-64 sm:h-80 md:h-96 bg-beige dark:bg-gray-900 overflow-hidden relative">
           <img
             src={heroImage.formats?.large?.url || heroImage.url}
             alt={realisation.title}
             width={1600}
             height={900}
-            className="w-full h-auto object-contain max-h-[60vh]"
+            className="w-full h-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
           <div className="absolute bottom-6 left-6 sm:left-10 md:left-16 lg:left-24">
