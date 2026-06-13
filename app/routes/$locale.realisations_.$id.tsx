@@ -537,7 +537,7 @@ export default function RealisationDetail() {
 
             {/* Description */}
             {realisation.description?.trim() && (
-              <div className="mb-6 p-5 bg-amber-50 border-l-4 border-benin-jaune rounded-r-xl">
+              <div className="mb-6 p-5 bg-white dark:bg-gray-900 border-l-4 border-benin-jaune rounded-r-xl">
                 <p className="text-gray-800 dark:text-gray-200 leading-relaxed text-base whitespace-pre-line">
                   {realisation.description}
                 </p>
