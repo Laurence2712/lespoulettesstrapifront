@@ -354,16 +354,16 @@ export default function Index() {
           </div>
           {actualites.length > 0 ? (
             actualites.map((actu, idx) => (
-              <div key={actu.id} className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
+              <div key={actu.id} className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-6 sm:gap-8 items-center">
                 {actu.image_url && (
                   <div className="anim-fade-right" data-delay="0.2">
                     <img
                       src={actu.image_url}
                       alt={actu.title}
                       loading="lazy"
-                      width={800}
-                      height={400}
-                      className="w-full max-w-sm md:max-w-md h-auto object-contain rounded-xl shadow-sm"
+                      width={600}
+                      height={600}
+                      className="w-full h-auto object-cover rounded-xl shadow-sm"
                     />
                   </div>
                 )}
