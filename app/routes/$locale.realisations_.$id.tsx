@@ -485,7 +485,7 @@ export default function RealisationDetail() {
               <span className="text-gray-600 dark:text-gray-300 uppercase">{realisation.title}</span>
             </nav>
 
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
+            <div className="flex items-start justify-between gap-4">
               <h1 className="text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
                 {realisation.title}
               </h1>
