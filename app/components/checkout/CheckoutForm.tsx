@@ -237,7 +237,7 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess, inDrawer 
       )}
 
       {/* Recap + secure payment */}
-      <div className="anim-fade-up grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 sm:mb-10" data-delay="0.15">
+      <div className="anim-fade-up grid grid-cols-1 gap-4 mb-8 sm:mb-10" data-delay="0.15">
         <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-2xl p-5 sm:p-6 shadow-sm">
           <h2 className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-sm sm:text-base mb-4">{t('cart.recap')}</h2>
           <div className="space-y-2">
