@@ -143,44 +143,6 @@ export default function ActualitesPage() {
         </div>
       </div>
 
-      {/* Agenda événements à venir */}
-      {upcomingEvents.length > 0 && (
-        <div className="px-6 sm:px-10 md:px-16 lg:px-24 pb-8">
-          <div className="anim-fade-up bg-white dark:bg-gray-900 rounded-2xl shadow-sm overflow-hidden w-full" data-delay="0.25">
-            {/* Header agenda */}
-            <div className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 dark:border-gray-800">
-              <svg className="w-4 h-4 text-benin-jaune flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              <span className="font-basecoat font-bold text-xs uppercase tracking-widest text-gray-900 dark:text-gray-100">
-                {t('news.upcoming_events') || 'Prochains événements'}
-              </span>
-            </div>
-            {/* Lignes événements */}
-            <ul>
-              {upcomingEvents.map((ev, i) => {
-                const d = new Date(ev.date!);
-                const day = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long' });
-                return (
-                  <li
-                    key={ev.id}
-                    className={`flex items-center gap-4 px-6 py-4 ${i < upcomingEvents.length - 1 ? 'border-b border-gray-100 dark:border-gray-800' : ''}`}
-                  >
-                    <span className="font-basecoat text-sm font-semibold text-benin-jaune w-28 flex-shrink-0 capitalize">
-                      {day}
-                    </span>
-                    <span className="w-px h-4 bg-gray-200 dark:bg-gray-700 flex-shrink-0" />
-                    <span className="font-basecoat text-sm text-gray-800 dark:text-gray-200 font-medium">
-                      {ev.title}
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
-      )}
-
       {/* Error */}
       {error && (
         <div className="flex items-center justify-center py-20">
