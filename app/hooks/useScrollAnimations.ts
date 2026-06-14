@@ -60,14 +60,16 @@ export function useScrollAnimations(deps: any[] = []) {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
+            const el = entry.target as HTMLElement;
             if (entry.isIntersecting) {
-              const el = entry.target as HTMLElement;
               const delay = parseFloat(el.dataset.delay || '0');
               setTimeout(() => {
                 el.style.transition = 'transform 0.5s ease-out';
                 el.style.transform = 'scaleX(1)';
               }, delay * 1000);
-              observer.unobserve(el);
+            } else {
+              el.style.transition = 'none';
+              el.style.transform = 'scaleX(0)';
             }
           });
         },
@@ -113,7 +115,7 @@ export function useScrollAnimations(deps: any[] = []) {
                   scrollTrigger: {
                     trigger: el,
                     start: "top 95%",
-                    toggleActions: "play none none none",
+                    toggleActions: "play none none reset",
                   },
                 }
               );
@@ -148,7 +150,30 @@ export function useScrollAnimations(deps: any[] = []) {
                 scrollTrigger: {
                   trigger: el,
                   start: "top 95%",
-                  toggleActions: "play none none none",
+                  toggleActions: "play none play reset",
+                },
+              }
+            );
+          });
+
+          // Event tags: fall from top with stagger + bounce
+          const eventTagContainers = container.querySelectorAll(".event-tags-container");
+          eventTagContainers.forEach((parent) => {
+            const tags = parent.querySelectorAll(".event-tag");
+            gsap.fromTo(
+              tags,
+              { opacity: 0, y: -80, rotation: () => Math.random() * 10 - 5 },
+              {
+                opacity: 1,
+                y: 0,
+                rotation: 0,
+                duration: 1.0,
+                stagger: 0.12,
+                ease: "bounce.out",
+                scrollTrigger: {
+                  trigger: parent,
+                  start: "top 90%",
+                  toggleActions: "play none play reset",
                 },
               }
             );
@@ -173,7 +198,7 @@ export function useScrollAnimations(deps: any[] = []) {
                 scrollTrigger: {
                   trigger: parent,
                   start: "top 95%",
-                  toggleActions: "play none none none",
+                  toggleActions: "play none play reset",
                 },
               }
             );
@@ -217,17 +242,25 @@ export function useParallaxHero() {
       gsap.registerPlugin(ScrollTrigger);
 
       ctx = gsap.context(() => {
-        gsap.to(hero, {
-          backgroundPositionY: "30%",
-          ease: "none",
-          scrollTrigger: {
-            trigger: hero,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
+        // Parallax sur l'image hero (img absolue)
+        const img = hero.querySelector("img");
+        if (img) {
+          gsap.fromTo(img,
+            { y: 0 },
+            {
+              y: "20%",
+              ease: "none",
+              scrollTrigger: {
+                trigger: hero,
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
+              },
+            }
+          );
+        }
 
+        // Fade-out du texte au scroll
         const content = hero.querySelector(".banner-content");
         if (content) {
           gsap.to(content, {
@@ -237,7 +270,7 @@ export function useParallaxHero() {
             scrollTrigger: {
               trigger: hero,
               start: "top top",
-              end: "60% top",
+              end: "50% top",
               scrub: true,
             },
           });

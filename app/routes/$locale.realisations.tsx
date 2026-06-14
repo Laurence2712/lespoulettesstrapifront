@@ -315,10 +315,10 @@ export default function Realisations() {
                   key={cat}
                   onClick={() => handleCategoryChange(cat)}
                   aria-pressed={selectedCategory === cat}
-                  className={`font-basecoat text-sm font-semibold px-4 py-1.5 rounded-lg border-2 transition-all duration-200 ${
+                  className={`font-basecoat text-sm font-semibold px-4 py-1.5 rounded-lg transition-all duration-200 ${
                     selectedCategory === cat
-                      ? 'bg-benin-jaune border-benin-jaune text-black shadow-md'
-                      : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
+                      ? 'bg-benin-jaune text-black shadow-md'
+                      : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 shadow-sm hover:shadow-md hover:text-benin-jaune'
                   }`}
                 >
                   {t(CAT_KEY[cat])}
