@@ -425,16 +425,19 @@ export default function Index() {
       <section className="py-10 sm:py-14 md:py-[70px] bg-beige dark:bg-gray-900">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="mb-8 sm:mb-10 md:mb-12">
-          <div className="flex items-center justify-between gap-4 mb-3 sm:mb-4">
+          <div className="flex items-start justify-between gap-4 mb-3 sm:mb-4">
             <div>
               <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
                 {t('home.event_title')}
               </h2>
               <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
+              <p className="anim-fade-up font-basecoat text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-4 max-w-lg" data-delay="0.15">
+                {t('home.event_quote')}
+              </p>
             </div>
             <Link
               to={lp('/commandes-personnalisees')}
-              className="hidden md:inline-flex font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 items-center gap-2"
+              className="hidden md:inline-flex font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 items-center gap-2 flex-shrink-0"
             >
               {t('common.learn_more')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -444,53 +447,23 @@ export default function Index() {
           </div>
         </div>
 
-       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
-
-  {/* Colonne gauche : Tags premium */}
-  <div className="anim-fade-right order-2 md:order-1" data-delay="0.2">
-    <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-sm mx-auto">
-      {[
-        { label: t('home.event_tag_mariage'), rotate: '-rotate-1' },
-        { label: t('home.event_tag_baby_shower'), rotate: 'rotate-1' },
-        { label: t('home.event_tag_anniv'), rotate: 'rotate-1' },
-        { label: t('home.event_tag_bapt'), rotate: '-rotate-1' },
-        { label: t('home.event_tag_birth'), rotate: 'rotate-1' },
-        { label: t('home.event_tag_corporate'), rotate: '-rotate-1' },
-      ].map((event) => (
-        <div
-          key={event.label}
-          className={`
-            ${event.rotate}
-            px-4 py-3 text-sm
-            text-center
-            font-basecoat font-semibold
-            bg-white dark:bg-gray-900
-            border border-red-900/20
-            text-red-900
-            rounded-2xl
-            shadow-sm
-            hover:shadow-xl
-            hover:-translate-y-1
-            hover:rotate-0
-            hover:scale-105
-            transition-all duration-300 ease-out
-            cursor-default
-          `}
-        >
-          {event.label}
+        <div className="anim-fade-up flex flex-wrap gap-3" data-delay="0.2">
+          {[
+            t('home.event_tag_mariage'),
+            t('home.event_tag_baby_shower'),
+            t('home.event_tag_anniv'),
+            t('home.event_tag_bapt'),
+            t('home.event_tag_birth'),
+            t('home.event_tag_corporate'),
+          ].map((label) => (
+            <span
+              key={label}
+              className="font-basecoat font-semibold text-sm px-4 py-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 rounded-xl shadow-sm"
+            >
+              {label}
+            </span>
+          ))}
         </div>
-      ))}
-    </div>
-  </div>
-
-  {/* Colonne droite : Texte */}
-  <div className="anim-fade-left order-1 md:order-2 text-center md:text-left" data-delay="0.3">
-    <p className="font-basecoat text-sm sm:text-base font-bold text-gray-900 dark:text-gray-100 uppercase leading-relaxed max-w-xl mx-auto md:mx-0">
-      {t('home.event_quote')}
-    </p>
-  </div>
-
-</div>
         <div className="mt-6 md:hidden">
           <Link
             to={lp('/commandes-personnalisees')}
