@@ -154,6 +154,29 @@ export function useScrollAnimations(deps: any[] = []) {
             );
           });
 
+          // Event tags: fall from top with stagger + bounce
+          const eventTagContainers = container.querySelectorAll(".event-tags-container");
+          eventTagContainers.forEach((parent) => {
+            const tags = parent.querySelectorAll(".event-tag");
+            gsap.fromTo(
+              tags,
+              { opacity: 0, y: -60, rotation: () => Math.random() * 10 - 5 },
+              {
+                opacity: 1,
+                y: 0,
+                rotation: 0,
+                duration: 0.6,
+                stagger: 0.08,
+                ease: "bounce.out",
+                scrollTrigger: {
+                  trigger: parent,
+                  start: "top 90%",
+                  toggleActions: "play none none none",
+                },
+              }
+            );
+          });
+
           // Stagger containers
           const staggerContainers = container.querySelectorAll(".anim-stagger");
           staggerContainers.forEach((parent) => {
