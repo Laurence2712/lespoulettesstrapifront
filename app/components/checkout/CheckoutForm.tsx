@@ -19,12 +19,13 @@ interface CheckoutFormProps {
   total: number;
   onBack: () => void;
   onSuccess: () => void;
+  inDrawer?: boolean;
 }
 
 const INPUT_CLASS = "font-basecoat w-full rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm sm:text-base focus:border-benin-jaune outline-none transition bg-white dark:bg-gray-900";
 const LABEL_CLASS = "font-basecoat block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2";
 
-export default function CheckoutForm({ cart, total, onBack, onSuccess }: CheckoutFormProps) {
+export default function CheckoutForm({ cart, total, onBack, onSuccess, inDrawer = false }: CheckoutFormProps) {
   const [formData, setFormData] = useState({ nom: '', email: '', telephone: '', notes: '' });
   const [deliveryMode, setDeliveryMode] = useState<'livraison' | 'retrait'>('livraison');
   const [country, setCountry] = useState('belgique');
@@ -42,8 +43,16 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
   const scrollRef = useScrollAnimations([deliveryMode]);
 
   const API_URL = getApiUrl();
-  const shippingCost = deliveryMode === 'retrait' ? 0 : (SHIPPING_COSTS[country]?.cost ?? 12);
-  const shippingLabel = deliveryMode === 'retrait' ? 'GRATUIT' : `${shippingCost.toFixed(2)} €`;
+  const FREE_SHIPPING_THRESHOLD = 49;
+  const baseShippingCost = deliveryMode === 'retrait' ? 0 : (SHIPPING_COSTS[country]?.cost ?? 12);
+  const freeShipping = deliveryMode === 'livraison' && total >= FREE_SHIPPING_THRESHOLD;
+  const shippingCost = freeShipping ? 0 : baseShippingCost;
+  const shippingLabel = deliveryMode === 'retrait'
+    ? 'GRATUIT'
+    : freeShipping
+      ? t('cart.free_shipping')
+      : `${shippingCost.toFixed(2)} €`;
+  const amountToFreeShipping = FREE_SHIPPING_THRESHOLD - total;
   const grandTotal = total + shippingCost;
   const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
 
@@ -208,24 +217,27 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
   };
 
   return (
-    <div ref={scrollRef} className="py-6 sm:py-8 md:py-[60px] px-6 sm:px-10 md:px-16 lg:px-24 mt-16 sm:mt-20 md:mt-24">
-      <button
-        onClick={onBack}
-        className="anim-fade-up font-basecoat text-benin-jaune hover:text-benin-terre mb-6 sm:mb-8 flex items-center gap-2 text-sm sm:text-base font-medium transition"
-      >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-        {t('cart.back_to_cart')}
-      </button>
-
-      <h1 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100" data-delay="0.1">
-        {t('cart.finalize')}
-      </h1>
-      <div className="anim-fade-up w-16 sm:w-20 h-1 bg-benin-jaune mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.15" aria-hidden="true" />
+    <div ref={scrollRef} className={inDrawer ? 'px-6 sm:px-8 py-5' : 'py-6 sm:py-8 md:py-[60px] px-6 sm:px-10 md:px-16 lg:px-24 mt-16 sm:mt-20 md:mt-24'}>
+      {!inDrawer && (
+        <>
+          <button
+            onClick={onBack}
+            className="anim-fade-up font-basecoat text-benin-jaune hover:text-benin-terre mb-6 sm:mb-8 flex items-center gap-2 text-sm sm:text-base font-medium transition"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            {t('cart.back_to_cart')}
+          </button>
+          <h1 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100" data-delay="0.1">
+            {t('cart.finalize')}
+          </h1>
+          <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4 mb-8 sm:mb-10 md:mb-12" data-delay="0.15" aria-hidden="true" />
+        </>
+      )}
 
       {/* Recap + secure payment */}
-      <div className="anim-fade-up grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 sm:mb-10" data-delay="0.15">
+      <div className="anim-fade-up grid grid-cols-1 gap-4 mb-8 sm:mb-10" data-delay="0.15">
         <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-2xl p-5 sm:p-6 shadow-sm">
           <h2 className="font-basecoat font-bold text-gray-900 dark:text-gray-100 text-sm sm:text-base mb-4">{t('cart.recap')}</h2>
           <div className="space-y-2">
@@ -233,6 +245,11 @@ export default function CheckoutForm({ cart, total, onBack, onSuccess }: Checkou
               <span>{t('cart.subtotal')} ({t('cart.items_count', { count: totalItems })})</span>
               <span className="font-semibold text-gray-900 dark:text-gray-100">{total.toFixed(2)} €</span>
             </div>
+            {deliveryMode === 'livraison' && amountToFreeShipping > 0 && (
+              <div className="font-basecoat text-xs text-benin-jaune font-semibold bg-benin-jaune/10 rounded-lg px-3 py-2">
+                {t('cart.free_shipping_nudge', { amount: amountToFreeShipping.toFixed(2) })}
+              </div>
+            )}
             <div className="font-basecoat flex justify-between text-sm text-gray-600 dark:text-gray-400">
               <span>
                 {deliveryMode === 'retrait'

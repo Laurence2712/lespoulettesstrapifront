@@ -86,13 +86,7 @@ export default function Footer() {
       <div className="border-t border-gray-800">
         <div className="max-w-[1440px] mx-auto px-6 sm:px-10 md:px-16 lg:px-24 py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm font-basecoat">
           <p>© {currentYear} Les Poulettes. {t("footer.copyright")}</p>
-          <p className="flex items-center gap-1.5">
-            <span>{t("footer.made_by")}</span>
-            <a href="https://www.laurencepirard.be" target="_blank" rel="noopener noreferrer" className="text-white font-bold hover:text-benin-jaune transition">
-              Laurence Pirard
-            </a>
-          </p>
-          <Link to={lp("/mentions-legales")} className="hover:text-benin-jaune transition">
+<Link to={lp("/mentions-legales")} className="hover:text-benin-jaune transition">
             {t("footer.legal")}
           </Link>
         </div>

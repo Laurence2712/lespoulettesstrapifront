@@ -30,12 +30,6 @@ export const PICKUP_LOCATIONS = [
     descKey: 'cart.pickup_exact',
   },
   {
-    id: 'watermael' as const,
-    label: 'Watermael-Boisfort',
-    flag: '🇧🇪',
-    descKey: 'cart.pickup_exact',
-  },
-  {
     id: 'benin' as const,
     label: 'Bénin — Cotonou',
     flag: '🇧🇯',
@@ -47,6 +41,5 @@ export type PickupLocationId = typeof PICKUP_LOCATIONS[number]['id'];
 
 export const buildPickupAddress = (id: PickupLocationId): string => {
   if (id === 'grimbergen') return 'RETRAIT GRATUIT — Grimbergen, Belgique (adresse exacte communiquée par email)';
-  if (id === 'watermael') return 'RETRAIT GRATUIT — Watermael-Boisfort, Belgique (adresse exacte communiquée par email)';
-  return 'RETRAIT GRATUIT — Bénin, Cotonou (adresse communiquée par email)';
+return 'RETRAIT GRATUIT — Bénin, Cotonou (adresse communiquée par email)';
 };

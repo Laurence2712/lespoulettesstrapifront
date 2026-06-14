@@ -31,10 +31,9 @@ describe('PICKUP_LOCATIONS', () => {
     });
   });
 
-  it('includes grimbergen, watermael, benin', () => {
+  it('includes grimbergen, benin', () => {
     const ids = PICKUP_LOCATIONS.map((l) => l.id);
     expect(ids).toContain('grimbergen');
-    expect(ids).toContain('watermael');
     expect(ids).toContain('benin');
   });
 });
@@ -44,11 +43,7 @@ describe('buildPickupAddress', () => {
     expect(buildPickupAddress('grimbergen')).toContain('Grimbergen');
   });
 
-  it('returns Watermael address for watermael', () => {
-    expect(buildPickupAddress('watermael')).toContain('Watermael');
-  });
-
-  it('returns Bénin address for benin', () => {
+it('returns Bénin address for benin', () => {
     expect(buildPickupAddress('benin')).toContain('Bénin');
   });
 

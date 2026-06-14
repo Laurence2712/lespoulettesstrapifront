@@ -78,13 +78,8 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const validCategory = (CATEGORIES as readonly string[]).includes(categorie) ? categorie : 'Tout';
 
   try {
-    // Base populate params
-    let url = `${baseUrl}?populate[0]=ImagePrincipale&populate[1]=Images&populate[2]=Declinaison&populate[3]=Declinaison.Image&locale=${locale}`;
-
-    // Add Strapi category filter when a specific category is selected
-    if (validCategory !== 'Tout') {
-      url += `&filters[Categorie][$eq]=${encodeURIComponent(validCategory)}`;
-    }
+    // Load all products and filter client-side (server-side Strapi filter is unreliable)
+    const url = `${baseUrl}?populate[0]=ImagePrincipale&populate[1]=Images&populate[2]=Declinaison&populate[3]=Declinaison.Image&locale=${locale}&pagination[limit]=100`;
 
     const response = await fetch(url);
 
@@ -136,7 +131,21 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
         };
       });
 
-      return json<LoaderData>({ realisations, coupsDeCoeur, selectedCategory: validCategory, error: null }, {
+      // Client-side category filter (same logic as homepage matchesCategory)
+      const filtered = validCategory === 'Tout'
+        ? realisations
+        : realisations.filter((r) => {
+            if (r.categorie) return r.categorie === validCategory;
+            const text = `${r.title} ${r.description}`.toLowerCase();
+            if (validCategory === 'Sacs') return text.includes('tote') && !text.includes('porte-cl');
+            if (validCategory === 'Accessoires') {
+              if (text.includes('porte-cl')) return true;
+              return !text.includes('trousse') && !text.includes('tote') && !text.includes('housse');
+            }
+            return text.includes(validCategory.toLowerCase().slice(0, -1));
+          });
+
+      return json<LoaderData>({ realisations: filtered, coupsDeCoeur, selectedCategory: validCategory, error: null }, {
         headers: { 'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=3600' },
       });
     }
