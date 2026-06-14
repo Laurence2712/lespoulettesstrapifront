@@ -262,6 +262,38 @@ export default function Index() {
         )}
         {/* Dégradé léger uniquement en bas pour lisibilité du texte */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
+        {/* Card promo — bas droite */}
+        <div className="anim-fade-left absolute bottom-10 sm:bottom-14 right-6 sm:right-10 md:right-16 lg:right-24 z-20 hidden sm:block" data-delay="0.4">
+          <Link
+            to={lp('/realisations')}
+            className="group flex items-center gap-4 bg-white/10 dark:bg-black/30 backdrop-blur-md border border-white/20 rounded-2xl px-5 py-4 hover:bg-white/20 transition-all duration-300 max-w-xs"
+          >
+            <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-white/30">
+              <img
+                src="/assets/kids-promo.jpg"
+                alt="Kids"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+              />
+              <div className="w-full h-full bg-benin-jaune flex items-center justify-center text-2xl -mt-14">🧒</div>
+            </div>
+            <div>
+              <span className="font-basecoat text-[10px] uppercase tracking-widest text-benin-jaune font-bold block mb-0.5">
+                {t('home.promo_tag') || 'Nouveau'}
+              </span>
+              <p className="font-basecoat text-white font-bold text-sm leading-tight">
+                {t('home.promo_title') || 'Collection KIDS'}
+              </p>
+              <p className="font-basecoat text-white/70 text-xs mt-0.5">
+                {t('home.promo_subtitle') || 'Tabliers & accessoires enfants'}
+              </p>
+            </div>
+            <svg className="w-4 h-4 text-white/60 flex-shrink-0 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </div>
+
         {/* Texte en bas à gauche — style Martine */}
         <div className="banner-content absolute bottom-10 sm:bottom-14 left-6 sm:left-10 md:left-16 lg:left-24 z-20 max-w-lg">
           <h1 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold uppercase tracking-wide mb-4 sm:mb-6 leading-tight">
