@@ -81,10 +81,11 @@ export default function EventTagsPhysics({ tags, containerHeight = 220 }: Props)
           lastScrollY = window.scrollY;
           const rect = container.getBoundingClientRect();
           if (rect.top > window.innerHeight || rect.bottom < 0) return;
+          // Scrolling down → tags float up, scrolling up → tags fall back
           validBodies.forEach((body) => {
             Body.applyForce(body, body.position, {
-              x: (Math.random() - 0.5) * 0.003,
-              y: delta * -0.0004,
+              x: (Math.random() - 0.5) * 0.008,
+              y: delta * -0.003,
             });
           });
         };
@@ -93,8 +94,8 @@ export default function EventTagsPhysics({ tags, containerHeight = 220 }: Props)
         const runner = Runner.create();
         Runner.run(runner, engine);
 
-        const REPULSION_RADIUS = 80;
-        const REPULSION_STRENGTH = 0.006;
+        const REPULSION_RADIUS = 120;
+        const REPULSION_STRENGTH = 0.025;
 
         let raf: number;
         const tick = () => {
