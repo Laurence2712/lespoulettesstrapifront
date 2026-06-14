@@ -1,5 +1,5 @@
 import { Link, useLoaderData, useNavigate } from '@remix-run/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { apiEndpoints, getImageUrl, getStrapiImageUrl } from '../config/api';
@@ -170,10 +170,31 @@ export default function Index() {
   const { homepageData, realisations, actualites, locale } = useLoaderData<LoaderData>();
   const { t } = useTranslation();
   const lp = useLocalePath();
+  const mapRef = useRef<HTMLIFrameElement>(null);
 
   const heroRef = useParallaxHero();
   const scrollRef = useScrollAnimations([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const iframe = mapRef.current;
+    if (!iframe || typeof window === 'undefined' || window.innerWidth <= 768) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let ctx: any;
+    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([g, st]) => {
+      const gsap = g.gsap;
+      const ScrollTrigger = st.ScrollTrigger;
+      gsap.registerPlugin(ScrollTrigger);
+      ctx = gsap.context(() => {
+        gsap.fromTo(iframe, { y: '-10%' }, {
+          y: '10%',
+          ease: 'none',
+          scrollTrigger: { trigger: iframe.closest('section'), start: 'top bottom', end: 'bottom top', scrub: true },
+        });
+      });
+    });
+    return () => { if (ctx) ctx.revert(); };
+  }, []);
 
   const CATEGORIES = [
     { label: t('products.cat_all'),        value: 'Tout' },
@@ -491,9 +512,10 @@ export default function Index() {
 >
   {/* Map full background */}
   <iframe
+    ref={mapRef}
     src="https://maps.google.com/maps?q=6.3554,2.3793&z=14&output=embed"
-    className="absolute inset-0 w-full h-full"
-    style={{ border: 0 }}
+    className="absolute inset-x-0 w-full"
+    style={{ border: 0, top: '-10%', height: '120%' }}
     allowFullScreen={true}
     loading="lazy"
     referrerPolicy="no-referrer-when-downgrade"
