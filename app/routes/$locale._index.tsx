@@ -355,29 +355,28 @@ export default function Index() {
           {actualites.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
               {actualites.map((actu, idx) => (
-                <Link key={actu.id} to={lp('/actualites')} className={`anim-fade-up bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 block`} data-delay={`${0.1 + idx * 0.1}`}>
+                <Link key={actu.id} to={lp('/actualites')} className={`anim-fade-up relative rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 block h-64 sm:h-72 group`} data-delay={`${0.1 + idx * 0.1}`}>
                   {actu.image_url && (
-                    <div className="bg-white dark:bg-gray-700 flex items-center justify-center overflow-hidden h-48 sm:h-56">
-                      <img
-                        src={actu.image_url}
-                        alt={actu.title}
-                        loading="lazy"
-                        width={600}
-                        height={400}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+                    <img
+                      src={actu.image_url}
+                      alt={actu.title}
+                      loading="lazy"
+                      width={600}
+                      height={400}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
                   )}
-                  <div className="p-5 sm:p-6">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
                     {actu.date && (
-                      <p className="font-basecoat text-[1rem] text-benin-jaune font-semibold mb-2 tracking-widest uppercase">
+                      <p className="font-basecoat text-[0.8rem] text-benin-jaune font-semibold mb-1.5 tracking-widest uppercase">
                         {new Date(actu.date).toLocaleDateString(locale === 'en' ? 'en-GB' : 'fr-FR', { day: "numeric", month: "long", year: "numeric" })}
                       </p>
                     )}
-                    <h3 className="font-basecoat text-[1.5rem] font-bold uppercase text-gray-900 dark:text-gray-100 mb-3 leading-snug">
+                    <h3 className="font-basecoat text-[1.2rem] font-bold uppercase text-white mb-2 leading-snug">
                       {actu.title}
                     </h3>
-                    <p className="font-basecoat text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-3">
+                    <p className="font-basecoat text-white/80 text-xs leading-relaxed line-clamp-2">
                       {actu.content}
                     </p>
                   </div>
