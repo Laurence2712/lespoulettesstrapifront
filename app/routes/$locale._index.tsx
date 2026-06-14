@@ -241,7 +241,7 @@ export default function Index() {
         {/* Dégradé léger uniquement en bas pour lisibilité du texte */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
         {/* Texte en bas à gauche — style Martine */}
-        <div className="absolute bottom-10 sm:bottom-14 left-6 sm:left-10 md:left-16 lg:left-24 z-20 max-w-lg">
+        <div className="banner-content absolute bottom-10 sm:bottom-14 left-6 sm:left-10 md:left-16 lg:left-24 z-20 max-w-lg">
           <h1 className="anim-fade-up font-basecoat text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold uppercase tracking-wide mb-4 sm:mb-6 leading-tight">
             {t('home.hero_title')}
           </h1>

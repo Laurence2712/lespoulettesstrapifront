@@ -217,17 +217,25 @@ export function useParallaxHero() {
       gsap.registerPlugin(ScrollTrigger);
 
       ctx = gsap.context(() => {
-        gsap.to(hero, {
-          backgroundPositionY: "30%",
-          ease: "none",
-          scrollTrigger: {
-            trigger: hero,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
+        // Parallax sur l'image hero (img absolue)
+        const img = hero.querySelector("img");
+        if (img) {
+          gsap.fromTo(img,
+            { y: 0 },
+            {
+              y: "20%",
+              ease: "none",
+              scrollTrigger: {
+                trigger: hero,
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
+              },
+            }
+          );
+        }
 
+        // Fade-out du texte au scroll
         const content = hero.querySelector(".banner-content");
         if (content) {
           gsap.to(content, {
@@ -237,7 +245,7 @@ export function useParallaxHero() {
             scrollTrigger: {
               trigger: hero,
               start: "top top",
-              end: "60% top",
+              end: "50% top",
               scrub: true,
             },
           });
