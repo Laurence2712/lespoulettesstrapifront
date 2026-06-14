@@ -46,7 +46,7 @@ export const apiEndpoints = (locale = 'fr') => ({
   homepages: `${API_URL}/api/homepages?populate=*&locale=${locale}`,
   realisations: `${API_URL}/api/realisations?populate=*&locale=${locale}`,
   actualites: `${API_URL}/api/actualites?populate=*&locale=${locale}`,
-  latestActualite: `${API_URL}/api/actualites?populate=*&sort[0]=publishedAt:desc&pagination[limit]=2&locale=${locale}`,
+  latestActualite: `${API_URL}/api/actualites?populate=*&sort[0]=publishedAt:desc&pagination[limit]=3&locale=${locale}`,
   commandes: `${API_URL}/api/commandes`,
   createCheckoutSession: `${API_URL}/api/commandes/create-checkout-session`,
   createBankTransferOrder: `${API_URL}/api/commandes/create-bank-transfer-order`,

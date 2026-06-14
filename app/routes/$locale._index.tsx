@@ -375,7 +375,7 @@ export default function Index() {
             </div>
           </div>
           {actualites.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {actualites.map((actu, idx) => (
                 <Link key={actu.id} to={lp('/actualites')} className={`anim-fade-up relative rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 block h-72 sm:h-80 group`} data-delay={`${0.1 + idx * 0.1}`}>
                   {actu.image_url && (
