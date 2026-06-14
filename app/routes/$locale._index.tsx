@@ -57,6 +57,7 @@ interface LoaderData {
   homepageData: HomepageData | null;
   realisations: Realisation[];
   actualites: Actualite[];
+  featuredActualite: Actualite | null;
   locale: string;
   error: string | null;
 }
@@ -80,15 +81,17 @@ export async function loader({ params }: LoaderFunctionArgs) {
 
   try {
     // Reduce timeout to 5s — faster failure & faster TTFB on slow Strapi cold starts
-    const [homepageRes, realisationsRes, actualitesRes] = await Promise.all([
+    const [homepageRes, realisationsRes, actualitesRes, featuredRes] = await Promise.all([
       fetchWithTimeout(endpoints.homepages, 5000),
       fetchWithTimeout(endpoints.realisations, 5000),
       fetchWithTimeout(endpoints.latestActualite, 5000),
+      fetchWithTimeout(endpoints.featuredActualite, 5000),
     ]);
 
     let homepageData: HomepageData | null = null;
     let realisations: Realisation[] = [];
     let actualites: Actualite[] = [];
+    let featuredActualite: Actualite | null = null;
 
     if (homepageRes?.ok) {
       const data = await homepageRes.json();
@@ -136,19 +139,33 @@ export async function loader({ params }: LoaderFunctionArgs) {
       }
     }
 
+    if (featuredRes?.ok) {
+      const data = await featuredRes.json();
+      if (data?.data?.[0]) {
+        const item = data.data[0];
+        featuredActualite = {
+          id: item.id,
+          title: item.Title || '',
+          content: item.content || '',
+          date: item.date || '',
+          image_url: getStrapiImageUrl(item.image, 'medium'),
+        };
+      }
+    }
+
     const responseHeaders = new Headers();
     if (heroImageUrl) {
       responseHeaders.set('Link', `<${heroImageUrl}>; rel=preload; as=image`);
     }
-    // Cache 10min on Vercel Edge, serve stale up to 1h while revalidating in background
     responseHeaders.set('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=3600');
 
-    return json<LoaderData>({ homepageData, realisations, actualites, locale, error: null }, { headers: responseHeaders });
+    return json<LoaderData>({ homepageData, realisations, actualites, featuredActualite, locale, error: null }, { headers: responseHeaders });
   } catch (err: any) {
     return json<LoaderData>({
       homepageData: null,
       realisations: [],
       actualites: [],
+      featuredActualite: null,
       locale,
       error: 'Erreur lors du chargement des données',
     });
@@ -168,7 +185,7 @@ function matchesCategory(r: Realisation, category: string): boolean {
 }
 
 export default function Index() {
-  const { homepageData, realisations, actualites, locale } = useLoaderData<LoaderData>();
+  const { homepageData, realisations, actualites, featuredActualite, locale } = useLoaderData<LoaderData>();
   const { t } = useTranslation();
   const lp = useLocalePath();
   const mapRef = useRef<HTMLIFrameElement>(null);
@@ -262,37 +279,36 @@ export default function Index() {
         )}
         {/* Dégradé léger uniquement en bas pour lisibilité du texte */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
-        {/* Card promo — bas droite */}
-        <div className="anim-fade-left absolute bottom-10 sm:bottom-14 right-6 sm:right-10 md:right-16 lg:right-24 z-20 hidden sm:block" data-delay="0.4">
-          <Link
-            to={lp('/realisations')}
-            className="group flex items-center gap-4 bg-white/10 dark:bg-black/30 backdrop-blur-md border border-white/20 rounded-2xl px-5 py-4 hover:bg-white/20 transition-all duration-300 max-w-xs"
-          >
-            <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-white/30">
-              <img
-                src="/assets/kids-promo.jpg"
-                alt="Kids"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-              />
-              <div className="w-full h-full bg-benin-jaune flex items-center justify-center text-2xl -mt-14">🧒</div>
-            </div>
-            <div>
-              <span className="font-basecoat text-[10px] uppercase tracking-widest text-benin-jaune font-bold block mb-0.5">
-                {t('home.promo_tag') || 'Nouveau'}
-              </span>
-              <p className="font-basecoat text-white font-bold text-sm leading-tight">
-                {t('home.promo_title') || 'Collection KIDS'}
-              </p>
-              <p className="font-basecoat text-white/70 text-xs mt-0.5">
-                {t('home.promo_subtitle') || 'Tabliers & accessoires enfants'}
-              </p>
-            </div>
-            <svg className="w-4 h-4 text-white/60 flex-shrink-0 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
-        </div>
+        {/* Card promo mise en avant — bas droite */}
+        {featuredActualite && (
+          <div className="anim-fade-left absolute bottom-10 sm:bottom-14 right-6 sm:right-10 md:right-16 lg:right-24 z-20 hidden sm:block" data-delay="0.4">
+            <Link
+              to={lp(`/actualites/${featuredActualite.id}`)}
+              className="group flex items-center gap-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-5 py-4 hover:bg-white/20 transition-all duration-300 max-w-xs"
+            >
+              {featuredActualite.image_url && (
+                <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-white/30">
+                  <img
+                    src={featuredActualite.image_url}
+                    alt={featuredActualite.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              )}
+              <div className="flex-1 min-w-0">
+                <span className="font-basecoat text-[10px] uppercase tracking-widest text-benin-jaune font-bold block mb-0.5">
+                  {t('home.promo_tag')}
+                </span>
+                <p className="font-basecoat text-white font-bold text-sm leading-tight line-clamp-2">
+                  {featuredActualite.title}
+                </p>
+              </div>
+              <svg className="w-4 h-4 text-white/60 flex-shrink-0 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+        )}
 
         {/* Texte en bas à gauche — style Martine */}
         <div className="banner-content absolute bottom-10 sm:bottom-14 left-6 sm:left-10 md:left-16 lg:left-24 z-20 max-w-lg">
