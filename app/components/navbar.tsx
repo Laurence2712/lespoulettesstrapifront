@@ -152,9 +152,9 @@ export default function NavBar() {
         <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-gray-100 dark:border-gray-800">
           <Link to={lp("/")} onClick={() => setMenuOpen(false)}>
             <img
-              src="/assets/lespoulettesfav.svg"
+              src={dark ? "/assets/logo_t_poulettes_white.png" : "/assets/logo_t_poulettes.png"}
               alt="Les Poulettes"
-              className="h-14 sm:h-16 w-auto object-contain"
+              className="h-16 sm:h-20 w-auto object-contain"
             />
           </Link>
           <button
