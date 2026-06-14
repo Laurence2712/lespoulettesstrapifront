@@ -60,14 +60,16 @@ export function useScrollAnimations(deps: any[] = []) {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
+            const el = entry.target as HTMLElement;
             if (entry.isIntersecting) {
-              const el = entry.target as HTMLElement;
               const delay = parseFloat(el.dataset.delay || '0');
               setTimeout(() => {
                 el.style.transition = 'transform 0.5s ease-out';
                 el.style.transform = 'scaleX(1)';
               }, delay * 1000);
-              observer.unobserve(el);
+            } else {
+              el.style.transition = 'none';
+              el.style.transform = 'scaleX(0)';
             }
           });
         },
@@ -113,7 +115,7 @@ export function useScrollAnimations(deps: any[] = []) {
                   scrollTrigger: {
                     trigger: el,
                     start: "top 95%",
-                    toggleActions: "play none none none",
+                    toggleActions: "play none none reset",
                   },
                 }
               );
@@ -148,7 +150,7 @@ export function useScrollAnimations(deps: any[] = []) {
                 scrollTrigger: {
                   trigger: el,
                   start: "top 95%",
-                  toggleActions: "play none none none",
+                  toggleActions: "play none play reset",
                 },
               }
             );
@@ -171,7 +173,7 @@ export function useScrollAnimations(deps: any[] = []) {
                 scrollTrigger: {
                   trigger: parent,
                   start: "top 90%",
-                  toggleActions: "play none none none",
+                  toggleActions: "play none play reset",
                 },
               }
             );
@@ -196,7 +198,7 @@ export function useScrollAnimations(deps: any[] = []) {
                 scrollTrigger: {
                   trigger: parent,
                   start: "top 95%",
-                  toggleActions: "play none none none",
+                  toggleActions: "play none play reset",
                 },
               }
             );
