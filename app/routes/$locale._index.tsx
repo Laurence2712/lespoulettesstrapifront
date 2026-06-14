@@ -1,5 +1,5 @@
 import { Link, useLoaderData, useNavigate } from '@remix-run/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { json } from '@remix-run/node';
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { apiEndpoints, getImageUrl, getStrapiImageUrl } from '../config/api';
@@ -170,10 +170,31 @@ export default function Index() {
   const { homepageData, realisations, actualites, locale } = useLoaderData<LoaderData>();
   const { t } = useTranslation();
   const lp = useLocalePath();
+  const mapRef = useRef<HTMLIFrameElement>(null);
 
   const heroRef = useParallaxHero();
   const scrollRef = useScrollAnimations([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const iframe = mapRef.current;
+    if (!iframe || typeof window === 'undefined' || window.innerWidth <= 768) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let ctx: any;
+    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([g, st]) => {
+      const gsap = g.gsap;
+      const ScrollTrigger = st.ScrollTrigger;
+      gsap.registerPlugin(ScrollTrigger);
+      ctx = gsap.context(() => {
+        gsap.fromTo(iframe, { y: '-10%' }, {
+          y: '10%',
+          ease: 'none',
+          scrollTrigger: { trigger: iframe.closest('section'), start: 'top bottom', end: 'bottom top', scrub: true },
+        });
+      });
+    });
+    return () => { if (ctx) ctx.revert(); };
+  }, []);
 
   const CATEGORIES = [
     { label: t('products.cat_all'),        value: 'Tout' },
@@ -288,10 +309,10 @@ export default function Index() {
               <button
                 key={cat.value}
                 onClick={() => setActiveCategory(cat.value)}
-                className={`font-basecoat text-sm font-semibold px-4 py-1.5 rounded-lg border-2 transition-all duration-200 ${
+                className={`font-basecoat text-sm font-semibold px-4 py-1.5 rounded-lg transition-all duration-200 ${
                   activeCategory === cat.value
-                    ? 'bg-benin-jaune border-benin-jaune text-black shadow-md'
-                    : 'bg-beige dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-benin-jaune hover:text-benin-jaune'
+                    ? 'bg-benin-jaune text-black shadow-md'
+                    : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 shadow-sm hover:shadow-md hover:text-benin-jaune'
                 }`}
               >
                 {cat.label}
@@ -355,7 +376,7 @@ export default function Index() {
           {actualites.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
               {actualites.map((actu, idx) => (
-                <Link key={actu.id} to={lp('/actualites')} className={`anim-fade-up relative rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 block h-64 sm:h-72 group`} data-delay={`${0.1 + idx * 0.1}`}>
+                <Link key={actu.id} to={lp('/actualites')} className={`anim-fade-up relative rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 block h-72 sm:h-80 group`} data-delay={`${0.1 + idx * 0.1}`}>
                   {actu.image_url && (
                     <img
                       src={actu.image_url}
@@ -369,11 +390,11 @@ export default function Index() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
                     {actu.date && (
-                      <p className="font-basecoat text-[0.8rem] text-benin-jaune font-semibold mb-1.5 tracking-widest uppercase">
+                      <p className="font-basecoat text-[1rem] text-benin-jaune font-semibold mb-1.5 tracking-widest uppercase">
                         {new Date(actu.date).toLocaleDateString(locale === 'en' ? 'en-GB' : 'fr-FR', { day: "numeric", month: "long", year: "numeric" })}
                       </p>
                     )}
-                    <h3 className="font-basecoat text-[1.2rem] font-bold uppercase text-white mb-2 leading-snug">
+                    <h3 className="font-basecoat text-[1.5rem] font-bold uppercase text-white mb-2 leading-snug">
                       {actu.title}
                     </h3>
                     <p className="font-basecoat text-white/80 text-xs leading-relaxed line-clamp-2">
@@ -491,9 +512,10 @@ export default function Index() {
 >
   {/* Map full background */}
   <iframe
+    ref={mapRef}
     src="https://maps.google.com/maps?q=6.3554,2.3793&z=14&output=embed"
-    className="absolute inset-0 w-full h-full"
-    style={{ border: 0 }}
+    className="absolute inset-x-0 w-full"
+    style={{ border: 0, top: '-10%', height: '120%' }}
     allowFullScreen={true}
     loading="lazy"
     referrerPolicy="no-referrer-when-downgrade"
