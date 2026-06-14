@@ -355,16 +355,16 @@ export default function Index() {
           {actualites.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
               {actualites.map((actu, idx) => (
-                <div key={actu.id} className={`anim-fade-up bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300`} data-delay={`${0.1 + idx * 0.1}`}>
+                <Link key={actu.id} to={lp('/actualites')} className={`anim-fade-up bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 block`} data-delay={`${0.1 + idx * 0.1}`}>
                   {actu.image_url && (
-                    <div className="bg-white dark:bg-gray-700 flex items-center justify-center overflow-hidden">
+                    <div className="bg-white dark:bg-gray-700 flex items-center justify-center overflow-hidden h-48 sm:h-56">
                       <img
                         src={actu.image_url}
                         alt={actu.title}
                         loading="lazy"
                         width={600}
-                        height={600}
-                        className="w-full h-auto object-contain"
+                        height={400}
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   )}
@@ -381,7 +381,7 @@ export default function Index() {
                       {actu.content}
                     </p>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           ) : (
