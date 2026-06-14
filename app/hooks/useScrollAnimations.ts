@@ -160,13 +160,13 @@ export function useScrollAnimations(deps: any[] = []) {
             const tags = parent.querySelectorAll(".event-tag");
             gsap.fromTo(
               tags,
-              { opacity: 0, y: -60, rotation: () => Math.random() * 10 - 5 },
+              { opacity: 0, y: -80, rotation: () => Math.random() * 10 - 5 },
               {
                 opacity: 1,
                 y: 0,
                 rotation: 0,
-                duration: 0.6,
-                stagger: 0.08,
+                duration: 1.0,
+                stagger: 0.12,
                 ease: "bounce.out",
                 scrollTrigger: {
                   trigger: parent,

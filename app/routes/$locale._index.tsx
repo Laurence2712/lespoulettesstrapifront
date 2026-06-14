@@ -421,147 +421,107 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ── Commandes personnalisées ── */}
-      <section className="py-10 sm:py-14 md:py-[70px] bg-beige dark:bg-gray-900">
-        <div className="px-6 sm:px-10 md:px-16 lg:px-24">
-        <div className="mb-8 sm:mb-10 md:mb-12">
-          <div className="flex items-start justify-between gap-4 mb-3 sm:mb-4">
-            <div>
-              <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
-                {t('home.event_title')}
-              </h2>
-              <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
-              <p className="anim-fade-up font-basecoat text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-4 max-w-lg" data-delay="0.15">
-                {t('home.event_quote')}
-              </p>
-            </div>
-            <Link
-              to={lp('/commandes-personnalisees')}
-              className="hidden md:inline-flex font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 items-center gap-2 flex-shrink-0"
-            >
-              {t('common.learn_more')}
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
-          </div>
+      {/* ── Événement + Où nous trouver (section fusionnée avec map à droite) ── */}
+      <section id="ou-nous-trouver" className="relative bg-beige dark:bg-gray-900 overflow-hidden">
+        {/* Map fixée à droite sur toute la hauteur */}
+        <div className="hidden md:block absolute top-0 right-0 w-1/2 h-full">
+          <iframe
+            ref={mapRef}
+            src="https://maps.google.com/maps?q=6.3554,2.3793&z=14&output=embed"
+            className="absolute inset-x-0 w-full"
+            style={{ border: 0, top: '-10%', height: '120%' }}
+            allowFullScreen={true}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title={t('home.map_title')}
+          />
+          {/* Fondu gauche sur la map */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#F5F1E8] via-[#F5F1E8]/30 to-transparent pointer-events-none" />
         </div>
 
-        <div className="event-tags-container flex flex-wrap gap-3">
-          {[
-            t('home.event_tag_mariage'),
-            t('home.event_tag_baby_shower'),
-            t('home.event_tag_anniv'),
-            t('home.event_tag_bapt'),
-            t('home.event_tag_birth'),
-            t('home.event_tag_corporate'),
-          ].map((label) => (
-            <span
-              key={label}
-              className="event-tag font-basecoat font-semibold text-sm px-4 py-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 rounded-xl shadow-sm cursor-default"
-              style={{ opacity: 0, transform: 'translateY(-60px)' }}
-              onMouseEnter={(e) => {
-                if (typeof window !== 'undefined') {
-                  import('gsap').then(({ gsap }) => {
-                    gsap.to(e.currentTarget, { y: -6, rotation: Math.random() * 6 - 3, scale: 1.08, duration: 0.25, ease: 'power2.out' });
-                  });
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (typeof window !== 'undefined') {
-                  import('gsap').then(({ gsap }) => {
-                    gsap.to(e.currentTarget, { y: 0, rotation: 0, scale: 1, duration: 0.4, ease: 'elastic.out(1,0.5)' });
-                  });
-                }
-              }}
-            >
-              {label}
-            </span>
-          ))}
-        </div>
-        <div className="mt-6 md:hidden">
+        {/* Colonne gauche : contenu */}
+        <div className="relative z-10 w-full md:w-1/2 px-6 sm:px-10 md:px-16 lg:px-24 py-10 sm:py-14 md:py-[70px]">
+
+          {/* Événement à célébrer */}
+          <div className="mb-10">
+            <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
+              {t('home.event_title')}
+            </h2>
+            <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
+            <p className="anim-fade-up font-basecoat text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-4" data-delay="0.15">
+              {t('home.event_quote')}
+            </p>
+          </div>
+
+          <div className="event-tags-container flex flex-wrap gap-3 mb-8">
+            {[
+              t('home.event_tag_mariage'),
+              t('home.event_tag_baby_shower'),
+              t('home.event_tag_anniv'),
+              t('home.event_tag_bapt'),
+              t('home.event_tag_birth'),
+              t('home.event_tag_corporate'),
+            ].map((label) => (
+              <span
+                key={label}
+                className="event-tag font-basecoat font-semibold text-sm px-4 py-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 rounded-xl shadow-sm cursor-default select-none transition-transform duration-200 hover:-translate-y-1.5 hover:scale-105 hover:shadow-md"
+                style={{ opacity: 0, transform: 'translateY(-60px)' }}
+              >
+                {label}
+              </span>
+            ))}
+          </div>
+
           <Link
             to={lp('/commandes-personnalisees')}
-            className="font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-4 py-4 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+            className="anim-fade-up font-basecoat bg-benin-jaune text-black hover:bg-white hover:text-black px-6 py-3 rounded-md text-xs font-bold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+            data-delay="0.3"
           >
             {t('common.learn_more')}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </Link>
-        </div>
+
+          {/* Séparateur */}
+          <div className="my-10 sm:my-14 w-24 h-[1px] bg-gray-200 dark:bg-gray-700" />
+
+          {/* Où nous trouver */}
+          <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-snug">
+            {t('home.location_title')}
+          </h2>
+          <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
+          <p className="anim-fade-up mt-4 mb-6 font-basecoat text-sm sm:text-base text-gray-800 dark:text-gray-200 leading-relaxed whitespace-pre-line" data-delay="0.2">
+            {t('home.location_desc')}
+          </p>
+          <a
+            href="https://wa.me/2290162007580"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="anim-fade-up inline-flex items-center gap-2.5 font-basecoat font-semibold text-sm sm:text-base text-benin-jaune hover:text-benin-terre transition-colors duration-200"
+            data-delay="0.3"
+          >
+            <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
+            </svg>
+            +229 01 62 00 75 80
+          </a>
+
+          {/* Map mobile uniquement */}
+          <div className="md:hidden mt-8 rounded-2xl overflow-hidden h-64">
+            <iframe
+              src="https://maps.google.com/maps?q=6.3554,2.3793&z=14&output=embed"
+              className="w-full h-full"
+              style={{ border: 0 }}
+              allowFullScreen={true}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title={t('home.map_title')}
+            />
+          </div>
+
         </div>
       </section>
-
-    {/* ── Où nous trouver ── */}
-<section
-  id="ou-nous-trouver"
-  className="relative w-full h-[440px] sm:h-[500px] md:h-[580px] overflow-hidden"
->
-  {/* Map full background */}
-  <iframe
-    ref={mapRef}
-    src="https://maps.google.com/maps?q=6.3554,2.3793&z=14&output=embed"
-    className="absolute inset-x-0 w-full"
-    style={{ border: 0, top: '-10%', height: '120%' }}
-    allowFullScreen={true}
-    loading="lazy"
-    referrerPolicy="no-referrer-when-downgrade"
-    title={t('home.map_title')}
-  ></iframe>
-
-  {/* Blur sur les bords, centre net autour de Cotonou */}
-  <div
-    className="absolute inset-0 pointer-events-none"
-    style={{
-      backdropFilter: 'blur(4px)',
-      WebkitBackdropFilter: 'blur(4px)',
-      maskImage: 'radial-gradient(ellipse 45% 55% at 68% 50%, transparent 30%, black 75%)',
-      WebkitMaskImage: 'radial-gradient(ellipse 45% 55% at 68% 50%, transparent 30%, black 75%)',
-    }}
-  />
-  {/* Dégradé beige sur la gauche pour le texte */}
-  <div className="absolute inset-0 bg-gradient-to-r from-[#F5F1E8] via-[#F5F1E8]/95 to-transparent pointer-events-none" />
-
-  {/* Contenu texte */}
-  <div className="relative z-10 h-full flex flex-col justify-center px-6 sm:px-10 md:px-16 lg:px-24">
-    <div className="max-w-xl">
-      <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-snug md:leading-tight">
-        {t('home.location_title')}
-      </h2>
-
-      <div
-        className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4"
-        data-delay="0.1"
-      ></div>
-
-      <p
-        className="anim-fade-up mt-4 mb-8 sm:mb-10 font-basecoat text-sm sm:text-base text-gray-800 dark:text-gray-200 leading-relaxed whitespace-pre-line"
-        data-delay="0.2"
-      >
-        {t('home.location_desc')}
-      </p>
-
-      <p className="anim-fade-up" data-delay="0.3">
-        <a
-          href="https://wa.me/2290162007580"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2.5 font-basecoat font-semibold text-sm sm:text-base text-benin-jaune hover:text-benin-terre transition-colors duration-200"
-        >
-          <svg
-            className="w-5 h-5 flex-shrink-0"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
-          </svg>
-          +229 01 62 00 75 80
-        </a>
-      </p>
-    </div>
-  </div>
-</section>
 
     </div>
   );
