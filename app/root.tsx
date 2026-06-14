@@ -15,6 +15,7 @@ import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next/react";
 import { SpeedInsights } from "@vercel/speed-insights/remix";
+import { Analytics } from "@vercel/analytics/react";
 import NavBar from "./components/navbar";
 import Footer from "./components/footer";
 import BackToTop from "./components/BackToTop";
@@ -181,6 +182,7 @@ export default function App() {
 
       {/* Global UI layers */}
 <CommandPalette />
+      <Analytics />
       <SpeedInsights />
     </ToastProvider>
   );
