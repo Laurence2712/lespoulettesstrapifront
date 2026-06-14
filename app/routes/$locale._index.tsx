@@ -447,7 +447,7 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="event-tags-container flex flex-wrap gap-3">
+        <div className="anim-fade-up flex flex-wrap gap-3" data-delay="0.2">
           {[
             t('home.event_tag_mariage'),
             t('home.event_tag_baby_shower'),
@@ -458,22 +458,7 @@ export default function Index() {
           ].map((label) => (
             <span
               key={label}
-              className="event-tag font-basecoat font-semibold text-sm px-4 py-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 rounded-xl shadow-sm cursor-default"
-              style={{ opacity: 0, transform: 'translateY(-60px)' }}
-              onMouseEnter={(e) => {
-                if (typeof window !== 'undefined') {
-                  import('gsap').then(({ gsap }) => {
-                    gsap.to(e.currentTarget, { y: -6, rotation: Math.random() * 6 - 3, scale: 1.08, duration: 0.25, ease: 'power2.out' });
-                  });
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (typeof window !== 'undefined') {
-                  import('gsap').then(({ gsap }) => {
-                    gsap.to(e.currentTarget, { y: 0, rotation: 0, scale: 1, duration: 0.4, ease: 'elastic.out(1,0.5)' });
-                  });
-                }
-              }}
+              className="font-basecoat font-semibold text-sm px-4 py-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 rounded-xl shadow-sm"
             >
               {label}
             </span>
