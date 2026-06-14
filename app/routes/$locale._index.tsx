@@ -398,7 +398,7 @@ export default function Index() {
                     <h3 className="font-basecoat text-[1.5rem] font-bold uppercase text-white mb-2 leading-snug">
                       {actu.title}
                     </h3>
-                    <p className="font-basecoat text-white/80 text-xs leading-relaxed line-clamp-2">
+                    <p className="font-basecoat text-white/80 text-[1rem] leading-relaxed line-clamp-2">
                       {actu.content}
                     </p>
                   </div>
