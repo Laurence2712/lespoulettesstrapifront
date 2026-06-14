@@ -7,6 +7,7 @@ import { useScrollAnimations, useParallaxHero } from '../hooks/useScrollAnimatio
 import { useTranslation } from 'react-i18next';
 import { useLocalePath } from '../hooks/useLocalePath';
 import ProductCard from '../components/ProductCard';
+import EventTagsPhysics from '../components/EventTagsPhysics';
 
 export function meta() {
   return [
@@ -453,24 +454,16 @@ export default function Index() {
             </p>
           </div>
 
-          <div className="event-tags-container flex flex-wrap gap-3 mb-8">
-            {[
+          <EventTagsPhysics
+            tags={[
               t('home.event_tag_mariage'),
               t('home.event_tag_baby_shower'),
               t('home.event_tag_anniv'),
               t('home.event_tag_bapt'),
               t('home.event_tag_birth'),
               t('home.event_tag_corporate'),
-            ].map((label) => (
-              <span
-                key={label}
-                className="event-tag font-basecoat font-semibold text-sm px-4 py-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 rounded-xl shadow-sm cursor-default select-none transition-transform duration-200 hover:-translate-y-1.5 hover:scale-105 hover:shadow-md"
-                style={{ opacity: 0, transform: 'translateY(-60px)' }}
-              >
-                {label}
-              </span>
-            ))}
-          </div>
+            ]}
+          />
 
           <Link
             to={lp('/commandes-personnalisees')}
@@ -483,29 +476,31 @@ export default function Index() {
             </svg>
           </Link>
 
-          {/* Séparateur */}
-          <div className="my-10 sm:my-14 w-24 h-[1px] bg-gray-200 dark:bg-gray-700" />
-
-          {/* Où nous trouver */}
-          <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-snug">
-            {t('home.location_title')}
-          </h2>
-          <div className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4" data-delay="0.1"></div>
-          <p className="anim-fade-up mt-4 mb-6 font-basecoat text-sm sm:text-base text-gray-800 dark:text-gray-200 leading-relaxed whitespace-pre-line" data-delay="0.2">
-            {t('home.location_desc')}
-          </p>
-          <a
-            href="https://wa.me/2290162007580"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="anim-fade-up inline-flex items-center gap-2.5 font-basecoat font-semibold text-sm sm:text-base text-benin-jaune hover:text-benin-terre transition-colors duration-200"
-            data-delay="0.3"
-          >
-            <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
-            </svg>
-            +229 01 62 00 75 80
-          </a>
+          {/* Card localisation */}
+          <div className="anim-fade-up mt-8 bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-5 sm:p-6 flex flex-col gap-4" data-delay="0.2">
+            <p className="font-basecoat text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+              {t('home.location_desc')}
+            </p>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <a
+                href="https://wa.me/2290162007580"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 font-basecoat font-semibold text-sm text-benin-jaune hover:text-benin-terre transition-colors duration-200"
+              >
+                <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
+                </svg>
+                +229 01 62 00 75 80
+              </a>
+              <Link
+                to={lp('/contact')}
+                className="font-basecoat font-bold text-xs uppercase tracking-widest px-5 py-2 border-2 border-gray-900 dark:border-gray-100 text-gray-900 dark:text-gray-100 rounded-md hover:bg-gray-900 hover:text-white dark:hover:bg-gray-100 dark:hover:text-gray-900 transition-all duration-200"
+              >
+                {t('nav.contact')}
+              </Link>
+            </div>
+          </div>
 
           {/* Map mobile uniquement */}
           <div className="md:hidden mt-8 rounded-2xl overflow-hidden h-64">
