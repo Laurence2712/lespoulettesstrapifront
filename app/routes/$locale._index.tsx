@@ -186,8 +186,8 @@ export default function Index() {
       const ScrollTrigger = st.ScrollTrigger;
       gsap.registerPlugin(ScrollTrigger);
       ctx = gsap.context(() => {
-        gsap.fromTo(iframe, { y: '-10%' }, {
-          y: '10%',
+        gsap.fromTo(iframe, { y: '-18%' }, {
+          y: '18%',
           ease: 'none',
           scrollTrigger: { trigger: iframe.closest('section'), start: 'top bottom', end: 'bottom top', scrub: true },
         });
@@ -427,9 +427,9 @@ export default function Index() {
         <div className="hidden md:block absolute top-0 right-0 w-1/2 h-full">
           <iframe
             ref={mapRef}
-            src="https://maps.google.com/maps?q=6.3554,2.3793&z=14&output=embed"
+            src="https://maps.google.com/maps?q=6.3654,2.4183&z=13&output=embed"
             className="absolute inset-x-0 w-full"
-            style={{ border: 0, top: '-10%', height: '120%' }}
+            style={{ border: 0, top: '-20%', height: '140%' }}
             allowFullScreen={true}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
@@ -510,7 +510,7 @@ export default function Index() {
           {/* Map mobile uniquement */}
           <div className="md:hidden mt-8 rounded-2xl overflow-hidden h-64">
             <iframe
-              src="https://maps.google.com/maps?q=6.3554,2.3793&z=14&output=embed"
+              src="https://maps.google.com/maps?q=6.3654,2.4183&z=13&output=embed"
               className="w-full h-full"
               style={{ border: 0 }}
               allowFullScreen={true}
