@@ -72,12 +72,19 @@ export default function ActualitesPage() {
 
   const scrollRef = useScrollAnimations([sortOrder]);
 
-  const today = new Date();
-  today.setHours(23, 59, 59, 999);
+  const todayStart = new Date();
+  todayStart.setHours(0, 0, 0, 0);
+  const todayEnd = new Date();
+  todayEnd.setHours(23, 59, 59, 999);
 
-  // Only show actualites whose date has arrived (or have no date)
+  // Upcoming: future dates only (agenda)
+  const upcomingEvents = [...actualites]
+    .filter((a) => a.date && new Date(a.date) > todayEnd)
+    .sort((a, b) => new Date(a.date!).getTime() - new Date(b.date!).getTime());
+
+  // Published: date has arrived or no date
   const visibleActualites = actualites.filter(
-    (a) => !a.date || new Date(a.date) <= today
+    (a) => !a.date || new Date(a.date) <= todayEnd
   );
 
   const sortedActualites = [...visibleActualites].sort((a, b) => {
@@ -142,6 +149,35 @@ export default function ActualitesPage() {
           </div>
         </div>
       </div>
+
+      {/* Agenda — événements à venir */}
+      {upcomingEvents.length > 0 && (
+        <div className="px-6 sm:px-10 md:px-16 lg:px-24 pb-8">
+          <div className="anim-fade-up bg-white dark:bg-gray-900 rounded-2xl shadow-sm overflow-hidden w-full" data-delay="0.25">
+            <div className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 dark:border-gray-800">
+              <svg className="w-4 h-4 text-benin-jaune flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span className="font-basecoat font-bold text-xs uppercase tracking-widest text-gray-900 dark:text-gray-100">
+                {t('news.upcoming_events')}
+              </span>
+            </div>
+            <ul>
+              {upcomingEvents.map((ev, i) => {
+                const d = new Date(ev.date!);
+                const day = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long' });
+                return (
+                  <li key={ev.id} className={`flex items-center gap-4 px-6 py-4 ${i < upcomingEvents.length - 1 ? 'border-b border-gray-100 dark:border-gray-800' : ''}`}>
+                    <span className="font-basecoat text-sm font-semibold text-benin-jaune w-28 flex-shrink-0 capitalize">{day}</span>
+                    <span className="w-px h-4 bg-gray-200 dark:bg-gray-700 flex-shrink-0" />
+                    <span className="font-basecoat text-sm text-gray-800 dark:text-gray-200 font-medium">{ev.title}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      )}
 
       {/* Error */}
       {error && (
