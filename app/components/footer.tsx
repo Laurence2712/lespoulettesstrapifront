@@ -84,7 +84,7 @@ export default function Footer() {
 
       {/* Ligne du bas */}
       <div className="border-t border-gray-800">
-        <div className="max-w-[1440px] mx-auto px-6 sm:px-10 md:px-16 lg:px-24 py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm font-basecoat">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-10 md:px-16 lg:px-24 py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-gray-500 dark:text-gray-400 text-sm font-basecoat">
           <p>© {currentYear} Les Poulettes. {t("footer.copyright")}</p>
 <Link to={lp("/mentions-legales")} className="hover:text-benin-jaune transition">
             {t("footer.legal")}
