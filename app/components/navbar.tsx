@@ -134,22 +134,37 @@ export default function NavBar() {
         </div>
       </nav>
 
-      {/* Backdrop with blur */}
+      {/* Backdrop */}
       <div
-        className={`fixed inset-0 z-40 transition-all duration-300 ${
-          menuOpen ? "backdrop-blur-sm bg-black/30 pointer-events-auto" : "pointer-events-none opacity-0"
-        }`}
+        className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm pointer-events-none"
+        style={{
+          opacity: menuOpen ? 1 : 0,
+          transition: menuOpen ? 'opacity 400ms ease' : 'opacity 250ms ease',
+          pointerEvents: menuOpen ? 'auto' : 'none',
+        }}
         onClick={() => setMenuOpen(false)}
       />
 
       {/* Left drawer */}
       <div
-        className={`fixed top-0 left-0 h-full z-50 w-[85vw] sm:w-[420px] bg-beige dark:bg-gray-950 flex flex-col transition-transform duration-300 ease-in-out ${
-          menuOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className="fixed top-0 left-0 h-full z-50 w-[85vw] sm:w-[420px] bg-beige dark:bg-gray-950 flex flex-col"
+        style={{
+          transform: menuOpen ? 'translateX(0)' : 'translateX(-100%)',
+          transition: menuOpen
+            ? 'transform 480ms cubic-bezier(0.32, 0.72, 0, 1)'
+            : 'transform 360ms cubic-bezier(0.32, 0.72, 0, 1)',
+          boxShadow: menuOpen ? '8px 0 40px rgba(0,0,0,0.12)' : 'none',
+        }}
       >
         {/* Header: logo + close */}
-        <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-gray-100 dark:border-gray-800">
+        <div
+          className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-gray-100 dark:border-gray-800"
+          style={{
+            opacity: menuOpen ? 1 : 0,
+            transform: menuOpen ? 'translateY(0)' : 'translateY(-8px)',
+            transition: menuOpen ? 'opacity 300ms ease 200ms, transform 300ms ease 200ms' : 'none',
+          }}
+        >
           <Link to={lp("/")} onClick={() => setMenuOpen(false)}>
             <img
               src="/assets/lespoulettesfav.svg"
@@ -170,11 +185,18 @@ export default function NavBar() {
 
         {/* Nav links */}
         <nav className="flex-1 overflow-y-auto">
-          {[...navLinks, { path: "/#ou-nous-trouver", label: t("nav.locations") }].map(({ path, label }) => (
+          {[...navLinks, { path: "/#ou-nous-trouver", label: t("nav.locations") }].map(({ path, label }, i) => (
             <Link
               key={path}
               to={lp(path)}
               onClick={() => setMenuOpen(false)}
+              style={{
+                opacity: menuOpen ? 1 : 0,
+                transform: menuOpen ? 'translateX(0)' : 'translateX(-20px)',
+                transition: menuOpen
+                  ? `opacity 350ms ease ${260 + i * 55}ms, transform 350ms cubic-bezier(0.32,0.72,0,1) ${260 + i * 55}ms`
+                  : 'none',
+              }}
               className={`font-basecoat font-bold uppercase tracking-wider text-sm sm:text-base block px-6 sm:px-8 py-4 border-b border-gray-100 dark:border-gray-800 transition-colors duration-200 hover:text-benin-jaune ${
                 isActive(path) ? "text-benin-jaune" : "text-gray-900 dark:text-gray-100"
               }`}
@@ -185,7 +207,14 @@ export default function NavBar() {
         </nav>
 
         {/* Bottom: language + dark mode */}
-        <div className="flex items-center gap-4 px-6 sm:px-8 py-5 border-t border-gray-100 dark:border-gray-800">
+        <div
+          className="flex items-center gap-4 px-6 sm:px-8 py-5 border-t border-gray-100 dark:border-gray-800"
+          style={{
+            opacity: menuOpen ? 1 : 0,
+            transform: menuOpen ? 'translateY(0)' : 'translateY(8px)',
+            transition: menuOpen ? 'opacity 300ms ease 500ms, transform 300ms ease 500ms' : 'none',
+          }}
+        >
           <Link
             to={otherLocalePath}
             onClick={() => setMenuOpen(false)}
