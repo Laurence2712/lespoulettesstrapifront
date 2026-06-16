@@ -11,7 +11,7 @@ import {
 } from "@remix-run/react";
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next/react";
 import { SpeedInsights } from "@vercel/speed-insights/remix";
@@ -70,6 +70,31 @@ const orgJsonLd = {
   sameAs: [SITE_CONFIG.facebook, SITE_CONFIG.instagram],
 };
 
+function StickyContentWrapper({ children }: { children: React.ReactNode }) {
+  const footerRef = useRef<HTMLDivElement>(null);
+  const [footerH, setFooterH] = useState(0);
+
+  useEffect(() => {
+    const measure = () => {
+      const fixed = document.querySelector('.fixed.bottom-0.left-0.right-0.z-0') as HTMLElement;
+      if (fixed) setFooterH(fixed.offsetHeight);
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
+
+  return (
+    <div
+      ref={footerRef}
+      className="noise-texture relative z-10 bg-beige dark:bg-gray-950 flex flex-col min-h-screen"
+      style={{ paddingBottom: footerH }}
+    >
+      {children}
+    </div>
+  );
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   const data = useLoaderData<typeof loader>();
   const locale = data?.locale ?? "fr";
@@ -86,7 +111,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
       </head>
-      <body className="noise-texture font-inter bg-beige dark:bg-gray-950 text-gray-900 dark:text-gray-100 flex flex-col min-h-screen overflow-x-hidden transition-colors duration-300">
+      <body className="font-inter text-gray-900 dark:text-gray-100 overflow-x-hidden transition-colors duration-300">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-benin-jaune focus:text-black focus:font-bold focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg"
@@ -94,10 +119,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
           {locale === "en" ? "Skip to main content" : "Aller au contenu principal"}
         </a>
         <ScrollProgress />
-        <NavBar />
-        <main id="main-content" className="flex-grow">{children}</main>
-        <Footer />
-        <BackToTop />
+        {/* Footer fixed underneath — content slides over it (Ricola effect) */}
+        <div className="fixed bottom-0 left-0 right-0 z-0">
+          <Footer />
+        </div>
+        {/* Content wrapper slides over the fixed footer */}
+        <StickyContentWrapper>
+          <NavBar />
+          <main id="main-content" className="flex-grow">{children}</main>
+          <BackToTop />
+        </StickyContentWrapper>
         <ScrollRestoration />
         <Scripts />
       </body>
