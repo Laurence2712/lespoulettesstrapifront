@@ -76,7 +76,9 @@ function StickyContentWrapper({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const measure = () => {
-      const fixed = document.querySelector('.fixed.bottom-0.left-0.right-0.z-0') as HTMLElement;
+      // Ricola effect only on desktop (md+)
+      if (window.innerWidth < 768) { setFooterH(0); return; }
+      const fixed = document.querySelector('.desktop-footer') as HTMLElement;
       if (fixed) setFooterH(fixed.offsetHeight);
     };
     measure();
@@ -119,14 +121,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
           {locale === "en" ? "Skip to main content" : "Aller au contenu principal"}
         </a>
         <ScrollProgress />
-        {/* Footer fixed underneath — content slides over it (Ricola effect) */}
-        <div className="fixed bottom-0 left-0 right-0 z-0">
+        {/* Desktop: footer fixed underneath (Ricola effect) */}
+        <div className="desktop-footer hidden md:block fixed bottom-0 left-0 right-0 z-0">
           <Footer />
         </div>
-        {/* Content wrapper slides over the fixed footer */}
         <StickyContentWrapper>
           <NavBar />
           <main id="main-content" className="flex-grow">{children}</main>
+          {/* Mobile: footer in normal flow */}
+          <div className="md:hidden">
+            <Footer />
+          </div>
           <BackToTop />
         </StickyContentWrapper>
         <ScrollRestoration />
