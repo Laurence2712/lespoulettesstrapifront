@@ -13,6 +13,21 @@ export default function EventTagsPhysics({ tags, containerHeight = 220 }: Props)
     const container = containerRef.current;
     if (!container || typeof window === 'undefined') return;
 
+    // Disable on mobile and reduced motion
+    if (window.innerWidth <= 768) {
+      // Show tags statically on mobile
+      tagsRef.current.forEach((el) => {
+        if (el) el.style.opacity = '1';
+      });
+      return;
+    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      tagsRef.current.forEach((el) => {
+        if (el) el.style.opacity = '1';
+      });
+      return;
+    }
+
     const W = container.offsetWidth;
     const H = containerHeight;
 
@@ -145,6 +160,23 @@ export default function EventTagsPhysics({ tags, containerHeight = 220 }: Props)
       cleanup?.();
     };
   }, [tags, containerHeight]);
+
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+
+  if (isMobile) {
+    return (
+      <div className="flex flex-wrap gap-3 mb-2">
+        {tags.map((label) => (
+          <span
+            key={label}
+            className="font-basecoat font-semibold text-sm px-4 py-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-xl shadow-sm select-none"
+          >
+            {label}
+          </span>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div
