@@ -105,19 +105,20 @@ export default function ActualitesPage() {
   return (
     <div ref={scrollRef} className="mt-16 sm:mt-20 md:mt-24">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+
       {/* Header */}
-      <div className="py-6 sm:py-8 md:py-[60px] px-6 sm:px-10 md:px-16 lg:px-24">
+      <div className="pt-5 pb-4 sm:pt-8 sm:pb-6 md:py-[60px] px-4 sm:px-10 md:px-16 lg:px-24">
         {/* Breadcrumb */}
-        <nav className="anim-fade-up font-basecoat mb-6 sm:mb-8 text-xs">
+        <nav className="anim-fade-up font-basecoat mb-4 sm:mb-6 text-xs">
           <Link to={lp('/')} className="text-benin-jaune hover:text-benin-terre font-medium transition">
             {t('common.home')}
           </Link>
-          <span className="mx-1.5 sm:mx-2 text-gray-400 dark:text-gray-500">/</span>
-          <span className="text-gray-600 dark:text-gray-400 dark:text-gray-500">{t('news.breadcrumb')}</span>
+          <span className="mx-1.5 text-gray-400 dark:text-gray-500">/</span>
+          <span className="text-gray-600 dark:text-gray-400">{t('news.breadcrumb')}</span>
         </nav>
 
-        {/* Titre + Tri */}
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6">
+        {/* Titre + Tri pills */}
+        <div className="flex items-end justify-between gap-4">
           <div>
             <h1
               className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100"
@@ -126,33 +127,38 @@ export default function ActualitesPage() {
               {t('news.title')}
             </h1>
             <div
-              className="anim-expand-line w-24 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3 sm:mt-4"
+              className="anim-expand-line w-20 sm:w-28 h-[2px] bg-gradient-to-r from-benin-jaune via-benin-jaune/60 to-transparent mt-3"
               data-delay="0.15"
-            ></div>
+            />
           </div>
-          <div className="anim-fade-up flex items-center gap-2" data-delay="0.2">
-            <label
-              htmlFor="sort-date"
-              className="font-basecoat text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500 whitespace-nowrap"
+          <div className="anim-fade-up flex items-center gap-2 flex-shrink-0" data-delay="0.2">
+            <button
+              onClick={() => setSortOrder('desc')}
+              className={`font-basecoat text-xs font-semibold px-3 py-1.5 rounded-lg transition-all duration-200 ${
+                sortOrder === 'desc'
+                  ? 'bg-benin-jaune text-black shadow-md'
+                  : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 shadow-sm hover:shadow-md'
+              }`}
             >
-              {t('news.sort_by')}
-            </label>
-            <select
-              id="sort-date"
-              value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value as 'desc' | 'asc')}
-              className="font-basecoat text-sm border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-benin-jaune focus:border-benin-jaune"
+              {t('news.sort_recent_short')}
+            </button>
+            <button
+              onClick={() => setSortOrder('asc')}
+              className={`font-basecoat text-xs font-semibold px-3 py-1.5 rounded-lg transition-all duration-200 ${
+                sortOrder === 'asc'
+                  ? 'bg-benin-jaune text-black shadow-md'
+                  : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 shadow-sm hover:shadow-md'
+              }`}
             >
-              <option value="desc">{t('news.sort_recent_short')}</option>
-              <option value="asc">{t('news.sort_oldest_short')}</option>
-            </select>
+              {t('news.sort_oldest_short')}
+            </button>
           </div>
         </div>
       </div>
 
       {/* Agenda — événements à venir */}
       {upcomingEvents.length > 0 && (
-        <div className="px-6 sm:px-10 md:px-16 lg:px-24 pb-8">
+        <div className="px-4 sm:px-10 md:px-16 lg:px-24 pb-6">
           <div className="anim-fade-up bg-white dark:bg-gray-900 rounded-2xl shadow-sm overflow-hidden w-full" data-delay="0.25">
             <div className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 dark:border-gray-800">
               <svg className="w-4 h-4 text-benin-jaune flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
@@ -194,7 +200,7 @@ export default function ActualitesPage() {
               key={actu.id}
               className={index % 2 === 0 ? 'bg-white dark:bg-gray-900' : 'bg-beige dark:bg-gray-900'}
             >
-              <div className="px-6 sm:px-10 md:px-16 lg:px-24 py-16 sm:py-20 md:py-24">
+              <div className="px-4 sm:px-10 md:px-16 lg:px-24 py-8 sm:py-14 md:py-20">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
                   {/* Image */}
                   {actu.image_url && (
@@ -227,7 +233,7 @@ export default function ActualitesPage() {
                           })
                         : t('news.date_unknown')}
                     </p>
-                    <h2 className="font-basecoat text-[1.5rem] font-bold uppercase text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 leading-tight">
+                    <h2 className="font-basecoat text-[1.2rem] sm:text-[1.5rem] font-bold uppercase text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 leading-tight break-words">
                       {actu.title}
                     </h2>
                     <p className="font-basecoat text-gray-700 dark:text-gray-300 text-sm sm:text-base whitespace-pre-line leading-relaxed">
