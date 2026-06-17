@@ -7,7 +7,6 @@ import { useScrollAnimations, useParallaxHero } from '../hooks/useScrollAnimatio
 import { useTranslation } from 'react-i18next';
 import { useLocalePath } from '../hooks/useLocalePath';
 import ProductCard from '../components/ProductCard';
-import EventTagsPhysics from '../components/EventTagsPhysics';
 
 export function meta() {
   return [
@@ -492,7 +491,7 @@ export default function Index() {
         <div className="relative z-10 w-full md:w-1/2 px-6 sm:px-10 md:px-16 lg:px-24 py-10 sm:py-14 md:py-[70px]">
 
           {/* Événement à célébrer */}
-          <div className="mb-10">
+          <div className="mb-6">
             <h2 className="anim-fade-up font-basecoat text-lg sm:text-xl md:text-2xl font-bold uppercase text-gray-900 dark:text-gray-100 leading-tight">
               {t('home.event_title')}
             </h2>
@@ -502,16 +501,23 @@ export default function Index() {
             </p>
           </div>
 
-          <EventTagsPhysics
-            tags={[
+          <div className="flex flex-wrap gap-2 sm:gap-3 mb-8">
+            {[
               t('home.event_tag_mariage'),
               t('home.event_tag_baby_shower'),
               t('home.event_tag_anniv'),
               t('home.event_tag_bapt'),
               t('home.event_tag_birth'),
               t('home.event_tag_corporate'),
-            ]}
-          />
+            ].map((label) => (
+              <span
+                key={label}
+                className="font-basecoat font-semibold text-sm px-4 py-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:border-benin-jaune hover:shadow-md transition-all duration-200 cursor-default"
+              >
+                {label}
+              </span>
+            ))}
+          </div>
 
           <Link
             to={lp('/commandes-personnalisees')}

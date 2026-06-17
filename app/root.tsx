@@ -90,7 +90,7 @@ function StickyContentWrapper({ children }: { children: React.ReactNode }) {
     <div
       ref={footerRef}
       className="noise-texture relative z-10 bg-beige dark:bg-gray-950 flex flex-col min-h-screen"
-      style={{ paddingBottom: footerH }}
+      style={{ marginBottom: footerH }}
     >
       {children}
     </div>
@@ -102,7 +102,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const locale = data?.locale ?? "fr";
 
   return (
-    <html lang={locale} className="overflow-x-hidden">
+    <html lang={locale} className="overflow-x-hidden bg-black">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
