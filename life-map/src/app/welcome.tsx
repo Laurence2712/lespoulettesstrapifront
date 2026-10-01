@@ -37,7 +37,7 @@ export default function WelcomeScreen() {
           </Text>
           <Text variant="display">Présente-toi</Text>
           <Text tone="muted">Ton nom et ton identifiant permettent à tes amis de te trouver. Tu pourras tout modifier plus tard.</Text>
-          <ProfileEditor submitLabel="Commencer ma carte" onSaved={finish} />
+          <ProfileEditor submitLabel="Commencer ma carte" onSaved={finish} markOnboarded />
         </Screen>
       </KeyboardAvoidingView>
     );

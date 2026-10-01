@@ -1,9 +1,13 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { ActivityIndicator } from 'react-native';
 
 import { PersonRow } from '@/components/PersonRow';
-import { Button, EmptyState, Field, Screen, SectionTitle } from '@/components/ui';
+import { Button, EmptyState, ErrorState, Field, Screen, SectionTitle } from '@/components/ui';
+import { searchProfiles } from '@/data/remote';
 import { useData, type FriendRelation } from '@/features/experiences/store';
 import type { Friendship, Profile } from '@/features/experiences/types';
+import { supabase } from '@/lib/supabase';
+import { useTheme } from '@/theme/ThemeProvider';
 
 function relationOf(meId: string, userId: string, friendships: Friendship[]): FriendRelation {
   const f = friendships.find(
@@ -25,12 +29,41 @@ export default function SearchScreen() {
   const friendships = useData((s) => s.friendships);
   const { sendFriendRequest, acceptFriendRequest } = useData.getState();
 
+  const { colors } = useTheme();
+  const [remoteResults, setRemoteResults] = useState<Profile[] | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Supabase mode: search on the server (debounced). Demo mode: search local profiles.
+  useEffect(() => {
+    if (!supabase) return;
+    const client = supabase;
+    let cancelled = false;
+    const t = setTimeout(() => {
+      setLoading(true);
+      setError(null);
+      searchProfiles(client, query)
+        .then((found) => {
+          if (cancelled) return;
+          useData.getState().mergeFromServer({ profiles: found });
+          setRemoteResults(found);
+        })
+        .catch(() => !cancelled && setError('Recherche impossible. Vérifie ta connexion.'))
+        .finally(() => !cancelled && setLoading(false));
+    }, 300);
+    return () => {
+      cancelled = true;
+      clearTimeout(t);
+    };
+  }, [query]);
+
   const results: Profile[] = useMemo(() => {
+    if (supabase) return (remoteResults ?? []).filter((p) => p.id !== meId);
     const q = normalize(query.trim().replace(/^@/, ''));
     const discoverable = profiles.filter((p) => p.id !== meId && p.isPublic);
     if (!q) return discoverable;
     return discoverable.filter((p) => normalize(p.displayName).includes(q) || normalize(p.username).includes(q));
-  }, [meId, profiles, query]);
+  }, [meId, profiles, query, remoteResults]);
 
   return (
     <Screen edges="none">
@@ -44,8 +77,12 @@ export default function SearchScreen() {
         returnKeyType="search"
         autoFocus
       />
-      <SectionTitle>{query ? 'Résultats' : 'Suggestions'}</SectionTitle>
-      {results.length === 0 ? (
+      <SectionTitle right={loading ? <ActivityIndicator color={colors.accent} /> : undefined}>
+        {query ? 'Résultats' : 'Suggestions'}
+      </SectionTitle>
+      {error ? (
+        <ErrorState message={error} />
+      ) : results.length === 0 && !loading ? (
         <EmptyState icon="search-outline" title="Aucun résultat" message="Vérifie l’orthographe ou essaie avec l’identifiant (@…)." />
       ) : (
         results.map((p) => {

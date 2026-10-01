@@ -31,7 +31,13 @@ export const experienceFormSchema = z.object({
     .optional(),
   visibility: z.enum(VISIBILITIES),
   media: z
-    .array(z.object({ id: z.string(), uri: z.string().min(1), width: z.number().optional(), height: z.number().optional() }))
+    .array(z.object({
+        id: z.string(),
+        uri: z.string().min(1),
+        width: z.number().optional(),
+        height: z.number().optional(),
+        storagePath: z.string().optional(),
+      }))
     .max(6, '6 photos maximum.'),
 });
 

@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { FeedPost } from '@/components/experience/FeedPost';
 import { Button, EmptyState, IconButton, ScreenHeader, Skeleton, TAB_BAR_SPACE, Text } from '@/components/ui';
-import { useData, useFeed } from '@/features/experiences/store';
+import { syncFromServer, useData, useFeed } from '@/features/experiences/store';
 import { useTheme } from '@/theme/ThemeProvider';
 
 const PAGE_SIZE = 5;
@@ -22,10 +22,10 @@ export default function FeedScreen() {
   const hasMore = limit < feed.length;
 
   const onRefresh = useCallback(() => {
-    // Demo mode: data is local, so refresh just resets pagination. With Supabase this refetches.
     setRefreshing(true);
     setLimit(PAGE_SIZE);
-    setTimeout(() => setRefreshing(false), 400);
+    // Supabase: refetch from the server. Demo: data is local, nothing to fetch.
+    syncFromServer().finally(() => setRefreshing(false));
   }, []);
 
   return (

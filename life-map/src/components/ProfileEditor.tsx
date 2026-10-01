@@ -22,7 +22,16 @@ export const profileSchema = z.object({
 type ProfileInput = z.input<typeof profileSchema>;
 type ProfileValues = z.output<typeof profileSchema>;
 
-export function ProfileEditor({ submitLabel, onSaved }: { submitLabel: string; onSaved: () => void }) {
+export function ProfileEditor({
+  submitLabel,
+  onSaved,
+  markOnboarded,
+}: {
+  submitLabel: string;
+  onSaved: () => void;
+  /** Set on the onboarding screen: records server-side that onboarding is done. */
+  markOnboarded?: boolean;
+}) {
   const { spacing } = useTheme();
   const me = useMe();
   const profiles = useData((s) => s.profiles);
@@ -33,7 +42,7 @@ export function ProfileEditor({ submitLabel, onSaved }: { submitLabel: string; o
     handleSubmit,
     setValue,
     setError,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<ProfileInput, unknown, ProfileValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: { displayName: me.displayName, username: me.username, bio: me.bio ?? '', avatarUrl: me.avatarUrl },
@@ -46,14 +55,26 @@ export function ProfileEditor({ submitLabel, onSaved }: { submitLabel: string; o
     if (!res.canceled && res.assets[0]) setValue('avatarUrl', res.assets[0].uri);
   };
 
-  const save = handleSubmit((values) => {
-    // Demo-mode uniqueness check. With Supabase, a UNIQUE constraint enforces it server-side.
+  const save = handleSubmit(async (values) => {
+    // Quick local check; with Supabase the UNIQUE constraint is the real guard.
     if (profiles.some((p) => p.id !== me.id && p.username === values.username)) {
       setError('username', { message: 'Cet identifiant est déjà pris.' });
       return;
     }
-    updateMyProfile({ displayName: values.displayName, username: values.username, bio: values.bio || undefined, avatarUrl: values.avatarUrl });
-    onSaved();
+    try {
+      await updateMyProfile({
+        displayName: values.displayName,
+        username: values.username,
+        bio: values.bio || undefined,
+        avatarUrl: values.avatarUrl,
+        onboarded: markOnboarded,
+      });
+      onSaved();
+    } catch (e) {
+      const message = e instanceof Error ? e.message : 'Enregistrement impossible.';
+      if (message.includes('identifiant')) setError('username', { message });
+      else setError('root', { message: `Enregistrement impossible : ${message}` });
+    }
   });
 
   return (
@@ -94,7 +115,12 @@ export function ProfileEditor({ submitLabel, onSaved }: { submitLabel: string; o
           <Field label="Présentation" optional multiline value={value} onChangeText={onChange} onBlur={onBlur} maxLength={160} error={errors.bio?.message} />
         )}
       />
-      <Button label={submitLabel} onPress={save} fullWidth />
+      {errors.root ? (
+        <Text tone="danger" variant="caption" accessibilityLiveRegion="polite">
+          {errors.root.message}
+        </Text>
+      ) : null}
+      <Button label={submitLabel} onPress={save} loading={isSubmitting} fullWidth />
     </View>
   );
 }

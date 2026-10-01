@@ -1,13 +1,17 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { useState } from 'react';
+import { Alert, Pressable, StyleSheet, Switch, View } from 'react-native';
 
 import { Button, Card, Screen, SectionTitle, Text, toast } from '@/components/ui';
 import { VISIBILITY_META } from '@/features/experiences/categories';
-import { useData, useMyExperiences } from '@/features/experiences/store';
+import { updatePreferences } from '@/data/remote';
+import { remoteUserId } from '@/features/auth/authStore';
+import { syncFromServer, useData, useMe, useMyExperiences } from '@/features/experiences/store';
 import { VISIBILITIES } from '@/features/experiences/types';
 import { useSettings } from '@/features/settings/store';
 import { haptic } from '@/lib/haptics';
+import { supabase } from '@/lib/supabase';
 import { useTheme } from '@/theme/ThemeProvider';
 
 const PROMISES: { icon: React.ComponentProps<typeof Ionicons>['name']; text: string }[] = [
@@ -15,14 +19,36 @@ const PROMISES: { icon: React.ComponentProps<typeof Ionicons>['name']; text: str
   { icon: 'navigate-outline', text: 'Ta position est demandée uniquement quand tu touches « Ma position ». Jamais de suivi en arrière-plan.' },
   { icon: 'home-outline', text: 'Le lieu proposé automatiquement s’arrête au quartier et à la ville : jamais de numéro de rue.' },
   { icon: 'eye-off-outline', text: 'Une expérience privée n’apparaît jamais dans le feed, la recherche ou le profil vu par les autres.' },
-  { icon: 'image-outline', text: 'Les métadonnées de localisation (EXIF) des photos ne sont pas lues.' },
+  { icon: 'image-outline', text: 'Avant envoi, chaque photo est ré-encodée : ses métadonnées (dont la position GPS) sont supprimées.' },
 ];
 
 export default function PrivacyScreen() {
   const { colors, radius, spacing } = useTheme();
   const defaultVisibility = useSettings((s) => s.defaultVisibility);
-  const setDefaultVisibility = useSettings((s) => s.setDefaultVisibility);
+  const setLocalDefaultVisibility = useSettings((s) => s.setDefaultVisibility);
   const deleteMyData = useData((s) => s.deleteMyData);
+  const me = useMe();
+  const [deleting, setDeleting] = useState(false);
+
+  /** Saves a preference on the server (Supabase mode); reverts by re-syncing on failure. */
+  const savePreference = (patch: Parameters<typeof updatePreferences>[2]) => {
+    const meId = remoteUserId();
+    if (!supabase || !meId) return;
+    updatePreferences(supabase, meId, patch).catch(() => {
+      toast('Préférence non enregistrée. Vérifie ta connexion.', 'error');
+      void syncFromServer();
+    });
+  };
+
+  const setDefaultVisibility = (v: (typeof VISIBILITIES)[number]) => {
+    setLocalDefaultVisibility(v);
+    savePreference({ default_visibility: v });
+  };
+
+  const setProfilePublic = (isPublic: boolean) => {
+    useData.setState((s) => ({ profiles: s.profiles.map((p) => (p.id === s.meId ? { ...p, isPublic } : p)) }));
+    savePreference({ is_public: isPublic });
+  };
   const mine = useMyExperiences();
   const counts = VISIBILITIES.map((v) => ({ v, n: mine.filter((e) => e.visibility === v).length }));
 
@@ -35,11 +61,18 @@ export default function PrivacyScreen() {
         {
           text: 'Tout supprimer',
           style: 'destructive',
-          onPress: () => {
-            deleteMyData();
-            haptic.warning();
-            toast('Toutes tes données ont été supprimées.');
-            router.replace('/(tabs)');
+          onPress: async () => {
+            setDeleting(true);
+            try {
+              await deleteMyData();
+              haptic.warning();
+              toast(supabase ? 'Ton compte et tes données ont été supprimés.' : 'Toutes tes données ont été supprimées.');
+              router.replace(supabase ? '/sign-in' : '/(tabs)');
+            } catch (e) {
+              toast(`Suppression impossible : ${e instanceof Error ? e.message : 'réessaie plus tard'}`, 'error');
+            } finally {
+              setDeleting(false);
+            }
           },
         },
       ],
@@ -73,6 +106,25 @@ export default function PrivacyScreen() {
         })}
       </Card>
 
+      <SectionTitle>Profil</SectionTitle>
+      <Card style={styles.option}>
+        <Ionicons name="search-outline" size={20} color={colors.textMuted} />
+        <View style={{ flex: 1 }}>
+          <Text variant="bodyStrong">Profil trouvable</Text>
+          <Text variant="caption" tone="muted">
+            {me.isPublic
+              ? 'Tout le monde peut trouver ton profil. Tes expériences gardent leur propre visibilité.'
+              : 'Seuls tes amis voient ton profil.'}
+          </Text>
+        </View>
+        <Switch
+          value={me.isPublic}
+          onValueChange={setProfilePublic}
+          trackColor={{ true: colors.accent, false: colors.surfaceRaised }}
+          accessibilityLabel="Profil trouvable par tous"
+        />
+      </Card>
+
       <SectionTitle>Tes expériences aujourd’hui</SectionTitle>
       <View style={{ flexDirection: 'row', gap: spacing.sm }}>
         {counts.map(({ v, n }) => (
@@ -103,9 +155,17 @@ export default function PrivacyScreen() {
       <SectionTitle>Zone sensible</SectionTitle>
       <Card style={{ gap: spacing.sm }}>
         <Text tone="muted">
-          Supprime définitivement tes expériences, photos, commentaires, réactions et amis. Avec un compte en ligne, cette action supprimera aussi le compte.
+          {supabase
+            ? 'Supprime définitivement ton compte, tes expériences, photos, commentaires, réactions et amitiés.'
+            : 'Supprime définitivement tes expériences, photos, commentaires, réactions et amis de cet appareil.'}
         </Text>
-        <Button label="Supprimer mes données" variant="danger" icon="trash-outline" onPress={confirmDelete} />
+        <Button
+          label={supabase ? 'Supprimer mon compte' : 'Supprimer mes données'}
+          variant="danger"
+          icon="trash-outline"
+          onPress={confirmDelete}
+          loading={deleting}
+        />
       </Card>
     </Screen>
   );

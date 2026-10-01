@@ -5,6 +5,8 @@ import { Alert, Pressable, StyleSheet, View } from 'react-native';
 
 import { ProfileEditor } from '@/components/ProfileEditor';
 import { Card, Chip, Screen, SectionTitle, Text, toast } from '@/components/ui';
+import { signOut } from '@/features/auth/session';
+import { useAuth } from '@/features/auth/authStore';
 import { useData } from '@/features/experiences/store';
 import { useSettings, type ThemePreference } from '@/features/settings/store';
 import { isSupabaseConfigured } from '@/lib/env';
@@ -35,6 +37,7 @@ export default function SettingsScreen() {
   const setTheme = useSettings((s) => s.setTheme);
   const resetOnboarding = useSettings((s) => s.resetOnboarding);
   const resetDemo = useData((s) => s.resetDemo);
+  const email = useAuth((s) => s.session?.user.email);
 
   return (
     <Screen edges="none">
@@ -63,6 +66,18 @@ export default function SettingsScreen() {
             router.replace('/welcome');
           }}
         />
+        {isSupabaseConfigured ? (
+          <Row
+            icon="log-out-outline"
+            label={email ? `Se déconnecter (${email})` : 'Se déconnecter'}
+            onPress={() =>
+              Alert.alert('Se déconnecter ?', 'Tes données restent en sécurité sur ton compte.', [
+                { text: 'Annuler', style: 'cancel' },
+                { text: 'Se déconnecter', style: 'destructive', onPress: () => void signOut() },
+              ])
+            }
+          />
+        ) : null}
       </Card>
 
       {!isSupabaseConfigured ? (

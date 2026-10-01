@@ -17,9 +17,12 @@ export type Coordinates = { latitude: number; longitude: number };
 
 export type ExperienceMedia = {
   id: string;
+  /** Displayable URI: local file before upload, signed URL once stored on the server. */
   uri: string;
   width?: number;
   height?: number;
+  /** Path in the private storage bucket; absent while the photo only exists on the device. */
+  storagePath?: string;
 };
 
 export type Experience = {
